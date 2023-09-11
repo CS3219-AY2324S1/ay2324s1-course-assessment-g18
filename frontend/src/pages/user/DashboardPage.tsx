@@ -1,7 +1,10 @@
 import React from "react";
 import "./Dashboard.css";
 
-function DashboardPage() {
+interface DashBoardProps {
+  name: String;
+}
+function DashboardPage({name}: DashBoardProps ) {
   return <div>Dashboard</div>;
 }
 
