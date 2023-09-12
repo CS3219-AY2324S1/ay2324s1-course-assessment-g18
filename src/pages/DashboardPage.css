@@ -1,12 +1,37 @@
 .dashboard-main {
-  display: flex;
+  display: grid;
+  grid-template-columns: 260px 1fr 1fr 1fr;
+  grid-template-rows: 0.2fr 3fr;
+  grid-template-areas:
+    'sidebar stats stats stats'
+    'sidebar question question question';
+
   width: 100%;
   height: 100%;
-  justify-content: center;
-  flex: 1;
 }
+
 .dashboard-content {
   padding: 100px;
   display: flex;
   flex: 1;
+}
+
+.dashboard-stats {
+  grid-area: stats;
+  height: 60px;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  padding: 100px;
+  box-shadow: 0 6px 7px -3px rgba(0, 0, 0, 0.35);
+}
+
+#sidebar {
+  grid-area: sidebar;
+  height: 100%;
+  background-color: #FFFFFF;
+  overflow-y: auto;
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
 }
