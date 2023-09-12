@@ -1,0 +1,12 @@
+.dashboard-main {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  flex: 1;
+}
+.dashboard-content {
+  padding: 100px;
+  display: flex;
+  flex: 1;
+}
