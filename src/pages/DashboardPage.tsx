@@ -1,13 +1,18 @@
-import React from "react";
 import "./DashboardPage.css";
 import DashboardStats from "@/components/dashboard/statistics/DashboardStats";
-import "./DashboardPage.css";
+import Sidebar from "@/components/dashboard/sidebar/Sidebar";
+import { useState } from "react";
+
 function DashboardPage() {
+  const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
+
+  const openSidebar = () => {
+    setOpenSidebarToggle(!openSidebarToggle)
+  }
   return (
     <div className="dashboard-main">
-      <div className="dashboard-content">
-        <DashboardStats />
-      </div>
+      <DashboardStats />
+      <Sidebar openSidebarToggle={openSidebarToggle} openSidebar={openSidebar} />
     </div>
   );
 }

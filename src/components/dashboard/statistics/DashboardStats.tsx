@@ -1,11 +1,12 @@
-import React from "react";
 import "./DashboardStats.css";
+import "../../../pages/DashboardPage.css"
 import qnsIcon from "../../../assets/dashboard/total-qns.svg";
 import activeIcon from "../../../assets/dashboard/active-now.svg";
 import membersIcon from "../../../assets/dashboard/members.svg";
+
 function DashboardStats() {
   return (
-    <div className="main">
+    <div className="dashboard-stats">
       <div className="main-content">
         <div className="sub-div">
           <img src={qnsIcon} />

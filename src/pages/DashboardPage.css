@@ -1,12 +1,32 @@
 .dashboard-main {
-  display: flex;
+  display: grid;
+  grid-template-columns: 260px 1fr 1fr 1fr;
+  grid-template-rows: 0.2fr 3fr;
+  grid-template-areas:
+    'sidebar stats stats stats'
+    'sidebar question question question';
+  gap: 20px;
   width: 100%;
-  height: 100%;
-  justify-content: center;
-  flex: 1;
+  height: 100vh;
 }
+
 .dashboard-content {
   padding: 100px;
   display: flex;
   flex: 1;
+}
+
+.dashboard-stats {
+  grid-area: stats;
+  padding-top: 20px;
+  padding-right: 20px;
+}
+
+#sidebar {
+  grid-area: sidebar;
+  height: 100%;
+  background-color: #FFFFFF;
+  overflow-y: auto;
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
 }
