@@ -1,8 +1,9 @@
 import "./DashboardStats.css";
-import "../"
+import "../../../pages/DashboardPage.css"
 import qnsIcon from "../../../assets/dashboard/total-qns.svg";
 import activeIcon from "../../../assets/dashboard/active-now.svg";
 import membersIcon from "../../../assets/dashboard/members.svg";
+
 function DashboardStats() {
   return (
     <div className="dashboard-stats">

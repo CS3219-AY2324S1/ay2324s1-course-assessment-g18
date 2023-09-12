@@ -1,5 +1,5 @@
 import 
-{BsCart3, BsGrid1X2Fill, BsPeopleFill, BsFillGearFill}
+{BsGrid1X2Fill, BsPeopleFill, BsFillGearFill}
  from 'react-icons/bs'
  import "../../../pages/DashboardPage.css"
  import "./Sidebar.css"
