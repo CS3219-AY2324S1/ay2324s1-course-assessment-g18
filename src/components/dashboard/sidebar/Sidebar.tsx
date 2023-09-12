@@ -4,10 +4,10 @@ import "./Sidebar.css";
 import logo from "../../../assets/dashboard/logo.svg";
 
 interface Props {
-  OpenSidebar: () => void;
+  openSidebar: () => void;
   openSidebarToggle: boolean;
 }
-function Sidebar({ openSidebarToggle, OpenSidebar }: Props) {
+function Sidebar({ openSidebarToggle, openSidebar }: Props) {
   return (
     <aside
       id="sidebar"
@@ -15,7 +15,7 @@ function Sidebar({ openSidebarToggle, OpenSidebar }: Props) {
     >
       <div className="sidebar-title">
         <img src={logo} />
-        <span className="icon close_icon" onClick={OpenSidebar}>
+        <span className="icon close_icon" onClick={openSidebar}>
           X
         </span>
       </div>
