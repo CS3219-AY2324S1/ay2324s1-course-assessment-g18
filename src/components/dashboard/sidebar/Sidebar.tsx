@@ -6,9 +6,8 @@ import logo from "../../../assets/dashboard/logo.svg";
 interface Props {
   openSidebar: () => void;
   openSidebarToggle: boolean;
-  handleClickUsers: () => void;
 }
-function Sidebar({ openSidebarToggle, openSidebar, handleClickUsers }: Props) {
+function Sidebar({ openSidebarToggle, openSidebar }: Props) {
   return (
     <aside
       id="sidebar"
@@ -27,7 +26,7 @@ function Sidebar({ openSidebarToggle, openSidebar, handleClickUsers }: Props) {
             <BsGrid1X2Fill className="icon" /> Dashboard
           </a>
         </li>
-        <li className="sidebar-list-item" onClick={handleClickUsers}>
+        <li className="sidebar-list-item">
           <a href="">
             <BsPeopleFill className="icon" /> Users
           </a>

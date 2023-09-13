@@ -23,14 +23,6 @@
   padding-right: 20px;
 }
 
-.dashboard-users {
-  grid-area: question;
-  padding-top: 20px;
-  padding-right: 20px;
-  /* max-height: fit-content; */
-  overflow-y: auto;
-}
-
 #sidebar {
   grid-area: sidebar;
   height: 100%;
