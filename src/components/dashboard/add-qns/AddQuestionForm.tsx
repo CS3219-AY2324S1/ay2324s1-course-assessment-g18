@@ -5,9 +5,12 @@ import { Question, QuestionDifficulty } from "@/models/question.model";
 import DifficultySelect from "@/components/form/DifficultySelect";
 import CustomTextArea from "@/components/form/CustomTextArea";
 import "./AddQuestionForm.css";
+import LocalQuestionRepository from "@/questionrepo/LocalQuestionRepository";
+
 interface Props {
   setIsAdding: Dispatch<SetStateAction<boolean>>;
 }
+
 function AddQuestionForm({ setIsAdding }: Props) {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
@@ -19,30 +22,29 @@ function AddQuestionForm({ setIsAdding }: Props) {
 
   const onSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    if (title.length != 0 && description.length != 0 && link.length != 0) {
+  
+    if (title.length !== 0 && description.length !== 0 && link.length !== 0) {
       try {
-        const currStringify = localStorage.getItem("questions");
-        let curr: Question[] = [];
-        if (!currStringify) {
-          curr = [];
-        } else {
-          curr = JSON.parse(currStringify);
-        }
-
         const newQuestion: Question = {
-          qId: curr.length ? curr.length + 1 : 1,
           title,
           description,
-          complexity: QuestionDifficulty[complexity],
+          complexity,
           link,
           category: [],
+          qId: 0 // just set a dummy value first will think of how to do this better later
         };
-        const newArr = curr.concat(newQuestion);
-        localStorage.setItem("questions", JSON.stringify(newArr));
-        console.log("Successfully added");
-        setIsAdding(false);
+  
+        // Use the LocalQuestionRepository to save the question
+        const isSaved = LocalQuestionRepository.saveQuestion(newQuestion);
+  
+        if (isSaved) {
+          console.log("Successfully added");
+          setIsAdding(false);
+        } else {
+          setIsAdding(true); // Handle the error state
+        }
       } catch (err) {
-        console.log(err);
+        console.error(err);
         setIsAdding(true);
       }
     } else {
