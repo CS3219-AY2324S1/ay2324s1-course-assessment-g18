@@ -1,4 +1,4 @@
-import "../../../pages/DashboardPage.css";
+import "../../pages/UserPage.css";
 import "./UserList.css";
 import {
   Table,
@@ -36,8 +36,8 @@ function UserList() {
   ]);
 
   return (
-    <div className="dashboard-users">
-      <div className="user-container">
+    <div className="userlist-container">
+      <div className="userlist-content">
         <Table className="user-table">
           <TableHeader>
             <TableRow>
