@@ -39,7 +39,6 @@ function AddQuestionForm({ setIsAdding }: Props) {
         };
         const newArr = curr.concat(newQuestion);
         localStorage.setItem("questions", JSON.stringify(newArr));
-        console.log(localStorage);
         console.log("Successfully added");
         setIsAdding(false);
       } catch (err) {

@@ -34,8 +34,6 @@ interface Props {
   data: Question[];
 }
 export default function QuestionList({ isChanged, setIsChanged, data }: Props) {
-  console.log(data);
-  // const [data, setData] = useState<Question[]>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
