@@ -1,9 +1,9 @@
-import "./DashboardPage.css";
-import DashboardStats from "@/components/dashboard/statistics/DashboardStats";
+import "./UserPage.css";
 import Sidebar from "@/components/dashboard/sidebar/Sidebar";
+import UserList from "@/components/users/UserList";
 import { useState } from "react";
 
-function DashboardPage() {
+function UserPage() {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
 
   const openSidebar = () => {
@@ -11,14 +11,14 @@ function DashboardPage() {
   };
 
   return (
-    <div className="dashboard-main">
-      <DashboardStats />
+    <div className="user-main">
       <Sidebar
         openSidebarToggle={openSidebarToggle}
         openSidebar={openSidebar}
       />
+      <UserList />
     </div>
   );
 }
 
-export default DashboardPage;
+export default UserPage;
