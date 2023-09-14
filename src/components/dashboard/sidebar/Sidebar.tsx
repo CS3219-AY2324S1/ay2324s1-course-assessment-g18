@@ -6,8 +6,15 @@ import logo from "../../../assets/dashboard/logo.svg";
 interface Props {
   openSidebar: () => void;
   openSidebarToggle: boolean;
+  handleClickDashboard: (event: React.MouseEvent) => void;
+  handleClickUser: (event: React.MouseEvent) => void;
 }
-function Sidebar({ openSidebarToggle, openSidebar }: Props) {
+function Sidebar({
+  openSidebarToggle,
+  openSidebar,
+  handleClickDashboard,
+  handleClickUser,
+}: Props) {
   return (
     <aside
       id="sidebar"
@@ -21,12 +28,16 @@ function Sidebar({ openSidebarToggle, openSidebar }: Props) {
       </div>
 
       <ul className="sidebar-list">
-        <li className="sidebar-list-item">
+        <li
+          className="sidebar-list-item"
+          onClick={(e) => handleClickDashboard(e)}
+        >
           <a href="">
-            <BsGrid1X2Fill className="icon" /> Dashboard
+            <BsGrid1X2Fill className="icon" />
+            Dashboard
           </a>
         </li>
-        <li className="sidebar-list-item">
+        <li className="sidebar-list-item" onClick={(e) => handleClickUser(e)}>
           <a href="">
             <BsPeopleFill className="icon" /> Users
           </a>
