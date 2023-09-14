@@ -9,7 +9,6 @@ export class QuestionController {
 
     @Get()
     async getAllQuestions(): Promise<QuestionDto[]> {
-        console.log("get all questions");
         return this.questionService.getAllQuestions();
     }
 
