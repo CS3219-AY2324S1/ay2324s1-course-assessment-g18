@@ -1,18 +1,39 @@
 import "./DashboardPage.css";
 import DashboardStats from "@/components/dashboard/statistics/DashboardStats";
 import Sidebar from "@/components/dashboard/sidebar/Sidebar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import QuestionList from "@/components/dashboard/question-list/QuestionList";
+import { Question } from "@/questionrepo/question.model";
+import FallbackQuestionRepository from "@/questionrepo/FallbackQuestionRepository";
 
 function DashboardPage() {
-  const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
+  const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
+  const [data, setData] = useState<Question[]>([]);
+  const [isAdding, setIsAdding] = useState<boolean>(false);
 
   const openSidebar = () => {
-    setOpenSidebarToggle(!openSidebarToggle)
-  }
+    setOpenSidebarToggle(!openSidebarToggle);
+  };
+  useEffect(() => {
+    const getData = () => {
+      const qns: Question[] = FallbackQuestionRepository.getQuestions();
+      setData(qns);
+    };
+    getData();
+  }, [isAdding]);
+
   return (
     <div className="dashboard-main">
-      <DashboardStats />
-      <Sidebar openSidebarToggle={openSidebarToggle} openSidebar={openSidebar} />
+      <DashboardStats dataLen={data.length} />
+      <Sidebar
+        openSidebarToggle={openSidebarToggle}
+        openSidebar={openSidebar}
+      />
+      <QuestionList
+        isChanged={isAdding}
+        setIsChanged={setIsAdding}
+        data={data}
+      />
     </div>
   );
 }

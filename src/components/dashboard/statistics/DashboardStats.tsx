@@ -1,10 +1,13 @@
 import "./DashboardStats.css";
-import "../../../pages/DashboardPage.css"
+import "../../../pages/DashboardPage.css";
 import qnsIcon from "../../../assets/dashboard/total-qns.svg";
 import activeIcon from "../../../assets/dashboard/active-now.svg";
 import membersIcon from "../../../assets/dashboard/members.svg";
 
-function DashboardStats() {
+interface Props {
+  dataLen: number;
+}
+function DashboardStats({ dataLen }: Props) {
   return (
     <div className="dashboard-stats">
       <div className="main-content">
@@ -12,7 +15,7 @@ function DashboardStats() {
           <img src={qnsIcon} />
           <div className="text-container">
             <div className="heading">Total Questions</div>
-            <div className="stats-number">53</div>
+            <div className="stats-number">{dataLen}</div>
             <div className="sub-text">16% this month</div>
           </div>
         </div>
