@@ -6,7 +6,12 @@ import QuestionList from "@/components/dashboard/question-list/QuestionList";
 import { Question } from "@/questionrepo/question.model";
 import FallbackQuestionRepository from "@/questionrepo/FallbackQuestionRepository";
 
-function DashboardPage() {
+interface Props {
+  handleClickDashboard: (event: React.MouseEvent) => void;
+  handleClickUser: (event: React.MouseEvent) => void;
+}
+
+function DashboardPage({ handleClickDashboard, handleClickUser }: Props) {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
   const [data, setData] = useState<Question[]>([]);
   const [isAdding, setIsAdding] = useState<boolean>(false);
@@ -28,6 +33,8 @@ function DashboardPage() {
       <Sidebar
         openSidebarToggle={openSidebarToggle}
         openSidebar={openSidebar}
+        handleClickDashboard={handleClickDashboard}
+        handleClickUser={handleClickUser}
       />
       <QuestionList
         isChanged={isAdding}
