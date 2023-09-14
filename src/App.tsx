@@ -1,10 +1,12 @@
 import DashboardPage from "./pages/DashboardPage";
 import "./App.css";
+import UserPage from "./pages/UserPage";
 
 function App() {
   return (
     <div>
-      <DashboardPage />
+      {/* <DashboardPage /> */}
+      <UserPage />
     </div>
   );
 }
