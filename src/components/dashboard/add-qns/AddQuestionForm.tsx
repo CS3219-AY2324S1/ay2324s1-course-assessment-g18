@@ -62,14 +62,14 @@ function AddQuestionForm({ setIsAdding }: Props) {
   return (
     <div className="form-div">
       <form onSubmit={(e) => onSubmit(e)}>
-        <div className="text-lg font-semibold pb-2">Add a new Question</div>
-        <CustomInput label="Question Title" setData={setTitle} data={title} />
-        <DifficultySelect setData={setComplexity} data={complexity} />
+        <div className="flex items-end gap-[10px]">
+          <CustomInput label="Question Title" setData={setTitle} data={title} />
+          <DifficultySelect setData={setComplexity} data={complexity} />
+        </div>
         <CustomTextArea
           label="Description"
           setData={setDescription}
           data={description}
-          inputStyling={{ height: "200px" }}
         />
 
         <CustomInput label="Link" setData={setLink} data={link} />

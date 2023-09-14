@@ -22,10 +22,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Question } from "@/questionrepo/question.model";
 import { Columns } from "./Column";
 import AddQuestionForm from "../add-qns/AddQuestionForm";
 import { PlusCircle } from "lucide-react";
+import CustomDialog from "@/components/dialog/CustomDialog";
 
 const columns = Columns;
 interface Props {
@@ -50,7 +52,6 @@ export default function QuestionList({ isChanged, setIsChanged, data }: Props) {
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
-
     state: {
       sorting,
       columnFilters,
@@ -66,17 +67,23 @@ export default function QuestionList({ isChanged, setIsChanged, data }: Props) {
         <div className="flex items-center py-4">
           <div className="w-3/5 flex gap-2 items-center">
             <div className="text-xl font-bold pl-5">All Questions</div>
-            <Button
-              className="bg-transparent"
-              variant="link"
-              onClick={() => setIsChanged(!isChanged)}
-            >
-              <PlusCircle
-                onClick={() => setIsChanged(!isChanged)}
-                color="grey"
-                className={isChanged ? "open" : ""}
-              />
-            </Button>
+            <Dialog open={isChanged} onOpenChange={setIsChanged}>
+              <DialogTrigger asChild>
+                <Button
+                  className="bg-transparent"
+                  variant="link"
+                  onClick={() => setIsChanged(!isChanged)}
+                >
+                  <PlusCircle
+                    color="grey"
+                    className={isChanged ? "open" : ""}
+                  />
+                </Button>
+              </DialogTrigger>
+              <CustomDialog dialogTitle="Add a New Question">
+                <AddQuestionForm setIsAdding={setIsChanged} />
+              </CustomDialog>
+            </Dialog>
           </div>
 
           <Input
@@ -89,58 +96,54 @@ export default function QuestionList({ isChanged, setIsChanged, data }: Props) {
           />
         </div>
         <div className="rounded-md border">
-          {!isChanged ? (
-            <Table>
-              <TableHeader>
-                {table.getHeaderGroups().map((headerGroup) => (
-                  <TableRow key={headerGroup.id}>
-                    {headerGroup.headers.map((header) => {
-                      return (
-                        <TableHead key={header.id}>
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
-                        </TableHead>
-                      );
-                    })}
+          <Table>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <TableHead key={header.id}>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </TableHead>
+                    );
+                  })}
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
                   </TableRow>
-                ))}
-              </TableHeader>
-              <TableBody>
-                {table.getRowModel().rows?.length ? (
-                  table.getRowModel().rows.map((row) => (
-                    <TableRow
-                      key={row.id}
-                      data-state={row.getIsSelected() && "selected"}
-                    >
-                      {row.getVisibleCells().map((cell) => (
-                        <TableCell key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell
-                      colSpan={columns.length}
-                      className="h-24 text-center"
-                    >
-                      No results.
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          ) : (
-            <AddQuestionForm setIsAdding={setIsChanged} />
-          )}
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
+                    No results.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
         </div>
         <div className="flex items-center justify-end space-x-2 py-4">
           <div className="flex-1 text-sm text-muted-foreground">
