@@ -1,5 +1,5 @@
 export interface QuestionDto {
-    questionId: number;
+    id: string;
     questionTitle: string;
     questionCategories: Array<string>;
     questionDifficulty: string;

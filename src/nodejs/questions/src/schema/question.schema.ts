@@ -6,7 +6,7 @@ export type QuestionDocument = Question & Document;
 @Schema()
 export class Question {
     @Prop()
-    questionId: number;
+    id: string;
 
     @Prop()
     questionTitle: string;
@@ -20,3 +20,5 @@ export class Question {
     @Prop()
     questionDescription: string;
 }
+
+export const QuestionSchema = SchemaFactory.createForClass(Question);

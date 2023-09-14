@@ -6,10 +6,10 @@ import { Question, QuestionDocument } from "src/schema/question.schema";
 
 export interface QuestionRepository {
     getAllQuestions(): Promise<QuestionDto[]>;
-    getQuestionById(questionId: number);
+    getQuestionById(questionId: string);
     addQuestion(questionDto: QuestionDto);
-    deleteQuestion(questionId: number);
-    editQuestion(questionId: number, questionDto: QuestionDto); 
+    deleteQuestion(questionId: string);
+    editQuestion(questionId: string, questionDto: QuestionDto); 
 }
 
 
@@ -22,17 +22,17 @@ export class QuestionMongoRepository implements QuestionRepository {
     async getAllQuestions(): Promise<QuestionDto[]> {
         return await this.questionModel.find().exec();
     }
-    async getQuestionById(questionId: number) {
+    async getQuestionById(questionId: string) {
         return await this.questionModel.findById(questionId);
     }
     async addQuestion(questionDto: QuestionDto) {
         this.questionModel.create(questionDto);
     }
-    async deleteQuestion(questionId: number) {
+    async deleteQuestion(questionId: string) {
         await this.questionModel.findByIdAndDelete(questionId);
     }
-    async editQuestion(questionId: number, questionDto: QuestionDto) {
-        await this.questionModel.findByIdAndDelete(questionId, questionDto);
+    async editQuestion(questionId: string, questionDto: QuestionDto) {
+        await this.questionModel.findByIdAndUpdate(questionId, questionDto);
     }
 
 }
