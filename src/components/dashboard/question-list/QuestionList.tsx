@@ -102,7 +102,7 @@ export default function QuestionList({ isChanged, setIsChanged, data }: Props) {
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {
                     return (
-                      <TableHead key={header.id}>
+                      <TableHead key={header.id} className={`${header.id}`}>
                         {header.isPlaceholder
                           ? null
                           : flexRender(
