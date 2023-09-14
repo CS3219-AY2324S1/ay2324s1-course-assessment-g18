@@ -5,7 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { QuestionDifficulty } from "@/models/question.model";
+import { QuestionDifficulty } from "@/questionrepo/question.model";
 import { Dispatch, SetStateAction } from "react";
 import "./Input.css";
 interface Props {

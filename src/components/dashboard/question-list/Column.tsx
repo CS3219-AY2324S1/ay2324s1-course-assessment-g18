@@ -1,5 +1,5 @@
 import { Checkbox } from "@/components/ui/checkbox";
-import { Question, QuestionDifficulty } from "@/models/question.model";
+import { Question, QuestionDifficulty } from "@/questionrepo/question.model";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";

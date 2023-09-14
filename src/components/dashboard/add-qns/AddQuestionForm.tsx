@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useState, SyntheticEvent, Dispatch, SetStateAction } from "react";
 import CustomInput from "@/components/form/CustomInput";
-import { Question, QuestionDifficulty } from "@/models/question.model";
+import { Question, QuestionDifficulty } from "@/questionrepo/question.model";
 import DifficultySelect from "@/components/form/DifficultySelect";
 import CustomTextArea from "@/components/form/CustomTextArea";
 import "./AddQuestionForm.css";

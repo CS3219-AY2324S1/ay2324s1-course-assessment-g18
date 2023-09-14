@@ -22,7 +22,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Question } from "@/models/question.model";
+import { Question } from "@/questionrepo/question.model";
 import { Columns } from "./Column";
 import AddQuestionForm from "../add-qns/AddQuestionForm";
 import { PlusCircle } from "lucide-react";

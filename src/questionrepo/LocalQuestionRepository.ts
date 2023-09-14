@@ -1,4 +1,4 @@
-import { Question, QuestionDifficulty } from "@/models/question.model";
+import { Question, QuestionDifficulty } from "@/questionrepo/question.model";
 
 class LocalQuestionRepository {
   // Function to retrieve questions from localStorage

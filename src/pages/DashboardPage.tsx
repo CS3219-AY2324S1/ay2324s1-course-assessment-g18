@@ -3,8 +3,8 @@ import DashboardStats from "@/components/dashboard/statistics/DashboardStats";
 import Sidebar from "@/components/dashboard/sidebar/Sidebar";
 import { useState, useEffect } from "react";
 import QuestionList from "@/components/dashboard/question-list/QuestionList";
-import { Question } from "@/models/question.model";
-import { fallbackQuestions } from "@/models/fallback-data/questions.fallback";
+import { Question } from "@/questionrepo/question.model";
+import FallbackQuestionRepository from "@/questionrepo/FallbackQuestionRepository";
 
 function DashboardPage() {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
@@ -16,15 +16,8 @@ function DashboardPage() {
   };
   useEffect(() => {
     const getData = () => {
-      const qnsStringify = localStorage.getItem("questions");
-      if (!qnsStringify) {
-        // load fallback questions to localstorage
-        localStorage.setItem("questions", JSON.stringify(fallbackQuestions));
-        setData(fallbackQuestions);
-      } else {
-        const qns: Question[] = JSON.parse(qnsStringify);
-        setData(qns);
-      }
+      const qns: Question[] = FallbackQuestionRepository.getQuestions();
+      setData(qns);
     };
     getData();
   }, [isAdding]);
