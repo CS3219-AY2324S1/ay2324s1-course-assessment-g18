@@ -9,7 +9,7 @@ import { Question } from './schema/question.schema';
 @Module({
   imports: [
     MongooseModule.forRoot(
-        'mongodb+srv://CS3219G18:XGrPYdDUo4ivoMIU@peerprep.e87nhmv.mongodb.net/questions',
+        'mongodb+srv://CS3219G18:XGrPYdDUo4ivoMIU@peerprep.e87nhmv.mongodb.net/PeerPrep',
     ),
     MongooseModule.forFeature([{name: Question.name, schema: QuestionSchema}])
 

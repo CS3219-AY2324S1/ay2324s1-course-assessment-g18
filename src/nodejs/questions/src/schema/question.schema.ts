@@ -9,13 +9,19 @@ export class Question {
     id: string;
 
     @Prop()
+    questionId: number;
+
+    @Prop()
     questionTitle: string;
 
     @Prop()
     questionCategories: Array<string>;
 
     @Prop()
-    questionDifficulty: string;
+    questionComplexity: string;
+
+    @Prop()
+    questionLink: string;
 
     @Prop()
     questionDescription: string;
