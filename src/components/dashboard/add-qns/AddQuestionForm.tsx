@@ -6,12 +6,14 @@ import DifficultySelect from "@/components/form/DifficultySelect";
 import CustomTextArea from "@/components/form/CustomTextArea";
 import "./AddQuestionForm.css";
 import LocalQuestionRepository from "@/questionrepo/LocalQuestionRepository";
+import { useToast } from "@/components/ui/use-toast";
 
 interface Props {
   setIsAdding: Dispatch<SetStateAction<boolean>>;
 }
 
 function AddQuestionForm({ setIsAdding }: Props) {
+  const { toast } = useToast();
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [complexity, setComplexity] = useState<QuestionDifficulty>(
@@ -22,7 +24,7 @@ function AddQuestionForm({ setIsAdding }: Props) {
 
   const onSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-  
+
     if (title.length !== 0 && description.length !== 0 && link.length !== 0) {
       try {
         const newQuestion: Question = {
@@ -31,20 +33,25 @@ function AddQuestionForm({ setIsAdding }: Props) {
           complexity,
           link,
           category: [],
-          qId: 0 // just set a dummy value first will think of how to do this better later
+          qId: 0, // just set a dummy value first will think of how to do this better later
         };
-  
+
         // Use the LocalQuestionRepository to save the question
         const isSaved = LocalQuestionRepository.saveQuestion(newQuestion);
-  
+
         if (isSaved) {
           console.log("Successfully added");
           setIsAdding(false);
+          return toast({
+            title: "Success!",
+            description: "A question has successfully been added.",
+          });
         } else {
           setIsAdding(true); // Handle the error state
         }
       } catch (err) {
         console.error(err);
+        setError(JSON.stringify(err));
         setIsAdding(true);
       }
     } else {
