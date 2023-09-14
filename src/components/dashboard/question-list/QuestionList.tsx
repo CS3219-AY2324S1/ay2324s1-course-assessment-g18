@@ -50,12 +50,14 @@ export default function QuestionList({ isChanged, setIsChanged, data }: Props) {
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
+
     state: {
       sorting,
       columnFilters,
       columnVisibility,
       rowSelection,
     },
+    initialState: { pagination: { pageSize: 6 } },
   });
 
   return (
