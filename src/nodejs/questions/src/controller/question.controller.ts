@@ -23,12 +23,12 @@ export class QuestionController {
         this.questionService.addQuestion(questionDto);
     }
 
-    @Delete("/:questionId")
+    @Delete('/:questionId')
     async deleteQuestion(@Param("questionId") questionId: string) {
         await this.questionService.deleteQuestion(questionId);
     }
 
-    @Put("/:questionId")
+    @Put('/:questionId')
     async editQuestion(@Param("questionId") questionId: string, @Body() questionDto: QuestionDto) {
         await this.questionService.editQuestion(questionId, questionDto);
     }
