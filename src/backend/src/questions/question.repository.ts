@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
-import { QuestionDto } from "src/schema/question.model";
-import { Question, QuestionDocument } from "src/schema/question.schema";
+import { QuestionDto } from "./question.model";
+import { Question, QuestionDocument } from "./question.schema";
 
 export interface QuestionRepository {
     getAllQuestions(): Promise<QuestionDto[]>;
