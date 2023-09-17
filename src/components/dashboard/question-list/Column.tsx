@@ -1,14 +1,9 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Question, QuestionDifficulty } from "@/questionrepo/question.model";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import ActionsDropdown from "./actions-dropdown/ActionsDropdown";
 
 export const Columns: ColumnDef<Question>[] = [
   {
@@ -70,21 +65,12 @@ export const Columns: ColumnDef<Question>[] = [
     },
   },
   {
-    header: "More",
-    cell: () => {
-      return (
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-50">
-            <div>Delete Question</div>
-          </PopoverContent>
-        </Popover>
-      );
+    id: "actions",
+    enableHiding: false,
+    cell: ({ row }) => {
+      const question = row.original;
+
+      return <ActionsDropdown question={question} />;
     },
   },
 ];
