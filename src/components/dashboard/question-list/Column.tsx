@@ -4,6 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ActionsDropdown from "./actions-dropdown/ActionsDropdown";
+import QuestionDialog from "./question-card/QuestionDialog";
 
 export const Columns: ColumnDef<Question>[] = [
   {
@@ -33,7 +34,7 @@ export const Columns: ColumnDef<Question>[] = [
   {
     accessorKey: "title",
     header: "Title",
-    cell: ({ row }) => <div className="citalize">{row.getValue("title")}</div>,
+    cell: ({ row }) => <QuestionDialog question={row.original} />,
   },
   {
     accessorKey: "complexity",
