@@ -21,7 +21,7 @@ export default function DifficultySelect({ setData }: Props) {
           setData(val);
         }}
       >
-        <SelectTrigger className="w-[180px]">
+        <SelectTrigger className="flex">
           <SelectValue placeholder="Difficulty" />
         </SelectTrigger>
         <SelectContent>

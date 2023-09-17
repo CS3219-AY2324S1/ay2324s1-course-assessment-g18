@@ -2,6 +2,7 @@ import DashboardPage from "./pages/DashboardPage";
 import "./App.css";
 import UserPage from "./pages/UserPage";
 import { useState } from "react";
+import { Toaster } from "./components/ui/toaster";
 
 function App() {
   const [showDashboardPage, setShowDashboardPage] = useState(true);
@@ -33,6 +34,7 @@ function App() {
           handleClickUser={handleClickUser}
         />
       )}
+      <Toaster />
     </div>
   );
 }
