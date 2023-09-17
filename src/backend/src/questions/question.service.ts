@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import { QuestionMongoRepository } from "src/repository/question.repository";
-import { QuestionDto } from "src/schema/question.model";
+import { QuestionMongoRepository } from "src/questions/question.repository";
+import { QuestionDto } from "./question.model";
 
 
 @Injectable()

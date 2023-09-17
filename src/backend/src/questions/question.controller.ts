@@ -1,6 +1,6 @@
 import {Body, Controller, Delete, Get, Param, Post, Put} from "@nestjs/common"
-import { QuestionDto } from "src/schema/question.model";
-import { QuestionService } from "src/service/question.service";
+import { QuestionDto } from "./question.model";
+import { QuestionService } from "src/questions/question.service";
 
 @Controller('questions')
 export class QuestionController {
@@ -23,12 +23,12 @@ export class QuestionController {
         this.questionService.addQuestion(questionDto);
     }
 
-    @Delete("/:questionId")
+    @Delete('/:questionId')
     async deleteQuestion(@Param("questionId") questionId: string) {
         await this.questionService.deleteQuestion(questionId);
     }
 
-    @Put("/:questionId")
+    @Put('/:questionId')
     async editQuestion(@Param("questionId") questionId: string, @Body() questionDto: QuestionDto) {
         await this.questionService.editQuestion(questionId, questionDto);
     }
