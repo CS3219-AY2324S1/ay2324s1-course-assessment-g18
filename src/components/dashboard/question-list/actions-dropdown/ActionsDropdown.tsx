@@ -12,6 +12,7 @@ import {
 import { MoreHorizontal } from "lucide-react";
 import UpdateDialog from "./UpdateDialog";
 import { Question } from "@/backend/dist/questions/question.schema";
+import DeleteDialog from "./DeleteDialog";
 
 interface Props {
   question: Question;
@@ -29,8 +30,7 @@ function ActionsDropdown({ question }: Props) {
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         <UpdateDialog question={question} />
         <DropdownMenuSeparator />
-        <DropdownMenuItem>View customer</DropdownMenuItem>
-        <DropdownMenuItem>View payment details</DropdownMenuItem>
+        <DeleteDialog />
       </DropdownMenuContent>
     </DropdownMenu>
   );
