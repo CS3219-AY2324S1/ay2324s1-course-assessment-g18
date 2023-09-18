@@ -19,7 +19,11 @@ function CustomInput({
 }: Props) {
   return (
     <div className="input-div">
-      <Label className="input-label" style={{ ...labelStyling }}>
+      <Label
+        className="input-label"
+        style={{ ...labelStyling }}
+        htmlFor="string"
+      >
         {label}
       </Label>
       <Input

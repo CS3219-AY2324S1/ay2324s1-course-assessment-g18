@@ -12,7 +12,7 @@ interface Props {
   setData: Dispatch<SetStateAction<QuestionDifficulty>>;
   data: string;
 }
-export default function DifficultySelect({ setData }: Props) {
+export default function DifficultySelect({ data, setData }: Props) {
   return (
     <div className="input-div">
       <Select
@@ -22,7 +22,7 @@ export default function DifficultySelect({ setData }: Props) {
         }}
       >
         <SelectTrigger className="flex">
-          <SelectValue placeholder="Difficulty" />
+          <SelectValue placeholder={data} />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value={QuestionDifficulty[QuestionDifficulty.Easy]}>

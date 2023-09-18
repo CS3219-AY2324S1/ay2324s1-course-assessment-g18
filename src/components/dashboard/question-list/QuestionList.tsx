@@ -1,4 +1,4 @@
-import { useState, Dispatch, SetStateAction } from "react";
+import { useState, Dispatch, SetStateAction, useContext } from "react";
 import {
   ColumnFiltersState,
   SortingState,
@@ -28,14 +28,15 @@ import { Columns } from "./Column";
 import AddQuestionForm from "../add-qns/AddQuestionForm";
 import { PlusCircle } from "lucide-react";
 import CustomDialog from "@/components/dialog/CustomDialog";
+import { IsChangedContext } from "@/context/IsChangedContext";
+import AddDialog from "../add-qns/AddDialog";
 
 const columns = Columns;
 interface Props {
-  isChanged: boolean;
-  setIsChanged: Dispatch<SetStateAction<boolean>>;
   data: Question[];
 }
-export default function QuestionList({ isChanged, setIsChanged, data }: Props) {
+export default function QuestionList({ data }: Props) {
+  const { isChanged, setIsChanged } = useContext(IsChangedContext);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -67,23 +68,7 @@ export default function QuestionList({ isChanged, setIsChanged, data }: Props) {
         <div className="flex items-center py-4">
           <div className="w-3/5 flex gap-2 items-center">
             <div className="text-xl font-bold pl-5">All Questions</div>
-            <Dialog open={isChanged} onOpenChange={setIsChanged}>
-              <DialogTrigger asChild>
-                <Button
-                  className="bg-transparent"
-                  variant="link"
-                  onClick={() => setIsChanged(!isChanged)}
-                >
-                  <PlusCircle
-                    color="grey"
-                    className={isChanged ? "open" : ""}
-                  />
-                </Button>
-              </DialogTrigger>
-              <CustomDialog dialogTitle="Add a New Question">
-                <AddQuestionForm setIsAdding={setIsChanged} />
-              </CustomDialog>
-            </Dialog>
+            <AddDialog />
           </div>
 
           <Input

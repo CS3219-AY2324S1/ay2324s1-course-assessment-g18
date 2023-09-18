@@ -1,7 +1,6 @@
 import React, { ReactNode } from "react";
 import {
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -14,7 +13,7 @@ function CustomDialog({ dialogTitle, children }: Props) {
     <DialogContent>
       <DialogHeader>
         <DialogTitle>{dialogTitle}</DialogTitle>
-        <DialogDescription>{children}</DialogDescription>
+        {children}
       </DialogHeader>
     </DialogContent>
   );
