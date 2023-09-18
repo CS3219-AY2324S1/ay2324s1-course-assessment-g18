@@ -1,12 +1,21 @@
 import DashboardPage from "./pages/DashboardPage";
 import "./App.css";
 import UserPage from "./pages/UserPage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Toaster } from "./components/ui/toaster";
 
 function App() {
-  const [showDashboardPage, setShowDashboardPage] = useState(true);
-  const [showUserPage, setShowUserPage] = useState(false);
+  const [showDashboardPage, setShowDashboardPage] = useState(
+    localStorage.getItem("currentPage") === "UserPage" ? false : true
+  );
+  const [showUserPage, setShowUserPage] = useState(!showDashboardPage);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "currentPage",
+      showDashboardPage ? "DashboardPage" : "UserPage"
+    );
+  }, [showDashboardPage]);
 
   function handleClickDashboard(event: React.MouseEvent) {
     event.preventDefault();
