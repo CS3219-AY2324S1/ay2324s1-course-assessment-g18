@@ -1,7 +1,13 @@
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { AlertDialog, AlertDialogContent,AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { Question } from "@/questionrepo/question.model";
 import { useState } from "react";
+import DeleteQuestionDialog from "../../delete-qns/DeleteQuestionDialog";
 
-function DeleteDialog() {
+interface Props {
+    question: Question;
+}
+
+function DeleteDialog({question}: Props) {
     const [open, setOpen] = useState(false);
     return (
         <AlertDialog open={open} onOpenChange={setOpen}>
@@ -11,19 +17,13 @@ function DeleteDialog() {
                 </div>
             </AlertDialogTrigger>
             <AlertDialogContent>
-                <AlertDialogHeader>
-                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                    <AlertDialogDescription>
-                        This action cannot be undone. This will permanently delete the question.
-                    </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction>Continue</AlertDialogAction>
-                </AlertDialogFooter>
+                <DeleteQuestionDialog question={question} setOpen={setOpen}/>
             </AlertDialogContent>
         </AlertDialog>
     );
 }
-  
+
 export default DeleteDialog;
+
+
+  

@@ -30,7 +30,7 @@ function ActionsDropdown({ question }: Props) {
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         <UpdateDialog question={question} />
         <DropdownMenuSeparator />
-        <DeleteDialog />
+        <DeleteDialog question={question} />
       </DropdownMenuContent>
     </DropdownMenu>
   );

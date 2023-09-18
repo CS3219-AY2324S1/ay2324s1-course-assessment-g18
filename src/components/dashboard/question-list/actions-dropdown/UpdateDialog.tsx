@@ -7,6 +7,7 @@ import { useState } from "react";
 interface Props {
   question: Question;
 }
+
 function UpdateDialog({ question }: Props) {
   const [open, setOpen] = useState(false);
   return (
