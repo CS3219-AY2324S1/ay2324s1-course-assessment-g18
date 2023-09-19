@@ -2,6 +2,12 @@
   "folders": [
     {
       "path": "."
+    },
+    {
+      "path": "service-question-v1"
+    },
+    {
+      "path": "web-admin-dashboard"
     }
   ]
 }

@@ -12,6 +12,6 @@
 
 1. Probably would cause conflicts with any commit from this point forward, please merge ASAP
 
-3. Make sure your terminal active directory is pointing to the project folder e.g. `/ay2324s1-course-assessment-g18/web-admin-dashboard` before running any `npm` commands
+2. Make sure your terminal active directory is pointing to the project folder e.g. `/ay2324s1-course-assessment-g18/web-admin-dashboard` before running any `npm` commands
 
-5. You may open the `vscode.code-workspace` file in VSCode, this will force you to select which project folder you want to open your terminal in (in case you forget to set active directory in Step 2)
+3. You may open the `vscode.code-workspace` file in VSCode, this will force you to select which project folder you want to open your terminal in (in case you forget to set active directory in Step 2), but remember to add new paths into this file for any new project in the future!
