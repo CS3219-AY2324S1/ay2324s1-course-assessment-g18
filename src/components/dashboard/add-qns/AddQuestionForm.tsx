@@ -15,6 +15,7 @@ import "./AddQuestionForm.css";
 import LocalQuestionRepository from "@/questionrepo/LocalQuestionRepository";
 import { useToast } from "@/components/ui/use-toast";
 import { IsChangedContext } from "@/context/IsChangedContext";
+import { areQuestionsEqual } from "@/utils/question";
 
 interface Props {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -44,19 +45,29 @@ function AddQuestionForm({ setOpen }: Props) {
           qId: 0, // just set a dummy value first will think of how to do this better later
         };
 
-        // Use the LocalQuestionRepository to save the question
-        const isSaved = LocalQuestionRepository.saveQuestion(newQuestion);
+        // Check for duplicates before saving
+        const existingQuestions = LocalQuestionRepository.getQuestions();
+        const isDuplicate = existingQuestions.some((existingQuestion: Question) =>
+          areQuestionsEqual(existingQuestion, newQuestion)
+        );
 
-        if (isSaved) {
-          console.log("Successfully added");
-          setIsChanged(true);
-          setOpen(false);
-          return toast({
-            title: "Success!",
-            description: "A question has successfully been added.",
-          });
+        if (isDuplicate) {
+          setError("This question already exists.");
         } else {
-          setIsChanged(false); // Handle the error state
+          // Use the LocalQuestionRepository to save the question
+          const isSaved = LocalQuestionRepository.saveQuestion(newQuestion);
+
+          if (isSaved) {
+            console.log("Successfully added");
+            setIsChanged(true);
+            setOpen(false);
+            return toast({
+              title: "Success!",
+              description: "A question has successfully been added.",
+            });
+          } else {
+            setIsChanged(false); // Handle the error state
+          }
         }
       } catch (err) {
         console.error(err);
@@ -67,6 +78,7 @@ function AddQuestionForm({ setOpen }: Props) {
       setError("All fields are required.");
     }
   };
+
   useEffect(() => setIsChanged(false), []);
 
   return (
@@ -91,3 +103,4 @@ function AddQuestionForm({ setOpen }: Props) {
 }
 
 export default AddQuestionForm;
+
