@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import LocalQuestionRepository from '@/questionrepo/LocalQuestionRepository';
 import { useToast } from '@/components/ui/use-toast';
@@ -42,7 +42,8 @@ function DeleteQuestionDialog({ question, setOpen }: Props) {
       setError(JSON.stringify(err));
     }
   };
-
+  
+  useEffect(() => setIsChanged(false), []);
   return (
     <>
           <AlertDialogHeader>
