@@ -30,6 +30,24 @@ class LocalQuestionRepository {
       return false;
     }
   }
+
+  // Function to delete a question from localStorage
+  static deleteQuestion(questionId: number) {
+    try {
+      const currArr: Question[] = LocalQuestionRepository.getQuestions();
+
+      // Filter out the question with the specified questionId
+      const updatedArr = currArr.filter((question) => question.qId !== questionId);
+
+      localStorage.setItem("questions", JSON.stringify(updatedArr));
+
+      return true;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  }
+  
   // Function to save a question to localStorage
   static saveQuestion(question: Question) {
     try {
