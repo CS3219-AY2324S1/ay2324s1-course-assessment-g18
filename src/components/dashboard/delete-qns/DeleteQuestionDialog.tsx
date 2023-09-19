@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from 'react';
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
+import {AlertDialogAction, AlertDialogCancel, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, } from '@/components/ui/alert-dialog';
 import LocalQuestionRepository from '@/questionrepo/LocalQuestionRepository';
 import { useToast } from '@/components/ui/use-toast';
 import { IsChangedContext } from '@/context/IsChangedContext';

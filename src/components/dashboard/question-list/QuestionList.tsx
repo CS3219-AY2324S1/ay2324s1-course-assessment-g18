@@ -1,4 +1,4 @@
-import { useState, Dispatch, SetStateAction, useContext } from "react";
+import { useState, useContext } from "react";
 import {
   ColumnFiltersState,
   SortingState,
@@ -22,12 +22,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Question } from "@/questionrepo/question.model";
 import { Columns } from "./Column";
-import AddQuestionForm from "../add-qns/AddQuestionForm";
-import { PlusCircle } from "lucide-react";
-import CustomDialog from "@/components/dialog/CustomDialog";
 import { IsChangedContext } from "@/context/IsChangedContext";
 import AddDialog from "../add-qns/AddDialog";
 
