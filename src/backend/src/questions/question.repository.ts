@@ -26,13 +26,17 @@ export class QuestionMongoRepository implements QuestionRepository {
         return await this.questionModel.findById(questionId);
     }
     async addQuestion(questionDto: QuestionDto) {
-        this.questionModel.create(questionDto);
+        return this.questionModel.create(questionDto);
     }
     async deleteQuestion(questionId: string) {
-        await this.questionModel.findByIdAndDelete(questionId);
+        return await this.questionModel.findByIdAndDelete(questionId);
     }
     async editQuestion(questionId: string, questionDto: QuestionDto) {
-        await this.questionModel.findByIdAndUpdate(questionId, questionDto);
+        return await this.questionModel.findByIdAndUpdate(questionId, questionDto);
+    }
+
+    async getQuestionByTitle(questionTitle: string) {
+        return await this.questionModel.findOne({questionTitle});
     }
 
 }

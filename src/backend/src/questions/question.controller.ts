@@ -1,6 +1,6 @@
-import {Body, Controller, Delete, Get, Param, Post, Put} from "@nestjs/common"
+import {Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put} from "@nestjs/common"
 import { QuestionDto } from "./question.model";
-import { QuestionService } from "src/questions/question.service";
+import { QuestionService } from "./question.service";
 
 @Controller('questions')
 export class QuestionController {
@@ -8,9 +8,9 @@ export class QuestionController {
     constructor(private questionService:QuestionService){}
 
     @Get()
-    async getAllQuestions(): Promise<QuestionDto[]> {
-        console.log("get all questions");
-        return this.questionService.getAllQuestions();
+    async getAllQuestions(): Promise<QuestionDto[]>
+    {
+        return await this.questionService.getAllQuestions();
     }
 
     @Get('/:questionId')
@@ -20,7 +20,7 @@ export class QuestionController {
 
     @Post()
     async addQuestion(@Body() questionDto: QuestionDto) {
-        this.questionService.addQuestion(questionDto);
+        return await this.questionService.addQuestion(questionDto);
     }
 
     @Delete('/:questionId')
@@ -30,6 +30,6 @@ export class QuestionController {
 
     @Put('/:questionId')
     async editQuestion(@Param("questionId") questionId: string, @Body() questionDto: QuestionDto) {
-        await this.questionService.editQuestion(questionId, questionDto);
+        return await this.questionService.editQuestion(questionId, questionDto);
     }
 }
