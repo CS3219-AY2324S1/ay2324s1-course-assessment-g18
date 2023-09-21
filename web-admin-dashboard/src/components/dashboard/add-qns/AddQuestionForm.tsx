@@ -14,13 +14,14 @@ import CustomTextArea from "@/components/form/CustomTextArea";
 import "./AddQuestionForm.css";
 import { useToast } from "@/components/ui/use-toast";
 import { IsChangedContext } from "@/context/IsChangedContext";
-import MongoQuestionRepository from "@/questionrepo/MongoQuestionRepository";
+import LiveQuestionRepository from "@/questionrepo/LiveQuestionRepository";
 
 interface Props {
   setOpen: Dispatch<SetStateAction<boolean>>;
+  setIsChanged: Dispatch<SetStateAction<boolean>>;
 }
-function AddQuestionForm({ setOpen }: Props) {
-  const { setIsChanged } = useContext(IsChangedContext);
+function AddQuestionForm({ setOpen, setIsChanged }: Props) {
+  // const { setIsChanged } = useContext(IsChangedContext);
   const { toast } = useToast();
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
@@ -31,6 +32,7 @@ function AddQuestionForm({ setOpen }: Props) {
 
   const onSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
+    setIsChanged(false);
     const error = invalidForm();
     if (error) {
       return toast({
@@ -50,7 +52,7 @@ function AddQuestionForm({ setOpen }: Props) {
       // };
 
       // const data = await LocalQuestionRepository.saveQuestion(newQuestion);
-      await MongoQuestionRepository.saveQuestion(
+      await LiveQuestionRepository.saveQuestion(
         title,
         description,
         [],
@@ -77,8 +79,6 @@ function AddQuestionForm({ setOpen }: Props) {
       return "All fields are required.";
     }
   }
-
-  useEffect(() => setIsChanged(false), []);
 
   return (
     <div className="form-div">

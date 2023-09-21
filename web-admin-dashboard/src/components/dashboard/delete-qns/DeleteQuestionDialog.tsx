@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, Dispatch, SetStateAction } from "react";
 import {
   AlertDialogAction,
   AlertDialogCancel,
@@ -8,17 +8,16 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/components/ui/use-toast";
-import { IsChangedContext } from "@/context/IsChangedContext";
 import { Question } from "@/questionrepo/question.model";
-import MongoQuestionRepository from "@/questionrepo/MongoQuestionRepository";
+import LiveQuestionRepository from "@/questionrepo/LiveQuestionRepository";
 
 interface Props {
   question: Question;
   setOpen: (open: boolean) => void;
+  setIsChanged: Dispatch<SetStateAction<boolean>>;
 }
 
-function DeleteQuestionDialog({ question, setOpen }: Props) {
-  const { setIsChanged } = useContext(IsChangedContext);
+function DeleteQuestionDialog({ question, setOpen, setIsChanged }: Props) {
   const [openDialog, setOpenDialog] = useState(false);
   const [err, setError] = useState("");
 
@@ -30,7 +29,7 @@ function DeleteQuestionDialog({ question, setOpen }: Props) {
       // const isDeleted = LocalQuestionRepository.deleteQuestion(
       //   question.questionId
       // );
-      const isDeleted = await MongoQuestionRepository.deleteQuestion(
+      const isDeleted = await LiveQuestionRepository.deleteQuestion(
         question._id
       );
 
@@ -59,7 +58,6 @@ function DeleteQuestionDialog({ question, setOpen }: Props) {
     }
   };
 
-  useEffect(() => setIsChanged(false), []);
   return (
     <>
       <AlertDialogHeader>

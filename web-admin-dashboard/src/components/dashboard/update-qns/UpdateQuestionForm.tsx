@@ -12,20 +12,18 @@ import { Question, QuestionDifficulty } from "@/questionrepo/question.model";
 import DifficultySelect from "@/components/form/DifficultySelect";
 import CustomTextArea from "@/components/form/CustomTextArea";
 import "./../add-qns/AddQuestionForm.css";
-import LocalQuestionRepository from "@/questionrepo/LocalQuestionRepository";
 import { useToast } from "@/components/ui/use-toast";
-import { IsChangedContext } from "@/context/IsChangedContext";
-import { areQuestionsEqual } from "@/utils/question";
-import MongoQuestionRepository from "@/questionrepo/MongoQuestionRepository";
+import LiveQuestionRepository from "@/questionrepo/LiveQuestionRepository";
 
 interface Props {
   question: Question;
   setOpen: Dispatch<SetStateAction<boolean>>;
+  setIsChanged: Dispatch<SetStateAction<boolean>>;
 }
-function UpdateQuestionForm({ question, setOpen }: Props) {
+function UpdateQuestionForm({ question, setOpen, setIsChanged }: Props) {
   console.log(question._id);
 
-  const { setIsChanged } = useContext(IsChangedContext);
+  // const { setIsChanged } = useContext(IsChangedContext);
 
   const { toast } = useToast();
 
@@ -39,6 +37,7 @@ function UpdateQuestionForm({ question, setOpen }: Props) {
   const [link, setLink] = useState<string>("");
 
   const onSubmit = async (e: SyntheticEvent) => {
+    setIsChanged(false);
     e.preventDefault();
     const error = invalidForm();
     if (error) {
@@ -71,11 +70,11 @@ function UpdateQuestionForm({ question, setOpen }: Props) {
       //   newQuestion,
       //   question._id
       // );
-      // const isSaved = await MongoQuestionRepository.updateQuestion(
+      // const isSaved = await LiveQuestionRepository.updateQuestion(
       //   newQuestion,
       //   question._id
       // );
-      await MongoQuestionRepository.updateQuestion(
+      await LiveQuestionRepository.updateQuestion(
         title,
         description,
         [],
@@ -102,8 +101,6 @@ function UpdateQuestionForm({ question, setOpen }: Props) {
       return "All fields are required.";
     }
   }
-
-  useEffect(() => setIsChanged(false), []);
 
   return (
     <div className="form-div">

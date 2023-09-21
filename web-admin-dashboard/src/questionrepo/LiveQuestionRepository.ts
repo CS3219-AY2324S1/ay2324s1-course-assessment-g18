@@ -1,7 +1,7 @@
 import { Question } from "@/questionrepo/question.model";
 import axios from "axios";
 
-class MongoQuestionRepository {
+class LiveQuestionRepository {
   static baseUrl = "https://oceanic-will-398716.et.r.appspot.com/questions";
   static async getQuestions(): Promise<Question[]> {
     try {
@@ -69,4 +69,4 @@ class MongoQuestionRepository {
   }
 }
 
-export default MongoQuestionRepository;
+export default LiveQuestionRepository;

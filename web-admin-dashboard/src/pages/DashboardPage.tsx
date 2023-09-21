@@ -6,7 +6,7 @@ import QuestionList from "@/components/dashboard/question-list/QuestionList";
 import { Question } from "@/questionrepo/question.model";
 import FallbackQuestionRepository from "@/questionrepo/FallbackQuestionRepository";
 import { IsChangedContext } from "@/context/IsChangedContext";
-import MongoQuestionRepository from "@/questionrepo/MongoQuestionRepository";
+import LiveQuestionRepository from "@/questionrepo/LiveQuestionRepository";
 
 interface Props {
   handleClickDashboard: (event: React.MouseEvent) => void;
@@ -16,7 +16,7 @@ interface Props {
 function DashboardPage({ handleClickDashboard, handleClickUser }: Props) {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
   const [data, setData] = useState<Question[]>([]);
-  const [isChanged, setIsChanged] = useState<boolean>(true);
+  const [isChanged, setIsChanged] = useState<boolean>(false);
 
   const openSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle);
@@ -30,28 +30,25 @@ function DashboardPage({ handleClickDashboard, handleClickUser }: Props) {
       }
     };
     const getDataBackend = async () => {
-      if (isChanged === true) {
-        const res: Question[] = await MongoQuestionRepository.getQuestions();
-        console.log(res);
-        setData(res);
-      }
+      const res: Question[] = await LiveQuestionRepository.getQuestions();
+      console.log(res);
+      setData(res);
     };
+
     getDataBackend();
   }, [isChanged]);
 
   return (
-    <IsChangedContext.Provider value={{ isChanged, setIsChanged }}>
-      <div className="dashboard-main">
-        <DashboardStats dataLen={data.length} />
-        <Sidebar
-          openSidebarToggle={openSidebarToggle}
-          openSidebar={openSidebar}
-          handleClickDashboard={handleClickDashboard}
-          handleClickUser={handleClickUser}
-        />
-        <QuestionList data={data} />
-      </div>
-    </IsChangedContext.Provider>
+    <div className="dashboard-main">
+      <DashboardStats dataLen={data.length} />
+      <Sidebar
+        openSidebarToggle={openSidebarToggle}
+        openSidebar={openSidebar}
+        handleClickDashboard={handleClickDashboard}
+        handleClickUser={handleClickUser}
+      />
+      <QuestionList data={data} setIsChanged={setIsChanged} />
+    </div>
   );
 }
 

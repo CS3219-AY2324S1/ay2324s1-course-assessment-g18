@@ -2,13 +2,14 @@ import CustomDialog from "@/components/dialog/CustomDialog";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import UpdateQuestionForm from "../../update-qns/UpdateQuestionForm";
 import { Question } from "@/questionrepo/question.model";
-import { useState } from "react";
+import { useState, Dispatch, SetStateAction } from "react";
 
 interface Props {
   question: Question;
+  setIsChanged: Dispatch<SetStateAction<boolean>>;
 }
 
-function UpdateDialog({ question }: Props) {
+function UpdateDialog({ question, setIsChanged }: Props) {
   const [open, setOpen] = useState(false);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -18,7 +19,11 @@ function UpdateDialog({ question }: Props) {
         </div>
       </DialogTrigger>
       <CustomDialog dialogTitle="Edit Question">
-        <UpdateQuestionForm question={question} setOpen={setOpen} />
+        <UpdateQuestionForm
+          question={question}
+          setOpen={setOpen}
+          setIsChanged={setIsChanged}
+        />
       </CustomDialog>
     </Dialog>
   );

@@ -3,7 +3,6 @@ import { Question, QuestionDifficulty } from "@/questionrepo/question.model";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import ActionsDropdown from "./actions-dropdown/ActionsDropdown";
 import QuestionDialog from "./question-card/QuestionDialog";
 
 export const Columns: ColumnDef<Question>[] = [
@@ -67,13 +66,13 @@ export const Columns: ColumnDef<Question>[] = [
       );
     },
   },
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => {
-      const question = row.original;
+  // {
+  //   id: "actions",
+  //   enableHiding: false,
+  //   cell: ({ row }) => {
+  //     const question = row.original;
 
-      return <ActionsDropdown question={question} />;
-    },
-  },
+  //     return <ActionsDropdown question={question} />;
+  //   },
+  // },
 ];
