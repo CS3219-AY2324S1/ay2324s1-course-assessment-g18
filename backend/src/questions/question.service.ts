@@ -32,7 +32,7 @@ export class QuestionService {
 
     async editQuestion(questionId: string, questionDto: QuestionDto) {
         const existingQuestion = await this.questionRepository.getQuestionByTitle(questionDto.questionTitle);
-        if (existingQuestion && existingQuestion.id === questionId) {
+        if (existingQuestion && existingQuestion.id !== questionId) {
             throw new HttpException(
                 'Question with the given title already exists', HttpStatus.BAD_REQUEST
             )
