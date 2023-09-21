@@ -6,6 +6,7 @@ import QuestionList from "@/components/dashboard/question-list/QuestionList";
 import { Question } from "@/questionrepo/question.model";
 import FallbackQuestionRepository from "@/questionrepo/FallbackQuestionRepository";
 import { IsChangedContext } from "@/context/IsChangedContext";
+import MongoQuestionRepository from "@/questionrepo/MongoQuestionRepository";
 
 interface Props {
   handleClickDashboard: (event: React.MouseEvent) => void;
@@ -24,10 +25,18 @@ function DashboardPage({ handleClickDashboard, handleClickUser }: Props) {
     const getData = () => {
       if (isChanged === true) {
         const qns: Question[] = FallbackQuestionRepository.getQuestions();
+        console.log(qns);
         setData(qns);
       }
     };
-    getData();
+    const getDataBackend = async () => {
+      if (isChanged === true) {
+        const res: Question[] = await MongoQuestionRepository.getQuestions();
+        console.log(res);
+        setData(res);
+      }
+    };
+    getDataBackend();
   }, [isChanged]);
 
   return (

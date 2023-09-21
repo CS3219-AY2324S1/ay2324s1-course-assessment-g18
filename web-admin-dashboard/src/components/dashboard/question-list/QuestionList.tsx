@@ -70,9 +70,14 @@ export default function QuestionList({ data }: Props) {
           <Input
             className="w-2/5"
             placeholder="Find a question..."
-            value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
+            value={
+              (table.getColumn("questionTitle")?.getFilterValue() as string) ??
+              ""
+            }
             onChange={(event) =>
-              table.getColumn("title")?.setFilterValue(event.target.value)
+              table
+                .getColumn("questionTitle")
+                ?.setFilterValue(event.target.value)
             }
           />
         </div>

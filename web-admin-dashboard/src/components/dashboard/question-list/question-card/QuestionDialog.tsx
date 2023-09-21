@@ -12,21 +12,23 @@ function QuestionDialog({ question }: Props) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <div className="cursor-pointer">{question.title}</div>
+        <div className="cursor-pointer">{question.questionTitle}</div>
       </DialogTrigger>
-      <CustomDialog dialogTitle={`${question.qId}. ${question.title}`}>
+      <CustomDialog
+        dialogTitle={`${question.questionId + 1}. ${question.questionTitle}`}
+      >
         <div
           className={` h-full w-20 rounded-md p-1 text-center ${
-            question.complexity == QuestionDifficulty.Easy
+            question.questionDifficulty == QuestionDifficulty.Easy
               ? "bg-green-200 text-green-600"
-              : question.complexity == QuestionDifficulty.Medium
+              : question.questionDifficulty == QuestionDifficulty.Medium
               ? "bg-yellow-100 text-yellow-600"
               : "bg-red-200 text-red-600"
           }`}
         >
-          {question.complexity}
+          {question.questionDifficulty}
         </div>
-        <DialogDescription>{question.description}</DialogDescription>
+        <DialogDescription>{question.questionDescription}</DialogDescription>
       </CustomDialog>
     </Dialog>
   );

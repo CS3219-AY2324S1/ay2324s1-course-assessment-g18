@@ -27,17 +27,19 @@ export const Columns: ColumnDef<Question>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "qId",
+    accessorKey: "questionId",
     header: "ID",
-    cell: ({ row }) => <div className="citalize">{row.getValue("qId")}</div>,
+    cell: ({ row }) => (
+      <div className="citalize">{row.getValue("questionId")}</div>
+    ),
   },
   {
-    accessorKey: "title",
+    accessorKey: "questionTitle",
     header: "Title",
     cell: ({ row }) => <QuestionDialog question={row.original} />,
   },
   {
-    accessorKey: "complexity",
+    accessorKey: "questionDifficulty",
     header: ({ column }) => {
       return (
         <Button
@@ -53,14 +55,14 @@ export const Columns: ColumnDef<Question>[] = [
       return (
         <div
           className={` h-full w-20 rounded-md p-1 text-center ${
-            row.getValue("complexity") == QuestionDifficulty.Easy
+            row.getValue("questionDifficulty") == QuestionDifficulty.Easy
               ? "bg-green-200 text-green-600"
-              : row.getValue("complexity") == QuestionDifficulty.Medium
+              : row.getValue("questionDifficulty") == QuestionDifficulty.Medium
               ? "bg-yellow-100 text-yellow-600"
               : "bg-red-200 text-red-600"
           }`}
         >
-          {row.getValue("complexity")}
+          {row.getValue("questionDifficulty")}
         </div>
       );
     },

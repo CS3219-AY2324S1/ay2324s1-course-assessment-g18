@@ -8,19 +8,19 @@ class LocalQuestionRepository {
   }
 
   // Function to update a question in localStorage
-  static updateQuestion(question: Question, questionId: number) {
+  static updateQuestion(question: Question, id: string) {
     try {
       const currArr: Question[] = LocalQuestionRepository.getQuestions();
-      const newQuestion = {
-        qId: questionId,
-        title: question.title,
-        description: question.description,
-        complexity: QuestionDifficulty[question.complexity],
-        link: question.link,
-        category: [],
+      const newQuestion: Question = {
+        _id: question._id,
+        questionId: question.questionId,
+        questionTitle: question.questionTitle,
+        questionDescription: question.questionDescription,
+        questionDifficulty: QuestionDifficulty[question.questionDifficulty],
+        questionCategories: [],
       };
       // Find index of the question with questionId
-      const indexOfQuestion = currArr.findIndex((q) => q.qId === questionId);
+      const indexOfQuestion = currArr.findIndex((q) => q._id === id);
       currArr[indexOfQuestion] = newQuestion;
       localStorage.setItem("questions", JSON.stringify(currArr));
 
@@ -35,9 +35,10 @@ class LocalQuestionRepository {
   static deleteQuestion(questionId: number) {
     try {
       const currArr: Question[] = LocalQuestionRepository.getQuestions();
-
       // Filter out the question with the specified questionId
-      const updatedArr = currArr.filter((question) => question.qId !== questionId);
+      const updatedArr = currArr.filter(
+        (question) => question.questionId !== questionId
+      );
 
       localStorage.setItem("questions", JSON.stringify(updatedArr));
 
@@ -47,23 +48,22 @@ class LocalQuestionRepository {
       return false;
     }
   }
-  
+
   // Function to save a question to localStorage
   static saveQuestion(question: Question) {
     try {
       const curr = LocalQuestionRepository.getQuestions();
 
-      const newQuestion = {
-        qId: curr.length ? curr.length + 1 : 1,
-        title: question.title,
-        description: question.description,
-        complexity: QuestionDifficulty[question.complexity],
-        link: question.link,
-        category: [],
+      const newQuestion: Question = {
+        _id: String(curr.length ? curr.length + 1 : 1),
+        questionId: curr.length ? curr.length + 1 : 1,
+        questionTitle: question.questionTitle,
+        questionDescription: question.questionDescription,
+        questionDifficulty: QuestionDifficulty[question.questionDifficulty],
+        questionCategories: [],
       };
       const newArr = curr.concat(newQuestion);
       localStorage.setItem("questions", JSON.stringify(newArr));
-
       return true; // Successfully saved
     } catch (error) {
       console.error(error);
