@@ -2,10 +2,22 @@ import { Question } from "@/questionrepo/question.model";
 import axios from "axios";
 
 class LiveQuestionRepository {
-  static baseUrl = "https://oceanic-will-398716.et.r.appspot.com/questions";
-  static async getQuestions(): Promise<Question[]> {
+  config;
+
+  constructor() {
+    this.config = {
+      baseURL: import.meta.env.VITE_BASE_LOCALHOST_URL,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        // Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
+      },
+    };
+  }
+
+  async getQuestions(): Promise<Question[]> {
     try {
-      const res = await axios.get(this.baseUrl);
+      const res = await axios.get("/questions", this.config);
       const data: Question[] = res.data;
       return data;
     } catch (error) {
@@ -14,9 +26,9 @@ class LiveQuestionRepository {
     }
   }
 
-  static async getQuestion(id: string): Promise<Question | null> {
+  async getQuestion(id: string): Promise<Question | null> {
     try {
-      const res = await axios.get(`${this.baseUrl}/${id}`);
+      const res = await axios.get(`questions/${id}`, this.config);
       const data: Question = res.data;
       return data;
     } catch (error) {
@@ -25,26 +37,30 @@ class LiveQuestionRepository {
     }
   }
 
-  static async updateQuestion(
+  async updateQuestion(
     questionTitle: string,
     questionDescription: string,
     questionCategories: string[],
     questionDifficulty: string,
     id: string
   ): Promise<Question> {
-    const res = await axios.put(`${this.baseUrl}/${id}`, {
-      questionTitle,
-      questionDescription,
-      questionCategories,
-      questionDifficulty,
-    });
+    const res = await axios.put(
+      `questions/${id}`,
+      {
+        questionTitle,
+        questionDescription,
+        questionCategories,
+        questionDifficulty,
+      },
+      this.config
+    );
     const question = res.data as Question;
     return question;
   }
 
-  static async deleteQuestion(id: string) {
+  async deleteQuestion(id: string) {
     try {
-      await axios.delete(`${this.baseUrl}/${id}`);
+      await axios.delete(`questions/${id}`, this.config);
       return true;
     } catch (error) {
       console.error(error);
@@ -52,18 +68,22 @@ class LiveQuestionRepository {
     }
   }
 
-  static async saveQuestion(
+  async saveQuestion(
     questionTitle: string,
     questionDescription: string,
     questionCategories: string[],
     questionDifficulty: string
   ): Promise<Question> {
-    const res = await axios.post(this.baseUrl, {
-      questionTitle,
-      questionDescription,
-      questionCategories,
-      questionDifficulty,
-    });
+    const res = await axios.post(
+      "/questions",
+      {
+        questionTitle,
+        questionDescription,
+        questionCategories,
+        questionDifficulty,
+      },
+      this.config
+    );
     const parsed = res.data as Question;
     return parsed;
   }
