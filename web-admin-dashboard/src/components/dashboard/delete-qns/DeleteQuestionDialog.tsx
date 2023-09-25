@@ -30,6 +30,7 @@ function DeleteQuestionDialog({ question, setOpen, setIsChanged }: Props) {
       // const isDeleted = LocalQuestionRepository.deleteQuestion(
       //   question.questionId
       // );
+      setIsChanged(false);
       const isDeleted = await questionRepo.deleteQuestion(question._id);
 
       if (isDeleted) {
