@@ -5,7 +5,6 @@ import {
   Dispatch,
   SetStateAction,
   useContext,
-  useEffect,
 } from "react";
 import CustomInput from "@/components/form/CustomInput";
 import { Question, QuestionDifficulty } from "@/questionrepo/question.model";
@@ -13,7 +12,7 @@ import DifficultySelect from "@/components/form/DifficultySelect";
 import CustomTextArea from "@/components/form/CustomTextArea";
 import "./../add-qns/AddQuestionForm.css";
 import { useToast } from "@/components/ui/use-toast";
-import LiveQuestionRepository from "@/questionrepo/LiveQuestionRepository";
+import { QuestionRepoContext } from "@/context/QuestionRepoContext";
 
 interface Props {
   question: Question;
@@ -21,9 +20,7 @@ interface Props {
   setIsChanged: Dispatch<SetStateAction<boolean>>;
 }
 function UpdateQuestionForm({ question, setOpen, setIsChanged }: Props) {
-  console.log(question._id);
-
-  // const { setIsChanged } = useContext(IsChangedContext);
+  const { questionRepo } = useContext(QuestionRepoContext);
 
   const { toast } = useToast();
 
@@ -74,7 +71,7 @@ function UpdateQuestionForm({ question, setOpen, setIsChanged }: Props) {
       //   newQuestion,
       //   question._id
       // );
-      await LiveQuestionRepository.updateQuestion(
+      await questionRepo.updateQuestion(
         title,
         description,
         [],

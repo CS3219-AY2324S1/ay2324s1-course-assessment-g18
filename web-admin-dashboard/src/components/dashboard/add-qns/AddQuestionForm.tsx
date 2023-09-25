@@ -5,16 +5,14 @@ import {
   Dispatch,
   SetStateAction,
   useContext,
-  useEffect,
 } from "react";
 import CustomInput from "@/components/form/CustomInput";
-import { Question, QuestionDifficulty } from "@/questionrepo/question.model";
+import { QuestionDifficulty } from "@/questionrepo/question.model";
 import DifficultySelect from "@/components/form/DifficultySelect";
 import CustomTextArea from "@/components/form/CustomTextArea";
 import "./AddQuestionForm.css";
 import { useToast } from "@/components/ui/use-toast";
-import { IsChangedContext } from "@/context/IsChangedContext";
-import LiveQuestionRepository from "@/questionrepo/LiveQuestionRepository";
+import { QuestionRepoContext } from "@/context/QuestionRepoContext";
 
 interface Props {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -22,6 +20,7 @@ interface Props {
 }
 function AddQuestionForm({ setOpen, setIsChanged }: Props) {
   // const { setIsChanged } = useContext(IsChangedContext);
+  const { questionRepo } = useContext(QuestionRepoContext);
   const { toast } = useToast();
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
@@ -52,12 +51,7 @@ function AddQuestionForm({ setOpen, setIsChanged }: Props) {
       // };
 
       // const data = await LocalQuestionRepository.saveQuestion(newQuestion);
-      await LiveQuestionRepository.saveQuestion(
-        title,
-        description,
-        [],
-        complexity
-      );
+      await questionRepo.saveQuestion(title, description, [], complexity);
       setIsChanged(true);
       setOpen(false);
       return toast({

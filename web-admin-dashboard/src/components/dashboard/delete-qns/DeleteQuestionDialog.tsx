@@ -1,4 +1,4 @@
-import { useState, Dispatch, SetStateAction } from "react";
+import { useState, Dispatch, SetStateAction, useContext } from "react";
 import {
   AlertDialogAction,
   AlertDialogCancel,
@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/components/ui/use-toast";
 import { Question } from "@/questionrepo/question.model";
-import LiveQuestionRepository from "@/questionrepo/LiveQuestionRepository";
+import { QuestionRepoContext } from "@/context/QuestionRepoContext";
 
 interface Props {
   question: Question;
@@ -18,6 +18,7 @@ interface Props {
 }
 
 function DeleteQuestionDialog({ question, setOpen, setIsChanged }: Props) {
+  const { questionRepo } = useContext(QuestionRepoContext);
   const [openDialog, setOpenDialog] = useState(false);
   const [err, setError] = useState("");
 
@@ -29,9 +30,7 @@ function DeleteQuestionDialog({ question, setOpen, setIsChanged }: Props) {
       // const isDeleted = LocalQuestionRepository.deleteQuestion(
       //   question.questionId
       // );
-      const isDeleted = await LiveQuestionRepository.deleteQuestion(
-        question._id
-      );
+      const isDeleted = await questionRepo.deleteQuestion(question._id);
 
       if (isDeleted) {
         console.log("Successfully deleted");
