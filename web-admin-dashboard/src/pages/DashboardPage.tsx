@@ -26,12 +26,11 @@ function DashboardPage({ handleClickDashboard, handleClickUser }: Props) {
   useEffect(() => {
     const getDataBackend = async () => {
       const res: Question[] = await questionRepo.getQuestions();
-      console.log(res);
       setData(res);
     };
 
     getDataBackend();
-  }, [isChanged]);
+  }, [isChanged, questionRepo]);
 
   return (
     <QuestionRepoContext.Provider value={{ questionRepo, setQuestionRepo }}>
