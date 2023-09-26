@@ -12,11 +12,11 @@ export class UsersService {
   ) {}
 
   async create(user: User): Promise<User> {
-    return this.userRepository.save(user);
+    return await this.userRepository.save(user);
   }
 
   async getUser(email: string): Promise<User> {
-    return this.userRepository.findOne({where: {email}});
+    return await this.userRepository.findOne({where: {email}});
   }
 
   async updateUser(email, _user) {
@@ -24,7 +24,7 @@ export class UsersService {
     const user: User = await this.getUser(email);
     user.username = _user.username;
     user.password = _user.password;
-    this.userRepository.save(user);
+    return await this.userRepository.save(user);
   }
 
   deleteUser(email: any) {

@@ -7,8 +7,8 @@ import { AppService } from './app.service';
 import { AppController } from './app.controller';
 import { QuestionModule } from './questions/question.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './users/user.entity';
-import { UserModule } from './users/user.module';
+import { User } from '../../user-service/src/users/user.entity';
+import { UserModule } from '../../user-service/src/users/user.module';
 import { AuthModule } from './auth/auth.module';
 
 
