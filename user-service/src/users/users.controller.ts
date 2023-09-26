@@ -12,6 +12,11 @@ export class UsersController {
     return this.usersService.getUser(email);
   }
 
+  @Get()
+  findAll(): Promise<User[]> {
+    return this.usersService.getUsers();
+  }
+
   @Post("/create")
   create(@Body() user: User): Promise<User> {
     return this.usersService.create(user);
