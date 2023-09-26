@@ -16,7 +16,7 @@ import { QuestionModule } from './questions/question.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    UserModule,
+    //UserModule,
     QuestionModule,
     // TypeOrmModule.forFeature([User]),
   ],
