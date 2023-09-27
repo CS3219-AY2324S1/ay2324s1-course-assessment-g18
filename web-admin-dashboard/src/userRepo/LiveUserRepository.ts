@@ -7,7 +7,7 @@ class LiveUserRepository {
 
   constructor() {
     this.config = {
-      baseURL: import.meta.env.VITE_BASE_LOCALHOST_URL,
+      baseURL: import.meta.env.VITE_BASE_USERHOST_URL,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -39,13 +39,13 @@ class LiveUserRepository {
   }
 
   async updateUser(
-    uId: number,
+    userOldEmail: string,
     userName: string,
     userEmail: string,
     userRole: UserRole,
   ): Promise<User> {
     const res = await axios.put(
-      `/users/update/${email}`,
+      `/users/update/${userOldEmail}`,
       {
         userName,
         userEmail,
