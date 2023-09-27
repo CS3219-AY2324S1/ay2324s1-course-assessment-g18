@@ -1,5 +1,13 @@
 // users.controller.ts
-import { Controller, Get, Post, Param, Body, Delete, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Param,
+  Body,
+  Delete,
+  Put,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './user.entity';
 
@@ -12,18 +20,23 @@ export class UsersController {
     return this.usersService.getUser(email);
   }
 
-  @Post("/create")
+  @Get()
+  findAll(): Promise<User[]> {
+    return this.usersService.getUsers();
+  }
+
+  @Post('/create')
   create(@Body() user: User): Promise<User> {
     return this.usersService.create(user);
   }
 
   @Delete('/:id')
   async deleteUser(@Param('id') questionId: string) {
-      await this.usersService.deleteUser(questionId);
+    await this.usersService.deleteUser(questionId);
   }
 
   @Put('/update/:email')
-  async updateUser(@Param('email') email:string, @Body() user: User) {
+  async updateUser(@Param('email') email: string, @Body() user: User) {
     await this.usersService.updateUser(email, user);
   }
 }
