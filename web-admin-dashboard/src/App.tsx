@@ -3,6 +3,7 @@ import "./App.css";
 import UserPage from "./pages/UserPage";
 import { useEffect, useState } from "react";
 import { Toaster } from "./components/ui/toaster";
+// import LoginPage from "./pages/LoginPage";
 
 function App() {
   const [showDashboardPage, setShowDashboardPage] = useState(
@@ -43,6 +44,7 @@ function App() {
           handleClickUser={handleClickUser}
         />
       )}
+      {/* <LoginPage /> */}
       <Toaster />
     </div>
   );

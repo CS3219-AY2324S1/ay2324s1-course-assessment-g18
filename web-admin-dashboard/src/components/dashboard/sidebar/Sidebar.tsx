@@ -44,7 +44,7 @@ function Sidebar({
         </li>
         <li className="sidebar-list-item">
           <a href="">
-            <BsFillGearFill className="icon" /> Setting
+            <BsFillGearFill className="icon" /> settings
           </a>
         </li>
       </ul>
