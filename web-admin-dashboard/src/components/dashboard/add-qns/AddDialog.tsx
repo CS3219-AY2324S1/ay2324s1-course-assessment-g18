@@ -2,10 +2,13 @@ import CustomDialog from "@/components/dialog/CustomDialog";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { PlusCircle } from "lucide-react";
-import { useState } from "react";
+import { useState, Dispatch, SetStateAction } from "react";
 import AddQuestionForm from "./AddQuestionForm";
 
-function AddDialog() {
+interface Props {
+  setIsChanged: Dispatch<SetStateAction<boolean>>;
+}
+function AddDialog({ setIsChanged }: Props) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -16,7 +19,7 @@ function AddDialog() {
         </Button>
       </DialogTrigger>
       <CustomDialog dialogTitle="Add a New Question">
-        <AddQuestionForm setOpen={setOpen} />
+        <AddQuestionForm setOpen={setOpen} setIsChanged={setIsChanged} />
       </CustomDialog>
     </Dialog>
   );
