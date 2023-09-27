@@ -1,3 +1,4 @@
+
 import {User, UserRole} from "@/userRepo/user.model";
 import axios from "axios";
 
@@ -26,9 +27,9 @@ class LiveUserRepository {
     }
   }
 
-  async getUser(id: string): Promise<User | null> {
+  async getUser(userEmail: string): Promise<User | null> {
     try {
-      const res = await axios.get(`users/${id}`, this.config);
+      const res = await axios.get(`/users/getUser/${userEmail}`, this.config);
       const data: User = res.data;
       return data;
     } catch (error) {
@@ -44,7 +45,7 @@ class LiveUserRepository {
     userRole: UserRole,
   ): Promise<User> {
     const res = await axios.put(
-      `users/${uId}`,
+      `/users/update/${email}`,
       {
         userName,
         userEmail,
@@ -56,25 +57,26 @@ class LiveUserRepository {
     return response;
   }
 
-  async deleteUser(id: string) {
+  async deleteUser(userEmail: string) {
     try {
-      await axios.delete(`users/${id}`, this.config);
+      await axios.delete(`/users/${userEmail}`, this.config);
       return true;
     } catch (error) {
-      console.error(error);
+      console.log(error);
       return false;
     }
   }
 
-  async saveQuestion(
-    userName: string,
+  // temporary for adding user, need to route to auth after implementing signup/login
+  async addUser(
+    username: string,
     userEmail: string,
-    userRole: UserRole,
+    userRole: UserRole
   ): Promise<User> {
     const res = await axios.post(
-      "/users",
+      "/users/create",
       {
-        userName,
+        username,
         userEmail,
         userRole,
       },
@@ -84,5 +86,4 @@ class LiveUserRepository {
     return parsed;
   }
 }
-
 export default LiveUserRepository;

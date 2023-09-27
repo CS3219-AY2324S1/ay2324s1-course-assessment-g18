@@ -3,17 +3,18 @@ import {
   AlertDialogContent,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Question } from "@/questionrepo/question.model";
-import { useState, Dispatch, SetStateAction } from "react";
-import DeleteQuestionDialog from "../../delete-qns/DeleteQuestionDialog";
+import { User } from "@/userRepo/user.model";
+import { Dispatch, SetStateAction, useState } from "react";
+import DeleteUserDialog from "../../delete-user/DeleteUserDialog";
 
 interface Props {
-  question: Question;
+  user: User;
   setIsChanged: Dispatch<SetStateAction<boolean>>;
 }
 
-function DeleteDialog({ question, setIsChanged }: Props) {
+function DeleteDialog({ user, setIsChanged }: Props) {
   const [open, setOpen] = useState(false);
+
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
@@ -22,8 +23,8 @@ function DeleteDialog({ question, setIsChanged }: Props) {
         </div>
       </AlertDialogTrigger>
       <AlertDialogContent>
-        <DeleteQuestionDialog
-          question={question}
+        <DeleteUserDialog
+          user={user}
           setOpen={setOpen}
           setIsChanged={setIsChanged}
         />

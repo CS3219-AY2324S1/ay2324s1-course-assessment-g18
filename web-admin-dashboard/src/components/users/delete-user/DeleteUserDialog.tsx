@@ -1,37 +1,36 @@
-import { useState, Dispatch, SetStateAction, useContext } from "react";
 import {
+  AlertDialogFooter,
+  AlertDialogHeader,
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/components/ui/use-toast";
-import { Question } from "@/questionrepo/question.model";
-import { QuestionRepoContext } from "@/context/QuestionRepoContext";
+import { UserRepoContext } from "@/context/UserRepoContext";
+import { User } from "@/userRepo/user.model";
+
+import { SetStateAction, useContext } from "react";
+import { Dispatch } from "react";
+import { useState } from "react";
 
 interface Props {
-  question: Question;
+  user: User;
   setOpen: (open: boolean) => void;
   setIsChanged: Dispatch<SetStateAction<boolean>>;
 }
 
-function DeleteQuestionDialog({ question, setOpen, setIsChanged }: Props) {
-  const { questionRepo } = useContext(QuestionRepoContext);
+function DeleteUserDialog({ user, setOpen, setIsChanged }: Props) {
+  const { userRepo } = useContext(UserRepoContext);
   const [openDialog, setOpenDialog] = useState(false);
   const [err, setError] = useState("");
 
   const { toast } = useToast();
 
-  const onDelete = async () => {
+  async function onDelete() {
     try {
-      // Use the LocalQuestionRepository to delete the question
-      // const isDeleted = LocalQuestionRepository.deleteQuestion(
-      //   question.questionId
-      // );
       setIsChanged(false);
-      const isDeleted = await questionRepo.deleteQuestion(question._id);
+      const isDeleted = await userRepo.deleteUser(user.userEmail);
 
       if (isDeleted) {
         console.log("Successfully deleted");
@@ -39,13 +38,13 @@ function DeleteQuestionDialog({ question, setOpen, setIsChanged }: Props) {
         setOpen(false);
         toast({
           title: "Success!",
-          description: "The question has been successfully deleted.",
+          description: "The user has been successfully deleted.",
         });
       } else {
         toast({
           variant: "destructive",
           title: "Uh oh! Something went wrong.",
-          description: "A problem occurred while deleting the question.",
+          description: "A problem occured while deleting the user.",
         });
       }
     } catch (err) {
@@ -53,18 +52,16 @@ function DeleteQuestionDialog({ question, setOpen, setIsChanged }: Props) {
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: err.response.data.message,
       });
     }
-  };
+  }
 
   return (
     <>
       <AlertDialogHeader>
         <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
         <AlertDialogDescription>
-          This action cannot be undone. This will permanently delete the
-          question.
+          This action cannot be undone. This will permanently delete the user.
         </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter>
@@ -73,9 +70,9 @@ function DeleteQuestionDialog({ question, setOpen, setIsChanged }: Props) {
         </AlertDialogCancel>
         <AlertDialogAction onClick={onDelete}>Continue</AlertDialogAction>
       </AlertDialogFooter>
-      {err && <div className="text-red-800">{err}</div>}
+      {err && <div className="text=red-800">{err}</div>}
     </>
   );
 }
 
-export default DeleteQuestionDialog;
+export default DeleteUserDialog;

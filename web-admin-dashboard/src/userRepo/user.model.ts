@@ -9,3 +9,4 @@ export interface User {
     Admin = "Admin",
     User = "User",
   }
+

@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, Dispatch, SetStateAction } from "react";
 import {
   ColumnFiltersState,
   SortingState,
@@ -24,15 +24,31 @@ import {
 } from "@/components/ui/table";
 import { Question } from "@/questionrepo/question.model";
 import { Columns } from "./Column";
-import { IsChangedContext } from "@/context/IsChangedContext";
 import AddDialog from "../add-qns/AddDialog";
+import ActionsDropdown from "./actions-dropdown/ActionsDropdown";
 
-const columns = Columns;
+// const columns = Columns;
 interface Props {
   data: Question[];
+  setIsChanged: Dispatch<SetStateAction<boolean>>;
 }
-export default function QuestionList({ data }: Props) {
-  const { isChanged, setIsChanged } = useContext(IsChangedContext);
+
+export default function QuestionList({ data, setIsChanged }: Props) {
+  const columns = [
+    ...Columns,
+    {
+      id: "actions",
+      enableHiding: false,
+      cell: ({ row }) => {
+        const question = row.original;
+
+        return (
+          <ActionsDropdown question={question} setIsChanged={setIsChanged} />
+        );
+      },
+    },
+  ];
+  // const { isChanged, setIsChanged } = useContext(IsChangedContext);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -64,15 +80,20 @@ export default function QuestionList({ data }: Props) {
         <div className="flex items-center py-4">
           <div className="w-3/5 flex gap-2 items-center">
             <div className="text-xl font-bold pl-5">All Questions</div>
-            <AddDialog />
+            <AddDialog setIsChanged={setIsChanged} />
           </div>
 
           <Input
             className="w-2/5"
             placeholder="Find a question..."
-            value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
+            value={
+              (table.getColumn("questionTitle")?.getFilterValue() as string) ??
+              ""
+            }
             onChange={(event) =>
-              table.getColumn("title")?.setFilterValue(event.target.value)
+              table
+                .getColumn("questionTitle")
+                ?.setFilterValue(event.target.value)
             }
           />
         </div>

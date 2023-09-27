@@ -1,25 +1,23 @@
-import CustomDialog from "@/components/dialog/CustomDialog";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { Dispatch, SetStateAction } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { User } from "@/userRepo/user.model";
+import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
+import { Dispatch, SetStateAction } from "react";
+import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
 import UpdateDialog from "./UpdateDialog";
-import { Question } from "@/backend/dist/questions/question.schema";
 import DeleteDialog from "./DeleteDialog";
 
 interface Props {
-  question: Question;
+  user: User;
   setIsChanged: Dispatch<SetStateAction<boolean>>;
 }
-function ActionsDropdown({ question, setIsChanged }: Props) {
+
+function ActionsDropdown({ user, setIsChanged }: Props) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -30,9 +28,9 @@ function ActionsDropdown({ question, setIsChanged }: Props) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-        <UpdateDialog question={question} setIsChanged={setIsChanged} />
+        <UpdateDialog user={user} setIsChanged={setIsChanged} />
         <DropdownMenuSeparator />
-        <DeleteDialog question={question} setIsChanged={setIsChanged} />
+        <DeleteDialog user={user} setIsChanged={setIsChanged} />
       </DropdownMenuContent>
     </DropdownMenu>
   );
