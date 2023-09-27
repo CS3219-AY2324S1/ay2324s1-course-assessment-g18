@@ -34,7 +34,7 @@ export const Columns: ColumnDef<User>[] = [
     ),
   },
   {
-    accessorKey: "uId",
+    accessorKey: "id",
     header: ({ column }) => {
       return (
         <Button
@@ -47,7 +47,7 @@ export const Columns: ColumnDef<User>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className="capitalize pl-7">{row.getValue("uId")}</div>
+      <div className="capitalize pl-7">{row.getValue("id")}</div>
     ),
   },
   {
