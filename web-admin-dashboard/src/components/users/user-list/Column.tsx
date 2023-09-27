@@ -2,21 +2,8 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { MoreHorizontal } from "lucide-react";
 import { RxAvatar } from "react-icons/rx";
-
-export type User = {
-  id: number;
-  username: string;
-  password: string;
-  email: string;
-  role: string;
-};
+import { User, UserRole } from "@/userRepo/user.model";
 
 export const Columns: ColumnDef<User>[] = [
   {
@@ -47,7 +34,7 @@ export const Columns: ColumnDef<User>[] = [
     ),
   },
   {
-    accessorKey: "id",
+    accessorKey: "uId",
     header: ({ column }) => {
       return (
         <Button
@@ -60,7 +47,7 @@ export const Columns: ColumnDef<User>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className="capitalize pl-7">{row.getValue("id")}</div>
+      <div className="capitalize pl-7">{row.getValue("uId")}</div>
     ),
   },
   {
@@ -81,7 +68,7 @@ export const Columns: ColumnDef<User>[] = [
     ),
   },
   {
-    accessorKey: "email",
+    accessorKey: "userEmail",
     header: ({ column }) => {
       return (
         <Button
@@ -93,29 +80,41 @@ export const Columns: ColumnDef<User>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+    cell: ({ row }) => (
+      <div className="lowercase">{row.getValue("userEmail")}</div>
+    ),
   },
   {
-    accessorKey: "role",
+    accessorKey: "userRole",
     header: "Role",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("role")}</div>,
+    cell: ({ row }) => (
+      <div
+        className={`h-full w-20 rounded-md p-1 text-center ${
+          row.getValue("userRole") == UserRole.Admin
+            ? "bg-red-200 text-red-600"
+            : "bg-gray-200 text-gray-600"
+        }`}
+      >
+        {row.getValue("userRole")}
+      </div>
+    ),
   },
-  {
-    header: "...",
-    cell: () => {
-      return (
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-50">
-            <div>Delete User</div>
-          </PopoverContent>
-        </Popover>
-      );
-    },
-  },
+  // {
+  //   header: "...",
+  //   cell: () => {
+  //     return (
+  //       <Popover>
+  //         <PopoverTrigger asChild>
+  //           <Button variant="ghost" className="h-8 w-8 p-0">
+  //             <span className="sr-only">Open menu</span>
+  //             <MoreHorizontal className="h-4 w-4" />
+  //           </Button>
+  //         </PopoverTrigger>
+  //         <PopoverContent className="w-50">
+  //           <div>Delete User</div>
+  //         </PopoverContent>
+  //       </Popover>
+  //     );
+  //   },
+  // },
 ];

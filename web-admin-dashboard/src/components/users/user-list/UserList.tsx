@@ -1,4 +1,4 @@
-import "../../pages/UserPage.css";
+import "../../../pages/UserPage.css";
 import "./UserList.css";
 import { useState } from "react";
 import {
@@ -20,32 +20,23 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { User } from "./Column";
+import { User, UserRole } from "@/userRepo/user.model";
 import { Columns } from "./Column";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 const users: User[] = [
   {
-    id: 1,
+    uId: 1,
     username: "admin",
-    password: "admin",
-    email: "admin@test.com",
-    role: "Admin",
+    userEmail: "admin@test.com",
+    userRole: UserRole.Admin,
   },
   {
-    id: 2,
+    uId: 2,
     username: "user1",
-    password: "user1",
-    email: "user1@test.com",
-    role: "User",
-  },
-  {
-    id: 3,
-    username: "user2",
-    password: "user2",
-    email: "user2@test.com",
-    role: "User",
+    userEmail: "user1@test.com",
+    userRole: UserRole.User,
   },
 ];
 

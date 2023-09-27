@@ -1,6 +1,6 @@
 import "./UserPage.css";
 import Sidebar from "@/components/dashboard/sidebar/Sidebar";
-import UserList from "@/components/users/UserList";
+import UserList from "@/components/users/user-list/UserList";
 import { useState } from "react";
 
 interface Props {
