@@ -39,15 +39,13 @@ class LiveQuestionRepository {
   async updateUser(
     username: string,
     userEmail: string,
-    userRole: UserRole,
-    id: number
+    email: string
   ): Promise<User> {
     const res = await axios.put(
-      `/users/update/${userEmail}`,
+      `/users/update/${email}`,
       {
         username,
         userEmail,
-        userRole,
       },
       this.config
     );
