@@ -7,7 +7,7 @@ class LocalUserRepository {
   }
 
   // Function to update a user in localStorage
-  static updateQuestion(user: User, userId: number) {
+  static updateUser(user: User, userId: number) {
     try {
       const currArr: User[] = LocalUserRepository.getUsers();
       const newUser = {
@@ -17,9 +17,9 @@ class LocalUserRepository {
         userRole: UserRole[user.userRole],
       };
       // Find index of the user with userId
-      const indexOfQuestion = currArr.findIndex((u) => u.uId === userId);
-      currArr[indexOfQuestion] = newUser;
-      localStorage.setItem("questions", JSON.stringify(currArr));
+      const indexOfUser = currArr.findIndex((u) => u.uId === userId);
+      currArr[indexOfUser] = newUser;
+      localStorage.setItem("users", JSON.stringify(currArr));
 
       return true;
     } catch (error) {
@@ -29,11 +29,11 @@ class LocalUserRepository {
   }
 
   // Function to delete a user from localStorage
-  static deleteQuestion(userId: number) {
+  static deleteUser(userId: number) {
     try {
       const currArr: User[] = LocalUserRepository.getUsers();
 
-      // Filter out the question with the specified questionId
+      // Filter out the user with the specified userId
       const updatedArr = currArr.filter((user) => user.uId !== userId);
 
       localStorage.setItem("users", JSON.stringify(updatedArr));
@@ -46,7 +46,7 @@ class LocalUserRepository {
   }
   
   // Function to save a user to localStorage
-  static saveQuestion(user: User) {
+  static saveUser(user: User) {
     try {
       const curr = LocalUserRepository.getUsers();
 
@@ -57,7 +57,7 @@ class LocalUserRepository {
         userRole: UserRole[user.userRole],
       };
       const newArr = curr.concat(newUser);
-      localStorage.setItem("questions", JSON.stringify(newArr));
+      localStorage.setItem("users", JSON.stringify(newArr));
 
       return true; // Successfully saved
     } catch (error) {
