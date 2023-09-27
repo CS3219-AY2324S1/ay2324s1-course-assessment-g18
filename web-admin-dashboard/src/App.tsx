@@ -4,7 +4,8 @@ import UserPage from "./pages/UserPage";
 import { useEffect, useState } from "react";
 import { Toaster } from "./components/ui/toaster";
 // import LoginPage from "./pages/LoginPage";
-
+import { Route, Routes } from "react-router-dom";
+import LoginPage from "./pages/LoginPage";
 function App() {
   const [showDashboardPage, setShowDashboardPage] = useState(
     localStorage.getItem("currentPage") === "UserPage" ? false : true
@@ -32,6 +33,9 @@ function App() {
 
   return (
     <div>
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+      </Routes>
       {showDashboardPage && (
         <DashboardPage
           handleClickDashboard={handleClickDashboard}
@@ -44,7 +48,6 @@ function App() {
           handleClickUser={handleClickUser}
         />
       )}
-      {/* <LoginPage /> */}
       <Toaster />
     </div>
   );

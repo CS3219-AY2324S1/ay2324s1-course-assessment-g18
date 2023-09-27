@@ -2,6 +2,7 @@ import { BsGrid1X2Fill, BsPeopleFill, BsFillGearFill } from "react-icons/bs";
 import "../../../pages/DashboardPage.css";
 import "./Sidebar.css";
 import logo from "../../../assets/dashboard/logo.svg";
+import { Link } from "react-router-dom";
 
 interface Props {
   openSidebar: () => void;
@@ -46,6 +47,12 @@ function Sidebar({
           <a href="">
             <BsFillGearFill className="icon" /> settings
           </a>
+        </li>
+
+        <li className="sidebar-list-item">
+          <Link to="/login" className="w-full flex">
+            Login
+          </Link>
         </li>
       </ul>
     </aside>
