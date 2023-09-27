@@ -16,8 +16,8 @@ export class UsersService {
     return await this.userRepository.save(user);
   }
 
-  async getUser(email: string): Promise<User> {
-    return await this.userRepository.findOne({ where: { email } });
+  async getUser(userEmail: string): Promise<User> {
+    return await this.userRepository.findOne({ where: { userEmail } });
   }
 
   async getUsers(): Promise<User[]> {
@@ -28,11 +28,11 @@ export class UsersService {
     console.log(updateUserDto);
     const user: User = await this.getUser(email);
     user.username = updateUserDto.username;
-    user.email = updateUserDto.email;
+    user.userEmail = updateUserDto.userEmail;
     return await this.userRepository.save(user);
   }
 
-  async deleteUser(email: string) {
-    return this.userRepository.delete({ email });
+  async deleteUser(userEmail: string) {
+    return this.userRepository.delete({ userEmail });
   }
 }

@@ -1,4 +1,5 @@
 import CustomInput from "@/components/form/CustomInput";
+import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { UserRepoContext } from "@/context/UserRepoContext";
 import { User } from "@/userRepo/user.model";
@@ -71,6 +72,9 @@ function UpdateUserForm({ user, setOpen, setIsChanged }: Props) {
             setData={setUserEmail}
             data={userEmail}
           />
+        </div>
+        <div className="flex items-end gap-[10px]">
+          <Button type="submit">Update User</Button>
         </div>
       </form>
     </div>

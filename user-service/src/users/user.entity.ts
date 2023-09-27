@@ -11,8 +11,8 @@ export class User {
   username: string;
 
   @Column()
-  email: string;
+  userEmail: string;
 
   @Column()
-  role: UserRole;
+  userRole: UserRole;
 }

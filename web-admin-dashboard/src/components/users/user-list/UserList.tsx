@@ -26,20 +26,20 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import ActionsDropdown from "./actions-dropdown/ActionsDropdown";
 
-const users: User[] = [
-  {
-    uId: 1,
-    username: "admin",
-    userEmail: "admin@test.com",
-    userRole: UserRole.Admin,
-  },
-  {
-    uId: 2,
-    username: "user1",
-    userEmail: "user1@test.com",
-    userRole: UserRole.User,
-  },
-];
+// const users: User[] = [
+//   {
+//     uId: 1,
+//     username: "admin",
+//     userEmail: "admin@test.com",
+//     userRole: UserRole.Admin,
+//   },
+//   {
+//     uId: 2,
+//     username: "user1",
+//     userEmail: "user1@test.com",
+//     userRole: UserRole.User,
+//   },
+// ];
 
 interface Props {
   data: User[];
@@ -68,7 +68,7 @@ function UserList({ data, setIsChanged }: Props) {
   const [rowSelection, setRowSelection] = useState({});
 
   const table = useReactTable({
-    data: users,
+    data,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
