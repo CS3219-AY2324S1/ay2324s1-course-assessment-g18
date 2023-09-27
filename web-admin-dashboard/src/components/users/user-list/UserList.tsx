@@ -1,6 +1,6 @@
 import "../../../pages/UserPage.css";
 import "./UserList.css";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import {
   ColumnFiltersState,
   SortingState,
@@ -24,6 +24,7 @@ import { User, UserRole } from "@/userRepo/user.model";
 import { Columns } from "./Column";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import ActionsDropdown from "./actions-dropdown/ActionsDropdown";
 
 const users: User[] = [
   {
@@ -40,9 +41,27 @@ const users: User[] = [
   },
 ];
 
-const columns = Columns;
+interface Props {
+  data: User[];
+  setIsChanged: Dispatch<SetStateAction<boolean>>;
+}
 
-function UserList() {
+// const columns = Columns;
+
+function UserList({ data, setIsChanged }: Props) {
+  const columns = [
+    ...Columns,
+    {
+      id: "actions",
+      enableHiding: false,
+      cell: ({ row }) => {
+        const user = row.original;
+
+        return <ActionsDropdown user={user} setIsChanged={setIsChanged} />;
+      },
+    },
+  ];
+
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
