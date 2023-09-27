@@ -1,10 +1,10 @@
 export interface Question {
-  qId: number;
-  title: string;
-  category: string[];
-  complexity: QuestionDifficulty;
-  link: string;
-  description: string;
+  _id: string;
+  questionId: number;
+  questionTitle: string;
+  questionCategories: string[];
+  questionDifficulty: QuestionDifficulty;
+  questionDescription: string;
 }
 
 export enum QuestionDifficulty {

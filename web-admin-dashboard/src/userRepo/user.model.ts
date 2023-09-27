@@ -1,3 +1,4 @@
+
 export interface User {
     uId: number;
     username: string;
@@ -9,3 +10,4 @@ export enum UserRole {
     Admin = "Admin",
     User = "User",
 }
+
