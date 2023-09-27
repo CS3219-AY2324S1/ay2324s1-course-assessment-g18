@@ -8,7 +8,7 @@ export class User {
   id: number;
 
   @Column()
-  username: string;
+  userName: string;
 
   @Column()
   userEmail: string;
@@ -16,8 +16,6 @@ export class User {
   @Column()
   userRole: UserRole;
 
-
   @Column()
   refreshToken: string;
-
 }

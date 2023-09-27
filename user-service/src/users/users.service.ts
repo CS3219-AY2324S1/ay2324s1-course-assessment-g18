@@ -27,8 +27,9 @@ export class UsersService {
   async updateUser(email, updateUserDto: UpdateUserDto) {
     console.log(updateUserDto);
     const user: User = await this.getUser(email);
-    user.username = updateUserDto.username;
+    user.userName = updateUserDto.username;
     user.userEmail = updateUserDto.userEmail;
+    user.userRole = updateUserDto.userRole;
     return await this.userRepository.save(user);
   }
 

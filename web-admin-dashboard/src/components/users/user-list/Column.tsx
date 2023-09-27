@@ -51,7 +51,7 @@ export const Columns: ColumnDef<User>[] = [
     ),
   },
   {
-    accessorKey: "username",
+    accessorKey: "userName",
     header: ({ column }) => {
       return (
         <Button
@@ -63,7 +63,7 @@ export const Columns: ColumnDef<User>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className=" pl-5">{row.getValue("username")}</div>,
+    cell: ({ row }) => <div className=" pl-5">{row.getValue("userName")}</div>,
   },
   {
     accessorKey: "userEmail",

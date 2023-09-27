@@ -22,7 +22,7 @@ function UpdateUserForm({ user, setOpen, setIsChanged }: Props) {
 
   const { toast } = useToast();
 
-  const [username, setUsername] = useState<string>(user.username);
+  const [userName, setUsername] = useState<string>(user.userName);
   const [userEmail, setUserEmail] = useState<string>(user.userEmail);
 
   async function onSubmit(e: SyntheticEvent) {
@@ -38,7 +38,7 @@ function UpdateUserForm({ user, setOpen, setIsChanged }: Props) {
     }
 
     try {
-      await userRepo.updateUser(username, userEmail, user.userEmail);
+      await userRepo.updateUser(user.userEmail, userName, userEmail, user.userRole);
       setIsChanged(true);
       setOpen(false);
       return toast({
@@ -55,7 +55,7 @@ function UpdateUserForm({ user, setOpen, setIsChanged }: Props) {
   }
 
   function invalidForm() {
-    if (username.length === 0 || userEmail.length === 0) {
+    if (userName.length === 0 || userEmail.length === 0) {
       return "All fields are required.";
     }
   }
@@ -64,7 +64,7 @@ function UpdateUserForm({ user, setOpen, setIsChanged }: Props) {
     <div className="form-div">
       <form onSubmit={(e) => onSubmit(e)}>
         <div className="flex items-end gap-[10px]">
-          <CustomInput label="Username" setData={setUsername} data={username} />
+          <CustomInput label="Username" setData={setUsername} data={userName} />
         </div>
         <div className="flex items-end gap-[10px]">
           <CustomInput
