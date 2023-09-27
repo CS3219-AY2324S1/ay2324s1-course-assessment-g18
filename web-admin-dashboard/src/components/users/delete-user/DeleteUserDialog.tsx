@@ -1,18 +1,18 @@
 import {
   AlertDialogFooter,
   AlertDialogHeader,
-} from "@/components/ui/alert-dialog";
-import { useToast } from "@/components/ui/use-toast";
-import { UserRepoContext } from "@/context/UserRepoContext";
-import { User } from "@/userRepo/user.model";
-import {
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogDescription,
   AlertDialogTitle,
-} from "@radix-ui/react-alert-dialog";
+} from "@/components/ui/alert-dialog";
+import { useToast } from "@/components/ui/use-toast";
+import { UserRepoContext } from "@/context/UserRepoContext";
+import { User } from "@/userRepo/user.model";
+
 import { SetStateAction, useContext } from "react";
 import { Dispatch } from "react";
+import { useState } from "react";
 
 interface Props {
   user: User;

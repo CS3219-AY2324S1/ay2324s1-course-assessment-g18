@@ -63,9 +63,7 @@ export const Columns: ColumnDef<User>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="lowercase pl-5">{row.getValue("username")}</div>
-    ),
+    cell: ({ row }) => <div className=" pl-5">{row.getValue("username")}</div>,
   },
   {
     accessorKey: "userEmail",
@@ -80,9 +78,7 @@ export const Columns: ColumnDef<User>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("userEmail")}</div>
-    ),
+    cell: ({ row }) => <div>{row.getValue("userEmail")}</div>,
   },
   {
     accessorKey: "userRole",
