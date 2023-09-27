@@ -1,15 +1,17 @@
-import { User, UserRole } from "./user.model";
+
+import {User, UserRole} from "@/userRepo/user.model";
 import axios from "axios";
 
-class LiveQuestionRepository {
+class LiveUserRepository {
   config;
 
   constructor() {
     this.config = {
-      baseURL: "http://localhost:4000",
+      baseURL: import.meta.env.VITE_BASE_LOCALHOST_URL,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        // Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
       },
     };
   }
@@ -37,20 +39,22 @@ class LiveQuestionRepository {
   }
 
   async updateUser(
-    username: string,
+    uId: number,
+    userName: string,
     userEmail: string,
-    email: string
+    userRole: UserRole,
   ): Promise<User> {
     const res = await axios.put(
       `/users/update/${email}`,
       {
-        username,
+        userName,
         userEmail,
+        userRole,
       },
       this.config
     );
-    const user = res.data as User;
-    return user;
+    const response = res.data as User;
+    return response;
   }
 
   async deleteUser(userEmail: string) {
@@ -82,5 +86,4 @@ class LiveQuestionRepository {
     return parsed;
   }
 }
-
-export default LiveQuestionRepository;
+export default LiveUserRepository;
