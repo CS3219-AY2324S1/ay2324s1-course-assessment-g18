@@ -1,13 +1,14 @@
-import { HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { AuthMongoRepository } from './auth.repository';
 import { AuthDto, CreateUserDto } from './dto/auth.dto';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { ClientProxy } from '@nestjs/microservices';
 
 
 @Injectable()
 export class AuthService {
-    constructor(private authRepository: AuthMongoRepository, private jwtService: JwtService,) {}
+    constructor(@Inject('USER_SERVICE') private client: ClientProxy, private authRepository: AuthMongoRepository, private jwtService: JwtService,) {}
 
     async signUp(createUserDto: CreateUserDto): Promise<any> {
         const userExists = await this.authRepository.getCredentialsByEmail(createUserDto.email);
@@ -25,8 +26,13 @@ export class AuthService {
                 password: encryptedPassword
             }
             // TODO: send newUser to userService after updating to microservice
+            
             const addedCredentials = await this.authRepository.addCredentials(newCredentials);
             const tokens = await this.getTokens(addedCredentials._id.toString(), addedCredentials.email);
+            newUser.refreshToken = tokens.refreshToken;
+            console.log(newUser);
+            const result = this.client.send({cmd: 'create'}, newUser);
+            await result.subscribe();
             return tokens;
         } catch (error) {
             throw new HttpException("Server Error", 500);
@@ -52,6 +58,7 @@ export class AuthService {
         const tokens = await this.getTokens(currentUser._id.toString(), currentUser.email);
         return tokens;
     }
+
     logout(email: string) {}
     async getTokens(userId: string, email: string) {
         const [accessToken, refreshToken] = await Promise.all([
@@ -80,6 +87,16 @@ export class AuthService {
             accessToken,
             refreshToken,
           };
+    }
+
+    async updateRefreshToken(email: string, refreshToken: string) {
+        const encryptedRefreshToken = this.hashData(refreshToken);
+        const result = this.client.send({cmd: 'refresh'}, encryptedRefreshToken);
+        await result.subscribe();
+    }
+
+    async generateAccessTokenFromRefreshToken(email: string, refreshToken: string) {
+        
     }
 
 

@@ -13,5 +13,8 @@ export class User {
   email: string;
 
   @Column()
-  password: string
+  refreshToken: string;
+
+  @Column()
+  role: string;
 }
