@@ -1,6 +1,7 @@
 import CustomDialog from "@/components/dialog/CustomDialog";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { Dispatch, SetStateAction } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,8 +17,9 @@ import DeleteDialog from "./DeleteDialog";
 
 interface Props {
   question: Question;
+  setIsChanged: Dispatch<SetStateAction<boolean>>;
 }
-function ActionsDropdown({ question }: Props) {
+function ActionsDropdown({ question, setIsChanged }: Props) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -28,9 +30,9 @@ function ActionsDropdown({ question }: Props) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-        <UpdateDialog question={question} />
+        <UpdateDialog question={question} setIsChanged={setIsChanged} />
         <DropdownMenuSeparator />
-        <DeleteDialog question={question} />
+        <DeleteDialog question={question} setIsChanged={setIsChanged} />
       </DropdownMenuContent>
     </DropdownMenu>
   );
