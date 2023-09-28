@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
+import { MessagePattern } from '@nestjs/microservices';
 
 @Injectable()
 export class UsersService {
@@ -11,13 +12,16 @@ export class UsersService {
     private userRepository: Repository<User>,
   ) {}
 
+  
   async create(user: User): Promise<User> {
+    console.log(user);
     return await this.userRepository.save(user);
   }
 
   async getUser(email: string): Promise<User> {
     return await this.userRepository.findOne({where: {email}});
   }
+
 
   async getUsers(): Promise<User[]> {
     return await this.userRepository.find();
@@ -34,5 +38,13 @@ export class UsersService {
 
   deleteUser(email: any) {
     return this.userRepository.delete({ email });
+  }
+
+  
+  async updateRefreshToken(email: string, refreshToken: string) {
+    console.log(refreshToken);
+    const user: User = await this.getUser(email);
+    user.refreshToken = refreshToken;
+    await this.userRepository.save(user);
   }
 }

@@ -13,8 +13,9 @@ export class User {
   email: string;
 
   @Column()
-  role: string;
+  refreshToken: string;
 
   @Column()
-  refreshToken: string;
+  role: string;
+
 }
