@@ -1,11 +1,11 @@
-import {IsString, IsArray, isNumber} from 'class-validator'
+import {IsString, IsArray, isBase32} from 'class-validator'
 
 
 export class QuestionDto {
     id: string;
 
-    @isNumber()
-    questionId: number;
+    @IsString()
+    questionId: string;
 
     @IsString()
     questionTitle: string;

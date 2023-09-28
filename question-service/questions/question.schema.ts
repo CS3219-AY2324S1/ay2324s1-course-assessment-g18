@@ -9,7 +9,7 @@ export class Question {
     id: string;
 
     @Prop()
-    questionsId: number;
+    questionId: string;
 
     @Prop()
     questionTitle: string;
