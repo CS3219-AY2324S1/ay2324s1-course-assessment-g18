@@ -9,6 +9,9 @@ export class Question {
     id: string;
 
     @Prop()
+    questionsId: number;
+
+    @Prop()
     questionTitle: string;
 
     @Prop()
@@ -16,6 +19,9 @@ export class Question {
 
     @Prop()
     questionDifficulty: string;
+
+    @Prop()
+    questionLink: string;
 
     @Prop()
     questionDescription: string;
