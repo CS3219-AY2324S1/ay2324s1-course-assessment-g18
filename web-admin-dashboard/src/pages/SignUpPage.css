@@ -1,0 +1,23 @@
+.signup-main {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-content {
+  padding: 20px;
+  width: 30%;
+  flex-direction: column;
+  display: flex;
+}
+
+.signup-form {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 20px;
+}
