@@ -10,12 +10,15 @@ import {
 } from "@/components/ui/card";
 import { SyntheticEvent, useState } from "react";
 import "./SignUpPage.css";
+import { useNavigate } from "react-router-dom";
 
 function SignUpPage() {
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [error, setError] = useState("");
+
+  const navigate = useNavigate();
 
   async function onSubmit(e: SyntheticEvent) {
     e.preventDefault();
@@ -83,7 +86,9 @@ function SignUpPage() {
               paddingTop: "20px",
             }}
           >
-            <button>Already have an account? Click here to login!</button>
+            <button onClick={() => navigate("/login")}>
+              Already have an account? Click here to login!
+            </button>
           </div>
         </CardContent>
       </Card>

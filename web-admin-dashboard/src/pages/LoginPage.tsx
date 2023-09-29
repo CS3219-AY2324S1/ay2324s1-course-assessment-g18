@@ -10,10 +10,14 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import CustomPassword from "@/components/form/CustomPassword";
+import { useNavigate } from "react-router-dom";
+
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  const navigate = useNavigate();
 
   const onSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -59,6 +63,17 @@ function LoginPage() {
             <div className="text-red-400">{error}</div>
             <Button type="submit">Login</Button>
           </form>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              paddingTop: "20px",
+            }}
+          >
+            <button onClick={() => navigate("/signup")}>
+              Don't have an account? Click here to sign up!
+            </button>
+          </div>
         </CardContent>
       </Card>
     </div>

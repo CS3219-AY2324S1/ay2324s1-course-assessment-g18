@@ -6,6 +6,7 @@ import { Toaster } from "./components/ui/toaster";
 // import LoginPage from "./pages/LoginPage";
 import { Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
+import SignUpPage from "./pages/SignUpPage";
 function App() {
   const [showDashboardPage, setShowDashboardPage] = useState(
     localStorage.getItem("currentPage") === "UserPage" ? false : true
@@ -35,6 +36,7 @@ function App() {
     <div>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
       </Routes>
       {showDashboardPage && (
         <DashboardPage
