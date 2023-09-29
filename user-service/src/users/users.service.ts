@@ -35,8 +35,11 @@ export class UsersService {
 
   
   async updateRefreshToken(email: string, refreshToken: string) {
+    console.log("service")
+    console.log(email);
     console.log(refreshToken);
     const user: User = await this.getUser(email);
+    console.log(user);
     user.refreshToken = refreshToken;
     await this.userRepository.save(user);
   }

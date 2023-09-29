@@ -22,4 +22,8 @@ export class AuthMongoRepository implements AuthRepository {
     async addCredentials(authDto: AuthDto) {
         return await this.authModel.create(authDto);
     }
+
+    async getCredentialsById(userId: string) {
+        return await this.authModel.findById(userId);
+    }
 }

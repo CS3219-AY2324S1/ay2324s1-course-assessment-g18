@@ -2,14 +2,20 @@
 import { Controller, Get, Post, Param, Body, Delete, Put } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './user.entity';
-import { MessagePattern } from '@nestjs/microservices';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
+  @MessagePattern({cmd: 'getUser'})
   @Get('/getUser/:email')
-  findOne(@Param('email') email: string): Promise<User | undefined> {
+  findOne(@Param('email') paramEmail: string, @Payload() data): Promise<User | undefined> {
+    const payloadEmail = data.email;
+    const email = paramEmail ?? payloadEmail;
+    console.log(paramEmail);
+    console.log(payloadEmail);
+    console.log(email);
     return this.usersService.getUser(email);
   }
 
@@ -31,7 +37,10 @@ export class UsersController {
   }
 
   @MessagePattern({cmd: 'refresh'})
-  async refresh(email: string, refreshToken: string) {
+  async refresh(@Payload() data) {
+    const {email, refreshToken} = data;
+    console.log(email);
+    console.log(refreshToken);
     return await this.usersService.updateRefreshToken(email, refreshToken);
   }
 }
