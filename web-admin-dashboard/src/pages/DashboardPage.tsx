@@ -21,7 +21,6 @@ function DashboardPage() {
   useEffect(() => {
     const getDataBackend = async () => {
       const res: Question[] = await questionRepo.getQuestions();
-      console.log(res);
       setData(res);
     };
 
