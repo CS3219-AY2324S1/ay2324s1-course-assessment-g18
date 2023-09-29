@@ -3,12 +3,7 @@ import Sidebar from "@/components/dashboard/sidebar/Sidebar";
 import UserList from "@/components/users/UserList";
 import { useState } from "react";
 
-interface Props {
-  handleClickDashboard: (event: React.MouseEvent) => void;
-  handleClickUser: (event: React.MouseEvent) => void;
-}
-
-function UserPage({ handleClickDashboard, handleClickUser }: Props) {
+function UserPage() {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
 
   const openSidebar = () => {
@@ -20,8 +15,6 @@ function UserPage({ handleClickDashboard, handleClickUser }: Props) {
       <Sidebar
         openSidebarToggle={openSidebarToggle}
         openSidebar={openSidebar}
-        handleClickDashboard={handleClickDashboard}
-        handleClickUser={handleClickUser}
       />
       <UserList />
     </div>

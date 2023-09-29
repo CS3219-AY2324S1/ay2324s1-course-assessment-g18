@@ -2,20 +2,14 @@ import { BsGrid1X2Fill, BsPeopleFill, BsFillGearFill } from "react-icons/bs";
 import "../../../pages/DashboardPage.css";
 import "./Sidebar.css";
 import logo from "../../../assets/dashboard/logo.svg";
-import { Link } from "react-router-dom";
+import { Link, useResolvedPath, useMatch } from "react-router-dom";
+import { ReactNode } from "react";
 
 interface Props {
   openSidebar: () => void;
   openSidebarToggle: boolean;
-  handleClickDashboard: (event: React.MouseEvent) => void;
-  handleClickUser: (event: React.MouseEvent) => void;
 }
-function Sidebar({
-  openSidebarToggle,
-  openSidebar,
-  handleClickDashboard,
-  handleClickUser,
-}: Props) {
+function Sidebar({ openSidebarToggle, openSidebar }: Props) {
   return (
     <aside
       id="sidebar"
@@ -29,33 +23,39 @@ function Sidebar({
       </div>
 
       <ul className="sidebar-list">
-        <li
-          className="sidebar-list-item"
-          onClick={(e) => handleClickDashboard(e)}
-        >
-          <a href="">
-            <BsGrid1X2Fill className="icon" />
-            Dashboard
-          </a>
-        </li>
-        <li className="sidebar-list-item" onClick={(e) => handleClickUser(e)}>
-          <a href="">
-            <BsPeopleFill className="icon" /> Users
-          </a>
-        </li>
-        <li className="sidebar-list-item">
-          <a href="">
-            <BsFillGearFill className="icon" /> settings
-          </a>
-        </li>
+        <CustomLink to="/">
+          <BsGrid1X2Fill className="icon" />
+          Dashboard
+        </CustomLink>
+        <CustomLink to="/users">
+          <BsPeopleFill className="icon" /> Users
+        </CustomLink>
+        <CustomLink to="/setting">
+          <BsFillGearFill className="icon" /> Settings
+        </CustomLink>
 
-        <li className="sidebar-list-item">
-          <Link to="/login" className="w-full flex">
-            Login
-          </Link>
-        </li>
+        <CustomLink to="/login">
+          <div>Login</div>
+        </CustomLink>
       </ul>
     </aside>
+  );
+}
+
+interface CustomLinkProps {
+  to: string;
+  children: ReactNode;
+}
+function CustomLink({ to, children }: CustomLinkProps) {
+  const resolvedPath = useResolvedPath(to);
+  const isActive = useMatch({ path: resolvedPath.pathname, end: true });
+
+  return (
+    <li className={isActive ? "active" : "inactive"}>
+      <Link className={"link"} to={to}>
+        {children}
+      </Link>
+    </li>
   );
 }
 
