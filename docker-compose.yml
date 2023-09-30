@@ -1,0 +1,18 @@
+version: '3'
+services:
+  user:
+    build: ./user
+    ports:
+      - 4000:4000
+    environment:
+      - MONGO_URI=mongodb+srv://CS3219G18:XGrPYdDUo4ivoMIU@peerprep.e87nhmv.mongodb.net/questions
+    depends_on:
+      - mongo
+  question:
+    build: ./question
+    ports:
+      - 3000:3000
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/question
+    depends_on:
+      - mongo
