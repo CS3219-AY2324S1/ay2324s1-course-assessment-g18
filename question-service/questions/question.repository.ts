@@ -20,8 +20,18 @@ export class QuestionMongoRepository implements QuestionRepository {
 
 
     async getAllQuestions(): Promise<QuestionDto[]> {
-        return await this.questionModel.find().exec();
-    }
+        const questions = await this.questionModel.find().lean().exec();
+        return questions.map((question: QuestionDto) => ({
+          id: question.id,
+          questionId: Number(question.questionId),
+          questionTitle: question.questionTitle,
+          questionCategories: question.questionCategories,
+          questionDifficulty: question.questionDifficulty,
+          questionLink: question.questionLink,
+          questionDescription: question.questionDescription,
+        }));
+      }
+      
     async getQuestionById(questionId: string) {
         return await this.questionModel.findById(questionId);
     }
