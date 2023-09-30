@@ -8,7 +8,7 @@ export class Question {
     @Prop()
     id: string;
 
-    @Prop()
+    @Prop({ type: Number, unique: true })
     questionId: number;
 
     @Prop()

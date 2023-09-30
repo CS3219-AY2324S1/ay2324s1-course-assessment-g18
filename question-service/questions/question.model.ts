@@ -1,11 +1,11 @@
-import {IsString, IsArray, IsNumber} from 'class-validator'
+import {IsString, IsArray, IsOptional} from 'class-validator'
 
 
 export class QuestionDto {
     id: string;
 
-    @IsNumber()
-    questionId: number;
+    @IsOptional()
+    questionId?: number;
 
     @IsString()
     questionTitle: string;
