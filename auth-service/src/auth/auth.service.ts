@@ -29,7 +29,7 @@ export class AuthService {
                 password: encryptedPassword
             }            
             const addedCredentials = await this.authRepository.addCredentials(newCredentials);
-            const tokens = await this.getTokens(addedCredentials._id.toString(), addedCredentials.email);
+            const tokens = await this.getTokens(addedCredentials._id.toString(), addedCredentials.email, newUser.role);
             const encryptedRefreshToken = await this.hashData(tokens.refreshToken);
             newUser.refreshToken = encryptedRefreshToken;
             console.log(newUser);
@@ -57,7 +57,10 @@ export class AuthService {
         if (!isPasswordMatch) {
             throw new UnauthorizedException("Invalid email or password");
         }
-        const tokens = await this.getTokens(currentUser._id.toString(), currentUser.email);
+        const user = this.client.send({cmd: 'getUser'}, {"email": email});
+        await user.subscribe();
+        const userData = await lastValueFrom(user);
+        const tokens = await this.getTokens(currentUser._id.toString(), currentUser.email, userData.role);
         const encryptedRefreshToken = await this.hashData(tokens.refreshToken);
         this.updateRefreshToken(email, encryptedRefreshToken);
         return tokens;
@@ -67,12 +70,13 @@ export class AuthService {
         return await this.updateRefreshToken(email, null);
     }
 
-    async getTokens(userId: string, email: string) {
+    async getTokens(userId: string, email: string, role: string) {
         const [accessToken, refreshToken] = await Promise.all([
             this.jwtService.signAsync(
               {
                 sub: userId,
                 email: email,
+                role: role,
               },
               {
                 secret: 'secret',
@@ -83,6 +87,7 @@ export class AuthService {
               {
                 sub: userId,
                 email: email,
+                role: role,
               },
               {
                 secret: 'secret',
@@ -123,7 +128,7 @@ export class AuthService {
         if (!isRefreshTokenMatch) {
             throw new ForbiddenException('Access denied');
         }
-        const newAccessToken = (await this.getTokens(userCredentials._id.toString(), email)).accessToken;
+        const newAccessToken = (await this.getTokens(userCredentials._id.toString(), email, userData.role)).accessToken;
         return {'accessToken': newAccessToken};
     }
 

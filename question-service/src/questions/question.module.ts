@@ -5,7 +5,6 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { Question, QuestionSchema } from "./question.schema";
 import { QuestionMongoRepository } from "./question.repository";
 import { AccessTokenStrategy } from "./strategies/accessToken.strategy";
-import { RefreshTokenStrategy } from "./strategies/refreshToken.strategy";
 
 
 @Module({
@@ -14,7 +13,7 @@ import { RefreshTokenStrategy } from "./strategies/refreshToken.strategy";
     ),
     MongooseModule.forFeature([{name: Question.name, schema: QuestionSchema}]),],
     controllers: [QuestionController],
-    providers: [QuestionService, QuestionMongoRepository, AccessTokenStrategy, RefreshTokenStrategy],
+    providers: [QuestionService, QuestionMongoRepository, AccessTokenStrategy],
 })
 
 export class QuestionModule{};
