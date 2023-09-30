@@ -26,4 +26,8 @@ export class AuthMongoRepository implements AuthRepository {
     async getCredentialsById(userId: string) {
         return await this.authModel.findById(userId);
     }
+
+    async deleteUser(email: string) {
+        await this.authModel.findOneAndDelete({email});
+    }
 }

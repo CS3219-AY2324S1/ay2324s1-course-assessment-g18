@@ -12,8 +12,11 @@ export class User {
   @Column()
   email: string;
 
-  @Column()
-  refreshToken: string;
+  @Column({
+    type: String,
+    nullable: true,
+  })
+  refreshToken: string | null = null;
 
   @Column()
   role: string;

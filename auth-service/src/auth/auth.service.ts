@@ -63,13 +63,16 @@ export class AuthService {
         return tokens;
     }
 
-    logout(email: string) {}
+    async logout(email: string) {
+        return await this.updateRefreshToken(email, null);
+    }
+
     async getTokens(userId: string, email: string) {
         const [accessToken, refreshToken] = await Promise.all([
             this.jwtService.signAsync(
               {
                 sub: userId,
-                email,
+                email: email,
               },
               {
                 secret: 'secret',
@@ -79,7 +82,7 @@ export class AuthService {
             this.jwtService.signAsync(
               {
                 sub: userId,
-                email,
+                email: email,
               },
               {
                 secret: 'secret',
@@ -94,7 +97,7 @@ export class AuthService {
           };
     }
 
-    async updateRefreshToken(email: string, refreshToken: string) {
+    async updateRefreshToken(email: string, refreshToken) {
         console.log(email, refreshToken);
         const result = this.client.send({cmd: 'refresh'}, {"email":email, "refreshToken": refreshToken});
         await result.subscribe();
@@ -124,6 +127,12 @@ export class AuthService {
         return {'accessToken': newAccessToken};
     }
 
+
+    async deleteUser(email: string) {
+        const result = this.client.send({cmd: 'delete'}, {});
+        await result.subscribe();
+        await this.authRepository.deleteUser(email);
+    }
 
 }
 

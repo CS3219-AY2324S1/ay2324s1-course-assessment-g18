@@ -31,6 +31,7 @@ export class UsersController {
     return this.usersService.create(user);
   }
 
+  @MessagePattern({cmd: 'delete'})
   @Delete('/:email')
   async deleteUser(@Param('email') email: string) {
       await this.usersService.deleteUser(email);
