@@ -30,8 +30,8 @@ export class QuestionService {
                     'Question with the given id already exists', HttpStatus.BAD_REQUEST
                 )
             }
-        return await this.questionRepository.addQuestion(questionDto);
         }
+        return await this.questionRepository.addQuestion(questionDto);
     }
 
 
