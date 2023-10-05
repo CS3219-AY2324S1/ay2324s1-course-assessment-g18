@@ -11,6 +11,7 @@ import {
 import { UsersService } from './users.service';
 import { User } from './user.entity';
 import { UpdateUserDto } from './update-user.dto';
+import { MessagePattern } from '@nestjs/microservices';
 
 @Controller('users')
 export class UsersController {
@@ -26,8 +27,10 @@ export class UsersController {
     return this.usersService.getUsers();
   }
 
-  @Post('/create')
-  create(@Body() user: User): Promise<User | null> {
+  @MessagePattern({cmd: 'create'})
+  @Post("/create")
+  async create(@Body() user: User): Promise<User | null> {
+    console.log("create called");
     return this.usersService.create(user);
   }
 
@@ -42,5 +45,10 @@ export class UsersController {
     @Body() updateUserDto: UpdateUserDto,
   ) {
     await this.usersService.updateUser(email, updateUserDto);
+  }
+
+  @MessagePattern({cmd: 'refresh'})
+  async refresh(email: string, refreshToken: string) {
+    return await this.usersService.updateRefreshToken(email, refreshToken);
   }
 }

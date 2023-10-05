@@ -5,6 +5,8 @@ import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { UpdateUserDto } from './update-user.dto';
 import { ConflictException } from '@nestjs/common';
+import { MessagePattern } from '@nestjs/microservices';
+
 
 @Injectable()
 export class UsersService {
@@ -40,12 +42,14 @@ export class UsersService {
       );
     }
 
+  
     return await this.userRepository.save(user);
   }
 
   async getUser(userEmail: string): Promise<User> {
     return await this.userRepository.findOne({ where: { userEmail } });
   }
+
 
   async getUsers(): Promise<User[]> {
     return await this.userRepository.find();
@@ -86,5 +90,13 @@ export class UsersService {
 
   async deleteUser(userEmail: string) {
     return this.userRepository.delete({ userEmail });
+  }
+
+  
+  async updateRefreshToken(email: string, refreshToken: string) {
+    console.log(refreshToken);
+    const user: User = await this.getUser(email);
+    user.refreshToken = refreshToken;
+    await this.userRepository.save(user);
   }
 }
