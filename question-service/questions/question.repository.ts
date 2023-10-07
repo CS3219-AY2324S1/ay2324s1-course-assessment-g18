@@ -10,6 +10,7 @@ export interface QuestionRepository {
     addQuestion(questionDto: QuestionDto);
     deleteQuestion(objectId: string);
     editQuestion(objectId: string, questionDto: QuestionDto); 
+    getQuestionbyQuestionId(questionId: number);
 }
 
 
@@ -21,8 +22,9 @@ export class QuestionMongoRepository implements QuestionRepository {
 
     async getAllQuestions(): Promise<QuestionDto[]> {
         const questions = await this.questionModel.find().lean().exec();
+        console.log(questions);
         return questions.map((question: QuestionDto) => ({
-          id: question.id,
+          _id: question._id,
           questionId: Number(question.questionId),
           questionTitle: question.questionTitle,
           questionCategories: question.questionCategories,

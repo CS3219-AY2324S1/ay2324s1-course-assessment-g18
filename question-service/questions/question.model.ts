@@ -2,7 +2,8 @@ import {IsString, IsArray, IsOptional} from 'class-validator'
 
 
 export class QuestionDto {
-    id: string;
+    @IsString()
+    _id: string;
 
     @IsOptional()
     questionId?: number;

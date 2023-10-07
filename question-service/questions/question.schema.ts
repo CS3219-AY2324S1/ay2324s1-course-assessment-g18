@@ -7,7 +7,7 @@ export type QuestionDocument = Question & Document;
 @Schema()
 export class Question {
     @Prop()
-    id: string;
+    _id: string;
 
     @Prop({ type: Number, unique: true })
     @IsNotEmpty()
