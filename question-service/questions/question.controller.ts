@@ -14,7 +14,7 @@ export class QuestionController {
     }
 
     @Get('/:objectId')
-    async getQuestionById(@Param('questionId') objectId: string) {
+    async getQuestionById(@Param('objectId') objectId: string) {
         return await this.questionService.getQuestionByObjectId(objectId);
     }
 
