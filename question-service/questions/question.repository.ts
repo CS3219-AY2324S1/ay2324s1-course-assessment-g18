@@ -6,10 +6,10 @@ import { Question, QuestionDocument } from "./question.schema";
 
 export interface QuestionRepository {
     getAllQuestions(): Promise<QuestionDto[]>;
-    getQuestionById(questionId: string);
+    getQuestionById(objectId: string);
     addQuestion(questionDto: QuestionDto);
-    deleteQuestion(questionId: string);
-    editQuestion(questionId: string, questionDto: QuestionDto); 
+    deleteQuestion(objectId: string);
+    editQuestion(objectId: string, questionDto: QuestionDto); 
 }
 
 
@@ -32,8 +32,8 @@ export class QuestionMongoRepository implements QuestionRepository {
         }));
       }
       
-    async getQuestionById(questionId: string) {
-        return await this.questionModel.findById(questionId);
+    async getQuestionById(objectId: string) {
+        return await this.questionModel.findById(objectId);
     }
     async addQuestion(questionDto: QuestionDto) {
     // If questionId is not provided, generate a new one
@@ -56,11 +56,11 @@ export class QuestionMongoRepository implements QuestionRepository {
     }
   
 
-    async deleteQuestion(questionId: string) {
-        return await this.questionModel.findByIdAndDelete(questionId);
+    async deleteQuestion(objectId: string) {
+        return await this.questionModel.findByIdAndDelete(objectId);
     }
-    async editQuestion(questionId: string, questionDto: QuestionDto) {
-        return await this.questionModel.findByIdAndUpdate(questionId, questionDto);
+    async editQuestion(objectId: string, questionDto: QuestionDto) {
+        return await this.questionModel.findByIdAndUpdate(objectId, questionDto);
     }
 
     async getQuestionByTitle(questionTitle: string) {

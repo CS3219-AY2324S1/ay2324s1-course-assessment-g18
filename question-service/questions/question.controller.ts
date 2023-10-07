@@ -13,9 +13,9 @@ export class QuestionController {
         return await this.questionService.getAllQuestions();
     }
 
-    @Get('/:questionId')
-    async getQuestionById(@Param('questionId') questionId: string) {
-        return await this.questionService.getQuestionById(questionId);
+    @Get('/:objectId')
+    async getQuestionById(@Param('questionId') objectId: string) {
+        return await this.questionService.getQuestionByObjectId(objectId);
     }
 
     @Post()
@@ -23,13 +23,13 @@ export class QuestionController {
         return await this.questionService.addQuestion(questionDto);
     }
 
-    @Delete('/:questionId')
-    async deleteQuestion(@Param("questionId") questionId: string) {
-        await this.questionService.deleteQuestion(questionId);
+    @Delete('/:objectId')
+    async deleteQuestion(@Param("objectId") objectId: string) {
+        await this.questionService.deleteQuestion(objectId);
     }
 
-    @Put('/:questionId')
-    async editQuestion(@Param("questionId") questionId: string, @Body() questionDto: QuestionDto) {
-        return await this.questionService.editQuestion(questionId, questionDto);
+    @Put('/:objectId')
+    async editQuestion(@Param("objectId") objectId: string, @Body() questionDto: QuestionDto) {
+        return await this.questionService.editQuestion(objectId, questionDto);
     }
 }

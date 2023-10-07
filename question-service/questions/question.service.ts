@@ -12,8 +12,8 @@ export class QuestionService {
         return await this.questionRepository.getAllQuestions();
     }
     
-    async getQuestionById(questionId: string) {
-        return await this.questionRepository.getQuestionById(questionId);
+    async getQuestionByObjectId(objectId: string) {
+        return await this.questionRepository.getQuestionById(objectId);
     }
 
     async addQuestion(questionDto: QuestionDto) {
@@ -35,18 +35,18 @@ export class QuestionService {
     }
 
 
-    async deleteQuestion(questionId: string) {
-        await this.questionRepository.deleteQuestion(questionId);
+    async deleteQuestion(objectId: string) {
+        await this.questionRepository.deleteQuestion(objectId);
     }
 
-    async editQuestion(questionId: string, questionDto: QuestionDto) {
+    async editQuestion(objectId: string, questionDto: QuestionDto) {
         const existingQuestion = await this.questionRepository.getQuestionByTitle(questionDto.questionTitle);
-        if (existingQuestion && existingQuestion._id.toString() !== questionId) {
+        if (existingQuestion && existingQuestion._id.toString() !== objectId) {
             throw new HttpException(
                 'Question with the given title already exists', HttpStatus.BAD_REQUEST
             )
         }
-        await this.questionRepository.editQuestion(questionId, questionDto);
+        await this.questionRepository.editQuestion(objectId, questionDto);
         return questionDto;
     }
 

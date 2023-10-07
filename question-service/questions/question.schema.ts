@@ -1,4 +1,5 @@
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose'
+import { IsNotEmpty } from 'class-validator';
 
 export type QuestionDocument = Question & Document;
 
@@ -9,6 +10,7 @@ export class Question {
     id: string;
 
     @Prop({ type: Number, unique: true })
+    @IsNotEmpty()
     questionId: number;
 
     @Prop()
