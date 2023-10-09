@@ -52,7 +52,7 @@ export class UsersService {
 
   async getOrAddUser(user: User): Promise<User> {
     console.log('service: ' + user);
-    const foundUser = await this.getUser(user.email);
+    const foundUser = await this.getUser(user.userEmail);
     if (foundUser) {
         return foundUser;
     }

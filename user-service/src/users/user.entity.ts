@@ -21,7 +21,4 @@ export class User {
     nullable: true,
   })
   refreshToken: string | null = null;
-
-  @Column()
-  role: string;
 }
