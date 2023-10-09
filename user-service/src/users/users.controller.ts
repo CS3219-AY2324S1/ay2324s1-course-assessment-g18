@@ -42,6 +42,12 @@ export class UsersController {
     await this.usersService.updateUser(email, user);
   }
 
+  @MessagePattern({cmd: 'getOrAdd'})
+  async getOrAddUser(@Body() user: User) {
+    console.log(user);
+    return await this.usersService.getOrAddUser(user);
+  }
+
   @MessagePattern({cmd: 'refresh'})
   async refresh(@Payload() data) {
     const {email, refreshToken} = data;

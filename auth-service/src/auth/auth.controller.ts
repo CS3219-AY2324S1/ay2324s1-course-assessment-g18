@@ -1,9 +1,10 @@
-import { Body, Controller, Delete, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { Request, Response } from 'express';
 import { AuthDto, CreateUserDto } from './dto/auth.dto';
-import { Request } from 'express';
 import { RefreshTokenGuard } from './guards/refreshToken.guard';
 import { AccessTokenGuard } from './guards/accessToken.guard';
+import { GoogleOauthGuard } from './guards/google-oauth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -43,5 +44,20 @@ export class AuthController {
         const email = req.user['email'];
         console.log(email);
         return await this.authService.logout(req.user['email']);
+      }
+
+      @Get('to-google')
+      @UseGuards(GoogleOauthGuard)
+      async googleAuth(@Req() req: Request) {
+
+      }
+
+      @Get('google')
+      @UseGuards(GoogleOauthGuard)
+      async googleAuthRedirect(@Req() req: Request, @Res() res: Response) {
+        const {user} = req;
+        const newUser: CreateUserDto = {"email": user['email'], "username": user["username"], "providerId": user['providerId'], "role": "user"}
+        res.send(newUser);
+        return await this.authService.oauthLogin(newUser);
       }
 }

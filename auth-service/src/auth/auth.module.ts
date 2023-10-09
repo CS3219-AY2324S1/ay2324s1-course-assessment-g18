@@ -8,6 +8,7 @@ import { JwtModule, JwtService } from "@nestjs/jwt";
 import { ClientsModule, Transport } from "@nestjs/microservices";
 import { RefreshTokenStrategy } from "./strategies/refreshToken.strategy";
 import { AccessTokenStrategy } from "./strategies/accessToken.strategy";
+import { GoogleStrategy } from "./strategies/google-oauth.strategy";
 
 
 @Module({
@@ -28,7 +29,7 @@ import { AccessTokenStrategy } from "./strategies/accessToken.strategy";
     }
   }])],
     controllers: [AuthController],
-    providers: [AuthService, AuthMongoRepository, RefreshTokenStrategy, AccessTokenStrategy],
+    providers: [AuthService, AuthMongoRepository, RefreshTokenStrategy, AccessTokenStrategy, GoogleStrategy],
 })
 
 export class AuthModule{};

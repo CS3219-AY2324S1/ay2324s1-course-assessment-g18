@@ -1,12 +1,17 @@
-import {IsString} from 'class-validator'
+import {IsString, IsOptional} from 'class-validator'
 
 
 export class AuthDto {
     @IsString()
     email: string;
 
+    @IsOptional()
     @IsString()
-    password: string;
+    password?: string;
+
+    @IsOptional()
+    @IsString()
+    providerId?: string;
 }
 
 export class CreateUserDto {
@@ -16,13 +21,19 @@ export class CreateUserDto {
     @IsString()
     email: string;
 
+    @IsOptional()
     @IsString()
-    password: string;
+    password?: string;
+
+    @IsOptional()
+    @IsString()
+    providerId?: string;
 
     @IsString()
     role: string;
 
+    @IsOptional()
     @IsString()
-    refreshToken: string;
+    refreshToken?: string;
 }
 

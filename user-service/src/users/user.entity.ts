@@ -20,5 +20,4 @@ export class User {
 
   @Column()
   role: string;
-
 }

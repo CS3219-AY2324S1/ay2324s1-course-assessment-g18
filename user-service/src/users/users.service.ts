@@ -22,6 +22,15 @@ export class UsersService {
     return await this.userRepository.findOne({where: {email}});
   }
 
+  async getOrAddUser(user: User): Promise<User> {
+    console.log('service: ' + user);
+    const foundUser = await this.getUser(user.email);
+    if (foundUser) {
+        return foundUser;
+    }
+    return await this.create(user);
+  }
+
 
   async getUsers(): Promise<User[]> {
     return await this.userRepository.find();
@@ -48,6 +57,7 @@ export class UsersService {
     const user: User = await this.getUser(email);
     console.log(user);
     user.refreshToken = refreshToken;
+    console.log(user);
     await this.userRepository.save(user);
   }
 }

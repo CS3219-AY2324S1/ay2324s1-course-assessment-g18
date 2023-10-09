@@ -50,7 +50,7 @@ export class AuthService {
     async login(authDto: AuthDto) {
         const {email, password} = authDto;
         const currentUser = await this.authRepository.getCredentialsByEmail(email);
-        if (!currentUser) {
+        if (!currentUser || currentUser.password === null) {
             throw new UnauthorizedException("Invalid email or password");
         }
         const isPasswordMatch = await currentUser.validatePassword(password);
@@ -63,6 +63,29 @@ export class AuthService {
         const tokens = await this.getTokens(currentUser._id.toString(), currentUser.email, userData.role);
         const encryptedRefreshToken = await this.hashData(tokens.refreshToken);
         this.updateRefreshToken(email, encryptedRefreshToken);
+        return tokens;
+    }
+
+    async oauthLogin(createUserDto: CreateUserDto) {
+        const authDto = {
+            ...createUserDto
+        }
+        const newUser = {
+            ...createUserDto,
+        }
+        newUser.password = undefined;
+        authDto.refreshToken = undefined;
+        authDto.role = undefined;
+        authDto.username = undefined;
+        console.log(newUser);
+        const currentUser = await this.authRepository.getCredentialsByEmailOrAdd(authDto);
+        const user = this.client.send({cmd: 'getOrAdd'}, newUser);
+        await user.subscribe();
+        const userData = await lastValueFrom(user);
+        console.log(userData);
+        const tokens = await this.getTokens(currentUser._id.toString(), currentUser.email, userData.role);
+        const encryptedRefreshToken = await this.hashData(tokens.refreshToken);
+        this.updateRefreshToken(createUserDto.email, encryptedRefreshToken);
         return tokens;
     }
 
