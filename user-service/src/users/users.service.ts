@@ -22,6 +22,15 @@ export class UsersService {
     return await this.userRepository.findOne({where: {email}});
   }
 
+  async getOrAddUser(user: User): Promise<User> {
+    console.log('service: ' + user);
+    const foundUser = await this.getUser(user.email);
+    if (foundUser) {
+        return foundUser;
+    }
+    return await this.create(user);
+  }
+
 
   async getUsers(): Promise<User[]> {
     return await this.userRepository.find();
@@ -30,9 +39,9 @@ export class UsersService {
   async updateUser(email, _user) {
     console.log(_user);
     const user: User = await this.getUser(email);
-    user.username = _user.username;
-    user.email = _user.email;
-    user.role = _user.role;
+    user.username = _user.username ?? user.username;
+    // user.email = _user.email ?? user.email;
+    user.role = _user.role ?? user.role;
     return await this.userRepository.save(user);
   }
 
@@ -42,9 +51,13 @@ export class UsersService {
 
   
   async updateRefreshToken(email: string, refreshToken: string) {
+    console.log("service")
+    console.log(email);
     console.log(refreshToken);
     const user: User = await this.getUser(email);
+    console.log(user);
     user.refreshToken = refreshToken;
+    console.log(user);
     await this.userRepository.save(user);
   }
 }
