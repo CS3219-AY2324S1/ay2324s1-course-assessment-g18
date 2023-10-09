@@ -17,23 +17,14 @@ export class QuestionService {
     }
 
     async addQuestion(questionDto: QuestionDto) {
-        var existingQuestion = await this.questionRepository.getQuestionByTitle(questionDto.questionTitle);
+        const existingQuestion = await this.questionRepository.getQuestionByTitle(questionDto.questionTitle);
         if (existingQuestion) {
             throw new HttpException(
                 'Question with the given title already exists', HttpStatus.BAD_REQUEST
             )
         }
-        if (questionDto.questionId){
-            existingQuestion  = await this.questionRepository.getQuestionbyQuestionId(questionDto.questionId);
-            if (existingQuestion) {
-                throw new HttpException(
-                    'Question with the given id already exists', HttpStatus.BAD_REQUEST
-                )
-            }
-        }
         return await this.questionRepository.addQuestion(questionDto);
     }
-
 
     async deleteQuestion(questionId: string) {
         await this.questionRepository.deleteQuestion(questionId);
