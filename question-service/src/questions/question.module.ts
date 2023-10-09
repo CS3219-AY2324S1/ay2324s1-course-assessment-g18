@@ -4,6 +4,7 @@ import { QuestionService } from "./question.service";
 import { MongooseModule } from "@nestjs/mongoose";
 import { Question, QuestionSchema } from "./question.schema";
 import { QuestionMongoRepository } from "./question.repository";
+import { AccessTokenStrategy } from "./strategies/accessToken.strategy";
 
 
 @Module({
@@ -12,7 +13,7 @@ import { QuestionMongoRepository } from "./question.repository";
     ),
     MongooseModule.forFeature([{name: Question.name, schema: QuestionSchema}]),],
     controllers: [QuestionController],
-    providers: [QuestionService, QuestionMongoRepository],
+    providers: [QuestionService, QuestionMongoRepository, AccessTokenStrategy],
 })
 
 export class QuestionModule{};

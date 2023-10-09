@@ -19,7 +19,24 @@ export class AuthMongoRepository implements AuthRepository {
         return await this.authModel.findOne({email});
     }
 
+    async getCredentialsByEmailOrAdd(authDto: AuthDto) {
+        const {email, password, providerId} = authDto;
+        const foundCredentials = await this.authModel.findOne({email});
+        if (foundCredentials) {
+            return foundCredentials;
+        }
+        return await this.authModel.create(authDto);
+    }
+
     async addCredentials(authDto: AuthDto) {
         return await this.authModel.create(authDto);
+    }
+
+    async getCredentialsById(userId: string) {
+        return await this.authModel.findById(userId);
+    }
+
+    async deleteUser(email: string) {
+        await this.authModel.findOneAndDelete({email});
     }
 }

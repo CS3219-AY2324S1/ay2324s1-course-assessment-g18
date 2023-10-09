@@ -16,10 +16,12 @@ export class User {
   @Column()
   userRole: UserRole;
 
-  @Column()
-  refreshToken: string;
+  @Column({
+    type: String,
+    nullable: true,
+  })
+  refreshToken: string | null = null;
 
   @Column()
   role: string;
-
 }

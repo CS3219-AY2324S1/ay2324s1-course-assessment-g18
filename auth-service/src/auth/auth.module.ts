@@ -6,6 +6,9 @@ import { AuthMongoRepository } from "./auth.repository";
 import { Auth, AuthSchema } from "./auth.schema";
 import { JwtModule, JwtService } from "@nestjs/jwt";
 import { ClientsModule, Transport } from "@nestjs/microservices";
+import { RefreshTokenStrategy } from "./strategies/refreshToken.strategy";
+import { AccessTokenStrategy } from "./strategies/accessToken.strategy";
+import { GoogleStrategy } from "./strategies/google-oauth.strategy";
 
 
 @Module({
@@ -26,7 +29,7 @@ import { ClientsModule, Transport } from "@nestjs/microservices";
     }
   }])],
     controllers: [AuthController],
-    providers: [AuthService, AuthMongoRepository],
+    providers: [AuthService, AuthMongoRepository, RefreshTokenStrategy, AccessTokenStrategy, GoogleStrategy],
 })
 
 export class AuthModule{};
