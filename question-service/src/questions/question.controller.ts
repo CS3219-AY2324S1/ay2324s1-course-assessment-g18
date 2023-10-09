@@ -1,8 +1,12 @@
-import {Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put} from "@nestjs/common"
+import {Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put, UseGuards} from "@nestjs/common"
 import { QuestionDto } from "./question.model";
 import { QuestionService } from "./question.service";
+import { AccessTokenGuard } from "./guards/accessToken.guard";
+import { RolesGuard } from "./guards/roles.guard";
+import { Roles } from "./decorator/roles.decorator";
 
 @Controller('questions')
+@UseGuards(AccessTokenGuard)
 export class QuestionController {
 
     constructor(private questionService:QuestionService){}
@@ -18,16 +22,22 @@ export class QuestionController {
         return await this.questionService.getQuestionById(questionId);
     }
 
+    @UseGuards(RolesGuard)
+    @Roles(['admin'])
     @Post()
     async addQuestion(@Body() questionDto: QuestionDto) {
         return await this.questionService.addQuestion(questionDto);
     }
 
+    @UseGuards(RolesGuard)
+    @Roles(['admin'])
     @Delete('/:questionId')
     async deleteQuestion(@Param("questionId") questionId: string) {
         await this.questionService.deleteQuestion(questionId);
     }
 
+    @UseGuards(RolesGuard)
+    @Roles(['admin'])
     @Put('/:questionId')
     async editQuestion(@Param("questionId") questionId: string, @Body() questionDto: QuestionDto) {
         return await this.questionService.editQuestion(questionId, questionDto);
