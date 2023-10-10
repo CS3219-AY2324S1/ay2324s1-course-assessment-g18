@@ -11,11 +11,14 @@ import {
 import { Button } from "@/components/ui/button";
 import CustomPassword from "@/components/form/CustomPassword";
 import { useNavigate } from "react-router-dom";
+import axios from "axios"; 
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [accessToken, setAccessToken] = useState(""); 
+  const [refreshToken, setRefreshToken] = useState(""); 
 
   const navigate = useNavigate();
 
@@ -27,13 +30,29 @@ function LoginPage() {
       return;
     } else {
       try {
-        // TODO: integrate BE login function
+        const response = await axios.post("http://localhost:3000/auth/login", {
+          email,
+          password,
+        });
+  
+        if (response.status === 201) {
+          const { accessToken, refreshToken } = response.data;
+          setAccessToken(accessToken);
+          setRefreshToken(refreshToken);
+          console.log(accessToken);
+          navigate('/');
+
+          // Implement logic for token refresh, expiration handling, etc.
+        } else {
+          setError("Login failed. Check your credentials.");
+        }
       } catch (err) {
-        console.log(err);
-        setError(err.response.data.message);
+        console.error(err);
+        setError("Login failed. Check your credentials.");
       }
     }
   };
+  
 
   function invalidForm() {
     if (email.length === 0 || password.length === 0) {
