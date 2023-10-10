@@ -80,7 +80,7 @@ function LoginPage() {
               data={password}
             />
             <div className="text-red-400">{error}</div>
-            <Button type="submit">Login</Button>
+            <Button type="submit" className="login-button">Login</Button>
           </form>
           <div
             style={{
@@ -89,9 +89,12 @@ function LoginPage() {
               paddingTop: "20px",
             }}
           >
-            <button onClick={() => navigate("/signup")}>
-              Don't have an account? Click here to sign up!
-            </button>
+          <button
+            onClick={() => navigate("/signup")}
+            className="signup-button">
+            Don't have an account? Click here to sign up!
+          </button>
+
           </div>
         </CardContent>
       </Card>

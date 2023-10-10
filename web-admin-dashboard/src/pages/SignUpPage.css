@@ -21,3 +21,31 @@
   flex-direction: column;
   gap: 20px;
 }
+
+.login-button {
+  color: black; /* Default text color */
+  /* Add other styling properties as needed */
+
+  /* Hover effect */
+  transition: color 0.3s ease; /* Smooth color transition over 0.3 seconds */
+
+  /* Change text color to light grey when hovered */
+  &:hover {
+    color: lightgrey;
+  }
+}
+
+.signup-button {
+  /* Add other styling properties as needed */
+
+  /* Set the default opacity to 1 (fully opaque) */
+  opacity: 1;
+
+  /* Hover effect */
+  transition: opacity 0.3s ease; /* Smooth opacity transition over 0.3 seconds */
+
+  /* Reduce opacity to make it slightly more transparent when hovered */
+  &:hover {
+    opacity: 0.8; /* Adjust the opacity value as needed */
+  }
+}

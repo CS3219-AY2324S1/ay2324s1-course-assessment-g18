@@ -12,6 +12,7 @@ import { SyntheticEvent, useState } from "react";
 import "./SignUpPage.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "@/components/ui/use-toast";
 
 function SignUpPage() {
   const [userName, setUserName] = useState("");
@@ -40,6 +41,10 @@ function SignUpPage() {
         if (response.status === 201) {
           // Redirect to login page upon succesful signup
           navigate("/login");
+          return toast({
+            title: "Success!",
+            description: "You have succesfully signed up as a user",
+          });
         } else {
           setError("Signup failed. Please try again.");
         }
@@ -91,7 +96,7 @@ function SignUpPage() {
               data={userPassword}
             />
             <div className="text-red-400">{error}</div>
-            <Button type="submit">Sign Up</Button>
+            <Button type="submit" className="signup-button">Sign Up</Button>
           </form>
           <div
             style={{
@@ -100,7 +105,9 @@ function SignUpPage() {
               paddingTop: "20px",
             }}
           >
-            <button onClick={() => navigate("/login")}>
+            <button 
+            onClick={() => navigate("/login")}
+            className="login-button">
               Already have an account? Click here to login!
             </button>
           </div>
