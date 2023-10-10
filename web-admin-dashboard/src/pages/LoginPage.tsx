@@ -40,7 +40,7 @@ function LoginPage() {
           setAccessToken(accessToken);
           setRefreshToken(refreshToken);
           console.log(accessToken);
-          navigate('/');
+          navigate('/dashboard');
 
           // Implement logic for token refresh, expiration handling, etc.
         } else {
