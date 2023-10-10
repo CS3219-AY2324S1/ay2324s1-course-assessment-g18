@@ -11,11 +11,13 @@ import {
 import { SyntheticEvent, useState } from "react";
 import "./SignUpPage.css";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function SignUpPage() {
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const [userRole, setUserRole] = useState("user"); // Set default value to "user"
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
@@ -28,10 +30,22 @@ function SignUpPage() {
       return;
     } else {
       try {
-        // call to auth service to sign up
+        const response = await axios.post("http://localhost:3000/auth/sign-up", { 
+          username: userName,
+          email: userEmail,
+          password: userPassword,
+          role: userRole,
+        });
+  
+        if (response.status === 201) {
+          // Redirect to login page upon succesful signup
+          navigate("/login");
+        } else {
+          setError("Signup failed. Please try again.");
+        }
       } catch (err) {
         console.log(err);
-        setError(err.respose.data.message);
+        setError(err.response.data.message);
       }
     }
   }
