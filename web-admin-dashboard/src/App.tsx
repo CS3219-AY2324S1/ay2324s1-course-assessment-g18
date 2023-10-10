@@ -8,7 +8,7 @@ import { Toaster } from "./components/ui/toaster";
 
 function App() {
   // Check if the user is authenticated 
-  const isAuthenticated = localStorage.getItem("access_token");
+  const isAuthenticated = localStorage.getItem("accessToken");
 
   return (
     <div>

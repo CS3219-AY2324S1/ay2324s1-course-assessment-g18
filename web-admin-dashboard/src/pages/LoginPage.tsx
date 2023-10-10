@@ -39,7 +39,8 @@ function LoginPage() {
           const { accessToken, refreshToken } = response.data;
           setAccessToken(accessToken);
           setRefreshToken(refreshToken);
-          console.log(accessToken);
+          localStorage.setItem('accessToken', accessToken);
+          localStorage.setItem('refreshToken', refreshToken);
           navigate('/dashboard');
 
           // Implement logic for token refresh, expiration handling, etc.
