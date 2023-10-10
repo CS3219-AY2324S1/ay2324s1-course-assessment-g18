@@ -20,7 +20,7 @@ export class UsersService {
 
     let existingUser = await this.userRepository.findOne({
       where: {
-        userEmail: user.userEmail,
+        email: user.email,
       },
     });
 
@@ -32,7 +32,7 @@ export class UsersService {
 
     existingUser = await this.userRepository.findOne({
       where: {
-        userName: user.userName,
+        username: user.username,
       },
     });
 
@@ -46,13 +46,13 @@ export class UsersService {
     return await this.userRepository.save(user);
   }
 
-  async getUser(userEmail: string): Promise<User> {
-    return await this.userRepository.findOne({ where: { userEmail } });
+  async getUser(email: string): Promise<User> {
+    return await this.userRepository.findOne({ where: { email } });
   }
 
   async getOrAddUser(user: User): Promise<User> {
     console.log('service: ' + user);
-    const foundUser = await this.getUser(user.userEmail);
+    const foundUser = await this.getUser(user.email);
     if (foundUser) {
         return foundUser;
     }
@@ -66,10 +66,10 @@ export class UsersService {
 
   async updateUser(email, updateUserDto: UpdateUserDto) {
     console.log(updateUserDto);
-    if (email != updateUserDto.userEmail) {
+    if (email != updateUserDto.email) {
       const existingUser = await this.userRepository.findOne({
         where: {
-          userEmail: updateUserDto.userEmail,
+          email: updateUserDto.email,
         },
       });
 
@@ -81,14 +81,14 @@ export class UsersService {
     }
 
     const user: User = await this.getUser(email);
-    user.userName = updateUserDto.userName;
-    user.userEmail = updateUserDto.userEmail;
-    user.userRole = updateUserDto.userRole;
+    user.username = updateUserDto.username;
+    user.email = updateUserDto.email;
+    user.role = updateUserDto.role;
     return await this.userRepository.save(user);
   }
 
-  async deleteUser(userEmail: string) {
-    return this.userRepository.delete({ userEmail });
+  async deleteUser(email: string) {
+    return this.userRepository.delete({ email });
   }
 
   

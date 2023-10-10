@@ -51,7 +51,7 @@ export const Columns: ColumnDef<User>[] = [
     ),
   },
   {
-    accessorKey: "userName",
+    accessorKey: "username",
     header: ({ column }) => {
       return (
         <Button
@@ -63,10 +63,10 @@ export const Columns: ColumnDef<User>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className=" pl-5">{row.getValue("userName")}</div>,
+    cell: ({ row }) => <div className=" pl-5">{row.getValue("username")}</div>,
   },
   {
-    accessorKey: "userEmail",
+    accessorKey: "email",
     header: ({ column }) => {
       return (
         <Button
@@ -78,10 +78,10 @@ export const Columns: ColumnDef<User>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue("userEmail")}</div>,
+    cell: ({ row }) => <div>{row.getValue("email")}</div>,
   },
   {
-    accessorKey: "userRole",
+    accessorKey: "role",
     header: "Role",
     cell: ({ row }) => (
       <div
@@ -91,7 +91,7 @@ export const Columns: ColumnDef<User>[] = [
             : "bg-gray-200 text-gray-600"
         }`}
       >
-        {row.getValue("userRole")}
+        {row.getValue("role")}
       </div>
     ),
   },
