@@ -66,28 +66,18 @@ export class UsersService {
 
   async updateUser(email, updateUserDto: UpdateUserDto) {
     console.log(updateUserDto);
-    let existingUser = await this.userRepository.findOne({
-      where: {
-        userEmail: updateUserDto.userEmail,
-      },
-    });
+    if (email != updateUserDto.userEmail) {
+      const existingUser = await this.userRepository.findOne({
+        where: {
+          userEmail: updateUserDto.userEmail,
+        },
+      });
 
-    if (existingUser) {
-      throw new ConflictException(
-        ' User with the provided email already exists ',
-      );
-    }
-
-    existingUser = await this.userRepository.findOne({
-      where: {
-        userName: updateUserDto.userName,
-      },
-    });
-
-    if (existingUser) {
-      throw new ConflictException(
-        ' User with the provided username already exists ',
-      );
+      if (existingUser) {
+        throw new ConflictException(
+          ' User with the provided email already exists ',
+        );
+      }
     }
 
     const user: User = await this.getUser(email);
