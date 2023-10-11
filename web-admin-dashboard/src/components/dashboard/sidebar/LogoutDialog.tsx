@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,7 +16,7 @@ import axios from 'axios';
 
 
 interface LogoutDialogProps {
-  onCancel: () => void;
+  setIsLogoutDialogOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const config = {
@@ -26,7 +26,7 @@ const config = {
     },
 };
 
-function LogoutDialog({ onCancel }: LogoutDialogProps) {
+function LogoutDialog({ setIsLogoutDialogOpen }: LogoutDialogProps) {
   const [openDialog, setOpenDialog] = useState(true);
 
   const navigate = useNavigate();
@@ -56,6 +56,7 @@ function LogoutDialog({ onCancel }: LogoutDialogProps) {
         title: 'Logout failed',
         description: 'An error occurred during logout.',
       });
+      setIsLogoutDialogOpen(false);
     }
   };
 
@@ -74,7 +75,7 @@ function LogoutDialog({ onCancel }: LogoutDialogProps) {
             </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => onCancel()}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel onClick={() => setIsLogoutDialogOpen(false)}>Cancel</AlertDialogCancel>
             <AlertDialogAction onClick={handleLogout}>Logout</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

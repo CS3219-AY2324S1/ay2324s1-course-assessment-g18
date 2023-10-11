@@ -52,7 +52,7 @@ function Sidebar({ openSidebarToggle, openSidebar }: Props) {
         </li>
       </ul>
 
-      {isLogoutDialogOpen && <LogoutDialog onCancel={closeLogoutDialog} />}
+      {isLogoutDialogOpen && <LogoutDialog setIsLogoutDialogOpen={closeLogoutDialog} />}
     </aside>
   );
 }
