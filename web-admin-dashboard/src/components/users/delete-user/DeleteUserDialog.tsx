@@ -30,7 +30,7 @@ function DeleteUserDialog({ user, setOpen, setIsChanged }: Props) {
   async function onDelete() {
     try {
       setIsChanged(false);
-      const isDeleted = await userRepo.deleteUser(user.userEmail);
+      const isDeleted = await userRepo.deleteUser(user.email);
 
       if (isDeleted) {
         console.log("Successfully deleted");

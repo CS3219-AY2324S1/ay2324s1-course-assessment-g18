@@ -40,16 +40,16 @@ class LiveUserRepository {
 
   async updateUser(
     userOldEmail: string,
-    userName: string,
-    userEmail: string,
-    userRole: UserRole,
+    username: string,
+    email: string,
+    role: UserRole,
   ): Promise<User> {
     const res = await axios.put(
       `/users/update/${userOldEmail}`,
       {
-        userName,
-        userEmail,
-        userRole,
+        username,
+        email,
+        role,
       },
       this.config
     );
@@ -70,15 +70,15 @@ class LiveUserRepository {
   // temporary for adding user, need to route to auth after implementing signup/login
   async addUser(
     username: string,
-    userEmail: string,
-    userRole: UserRole
+    email: string,
+    role: UserRole
   ): Promise<User> {
     const res = await axios.post(
       "/users/create",
       {
         username,
-        userEmail,
-        userRole,
+        email,
+        role,
       },
       this.config
     );

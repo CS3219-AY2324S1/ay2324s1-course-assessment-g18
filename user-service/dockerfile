@@ -1,0 +1,22 @@
+FROM node:18
+
+# Create app directory
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+ENV PORT=4000
+
+ENV GOOGLE_HOST=34.143.238.153
+ENV DB_PORT=5432
+ENV DB_NAME=user
+ENV DB_USERNAME=postgres
+ENV DB_PASSWORD=CS3219G18
+
+EXPOSE 4000
+
+CMD [ "npm", "start" ]

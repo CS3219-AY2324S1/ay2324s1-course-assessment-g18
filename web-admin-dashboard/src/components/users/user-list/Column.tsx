@@ -51,7 +51,7 @@ export const Columns: ColumnDef<User>[] = [
     ),
   },
   {
-    accessorKey: "userName",
+    accessorKey: "username",
     header: ({ column }) => {
       return (
         <Button
@@ -63,10 +63,10 @@ export const Columns: ColumnDef<User>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className=" pl-5">{row.getValue("userName")}</div>,
+    cell: ({ row }) => <div className=" pl-5">{row.getValue("username")}</div>,
   },
   {
-    accessorKey: "userEmail",
+    accessorKey: "email",
     header: ({ column }) => {
       return (
         <Button
@@ -78,20 +78,20 @@ export const Columns: ColumnDef<User>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue("userEmail")}</div>,
+    cell: ({ row }) => <div>{row.getValue("email")}</div>,
   },
   {
-    accessorKey: "userRole",
+    accessorKey: "role",
     header: "Role",
     cell: ({ row }) => (
       <div
         className={`h-full w-20 rounded-md p-1 text-center ${
-          row.getValue("userRole") == UserRole.Admin
+          row.getValue("role") == UserRole.Admin
             ? "bg-red-200 text-red-600"
             : "bg-gray-200 text-gray-600"
         }`}
       >
-        {row.getValue("userRole")}
+        {row.getValue("role")}
       </div>
     ),
   },

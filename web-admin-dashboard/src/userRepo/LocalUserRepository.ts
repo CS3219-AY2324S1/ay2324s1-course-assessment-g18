@@ -12,9 +12,9 @@ class LocalUserRepository {
       const currArr: User[] = LocalUserRepository.getUsers();
       const newUser = {
         uId: userId,
-        userName: user.userName,
-        userEmail: user.userEmail,
-        userRole: UserRole[user.userRole],
+        username: user.username,
+        email: user.email,
+        role: UserRole[user.role],
       };
       // Find index of the user with userId
       const indexOfUser = currArr.findIndex((u) => u.uId === userId);
@@ -52,9 +52,9 @@ class LocalUserRepository {
 
       const newUser = {
         uId: curr.length ? curr.length + 1 : 1,
-        userName: user.userName,
-        userEmail: user.userEmail,
-        userRole: UserRole[user.userRole],
+        username: user.username,
+        email: user.email,
+        role: UserRole[user.role],
       };
       const newArr = curr.concat(newUser);
       localStorage.setItem("users", JSON.stringify(newArr));
