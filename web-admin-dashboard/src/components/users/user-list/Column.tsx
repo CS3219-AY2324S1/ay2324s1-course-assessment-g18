@@ -86,7 +86,7 @@ export const Columns: ColumnDef<User>[] = [
     cell: ({ row }) => (
       <div
         className={`h-full w-20 rounded-md p-1 text-center ${
-          row.getValue("userRole") == UserRole.Admin
+          row.getValue("role") == UserRole.Admin
             ? "bg-red-200 text-red-600"
             : "bg-gray-200 text-gray-600"
         }`}
