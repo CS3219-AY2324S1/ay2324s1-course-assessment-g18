@@ -29,19 +29,6 @@ export class UsersService {
         ' User with the provided email already exists ',
       );
     }
-
-    existingUser = await this.userRepository.findOne({
-      where: {
-        username: user.username,
-      },
-    });
-
-    if (existingUser) {
-      throw new ConflictException(
-        ' User with the provided username already exists ',
-      );
-    }
-
   
     return await this.userRepository.save(user);
   }
