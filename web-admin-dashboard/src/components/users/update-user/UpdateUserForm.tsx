@@ -10,6 +10,7 @@ import {
   useContext,
   useState,
 } from "react";
+import { set } from "react-hook-form";
 
 interface Props {
   user: User;
@@ -22,8 +23,8 @@ function UpdateUserForm({ user, setOpen, setIsChanged }: Props) {
 
   const { toast } = useToast();
 
-  const [userName, setUsername] = useState<string>(user.userName);
-  const [userEmail, setUserEmail] = useState<string>(user.userEmail);
+  const [username, setUsername] = useState<string>(user.username);
+  const [email, setEmail] = useState<string>(user.email);
 
   async function onSubmit(e: SyntheticEvent) {
     setIsChanged(false);
@@ -38,7 +39,7 @@ function UpdateUserForm({ user, setOpen, setIsChanged }: Props) {
     }
 
     try {
-      await userRepo.updateUser(user.userEmail, userName, userEmail, user.userRole);
+      await userRepo.updateUser(user.email, username, email, user.role);
       setIsChanged(true);
       setOpen(false);
       return toast({
@@ -55,7 +56,7 @@ function UpdateUserForm({ user, setOpen, setIsChanged }: Props) {
   }
 
   function invalidForm() {
-    if (userName.length === 0 || userEmail.length === 0) {
+    if (username.length === 0 || email.length === 0) {
       return "All fields are required.";
     }
   }
@@ -64,13 +65,13 @@ function UpdateUserForm({ user, setOpen, setIsChanged }: Props) {
     <div className="form-div">
       <form onSubmit={(e) => onSubmit(e)}>
         <div className="flex items-end gap-[10px]">
-          <CustomInput label="Username" setData={setUsername} data={userName} />
+          <CustomInput label="Username" setData={setUsername} data={username} />
         </div>
         <div className="flex items-end gap-[10px]">
           <CustomInput
             label="User email"
-            setData={setUserEmail}
-            data={userEmail}
+            setData={setEmail}
+            data={email}
           />
         </div>
         <div className="flex items-end gap-[10px]">

@@ -1,7 +1,7 @@
 import { UserRole } from './user-role.enum';
 
 export class UpdateUserDto {
-  userName: string;
-  userEmail: string;
-  userRole: UserRole;
+  username: string;
+  email: string;
+  role: UserRole;
 }

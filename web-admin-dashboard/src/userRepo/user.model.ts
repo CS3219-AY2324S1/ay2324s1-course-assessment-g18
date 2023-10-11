@@ -1,8 +1,8 @@
 export interface User {
     uId: number;
-    userName: string;
-    userEmail: string;
-    userRole: UserRole;
+    username: string;
+    email: string;
+    role: UserRole;
   }
 
   export enum UserRole {
