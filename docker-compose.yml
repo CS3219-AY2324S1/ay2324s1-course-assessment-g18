@@ -1,17 +1,20 @@
 version: '3'
 services:
   user:
-    build: ./user
+    build: ./user-service
     ports:
       - 4000:4000
-    environment:
+    env_file:
+      - ./user-service/.env
 
     depends_on:
       - mongo
   question:
-    build: ./question
+    build: ./question-service
     ports:
-      - 3000:3000
+      - 4001:4001
+    env_file:
+      - ./question-service/.env
     environment:
       - MONGO_URI=mongodb+srv://CS3219G18:XGrPYdDUo4ivoMIU@peerprep.e87nhmv.mongodb.net/questions
     depends_on:
