@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-    AlertDialog,
+  AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
@@ -19,6 +19,13 @@ interface LogoutDialogProps {
   onCancel: () => void;
 }
 
+const config = {
+    baseURL: import.meta.env.VITE_BASE_AUTH_URL,
+    headers: {
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+    },
+};
+
 function LogoutDialog({ onCancel }: LogoutDialogProps) {
   const [openDialog, setOpenDialog] = useState(true);
 
@@ -28,7 +35,8 @@ function LogoutDialog({ onCancel }: LogoutDialogProps) {
 
   const handleLogout = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/auth/logout"); 
+      // #issue 43 need send refresh token to get new access tokens before logging out
+      const response = await axios.get("/auth/logout", config); 
       if (response.status === 200) {
         //clear local storage accesstokens
         localStorage.removeItem('accessToken');
@@ -59,16 +67,16 @@ function LogoutDialog({ onCancel }: LogoutDialogProps) {
         </div>
       </AlertDialogTrigger>
       <AlertDialogContent>
-      <AlertDialogHeader>
-        <AlertDialogTitle>Logout Confirmation</AlertDialogTitle>
-        <AlertDialogDescription>
-          Are you sure you want to log out?
-        </AlertDialogDescription>
-      </AlertDialogHeader>
-      <AlertDialogFooter>
-        <AlertDialogCancel onClick={() => onCancel()}>Cancel</AlertDialogCancel>
-        <AlertDialogAction onClick={handleLogout}>Logout</AlertDialogAction>
-      </AlertDialogFooter>
+        <AlertDialogHeader>
+            <AlertDialogTitle>Logout Confirmation</AlertDialogTitle>
+            <AlertDialogDescription>
+                Are you sure you want to log out?
+            </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => onCancel()}>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleLogout}>Logout</AlertDialogAction>
+        </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
   );
