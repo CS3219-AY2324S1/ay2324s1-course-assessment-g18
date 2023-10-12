@@ -15,10 +15,10 @@ jobs:
 
       - name: Build the UserService image
         run: |
-          cd user-service
+          cd ./user-service
           docker build . --file ./user-service/dockerfile --tag rgonslayer/peerprep-user:$(date +%s)
 
       - name: Build QuestionService image
         run: |
-          cd question-service
+          cd ./question-service
           docker build . --file ./question-service/dockerfile --tag rgonslayer/peerprep-question:$(date +%s)
