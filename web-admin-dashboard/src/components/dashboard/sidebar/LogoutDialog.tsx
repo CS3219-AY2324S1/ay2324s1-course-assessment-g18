@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction, SyntheticEvent, useState } from 'react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,19 +12,13 @@ import {
 } from '@/components/ui/alert-dialog';
 import { useToast } from '@/components/ui/use-toast';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '@/utils/api';
 
 
 interface LogoutDialogProps {
   setIsLogoutDialogOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-const config = {
-    baseURL: import.meta.env.VITE_BASE_AUTH_URL,
-    headers: {
-    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-    },
-};
 
 function LogoutDialog({ setIsLogoutDialogOpen }: LogoutDialogProps) {
   const [openDialog, setOpenDialog] = useState(true);
@@ -33,16 +27,18 @@ function LogoutDialog({ setIsLogoutDialogOpen }: LogoutDialogProps) {
 
   const { toast } = useToast();
 
-  const handleLogout = async () => {
+  const handleLogout = async (e: SyntheticEvent) => {
+    e.preventDefault();
+    console.log(localStorage.getItem('accessToken'));
+    console.log(localStorage.getItem('refreshToken'));   
     try {
-      // #issue 43 need send refresh token to get new access tokens before logging out
-      const response = await axios.get("/auth/logout", config); 
+      const response = await api.get("/auth/logout", {
+        baseURL: import.meta.env.VITE_BASE_AUTH_URL,
+      });
       if (response.status === 200) {
-        //clear local storage accesstokens
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-        setOpenDialog(false); // Close the dialog after logout
+        
         navigate('/login');
+        setOpenDialog(false); // Close the dialog after logout
         toast({
           title: 'Success!',
           description: 'You have been logged out successfully.',
