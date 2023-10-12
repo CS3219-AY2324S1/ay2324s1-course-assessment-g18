@@ -26,15 +26,16 @@ export class AuthService {
             newUser.password = undefined;
             const newCredentials = {
                 email: createUserDto.email,
-                password: encryptedPassword
+                password: encryptedPassword,
+                role: createUserDto.role
             }            
             const addedCredentials = await this.authRepository.addCredentials(newCredentials);
             const tokens = await this.getTokens(addedCredentials._id.toString(), addedCredentials.email, newUser.role);
             const encryptedRefreshToken = await this.hashData(tokens.refreshToken);
             newUser.refreshToken = encryptedRefreshToken;
             console.log(newUser);
-            const result = this.client.send({cmd: 'create'}, newUser);
-            await result.subscribe();
+            // const result = this.client.send({cmd: 'create'}, newUser);
+            // await result.subscribe();
             return tokens;
         } catch (error) {
             throw new HttpException("Server Error", 500);
@@ -48,7 +49,7 @@ export class AuthService {
     }
 
     async login(authDto: AuthDto) {
-        const {email, password} = authDto;
+        const {email, password, role} = authDto;
         const currentUser = await this.authRepository.getCredentialsByEmail(email);
         if (!currentUser || currentUser.password === null) {
             throw new UnauthorizedException("Invalid email or password");
@@ -57,10 +58,10 @@ export class AuthService {
         if (!isPasswordMatch) {
             throw new UnauthorizedException("Invalid email or password");
         }
-        const user = this.client.send({cmd: 'getUser'}, {"email": email});
-        await user.subscribe();
-        const userData = await lastValueFrom(user);
-        const tokens = await this.getTokens(currentUser._id.toString(), currentUser.email, userData.role);
+        // const user = this.client.send({cmd: 'getUser'}, {"email": email});
+        // await user.subscribe();
+        // const userData = await lastValueFrom(user);
+        const tokens = await this.getTokens(currentUser._id.toString(), currentUser.email, role);
         const encryptedRefreshToken = await this.hashData(tokens.refreshToken);
         this.updateRefreshToken(email, encryptedRefreshToken);
         return tokens;
@@ -79,13 +80,13 @@ export class AuthService {
         authDto.username = undefined;
         console.log(newUser);
         const currentUser = await this.authRepository.getCredentialsByEmailOrAdd(authDto);
-        const user = this.client.send({cmd: 'getOrAdd'}, newUser);
-        await user.subscribe();
-        const userData = await lastValueFrom(user);
-        console.log(userData);
-        const tokens = await this.getTokens(currentUser._id.toString(), currentUser.email, userData.role);
-        const encryptedRefreshToken = await this.hashData(tokens.refreshToken);
-        this.updateRefreshToken(createUserDto.email, encryptedRefreshToken);
+        // const user = this.client.send({cmd: 'getOrAdd'}, newUser);
+        // await user.subscribe();
+        // const userData = await lastValueFrom(user);
+        // console.log(userData);
+        const tokens = await this.getTokens(currentUser._id.toString(), currentUser.email, newUser.role);
+        // const encryptedRefreshToken = await this.hashData(tokens.refreshToken);
+        // this.updateRefreshToken(createUserDto.email, encryptedRefreshToken);
         return tokens;
     }
 
@@ -131,27 +132,30 @@ export class AuthService {
         await result.subscribe();
     }
 
-    async generateAccessTokenFromRefreshToken(userId: string, refreshToken: string) {
+    async generateAccessTokenFromRefreshToken(userId: string, refreshToken: string, userRefreshToken: string, role: string) {
         console.log('refresh');
         const email = (await this.authRepository.getCredentialsById(userId)).email;
         console.log(email);
 
-        const user = this.client.send({cmd: 'getUser'}, {"email": email});
-        await user.subscribe();
-        const userData = await lastValueFrom(user);
-        console.log(userData);
+        // const user = this.client.send({cmd: 'getUser'}, {"email": email});
+        // await user.subscribe();
+        // const userData = await lastValueFrom(user);
+        // console.log(userData);
         const userCredentials = await this.authRepository.getCredentialsByEmail(email);
-        if (!userData) {
+        // if (!userData) {
+        //     throw new ForbiddenException('Access denied');
+        // }
+        if (!email) {
             throw new ForbiddenException('Access denied');
         }
-        console.log(refreshToken);
-        console.log(userData.refreshToken);
-        const isRefreshTokenMatch = await bcrypt.compare(refreshToken, userData.refreshToken);
+        // console.log(refreshToken);
+        // console.log(userData.refreshToken);
+        const isRefreshTokenMatch = await bcrypt.compare(refreshToken, userRefreshToken);
         console.log(isRefreshTokenMatch);
         if (!isRefreshTokenMatch) {
             throw new ForbiddenException('Access denied');
         }
-        const newAccessToken = (await this.getTokens(userCredentials._id.toString(), email, userData.role)).accessToken;
+        const newAccessToken = (await this.getTokens(userCredentials._id.toString(), email, role)).accessToken;
         return {'accessToken': newAccessToken};
     }
 

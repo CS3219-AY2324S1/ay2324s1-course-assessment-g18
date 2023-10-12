@@ -37,3 +37,7 @@ export class CreateUserDto {
     refreshToken?: string;
 }
 
+export class RefreshTokenDto {
+    @IsString()
+    refreshToken: string;
+}
