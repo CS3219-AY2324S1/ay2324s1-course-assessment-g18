@@ -7,14 +7,10 @@ import { BiLogOut } from "react-icons/bi";
 
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { Link, Outlet } from "react-router-dom";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,13 +22,15 @@ import {
 
 function Navbar() {
   return (
-    <div className="w-screen h-screen flex p-5">
+    <div className="w-screen h-screen flex p-5 flex-col">
       <NavigationMenu className="h-11 w-full flex max-w-none justify-between align-center px-5">
         {/* left side */}
         <NavigationMenuList className="w-full">
           <NavigationMenuItem className="flex gap-5 items-center">
             <img src={logo} className="logo" />
-            <div className="">PeerPrep</div>
+            <Link to="/user-dashboard" className="">
+              PeerPrep
+            </Link>
           </NavigationMenuItem>
         </NavigationMenuList>
         {/* right side */}
@@ -43,7 +41,6 @@ function Navbar() {
           <NavigationMenuItem className="">
             <DropdownMenu>
               <DropdownMenuTrigger>
-                {" "}
                 <img src={profileIcon} className="profile-icon" />
               </DropdownMenuTrigger>
               <DropdownMenuContent className="mt-7 mr-5">
@@ -60,7 +57,6 @@ function Navbar() {
                   Settings
                 </DropdownMenuItem>
                 <DropdownMenuItem className="flex gap-3 cursor-pointer">
-                  {" "}
                   <BiLogOut />
                   Logout
                 </DropdownMenuItem>
@@ -69,6 +65,7 @@ function Navbar() {
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
+      <Outlet />
     </div>
   );
 }
