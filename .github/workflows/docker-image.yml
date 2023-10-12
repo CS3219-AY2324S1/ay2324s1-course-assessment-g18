@@ -14,7 +14,11 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Build the UserService image
-        run: docker build . --file ./user-service/dockerfile --tag rgonslayer/peerprep-user:$(date +%s)
+        run: |
+          cd user-service
+          docker build . --file ./user-service/dockerfile --tag rgonslayer/peerprep-user:$(date +%s)
 
       - name: Build QuestionService image
-        run: docker build . --file ./question-service/dockerfile --tag rgonslayer/peerprep-question:$(date +%s)
+        run: |
+          cd question-service
+          docker build . --file ./question-service/dockerfile --tag rgonslayer/peerprep-question:$(date +%s)
