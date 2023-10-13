@@ -8,7 +8,7 @@ function MatchDialogue() {
   const [difficulty, setDifficulty] = useState(QuestionDifficulty.Easy);
   return (
     <div className="">
-      <DialogTitle className="">Room Started</DialogTitle>
+      <DialogTitle className="">New Session Started</DialogTitle>
       <div className="ellipses">PeerPrep is matching you with a peer...</div>
       <Separator className="w-3/4" />
       <div className="flex flex-col gap-2 pt-3">

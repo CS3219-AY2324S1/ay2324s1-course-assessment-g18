@@ -30,6 +30,7 @@ function Navbar() {
   const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
 
   const createMatch = () => {
+    // implement matching logic here
     setOpenDialogue(true);
   };
 
@@ -50,7 +51,9 @@ function Navbar() {
           <NavigationMenuItem>
             <Dialog open={openDialogue} onOpenChange={setOpenDialogue}>
               <DialogTrigger>
-                <div className="match-btn">Match</div>
+                <div className="match-btn" onClick={createMatch}>
+                  Match
+                </div>
               </DialogTrigger>
               <CustomDialog dialogTitle="">
                 <MatchDialogue />
