@@ -24,8 +24,11 @@ import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
 import CustomDialog from "@/components/dialog/CustomDialog";
 import MatchDialogue from "../match/MatchDialogue";
+import LogoutDialog from "@/components/dashboard/sidebar/LogoutDialog";
 function Navbar() {
   const [openDialogue, setOpenDialogue] = useState(false);
+  const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
+
   const createMatch = () => {
     setOpenDialogue(true);
   };
@@ -72,7 +75,10 @@ function Navbar() {
                   <FiSettings />
                   Settings
                 </DropdownMenuItem>
-                <DropdownMenuItem className="flex gap-3 cursor-pointer">
+                <DropdownMenuItem
+                  className="flex gap-3 cursor-pointer"
+                  onClick={() => setIsLogoutDialogOpen(true)}
+                >
                   <BiLogOut />
                   Logout
                 </DropdownMenuItem>
@@ -81,6 +87,10 @@ function Navbar() {
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
+      {isLogoutDialogOpen && (
+        <LogoutDialog setIsLogoutDialogOpen={setIsLogoutDialogOpen} />
+      )}
+
       <Outlet />
     </div>
   );
