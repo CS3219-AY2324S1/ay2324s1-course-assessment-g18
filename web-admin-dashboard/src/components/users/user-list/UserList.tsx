@@ -97,10 +97,10 @@ function UserList({ data, setIsChanged }: Props) {
             className="w-2/5"
             placeholder="Find a user..."
             value={
-              (table.getColumn("userName")?.getFilterValue() as string) ?? ""
+              (table.getColumn("username")?.getFilterValue() as string) ?? ""
             }
             onChange={(event) =>
-              table.getColumn("userName")?.setFilterValue(event.target.value)
+              table.getColumn("username")?.setFilterValue(event.target.value)
             }
           />
         </div>

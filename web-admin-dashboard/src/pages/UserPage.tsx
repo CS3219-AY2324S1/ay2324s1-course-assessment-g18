@@ -7,12 +7,7 @@ import LiveUserRepository from "@/userRepo/LiveUserRepository";
 import { useEffect } from "react";
 import { UserRepoContext } from "@/context/UserRepoContext";
 
-interface Props {
-  handleClickDashboard: (event: React.MouseEvent) => void;
-  handleClickUser: (event: React.MouseEvent) => void;
-}
-
-function UserPage({ handleClickDashboard, handleClickUser }: Props) {
+function UserPage() {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
   const [data, setData] = useState<User[]>([]);
   const [isChanged, setIsChanged] = useState<boolean>(false);
@@ -39,8 +34,6 @@ function UserPage({ handleClickDashboard, handleClickUser }: Props) {
         <Sidebar
           openSidebarToggle={openSidebarToggle}
           openSidebar={openSidebar}
-          handleClickDashboard={handleClickDashboard}
-          handleClickUser={handleClickUser}
         />
         <UserList data={data} setIsChanged={setIsChanged} />
       </div>

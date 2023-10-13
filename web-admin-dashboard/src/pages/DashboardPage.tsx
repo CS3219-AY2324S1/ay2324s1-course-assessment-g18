@@ -7,12 +7,7 @@ import { Question } from "@/questionrepo/question.model";
 import LiveQuestionRepository from "@/questionrepo/LiveQuestionRepository";
 import { QuestionRepoContext } from "@/context/QuestionRepoContext";
 
-interface Props {
-  handleClickDashboard: (event: React.MouseEvent) => void;
-  handleClickUser: (event: React.MouseEvent) => void;
-}
-
-function DashboardPage({ handleClickDashboard, handleClickUser }: Props) {
+function DashboardPage() {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
   const [data, setData] = useState<Question[]>([]);
   const [isChanged, setIsChanged] = useState<boolean>(false);
@@ -39,8 +34,6 @@ function DashboardPage({ handleClickDashboard, handleClickUser }: Props) {
         <Sidebar
           openSidebarToggle={openSidebarToggle}
           openSidebar={openSidebar}
-          handleClickDashboard={handleClickDashboard}
-          handleClickUser={handleClickUser}
         />
         <QuestionList data={data} setIsChanged={setIsChanged} />
       </div>

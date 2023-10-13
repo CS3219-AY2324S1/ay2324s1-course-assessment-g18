@@ -27,7 +27,7 @@ import { GoogleStrategy } from "./strategies/google-oauth.strategy";
         durable: false
       }
     }
-  }])],
+  }])], 
     controllers: [AuthController],
     providers: [AuthService, AuthMongoRepository, RefreshTokenStrategy, AccessTokenStrategy, GoogleStrategy],
 })

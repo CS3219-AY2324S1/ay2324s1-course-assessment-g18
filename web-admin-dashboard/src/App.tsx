@@ -1,48 +1,36 @@
+import React from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import LoginPage from "./pages/LoginPage";
+import SignUpPage from "./pages/SignUpPage";
 import DashboardPage from "./pages/DashboardPage";
-import "./App.css";
 import UserPage from "./pages/UserPage";
-import { useEffect, useState } from "react";
 import { Toaster } from "./components/ui/toaster";
 
 function App() {
-  const [showDashboardPage, setShowDashboardPage] = useState(
-    localStorage.getItem("currentPage") === "UserPage" ? false : true
-  );
-  const [showUserPage, setShowUserPage] = useState(!showDashboardPage);
-
-  useEffect(() => {
-    localStorage.setItem(
-      "currentPage",
-      showDashboardPage ? "DashboardPage" : "UserPage"
-    );
-  }, [showDashboardPage]);
-
-  function handleClickDashboard(event: React.MouseEvent) {
-    event.preventDefault();
-    setShowDashboardPage(true);
-    setShowUserPage(false);
-  }
-
-  function handleClickUser(event: React.MouseEvent) {
-    event.preventDefault();
-    setShowDashboardPage(false);
-    setShowUserPage(true);
-  }
+  // Check if the user is authenticated 
+  // This has to be modified #issue43
+  const isAuthenticated = localStorage.getItem("accessToken");
 
   return (
     <div>
-      {showDashboardPage && (
-        <DashboardPage
-          handleClickDashboard={handleClickDashboard}
-          handleClickUser={handleClickUser}
+      <Routes>
+        {/* Redirect to login page if not authenticated */}
+        <Route
+          path="/"
+          element={
+            isAuthenticated ? (
+              <Navigate to="/dashboard" />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
         />
-      )}
-      {showUserPage && (
-        <UserPage
-          handleClickDashboard={handleClickDashboard}
-          handleClickUser={handleClickUser}
-        />
-      )}
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/users" element={<UserPage />} />
+      </Routes>
+
       <Toaster />
     </div>
   );
