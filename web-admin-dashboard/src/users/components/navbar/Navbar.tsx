@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Navbar.css";
 import logo from "./../../../assets/dashboard/logo.svg";
 import profileIcon from "../../assets/profile-icon.jpeg";
@@ -20,25 +20,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
-import CustomDialog from "@/components/dialog/CustomDialog";
 import MatchDialogue from "../match/MatchDialogue";
 import LogoutDialog from "@/components/dashboard/sidebar/LogoutDialog";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+
 function Navbar() {
   const [openDialogue, setOpenDialogue] = useState(false);
   const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
-
-  const createMatch = () => {
-    // implement matching logic here
-    setOpenDialogue(true);
-  };
+  const [chose, setChose] = useState(false);
 
   return (
     <div className="w-screen h-screen flex p-5 flex-col">
@@ -57,22 +45,9 @@ function Navbar() {
           <NavigationMenuItem>
             <Dialog open={openDialogue} onOpenChange={setOpenDialogue}>
               <DialogTrigger>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger>
-                      <div className="match-btn" onClick={createMatch}>
-                        Match
-                      </div>
-                    </TooltipTrigger>
-                    <TooltipContent className="w-[200px]">
-                      Find a peer to practice technical questions together.
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
+                <div className="match-btn">Match</div>
               </DialogTrigger>
-              <CustomDialog dialogTitle="">
-                <MatchDialogue />
-              </CustomDialog>
+              <MatchDialogue setChose={setChose} chose={chose} />
             </Dialog>
           </NavigationMenuItem>
           <NavigationMenuItem className="">
