@@ -25,6 +25,12 @@ import { PlusCircle } from "lucide-react";
 import CustomDialog from "@/components/dialog/CustomDialog";
 import MatchDialogue from "../match/MatchDialogue";
 import LogoutDialog from "@/components/dashboard/sidebar/LogoutDialog";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 function Navbar() {
   const [openDialogue, setOpenDialogue] = useState(false);
   const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
@@ -51,9 +57,18 @@ function Navbar() {
           <NavigationMenuItem>
             <Dialog open={openDialogue} onOpenChange={setOpenDialogue}>
               <DialogTrigger>
-                <div className="match-btn" onClick={createMatch}>
-                  Match
-                </div>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <div className="match-btn" onClick={createMatch}>
+                        Match
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent className="w-[200px]">
+                      Find a peer to practice technical questions together.
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </DialogTrigger>
               <CustomDialog dialogTitle="">
                 <MatchDialogue />
