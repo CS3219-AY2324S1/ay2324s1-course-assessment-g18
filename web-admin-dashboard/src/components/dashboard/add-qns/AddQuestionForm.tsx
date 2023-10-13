@@ -5,6 +5,7 @@ import {
   Dispatch,
   SetStateAction,
   useContext,
+  useEffect,
 } from "react";
 import CustomInput from "@/components/form/CustomInput";
 import { QuestionDifficulty } from "@/questionrepo/question.model";
@@ -13,6 +14,7 @@ import CustomTextArea from "@/components/form/CustomTextArea";
 import "./AddQuestionForm.css";
 import { useToast } from "@/components/ui/use-toast";
 import { QuestionRepoContext } from "@/context/QuestionRepoContext";
+import { CustomSelect } from "@/components/form/CustomSelect";
 
 interface Props {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -27,7 +29,7 @@ function AddQuestionForm({ setOpen, setIsChanged }: Props) {
   const [complexity, setComplexity] = useState<QuestionDifficulty>(
     QuestionDifficulty.Easy
   );
-  const [link, setLink] = useState<string>("");
+  const [categories, setCategories] = useState<string[]>([]);
 
   const onSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -41,16 +43,6 @@ function AddQuestionForm({ setOpen, setIsChanged }: Props) {
       });
     }
     try {
-      // const newQuestion: Question = {
-      //   _id: "",
-      //   questionTitle: title,
-      //   questionDescription: description,
-      //   questionDifficulty: complexity,
-      //   questionCategories: [],
-      //   questionId: 0, // just set a dummy value first will think of how to do this better later
-      // };
-
-      // const data = await LocalQuestionRepository.saveQuestion(newQuestion);
       await questionRepo.saveQuestion(title, description, [], complexity);
       setIsChanged(true);
       setOpen(false);
@@ -74,6 +66,10 @@ function AddQuestionForm({ setOpen, setIsChanged }: Props) {
     }
   }
 
+  useEffect(() => {
+    console.log(categories);
+  }, [categories]);
+
   return (
     <div className="form-div">
       <form onSubmit={(e) => onSubmit(e)}>
@@ -87,7 +83,13 @@ function AddQuestionForm({ setOpen, setIsChanged }: Props) {
           data={description}
         />
 
-        <CustomInput label="Link" setData={setLink} data={link} />
+        {categories.map((c) => (
+          <div key={c}>{c}</div>
+        ))}
+        <CustomSelect
+          setSelectedArray={setCategories}
+          selectedArray={categories}
+        />
         <Button type="submit">Add Question</Button>
       </form>
     </div>
