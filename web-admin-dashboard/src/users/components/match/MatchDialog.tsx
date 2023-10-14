@@ -1,29 +1,33 @@
 import { QuestionDifficulty } from "@/questionrepo/question.model";
 import React, { Dispatch, SetStateAction, useState } from "react";
-import "./MatchDialogue.css";
+import "./MatchDialog.css";
 import CustomDialog from "@/components/dialog/CustomDialog";
 import ChooseMatch from "./ChooseMatch";
 import WaitingMatch from "./WaitingMatch";
 interface Props {
-  chose: boolean;
-  setChose: Dispatch<SetStateAction<boolean>>;
+  setOpenDialog: Dispatch<SetStateAction<boolean>>;
 }
-function MatchDialogue({ chose, setChose }: Props) {
+function MatchDialog({ setOpenDialog }: Props) {
   // hard code the preferences selected for now
   const [difficulty, setDifficulty] = useState(QuestionDifficulty.Easy);
+  const [chosen, setchosen] = useState(false);
   return (
     <CustomDialog dialogTitle="">
-      {!chose ? (
+      {!chosen ? (
         <ChooseMatch
           difficulty={difficulty}
           setDifficulty={setDifficulty}
-          setChose={setChose}
+          setChosen={setchosen}
         />
       ) : (
-        <WaitingMatch difficulty={difficulty} setChose={setChose} />
+        <WaitingMatch
+          difficulty={difficulty}
+          setChosen={setchosen}
+          setOpenDialog={setOpenDialog}
+        />
       )}
     </CustomDialog>
   );
 }
 
-export default MatchDialogue;
+export default MatchDialog;

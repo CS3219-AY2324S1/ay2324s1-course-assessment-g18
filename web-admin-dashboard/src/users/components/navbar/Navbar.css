@@ -35,6 +35,18 @@
   background-color: #6470ee;
 }
 
+.end-btn {
+  color: white;
+  width: 100px;
+  padding: 5px;
+  background-color: black;
+  border-radius: 10px;
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .profile-btn {
   padding: 5px;
 }

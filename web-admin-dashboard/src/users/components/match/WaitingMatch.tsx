@@ -1,14 +1,25 @@
 import { DialogTitle } from "@/components/ui/dialog";
 import { QuestionDifficulty } from "@/questionrepo/question.model";
-import React, { SetStateAction, useState } from "react";
-import "./MatchDialogue.css";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import "./MatchDialog.css";
 import { Separator } from "@/components/ui/separator";
+import { useNavigate } from "react-router-dom";
+import DifficultyBtn from "../buttons/DifficultyBtn";
 interface Props {
   difficulty: QuestionDifficulty;
-  setChose: Dispatch<SetStateAction<boolean>>;
+  setChosen: Dispatch<SetStateAction<boolean>>;
+  setOpenDialog: Dispatch<SetStateAction<boolean>>;
 }
-function WaitingMatch({ difficulty, setChose }: Props) {
-  // hard code the preferences selected for now
+function WaitingMatch({ difficulty, setChosen, setOpenDialog }: Props) {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setTimeout(() => {
+      navigate("/session");
+      setOpenDialog(false);
+    }, 3000);
+  }, []);
+
   return (
     <div>
       <DialogTitle className="">New Session Started</DialogTitle>
@@ -17,18 +28,7 @@ function WaitingMatch({ difficulty, setChose }: Props) {
       <div className="flex flex-col gap-2 pt-3">
         <div className="text-slate-500">You have selected:</div>
         <div className="flex flex-row w-full items-center gap-3 text-slate-500">
-          Difficulty:{" "}
-          <div
-            className={`w-20 rounded-md p-1 text-center ${
-              difficulty == QuestionDifficulty.Easy
-                ? "bg-green-200 text-green-600"
-                : difficulty == QuestionDifficulty.Medium
-                ? "bg-yellow-100 text-yellow-600"
-                : "bg-red-200 text-red-600"
-            }`}
-          >
-            {difficulty}
-          </div>
+          Difficulty: <DifficultyBtn level={difficulty} />
         </div>
       </div>
     </div>

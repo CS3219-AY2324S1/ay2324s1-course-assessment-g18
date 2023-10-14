@@ -7,6 +7,7 @@ import UserPage from "./pages/UserPage";
 import { Toaster } from "./components/ui/toaster";
 import UserDashboardPage from "./users/pages/UserDashboardPage";
 import Navbar from "./users/components/navbar/Navbar";
+import SessionPage from "./users/pages/SessionPage";
 
 function App() {
   // Check if the user is authenticated
@@ -34,6 +35,7 @@ function App() {
         {/* placing user routes here temporarily first */}
         <Route element={<Navbar />}>
           <Route path="/user-dashboard" element={<UserDashboardPage />} />
+          <Route path="/session" element={<SessionPage />} />
         </Route>
       </Routes>
 

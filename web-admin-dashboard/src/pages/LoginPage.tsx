@@ -11,14 +11,14 @@ import {
 import { Button } from "@/components/ui/button";
 import CustomPassword from "@/components/form/CustomPassword";
 import { useNavigate } from "react-router-dom";
-import axios from "axios"; 
+import axios from "axios";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [accessToken, setAccessToken] = useState(""); 
-  const [refreshToken, setRefreshToken] = useState(""); 
+  const [accessToken, setAccessToken] = useState("");
+  const [refreshToken, setRefreshToken] = useState("");
 
   const navigate = useNavigate();
 
@@ -34,14 +34,14 @@ function LoginPage() {
           email,
           password,
         });
-  
+
         if (response.status === 201) {
           const { accessToken, refreshToken } = response.data;
           setAccessToken(accessToken);
           setRefreshToken(refreshToken);
-          localStorage.setItem('accessToken', accessToken);
-          localStorage.setItem('refreshToken', refreshToken);
-          navigate('/dashboard');
+          localStorage.setItem("accessToken", accessToken);
+          localStorage.setItem("refreshToken", refreshToken);
+          navigate("/dashboard");
 
           // Implement logic for token refresh, expiration handling, etc.
         } else {
@@ -53,7 +53,6 @@ function LoginPage() {
       }
     }
   };
-  
 
   function invalidForm() {
     if (email.length === 0 || password.length === 0) {
@@ -81,7 +80,9 @@ function LoginPage() {
               data={password}
             />
             <div className="text-red-400">{error}</div>
-            <Button type="submit" className="login-button">Login</Button>
+            <Button type="submit" className="login-button">
+              Login
+            </Button>
           </form>
           <div
             style={{
@@ -90,12 +91,12 @@ function LoginPage() {
               paddingTop: "20px",
             }}
           >
-          <button
-            onClick={() => navigate("/signup")}
-            className="signup-button">
-            Don't have an account? Click here to sign up!
-          </button>
-
+            <button
+              onClick={() => navigate("/signup")}
+              className="signup-button"
+            >
+              Don't have an account? Click here to sign up!
+            </button>
           </div>
         </CardContent>
       </Card>

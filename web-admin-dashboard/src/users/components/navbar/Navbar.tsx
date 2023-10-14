@@ -1,32 +1,20 @@
 import React, { useEffect, useState } from "react";
 import "./Navbar.css";
 import logo from "./../../../assets/dashboard/logo.svg";
-import profileIcon from "../../assets/profile-icon.jpeg";
-import { FiSettings } from "react-icons/fi";
-import { BiLogOut } from "react-icons/bi";
-
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
-import { Link, Outlet } from "react-router-dom";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import MatchDialogue from "../match/MatchDialogue";
-import LogoutDialog from "@/components/dashboard/sidebar/LogoutDialog";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import SettingsDropdown from "./settings-dropdown/SettingsDropdown";
+import EndBtn from "./end-btn/EndBtn";
+import MatchBtn from "./match-btn/MatchBtn";
 
 function Navbar() {
-  const [openDialogue, setOpenDialogue] = useState(false);
-  const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
-  const [chose, setChose] = useState(false);
+  const location = useLocation();
+
+  const [openDialog, setOpenDialog] = useState(false);
 
   return (
     <div className="w-screen h-screen flex p-5 flex-col">
@@ -43,46 +31,17 @@ function Navbar() {
         {/* right side */}
         <NavigationMenuList className="gap-5">
           <NavigationMenuItem>
-            <Dialog open={openDialogue} onOpenChange={setOpenDialogue}>
-              <DialogTrigger>
-                <div className="match-btn">Match</div>
-              </DialogTrigger>
-              <MatchDialogue setChose={setChose} chose={chose} />
-            </Dialog>
+            {location.pathname === "/session" ? (
+              <EndBtn openDialog={openDialog} setOpenDialog={setOpenDialog} />
+            ) : (
+              <MatchBtn openDialog={openDialog} setOpenDialog={setOpenDialog} />
+            )}
           </NavigationMenuItem>
           <NavigationMenuItem className="">
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <img src={profileIcon} className="profile-icon" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="mt-7 mr-5">
-                <div className="user-details">
-                  <img src={profileIcon} className="profile-img" />
-                  <div className="">
-                    <DropdownMenuLabel>Mary Tan</DropdownMenuLabel>
-                    <DropdownMenuItem>mary@gmail.com</DropdownMenuItem>
-                  </div>
-                </div>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem className="flex gap-3 cursor-pointer">
-                  <FiSettings />
-                  Settings
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  className="flex gap-3 cursor-pointer"
-                  onClick={() => setIsLogoutDialogOpen(true)}
-                >
-                  <BiLogOut />
-                  Logout
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <SettingsDropdown />
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
-      {isLogoutDialogOpen && (
-        <LogoutDialog setIsLogoutDialogOpen={setIsLogoutDialogOpen} />
-      )}
 
       <Outlet />
     </div>

@@ -8,14 +8,13 @@ import React, { Dispatch, SetStateAction, useState } from "react";
 interface Props {
   difficulty: QuestionDifficulty;
   setDifficulty: Dispatch<SetStateAction<QuestionDifficulty>>;
-  setChose: Dispatch<SetStateAction<boolean>>;
+  setChosen: Dispatch<SetStateAction<boolean>>;
 }
-function ChooseMatch({ difficulty, setDifficulty, setChose }: Props) {
+function ChooseMatch({ difficulty, setDifficulty, setChosen }: Props) {
   const [error, setError] = useState<string>("");
   const handleSubmit = () => {
     // matching logic here
-    console.log("choose");
-    setChose(true);
+    setChosen(true);
   };
   return (
     <div>
