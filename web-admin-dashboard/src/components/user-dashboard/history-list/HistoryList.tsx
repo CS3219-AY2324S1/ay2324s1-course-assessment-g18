@@ -22,6 +22,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import "./HistoryList.css";
+import "../../../pages/UserDashboardPage.css";
 
 interface Props {
   data: History[];
@@ -56,7 +58,7 @@ export default function HistoryList({ data }: Props) {
   });
 
   return (
-    <div className="history">
+    <div className="user-dashboard-history">
       <div className="history-main-content">
         <div className="flex items-center py-4">
           <div className="w-3/5 flex gap-2 items-center">

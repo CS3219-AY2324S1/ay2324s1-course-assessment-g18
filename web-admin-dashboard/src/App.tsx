@@ -5,6 +5,7 @@ import SignUpPage from "./pages/SignUpPage";
 import DashboardPage from "./pages/DashboardPage";
 import UserPage from "./pages/UserPage";
 import { Toaster } from "./components/ui/toaster";
+import UserDashboardPage from "./pages/UserDashboardPage";
 
 function App() {
   // Check if the user is authenticated
@@ -29,6 +30,7 @@ function App() {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/users" element={<UserPage />} />
+        <Route path="/history" element={<UserDashboardPage />} />
       </Routes>
 
       <Toaster />

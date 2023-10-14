@@ -1,11 +1,12 @@
 import "./UserDashboardStats.css";
-import qnsIcon from "../../assets/dashboard/total-qns.svg";
-import activeIcon from "../../assets/dashboard/active-now.svg";
-import membersIcon from "../../assets/dashboard/members.svg";
+import "../../../pages/UserDashboardPage.css";
+import qnsIcon from "../../../assets/dashboard/total-qns.svg";
+import activeIcon from "../../../assets/dashboard/active-now.svg";
+import membersIcon from "../../../assets/dashboard/members.svg";
 
 function UserDashboardStats() {
   return (
-    <div className="user-dashbaord-stats">
+    <div className="user-dashboard-stats">
       <div className="main-content">
         <div className="sub-div">
           <img src={qnsIcon} />
