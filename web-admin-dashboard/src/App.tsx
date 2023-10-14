@@ -7,7 +7,7 @@ import UserPage from "./pages/UserPage";
 import { Toaster } from "./components/ui/toaster";
 
 function App() {
-  // Check if the user is authenticated 
+  // Check if the user is authenticated
   // This has to be modified #issue43
   const isAuthenticated = localStorage.getItem("accessToken");
 
