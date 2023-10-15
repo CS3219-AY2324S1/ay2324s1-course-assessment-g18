@@ -10,6 +10,9 @@ RUN npm install
 COPY . .
 
 ENV PORT=3000
+ENV GOOGLE_CLIENT_ID=931740617085-0thjn5j3mtvtq1dkskg7cpe75vbku1ig.apps.googleusercontent.com
+ENV GOOGLE_CLIENT_SECRET=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
+ENV GOOGLE_CALLBACK_URL=http://localhost:3000/auth/google
 
 EXPOSE 3000
 
