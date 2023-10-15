@@ -25,7 +25,7 @@ export class MatchService {
 
   dequeueUser(userId: string, difficulty: string): void {
     const queue = this.queues[difficulty];
-    const index = queue.findIndex(user => user.client.id === userId);
+    const index = queue.findIndex(user => user.userId === userId);
     if (index !== -1) {
       queue.splice(index, 1);
       console.log(`User ${userId} dequeued from ${difficulty} queue`);
