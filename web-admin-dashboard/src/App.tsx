@@ -5,10 +5,9 @@ import SignUpPage from "./pages/SignUpPage";
 import DashboardPage from "./pages/DashboardPage";
 import UserPage from "./pages/UserPage";
 import { Toaster } from "./components/ui/toaster";
-import UserDashboardPage from "./users/pages/UserDashboardPage";
 import Navbar from "./users/components/navbar/Navbar";
 import SessionPage from "./users/pages/SessionPage";
-
+import UserDashboardPage from "./users/pages/UserDashboardPage";
 function App() {
   // Check if the user is authenticated
   // This has to be modified #issue43
