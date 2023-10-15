@@ -1,4 +1,7 @@
-import { History, QuestionDifficulty } from "@/userHistoryRepo/history.model";
+import {
+  History,
+  QuestionDifficulty,
+} from "@/users/userHistoryRepo/history.model";
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ArrowUpDown } from "lucide-react";

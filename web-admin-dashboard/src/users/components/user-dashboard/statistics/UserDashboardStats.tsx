@@ -1,8 +1,8 @@
 import "./UserDashboardStats.css";
 import "../../../pages/UserDashboardPage.css";
-import qnsIcon from "../../../assets/dashboard/total-qns.svg";
-import activeIcon from "../../../assets/dashboard/active-now.svg";
-import membersIcon from "../../../assets/dashboard/members.svg";
+import qnsIcon from "../../../../assets/dashboard/total-qns.svg";
+import activeIcon from "../../../../assets/dashboard/active-now.svg";
+import membersIcon from "../../../../assets/dashboard/members.svg";
 
 function UserDashboardStats() {
   return (

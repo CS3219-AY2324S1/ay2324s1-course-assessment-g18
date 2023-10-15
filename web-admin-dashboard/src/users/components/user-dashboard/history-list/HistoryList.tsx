@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { History } from "@/userHistoryRepo/history.model";
+import { History } from "@/users/userHistoryRepo/history.model";
 import { Columns } from "./Column";
 import {
   ColumnFiltersState,
