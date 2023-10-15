@@ -36,6 +36,7 @@
     "clsx": "^2.0.0",
     "dotenv": "^16.3.1",
     "lucide-react": "^0.276.0",
+    "monaco-editor": "^0.44.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.46.1",
@@ -47,6 +48,7 @@
     "web-vitals": "^3.4.0",
     "y-monaco": "^0.1.4",
     "y-webrtc": "^10.2.5",
+    "y-websocket": "^1.5.0",
     "yjs": "^13.6.8",
     "zod": "^3.22.2"
   },
