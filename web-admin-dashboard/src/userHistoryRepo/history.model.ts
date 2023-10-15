@@ -4,7 +4,7 @@ export interface History {
   questionTitle: string;
   questionDifficulty: QuestionDifficulty;
   questionDescription: string;
-  dateSubmitted: Date;
+  dateSubmitted: string;
   submission: string;
 }
 

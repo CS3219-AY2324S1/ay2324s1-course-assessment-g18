@@ -22,7 +22,9 @@ const fallbackHistory: History[] = [
     questionDifficulty: QuestionDifficulty.Easy,
     questionDescription:
       "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.",
-    dateSubmitted: new Date(),
+    dateSubmitted: new Date(2023, 9, 15, 8, 45).toLocaleString(
+      navigator.language
+    ),
     submission: "function twoSum(nums, target) {\n}",
   },
   {
@@ -32,7 +34,7 @@ const fallbackHistory: History[] = [
     questionDifficulty: QuestionDifficulty.Medium,
     questionDescription:
       "Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k.",
-    dateSubmitted: new Date(),
+    dateSubmitted: new Date().toLocaleString(navigator.language),
     submission: "function threeSum(nums) {\n}",
   },
 ];

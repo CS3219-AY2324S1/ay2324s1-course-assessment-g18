@@ -66,6 +66,23 @@ export const Columns: ColumnDef<History>[] = [
     },
   },
   {
+    accessorKey: "dateSubmitted",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Submitted On
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      return <div className="citalize">{row.getValue("dateSubmitted")}</div>;
+    },
+  },
+  {
     accessorKey: "submission",
     header: "Submission",
     cell: ({ row }) => (
