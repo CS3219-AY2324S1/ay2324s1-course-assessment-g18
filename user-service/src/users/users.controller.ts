@@ -7,64 +7,52 @@ import {
   Body,
   Delete,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './user.entity';
 import { UpdateUserDto } from './update-user.dto';
-import { MessagePattern, Payload } from '@nestjs/microservices';
+import { AccessTokenGuard } from './guards/accessToken.guard';
 
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
-  @MessagePattern({cmd: 'getUser'})
   @Get('/getUser/:email')
-  findOne(@Param('email') paramEmail: string, @Payload() data): Promise<User | undefined> {
-    const payloadEmail = data.email;
-    const email = paramEmail ?? payloadEmail;
-    console.log(paramEmail);
-    console.log(payloadEmail);
-    console.log(email);
+  findOne(@Param('email') email: string): Promise<User | undefined> {
     return this.usersService.getUser(email);
   }
 
+  @UseGuards(AccessTokenGuard)
   @Get()
   findAll(): Promise<User[]> {
     return this.usersService.getUsers();
   }
 
-  @MessagePattern({cmd: 'create'})
+  @UseGuards(AccessTokenGuard)
   @Post("/create")
   async create(@Body() user: User): Promise<User | null> {
     console.log("create called");
     return this.usersService.create(user);
   }
 
-  @MessagePattern({cmd: 'delete'})
+  @UseGuards(AccessTokenGuard)
   @Delete('/:email')
   async deleteUser(@Param('email') email: string) {
     await this.usersService.deleteUser(email);
   }
 
-  @Put('/update/:email')
+  @UseGuards(AccessTokenGuard)
+  @Put("/update/:email")
   async updateUser(
     @Param('email') email: string,
     @Body() updateUserDto: UpdateUserDto,
   ) {
-    await this.usersService.updateUser(email, updateUserDto);
+    return await this.usersService.updateUser(email, updateUserDto);
   }
 
-  @MessagePattern({cmd: 'getOrAdd'})
+  @Post("/getOrAdd")
   async getOrAddUser(@Body() user: User) {
-    console.log(user);
     return await this.usersService.getOrAddUser(user);
-  }
-
-  @MessagePattern({cmd: 'refresh'})
-  async refresh(@Payload() data) {
-    const {email, refreshToken} = data;
-    console.log(email);
-    console.log(refreshToken);
-    return await this.usersService.updateRefreshToken(email, refreshToken);
   }
 }

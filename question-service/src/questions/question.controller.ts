@@ -4,6 +4,7 @@ import { QuestionService } from "./question.service";
 import { AccessTokenGuard } from "./guards/accessToken.guard";
 import { RolesGuard } from "./guards/roles.guard";
 import { Roles } from "./decorator/roles.decorator";
+import { UserRole } from "./user-role.enum";
 
 @Controller('questions')
 @UseGuards(AccessTokenGuard)
@@ -23,21 +24,21 @@ export class QuestionController {
     }
 
     @UseGuards(RolesGuard)
-    @Roles(['admin'])
+    @Roles([UserRole.Admin])
     @Post()
     async addQuestion(@Body() questionDto: QuestionDto) {
         return await this.questionService.addQuestion(questionDto);
     }
 
     @UseGuards(RolesGuard)
-    @Roles(['admin'])
+    @Roles([UserRole.Admin])
     @Delete('/:questionId')
     async deleteQuestion(@Param("questionId") questionId: string) {
         await this.questionService.deleteQuestion(questionId);
     }
 
     @UseGuards(RolesGuard)
-    @Roles(['admin'])
+    @Roles([UserRole.Admin])
     @Put('/:questionId')
     async editQuestion(@Param("questionId") questionId: string, @Body() questionDto: QuestionDto) {
         return await this.questionService.editQuestion(questionId, questionDto);

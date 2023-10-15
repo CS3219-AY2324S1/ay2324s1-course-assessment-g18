@@ -12,6 +12,9 @@ export class AuthDto {
     @IsOptional()
     @IsString()
     providerId?: string;
+
+    @IsString()
+    role: string;
 }
 
 export class CreateUserDto {

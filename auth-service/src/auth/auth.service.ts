@@ -9,7 +9,9 @@ import { firstValueFrom, lastValueFrom } from 'rxjs';
 
 @Injectable()
 export class AuthService {
-    constructor(@Inject('USER_SERVICE') private client: ClientProxy, private authRepository: AuthMongoRepository, private jwtService: JwtService,) {}
+    constructor(
+        // @Inject('USER_SERVICE') private client: ClientProxy, 
+    private authRepository: AuthMongoRepository, private jwtService: JwtService,) {}
 
 
 
@@ -31,9 +33,9 @@ export class AuthService {
             }            
             const addedCredentials = await this.authRepository.addCredentials(newCredentials);
             const tokens = await this.getTokens(addedCredentials._id.toString(), addedCredentials.email, newUser.role);
-            const encryptedRefreshToken = await this.hashData(tokens.refreshToken);
-            newUser.refreshToken = encryptedRefreshToken;
-            console.log(newUser);
+            // const encryptedRefreshToken = await this.hashData(tokens.refreshToken);
+            // newUser.refreshToken = encryptedRefreshToken;
+            // console.log(newUser);
             // const result = this.client.send({cmd: 'create'}, newUser);
             // await result.subscribe();
             return tokens;
@@ -62,8 +64,8 @@ export class AuthService {
         // await user.subscribe();
         // const userData = await lastValueFrom(user);
         const tokens = await this.getTokens(currentUser._id.toString(), currentUser.email, role);
-        const encryptedRefreshToken = await this.hashData(tokens.refreshToken);
-        this.updateRefreshToken(email, encryptedRefreshToken);
+        // const encryptedRefreshToken = await this.hashData(tokens.refreshToken);
+        // this.updateRefreshToken(email, encryptedRefreshToken);
         return tokens;
     }
 
@@ -91,7 +93,7 @@ export class AuthService {
     }
 
     async logout(email: string) {
-        return await this.updateRefreshToken(email, null);
+        // return await this.updateRefreshToken(email, null);
     }
 
     async getTokens(userId: string, email: string, role: string) {
@@ -126,11 +128,11 @@ export class AuthService {
           };
     }
 
-    async updateRefreshToken(email: string, refreshToken) {
-        console.log(email, refreshToken);
-        const result = this.client.send({cmd: 'refresh'}, {"email":email, "refreshToken": refreshToken});
-        await result.subscribe();
-    }
+    // async updateRefreshToken(email: string, refreshToken) {
+    //     console.log(email, refreshToken);
+    //     const result = this.client.send({cmd: 'refresh'}, {"email":email, "refreshToken": refreshToken});
+    //     await result.subscribe();
+    // }
 
     async generateAccessTokenFromRefreshToken(userId: string, refreshToken: string, userRefreshToken: string, role: string) {
         console.log('refresh');
@@ -161,8 +163,8 @@ export class AuthService {
 
 
     async deleteUser(email: string) {
-        const result = this.client.send({cmd: 'delete'}, {});
-        await result.subscribe();
+        // const result = this.client.send({cmd: 'delete'}, {});
+        // await result.subscribe();
         await this.authRepository.deleteUser(email);
     }
 

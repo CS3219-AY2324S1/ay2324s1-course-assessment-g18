@@ -27,8 +27,9 @@ export class AuthController {
       async refreshAccessToken(@Req() req: Request, @Body() refreshTokenDto: RefreshTokenDto) {
         const userId = req.user['sub'];
         const refreshToken = req.user['refreshToken'];
-        const userRefreshToken = refreshTokenDto.refreshToken;
+        
         const role = req.user['role'];
+        const userRefreshToken = refreshTokenDto.refreshToken;
         return this.authService.generateAccessTokenFromRefreshToken(userId, refreshToken, userRefreshToken, role);
       }
 
@@ -38,15 +39,6 @@ export class AuthController {
         await this.authService.deleteUser(email);
       }
 
-      @UseGuards(AccessTokenGuard)
-      @Get('logout')
-      async logout(@Req() req: Request) {
-        console.log("logout: " + req.user['email']);
-        console.log("logout: " + req.user['sub']);
-        const email = req.user['email'];
-        console.log(email);
-        return await this.authService.logout(req.user['email']);
-      }
 
       @Get('to-google')
       @UseGuards(GoogleOauthGuard)

@@ -14,7 +14,7 @@ export class User {
   email: string;
 
   @Column()
-  role: UserRole;
+  role: string;
 
   @Column({
     type: String,
