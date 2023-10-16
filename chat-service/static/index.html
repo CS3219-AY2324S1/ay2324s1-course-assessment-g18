@@ -7,8 +7,12 @@
     <body>
         <h2>Simple nest chat</h2>
         <div id="chat"></div>
+        <input type="text" id="room" placeholder="join room id">
+        <button onclick="joinRoom()">Join</button>
+        <div></div>
         <input type="text" id="message" placeholder="type your message">
         <button onclick="sendMessage()">Send</button>
+        <button onclick="createRoom()">Create room</button>
 
     </body>
     <script src="https://code.jquery.com/jquery-3.6.1.slim.js"></script>

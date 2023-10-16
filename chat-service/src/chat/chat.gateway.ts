@@ -8,7 +8,15 @@ export class ChatGateway {
 
   @SubscribeMessage('message')
   handleMessage(socket: Socket, data: any): void {
-    const {message, username} = data;
-    socket.broadcast.emit('message', `${username}: ${message}`);
+    const {message, username, currentRoom} = data;
+    console.log(currentRoom);
+    socket.broadcast.to(currentRoom).emit('message', `${username}: ${message}`);
+  }
+
+  @SubscribeMessage('joinRoom')
+  handleJoinRoom(socket: Socket, data) {
+    const {room, toLeaveRoom} = data;
+    socket.leave(toLeaveRoom);
+    socket.join(room);
   }
 }
