@@ -3,6 +3,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { User } from "./user.entity";
 import { UsersController } from "./users.controller";
 import { UsersService } from "./users.service";
+import { AccessTokenStrategy } from "./strategies/accessToken.strategy";
 
 @Module({
 imports:[TypeOrmModule.forFeature([User]), TypeOrmModule.forRoot({
@@ -20,7 +21,7 @@ imports:[TypeOrmModule.forFeature([User]), TypeOrmModule.forRoot({
     }),
     UserModule,],
     controllers: [UsersController],
-    providers: [UsersService],
+    providers: [UsersService, AccessTokenStrategy],
     exports: [UsersService],
 })
 
