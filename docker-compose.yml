@@ -1,21 +1,28 @@
 version: '3'
 services:
+  rabbitmq:
+    container_name: rabbitmq
+    image: "rabbitmq:3.12-management"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - mynetwork
+
+
   user:
-    build: ./user-service
+    image: "rgonslayer/peerprep-user:1.1"
     ports:
       - 4000:4000
-    env_file:
-      - ./user-service/.env
+    networks:
+      - mynetwork
 
-    depends_on:
-      - mongo
+
   question:
-    build: ./question-service
+    image: "rgonslayer/peerprep-question:1.0"
     ports:
       - 4001:4001
-    env_file:
-      - ./question-service/.env
-    environment:
-      - MONGO_URI=mongodb+srv://CS3219G18:XGrPYdDUo4ivoMIU@peerprep.e87nhmv.mongodb.net/questions
-    depends_on:
-      - mongo
+
+networks:
+  mynetwork:
+    driver: bridge
