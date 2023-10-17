@@ -5,7 +5,6 @@ import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { UpdateUserDto } from './update-user.dto';
 import { ConflictException } from '@nestjs/common';
-import { MessagePattern } from '@nestjs/microservices';
 
 
 @Injectable()
