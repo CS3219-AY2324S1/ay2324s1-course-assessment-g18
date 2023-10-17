@@ -5,7 +5,7 @@ import FallbackHistoryRepository from "@/users/userHistoryRepo/FallbackHistoryRe
 
 function UserDashboardPage() {
   return (
-    <div className="w-full h-full">
+    <div className="user-dashboard-main">
       <UserDashboardStats />
       <HistoryList data={FallbackHistoryRepository.getHistory()} />
     </div>

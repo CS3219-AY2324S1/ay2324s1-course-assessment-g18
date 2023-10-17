@@ -17,8 +17,8 @@ function Navbar() {
   const [openDialog, setOpenDialog] = useState(false);
 
   return (
-    <div className="w-screen h-screen flex p-5 flex-col">
-      <NavigationMenu className="h-11 w-full flex max-w-none justify-between align-center px-5">
+    <div className="w-screen h-screen flex flex-col">
+      <NavigationMenu className="h-13 w-full flex max-w-none justify-between align-center px-5 bg-white pt-[10px] pb-[10px] pl-[25px] pr-[25px]">
         {/* left side */}
         <NavigationMenuList className="w-full">
           <NavigationMenuItem className="flex gap-5 items-center">
