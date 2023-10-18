@@ -10,7 +10,8 @@ import {
   useContext,
   useState,
 } from "react";
-import { set } from "react-hook-form";
+import { UserRole } from "@/userRepo/user.model";
+import RoleSelect from "@/components/form/RoleSelect";
 
 interface Props {
   user: User;
@@ -25,6 +26,7 @@ function UpdateUserForm({ user, setOpen, setIsChanged }: Props) {
 
   const [username, setUsername] = useState<string>(user.username);
   const [email, setEmail] = useState<string>(user.email);
+  const [role, setRole] = useState<string>(user.role);
 
   async function onSubmit(e: SyntheticEvent) {
     setIsChanged(false);
@@ -39,7 +41,7 @@ function UpdateUserForm({ user, setOpen, setIsChanged }: Props) {
     }
 
     try {
-      await userRepo.updateUser(user.email, username, email, user.role);
+      await userRepo.updateUser(user.email, username, email, role as UserRole);
       setIsChanged(true);
       setOpen(false);
       return toast({
@@ -68,11 +70,11 @@ function UpdateUserForm({ user, setOpen, setIsChanged }: Props) {
           <CustomInput label="Username" setData={setUsername} data={username} />
         </div>
         <div className="flex items-end gap-[10px]">
-          <CustomInput
-            label="User email"
-            setData={setEmail}
-            data={email}
-          />
+          <CustomInput label="User email" setData={setEmail} data={email} />
+        </div>
+        <div className="flex items-end gap-[10px]">
+          {/* <CustomInput label="User role" setData={setRole} data={role} /> */}
+          <RoleSelect label="User role" setData={setRole} data={role} />
         </div>
         <div className="flex items-end gap-[10px]">
           <Button type="submit">Update User</Button>

@@ -9,19 +9,29 @@ services:
     networks:
       - mynetwork
 
+  auth:
+    container_name: auth
+    image: "rgonslayer/peerprep-auth:1.0"
+    ports:
+      - 3000:3000
+    networks:
+      - mynetwork
+
+  question:
+    container_name: question
+    image: "rgonslayer/peerprep-question:1.0"
+    ports:
+      - 4001:4001
+    networks:
+      - mynetwork
 
   user:
+    container_name: user
     image: "rgonslayer/peerprep-user:1.1"
     ports:
       - 4000:4000
     networks:
       - mynetwork
-
-
-  question:
-    image: "rgonslayer/peerprep-question:1.0"
-    ports:
-      - 4001:4001
 
 networks:
   mynetwork:

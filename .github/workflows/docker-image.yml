@@ -1,0 +1,28 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build the UserService image
+        run: |
+          cd ./user-service
+          docker build . --file ./dockerfile --tag rgonslayer/peerprep-user:1.1
+          docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+          docker push rgonslayer/peerprep-user:1.1
+
+      - name: Build QuestionService image
+        run: |
+          cd ./question-service
+          docker build . --file ./dockerfile --tag rgonslayer/peerprep-question:1.0
+          docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+          docker push rgonslayer/peerprep-question:1.0
