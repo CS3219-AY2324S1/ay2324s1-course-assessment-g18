@@ -3,7 +3,8 @@ import { Button } from "@/components/ui/button";
 import { DialogTitle } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { QuestionDifficulty } from "@/questionrepo/question.model";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { matchingSocket } from "./sockets";
 
 interface Props {
   difficulty: QuestionDifficulty;
@@ -11,9 +12,11 @@ interface Props {
   setChosen: Dispatch<SetStateAction<boolean>>;
 }
 function ChooseMatch({ difficulty, setDifficulty, setChosen }: Props) {
+
   const [error, setError] = useState<string>("");
   const handleSubmit = () => {
     // matching logic here
+    matchingSocket.emit("match", {difficulty: difficulty, userId: "username"});
     setChosen(true);
   };
   return (

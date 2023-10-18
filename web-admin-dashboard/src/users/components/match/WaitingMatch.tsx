@@ -5,6 +5,7 @@ import "./MatchDialog.css";
 import { Separator } from "@/components/ui/separator";
 import { useNavigate } from "react-router-dom";
 import DifficultyBtn from "../buttons/DifficultyBtn";
+import { chatSocket, matchingSocket } from "./sockets";
 interface Props {
   difficulty: QuestionDifficulty;
   setChosen: Dispatch<SetStateAction<boolean>>;
@@ -12,13 +13,17 @@ interface Props {
 }
 function WaitingMatch({ difficulty, setChosen, setOpenDialog }: Props) {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    setTimeout(() => {
-      navigate("/session");
-      setOpenDialog(false);
-    }, 3000);
-  }, []);
+  matchingSocket.on("matchSuccess", (payload) => {
+    const { roomId } = payload;
+    chatSocket.emit('joinRoom', {roomId, toLeaveRoom: ""});
+    navigate("/session");
+  });
+//   useEffect(() => {
+//     setTimeout(() => {
+//       navigate("/session");
+//       setOpenDialog(false);
+//     }, 3000);
+//   }, []);
 
   return (
     <div>

@@ -2,7 +2,7 @@ import { WebSocketGateway, WebSocketServer, SubscribeMessage, OnGatewayConnectio
 import { Server, Socket } from 'socket.io';
 import { MatchService } from './match.service';
 
-@WebSocketGateway()
+@WebSocketGateway({cors: true})
 export class MatchGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     @WebSocketServer() server: Server;
@@ -14,14 +14,15 @@ export class MatchGateway implements OnGatewayConnection, OnGatewayDisconnect {
     }
   
     handleDisconnect(client: Socket) {
-        this.matchService.dequeueUser(client.id, 'easy');
-        this.matchService.dequeueUser(client.id, 'medium');
-        this.matchService.dequeueUser(client.id, 'hard');
+        this.matchService.dequeueUser(client.id, 'Easy');
+        this.matchService.dequeueUser(client.id, 'Medium');
+        this.matchService.dequeueUser(client.id, 'Hard');
         console.log(`Client disconnected: ${client.id}`);
     }
   
     @SubscribeMessage('match')
     handleSelectDifficulty(client: Socket, payload: { difficulty: string, userId: string }) {
+        console.log(payload);
       const { difficulty, userId } = payload;
       const user = { client: client, difficulty, userId };
       this.matchService.enqueueUser(user);

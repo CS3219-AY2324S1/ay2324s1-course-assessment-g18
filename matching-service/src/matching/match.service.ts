@@ -12,18 +12,20 @@ interface User {
 @Injectable()
 export class MatchService {
   private queues: { [key: string]: User[] } = {
-    easy: [],
-    medium: [],
-    hard: [],
+    Easy: [],
+    Medium: [],
+    Hard: [],
   };
 
   enqueueUser(user: User): void {
     const { difficulty } = user;
+    console.log(user);
     this.queues[difficulty].push(user);
     this.tryMatchUsers(difficulty);
   }
 
   dequeueUser(userId: string, difficulty: string): void {
+    console.log(difficulty);    
     const queue = this.queues[difficulty];
     const index = queue.findIndex(user => user.userId === userId);
     if (index !== -1) {
