@@ -4,11 +4,16 @@ import "./ChatBubble.css";
 
 interface Props {
   msg: Message;
+  isMe: boolean;
 }
-function ChatBubble({ msg }: Props) {
+function ChatBubble({ msg, isMe }: Props) {
   const { message, username } = msg;
   return (
-    <div className="bubble-container bubble-container-me">
+    <div
+      className={
+        isMe ? "bubble-container-me bubble-container" : "bubble-container"
+      }
+    >
       <div className="text-xs text-clip">{message}</div>
     </div>
   );

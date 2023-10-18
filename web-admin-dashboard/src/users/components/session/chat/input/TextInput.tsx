@@ -1,21 +1,26 @@
-import React, { SyntheticEvent, useState } from "react";
+import React, { SyntheticEvent, useContext, useState } from "react";
 import { IoIosSend } from "react-icons/io";
 import "./TextInput.css";
 import { chatSocket } from "@/users/components/match/sockets";
+import { AuthContext } from "@/context/AuthProvider";
 
 interface Props {
-    roomId: String
+  roomId: string;
 }
 
-function TextInput({roomId} : Props) {
+function TextInput({ roomId }: Props) {
+  const { authState } = useContext(AuthContext);
+  const user = authState.userInfo;
   const [msg, setMsg] = useState("");
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     // send message logic
-    chatSocket.emit('message', { message: msg, username: "my user", currentRoom: roomId });
-
-    // console.log(msg);
+    chatSocket.emit("message", {
+      message: msg,
+      username: user.username,
+      currentRoom: roomId,
+    });
     setMsg("");
   };
   return (

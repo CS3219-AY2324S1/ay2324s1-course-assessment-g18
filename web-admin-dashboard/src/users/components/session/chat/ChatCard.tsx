@@ -10,29 +10,16 @@ import { chatSocket } from "../../match/sockets";
 interface Props {
   setOpenChat: Dispatch<SetStateAction<boolean>>;
   peer: User;
-  roomId: String;
+  roomId: string;
   messagesReceived: Message[];
 }
 function ChatCard({ setOpenChat, peer, roomId, messagesReceived }: Props) {
-
-//   const tempMessages: Message[] = [
-//     {
-//       message:
-//         "Hey there Johndoe this question is really hard, what do you say?",
-//       username: "johnnydepp",
-//     },
-//     {
-//       message: "Hey there Johndoe",
-//       username: "johndoe",
-//     },
-//   ];
-
   return (
     <Card className="w-[300px] h-[400px]">
       <div className="flex p-5 flex-col h-full w-full">
-        <ChatHeader setOpenChat={setOpenChat} peer={peer}/>
-        <ChatContainer messages={messagesReceived}/>
-        <TextInput roomId={roomId}/>
+        <ChatHeader setOpenChat={setOpenChat} peer={peer} />
+        <ChatContainer messages={messagesReceived} />
+        <TextInput roomId={roomId} />
       </div>
     </Card>
   );
