@@ -1,14 +1,21 @@
 import React, { SyntheticEvent, useState } from "react";
 import { IoIosSend } from "react-icons/io";
 import "./TextInput.css";
+import { chatSocket } from "@/users/components/match/sockets";
 
-function TextInput() {
+interface Props {
+    roomId: String
+}
+
+function TextInput({roomId} : Props) {
   const [msg, setMsg] = useState("");
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     // send message logic
-    console.log(msg);
+    chatSocket.emit('message', { message: msg, username: "my user", currentRoom: roomId });
+
+    // console.log(msg);
     setMsg("");
   };
   return (
