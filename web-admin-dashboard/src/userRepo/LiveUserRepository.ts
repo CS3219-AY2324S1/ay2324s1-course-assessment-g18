@@ -1,5 +1,6 @@
 
 import {User, UserRole} from "@/userRepo/user.model";
+import api from "@/utils/api";
 import axios from "axios";
 
 class LiveUserRepository {
@@ -18,7 +19,7 @@ class LiveUserRepository {
 
   async getUsers(): Promise<User[]> {
     try {
-      const res = await axios.get("/users", this.config);
+      const res = await api.get("/users", this.config);
       const data: User[] = res.data;
       return data;
     } catch (error) {
@@ -29,7 +30,7 @@ class LiveUserRepository {
 
   async getUser(userEmail: string): Promise<User | null> {
     try {
-      const res = await axios.get(`/users/getUser/${userEmail}`, this.config);
+      const res = await api.get(`/users/getUser/${userEmail}`, this.config);
       const data: User = res.data;
       return data;
     } catch (error) {
@@ -44,7 +45,7 @@ class LiveUserRepository {
     email: string,
     role: UserRole,
   ): Promise<User> {
-    const res = await axios.put(
+    const res = await api.put(
       `/users/update/${userOldEmail}`,
       {
         username,
@@ -59,7 +60,7 @@ class LiveUserRepository {
 
   async deleteUser(userEmail: string) {
     try {
-      await axios.delete(`/users/${userEmail}`, this.config);
+      await api.delete(`/users/${userEmail}`, this.config);
       return true;
     } catch (error) {
       console.log(error);
@@ -73,7 +74,7 @@ class LiveUserRepository {
     email: string,
     role: UserRole
   ): Promise<User> {
-    const res = await axios.post(
+    const res = await api.post(
       "/users/create",
       {
         username,

@@ -20,6 +20,8 @@ function SignUpPage() {
   const [userPassword, setUserPassword] = useState("");
   const [userRole, setUserRole] = useState("user"); // Set default value to "user"
   const [error, setError] = useState("");
+  const [accessToken, setAccessToken] = useState(""); 
+  const [refreshToken, setRefreshToken] = useState(""); 
 
   const navigate = useNavigate();
 
@@ -31,14 +33,21 @@ function SignUpPage() {
       return;
     } else {
       try {
-        const response = await axios.post("http://localhost:3000/auth/sign-up", { 
+        const authResponse = await axios.post("http://localhost:3000/auth/sign-up", { 
           username: userName,
           email: userEmail,
           password: userPassword,
           role: userRole,
         });
+
+        
   
-        if (response.status === 201) {
+        if (authResponse.status === 201) {
+          const { accessToken, refreshToken } = authResponse.data;
+          setAccessToken(accessToken);
+          setRefreshToken(refreshToken);
+          localStorage.setItem('accessToken', accessToken);
+          localStorage.setItem('refreshToken', refreshToken);
           // Redirect to login page upon succesful signup
           navigate("/login");
           return toast({

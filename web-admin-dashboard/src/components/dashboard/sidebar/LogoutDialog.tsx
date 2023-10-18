@@ -32,11 +32,12 @@ function LogoutDialog({ setIsLogoutDialogOpen }: LogoutDialogProps) {
     console.log(localStorage.getItem('accessToken'));
     console.log(localStorage.getItem('refreshToken'));   
     try {
-      const response = await api.get("/auth/logout", {
-        baseURL: import.meta.env.VITE_BASE_AUTH_URL,
+      const response = await api.put("/users/update/:email", {
+        baseURL: import.meta.env.VITE_BASE_USERHOST_URL,
       });
       if (response.status === 200) {
-        
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
         navigate('/login');
         setOpenDialog(false); // Close the dialog after logout
         toast({
