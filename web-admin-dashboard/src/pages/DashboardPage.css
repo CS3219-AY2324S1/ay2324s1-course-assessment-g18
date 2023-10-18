@@ -1,15 +1,29 @@
 .dashboard-main {
   display: grid;
   grid-template-columns: 230px 1fr;
-  grid-template-rows: 0.6fr 3fr;
+  grid-template-rows: 80px 0.6fr 3fr;
   grid-template-areas:
+    "sidebar greet"
     "sidebar stats"
     "sidebar question";
   gap: 20px;
   width: 100%;
   height: 100vh;
+  /* padding: 30px; */
 }
 
+.greetings {
+  grid-area: greet;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  /* font-weight: bold; */
+  gap: 5px;
+  font-size: 1.2rem;
+  /* margin-top: 5px; */
+  /* margin-bottom: 5px; */
+  background-color: transparent;
+}
 .dashboard-content {
   padding: 100px;
   display: flex;
@@ -18,7 +32,6 @@
 
 .dashboard-stats {
   grid-area: stats;
-  padding-top: 30px;
   padding-right: 30px;
 }
 
