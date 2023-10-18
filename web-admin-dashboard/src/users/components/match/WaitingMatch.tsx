@@ -19,10 +19,8 @@ function WaitingMatch({ difficulty, setChosen, setOpenDialog }: Props) {
     const { roomId } = payload;
     chatSocket.emit('joinRoom', {roomId, toLeaveRoom: ""});
     navigate("/session", {state: {roomId: roomId}});
+    setOpenDialog(false);
   });
-  chatSocket.on("message", () => {
-    console.log("yay");
-  })
 //   useEffect(() => {
 //     setTimeout(() => {
 //       navigate("/session");
