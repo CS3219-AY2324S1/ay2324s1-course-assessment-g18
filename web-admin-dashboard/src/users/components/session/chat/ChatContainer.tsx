@@ -5,25 +5,16 @@ import { Message } from "@/users/models/message.model";
 import { chatSocket } from "../../match/sockets";
 
 interface Props {
-  messages: Message[];
+  messages: Message[]
 }
 function ChatContainer({ messages }: Props) {
     // const msg: Message[] = [];
-  const [messagesRecieved, setMessagesReceived] = useState(messages);
-  chatSocket.on('message', (message) => {
-    setMessagesReceived((state : Message[]) => [
-        ...state,
-        {
-          message: message.message,
-          username: message.username,
-        },
-      ]);
-});
 
+    console.log(messages);
   return (
     <div className="chat-container">
-      {messagesRecieved.map((msg) => (
-        <ChatBubble msg={msg} />
+      {messages.map((msg) => (
+        <ChatBubble msg={msg}/>
       ))}
     </div>
   );

@@ -6,9 +6,12 @@ import QuestionView from "../components/session/question-view/QuestionView";
 import { QuestionDifficulty } from "@/questionrepo/question.model";
 import ChatBtn from "../components/session/chat/ChatBtn";
 import { User, UserRole } from "@/userRepo/user.model";
+import { useLocation } from "react-router-dom";
+import { chatSocket } from "../components/match/sockets";
 
 function SessionPage() {
   const [lang, setLang] = useState<Language>(Language.JavaScript);
+  const location = useLocation();
   const tempQn = {
     questionId: 1,
     _id: "e0bd7857-17b3-4811-9434-3f623efa78ae",
@@ -38,7 +41,7 @@ function SessionPage() {
           <LanugageSelect setData={setLang} data={lang} />
         </div>
         <CodeEditor roomId="1" language={lang} />
-        <ChatBtn peer={peer} />
+        <ChatBtn peer={peer} roomId={location.state.roomId}/>
       </div>
     </div>
   );
