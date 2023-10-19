@@ -20,7 +20,7 @@ function WaitingMatch({
   setOpenDialog,
   setRematch,
 }: Props) {
-  const toast = useToast();
+  const { toast } = useToast();
   const navigate = useNavigate();
 
   matchingSocket.on("matchSuccess", (payload) => {
@@ -37,8 +37,13 @@ function WaitingMatch({
       const { roomId } = payload;
       chatSocket.emit("joinRoom", { roomId, toLeaveRoom: "" });
       navigate("/session", { state: { roomId: roomId } });
+
       setOpenDialog(false);
       matchSuccessReceived = true;
+      toast({
+        title: "Match found!",
+        description: "A peer has joined the room.",
+      });
     };
 
     matchingSocket.on("matchSuccess", matchSuccessHandler);
