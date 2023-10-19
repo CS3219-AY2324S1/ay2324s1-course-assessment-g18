@@ -6,27 +6,58 @@ import { Separator } from "@/components/ui/separator";
 import { useNavigate } from "react-router-dom";
 import DifficultyBtn from "../buttons/DifficultyBtn";
 import { chatSocket, matchingSocket } from "./sockets";
-
+import { useToast } from "@/components/ui/use-toast";
 
 interface Props {
   difficulty: QuestionDifficulty;
   setChosen: Dispatch<SetStateAction<boolean>>;
   setOpenDialog: Dispatch<SetStateAction<boolean>>;
+  setRematch: Dispatch<SetStateAction<boolean>>;
 }
-function WaitingMatch({ difficulty, setChosen, setOpenDialog }: Props) {
+function WaitingMatch({
+  difficulty,
+  setChosen,
+  setOpenDialog,
+  setRematch,
+}: Props) {
+  const toast = useToast();
   const navigate = useNavigate();
+
   matchingSocket.on("matchSuccess", (payload) => {
     const { roomId } = payload;
-    chatSocket.emit('joinRoom', {roomId, toLeaveRoom: ""});
-    navigate("/session", {state: {roomId: roomId}});
+    chatSocket.emit("joinRoom", { roomId, toLeaveRoom: "" });
+    navigate("/session", { state: { roomId: roomId } });
     setOpenDialog(false);
   });
-//   useEffect(() => {
-//     setTimeout(() => {
-//       navigate("/session");
-//       setOpenDialog(false);
-//     }, 3000);
-//   }, []);
+
+  useEffect(() => {
+    let matchSuccessReceived = false;
+
+    const matchSuccessHandler = (payload: any) => {
+      const { roomId } = payload;
+      chatSocket.emit("joinRoom", { roomId, toLeaveRoom: "" });
+      navigate("/session", { state: { roomId: roomId } });
+      setOpenDialog(false);
+      matchSuccessReceived = true;
+    };
+
+    matchingSocket.on("matchSuccess", matchSuccessHandler);
+
+    // Set a timeout to check if "matchSuccess" is not received within 30 seconds
+    const timeoutId = setTimeout(() => {
+      if (!matchSuccessReceived) {
+        // If "matchSuccess" is not received within 30 seconds, trigger an error.
+        console.error("Match did not succeed within 30 seconds.");
+        setRematch(true);
+        // You can throw an error or handle it according to your needs.
+      }
+    }, 30000);
+
+    // To cancel the timeout if "matchSuccess" is received before it expires
+    matchingSocket.on("matchSuccess", () => {
+      clearTimeout(timeoutId);
+    });
+  }, []);
 
   return (
     <div>
