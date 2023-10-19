@@ -10,7 +10,11 @@ interface Props {
 }
 function CustomDialog({ dialogTitle, children }: Props) {
   return (
-    <DialogContent>
+    <DialogContent
+      onInteractOutside={(e) => {
+        e.preventDefault();
+      }}
+    >
       <DialogHeader>
         <DialogTitle>{dialogTitle}</DialogTitle>
         {children}

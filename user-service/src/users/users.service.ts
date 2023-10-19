@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { UpdateUserDto } from './update-user.dto';
 import { ConflictException } from '@nestjs/common';
-import { MessagePattern } from '@nestjs/microservices';
+import * as bcrypt from 'bcrypt';
 
 
 @Injectable()
@@ -47,13 +47,19 @@ export class UsersService {
   }
 
 
+  async hashData(data: string) : Promise<string> {
+    const salt = await bcrypt.genSalt();
+    return bcrypt.hashSync(data, salt);
+  }
+
   async getUsers(): Promise<User[]> {
     return await this.userRepository.find();
   }
 
   async updateUser(email, updateUserDto: UpdateUserDto) {
+    console.log(email);
     console.log(updateUserDto);
-    if (email != updateUserDto.email) {
+    if (email != updateUserDto.email && updateUserDto.email != undefined) {
       const existingUser = await this.userRepository.findOne({
         where: {
           email: updateUserDto.email,
@@ -68,9 +74,10 @@ export class UsersService {
     }
 
     const user: User = await this.getUser(email);
-    user.username = updateUserDto.username;
-    user.email = updateUserDto.email;
-    user.role = updateUserDto.role;
+    user.username = updateUserDto.username ?? user.username;
+    user.email = updateUserDto.email ?? user.email;
+    user.role = updateUserDto.role ?? user.role;
+    user.refreshToken = updateUserDto.refreshToken ? await this.hashData(updateUserDto.refreshToken) : user.refreshToken;
     return await this.userRepository.save(user);
   }
 
@@ -78,15 +85,4 @@ export class UsersService {
     return this.userRepository.delete({ email });
   }
 
-  
-  async updateRefreshToken(email: string, refreshToken: string) {
-    console.log("service")
-    console.log(email);
-    console.log(refreshToken);
-    const user: User = await this.getUser(email);
-    console.log(user);
-    user.refreshToken = refreshToken;
-    console.log(user);
-    await this.userRepository.save(user);
-  }
 }

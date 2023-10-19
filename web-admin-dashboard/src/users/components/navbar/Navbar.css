@@ -1,0 +1,70 @@
+.navbar {
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  height: 7%;
+  padding: 5px 10px;
+  align-items: center;
+  border-radius: 10px;
+  width: 100%;
+  position: static;
+}
+
+.logo {
+  height: 30px;
+  width: 30px;
+}
+
+.list-item {
+  width: max-content;
+}
+
+.match-btn {
+  color: white;
+  width: 100px;
+  padding: 5px;
+  background-color: #5562eb;
+  border-radius: 10px;
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.match-btn:hover {
+  background-color: #6470ee;
+}
+
+.end-btn {
+  color: white;
+  width: 100px;
+  padding: 5px;
+  background-color: black;
+  border-radius: 10px;
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.profile-btn {
+  padding: 5px;
+}
+
+.profile-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.user-details {
+  display: flex;
+  padding: 10px;
+}
+.profile-img {
+  width: 60px;
+  border-radius: 50%;
+  height: 60px;
+}

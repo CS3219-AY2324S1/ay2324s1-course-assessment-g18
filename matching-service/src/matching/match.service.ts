@@ -12,9 +12,9 @@ interface User {
 @Injectable()
 export class MatchService {
   private queues: { [key: string]: User[] } = {
-    easy: [],
-    medium: [],
-    hard: [],
+    Easy: [],
+    Medium: [],
+    Hard: [],
   };
 
   enqueueUser(user: User): void {
