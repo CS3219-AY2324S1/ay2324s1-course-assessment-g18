@@ -15,6 +15,7 @@ import axios from "axios";
 import LiveUserRepository from "@/userRepo/LiveUserRepository";
 import { AuthContext } from "@/context/AuthProvider";
 import { UserRole } from "@/userRepo/user.model";
+import api from "@/utils/api";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -45,12 +46,14 @@ function LoginPage() {
 
         if (authResponse.status === 201) {
           const { accessToken, refreshToken } = authResponse.data;
-          const userResponse = await axios.put(`http://localhost:4000/users/update/${email}`, {refreshToken: refreshToken})
+          localStorage.setItem("accessToken", accessToken);
+          localStorage.setItem("refreshToken", refreshToken);
+          const userResponse = await api.put(`http://localhost:4000/users/update/${email}`, {
+            refreshToken: refreshToken})
           if (userResponse.status == 200) {
             setAccessToken(accessToken);
             setRefreshToken(refreshToken);
-            localStorage.setItem("accessToken", accessToken);
-            localStorage.setItem("refreshToken", refreshToken);
+            
             const user = await new LiveUserRepository().getUser(email);
 
             if (user) {
