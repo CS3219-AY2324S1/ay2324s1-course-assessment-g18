@@ -39,9 +39,6 @@ function LoginPage() {
           email,
           password,
         });
-
-        // const user = JSON.parse(localStorage.getItem('userInfo')!);
-        // const userEmail = user['email'];
         
 
         if (authResponse.status === 201) {
@@ -68,7 +65,6 @@ function LoginPage() {
           }
           }
 
-          // Implement logic for token refresh, expiration handling, etc.
         } else {
           setError("Login failed. Check your credentials.");
         }
