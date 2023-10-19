@@ -23,7 +23,7 @@ export class AuthController {
       }
 
       @UseGuards(RefreshTokenGuard)
-      @Get('refresh')
+      @Post('refresh')
       async refreshAccessToken(@Req() req: Request, @Body() refreshTokenDto: RefreshTokenDto) {
         const userId = req.user['sub'];
         const refreshToken = req.user['refreshToken'];

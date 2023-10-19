@@ -27,13 +27,18 @@ api.interceptors.response.use(
         originalRequest._retry = true;
   
         try {
-            const refreshToken = localStorage.getItem('refreshToken');
-            const response = await axios.get('/auth/refresh', {
-                baseURL: import.meta.env.VITE_BASE_AUTH_URL,
-                headers: {
-                    Authorization: `Bearer ${refreshToken}`,
-                }
-            });
+          const refreshToken = localStorage.getItem('refreshToken');
+          const user = JSON.parse(localStorage.getItem('userInfo')!);
+          const userRefreshToken = user['refreshToken'];
+          console.log(refreshToken);
+          console.log(userRefreshToken);
+          const response = await axios.post('http://localhost:3000/auth/refresh', {
+              // baseURL: import.meta.env.VITE_BASE_AUTH_URL,
+              headers: {
+                  Authorization: `Bearer ${refreshToken}`,
+              },     
+              userRefreshToken
+          });
           console.log("Refreshed Access token");
           console.log(response);
           const { accessToken } = response.data;

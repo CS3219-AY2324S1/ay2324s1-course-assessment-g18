@@ -53,8 +53,12 @@ const AuthProvider = ({ children }: Props) => {
 
   const logout = async () => {
     try {
-      const response = await api.get("/auth/logout", {
-        baseURL: import.meta.env.VITE_BASE_AUTH_URL,
+      const userInfo = JSON.parse(localStorage.getItem("userInfo")!);
+      const email = userInfo['email'];
+      
+      const response = await api.put(`http://localhost:4000/users/update/${email}`, {
+      // baseURL: import.meta.env.VITE_BASE_USERHOST_URL,
+      refreshToken: null
       });
       if (response.status === 200) {
         navigate("/login");

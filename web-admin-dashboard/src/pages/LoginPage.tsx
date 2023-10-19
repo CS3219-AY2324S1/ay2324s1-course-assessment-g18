@@ -34,27 +34,35 @@ function LoginPage() {
       return;
     } else {
       try {
-        const response = await axios.post("http://localhost:3000/auth/login", {
+        const authResponse = await axios.post("http://localhost:3000/auth/login", {
           email,
           password,
         });
 
-        if (response.status === 201) {
-          const { accessToken, refreshToken } = response.data;
-          setAccessToken(accessToken);
-          setRefreshToken(refreshToken);
-          localStorage.setItem("accessToken", accessToken);
-          localStorage.setItem("refreshToken", refreshToken);
-          const user = await new LiveUserRepository().getUser(email);
+        // const user = JSON.parse(localStorage.getItem('userInfo')!);
+        // const userEmail = user['email'];
+        
 
-          if (user) {
-            setAuthState({ userInfo: user, loggedIn: true });
-            localStorage.setItem("userInfo", JSON.stringify(user));
-            if (user.role === UserRole.Admin) {
-              navigate("/dashboard");
-            } else {
-              navigate("/user-dashboard");
-            }
+        if (authResponse.status === 201) {
+          const { accessToken, refreshToken } = authResponse.data;
+          const userResponse = await axios.put(`http://localhost:4000/users/update/${email}`, {refreshToken: refreshToken})
+          if (userResponse.status == 200) {
+            setAccessToken(accessToken);
+            setRefreshToken(refreshToken);
+            localStorage.setItem("accessToken", accessToken);
+            localStorage.setItem("refreshToken", refreshToken);
+            const user = await new LiveUserRepository().getUser(email);
+
+            if (user) {
+              setAuthState({ userInfo: user, loggedIn: true });
+              localStorage.setItem("userInfo", JSON.stringify(user));
+              console.log(user);
+              if (user.role === UserRole.Admin) {
+                navigate("/dashboard");
+              } else {
+                navigate("/user-dashboard");
+              }
+          }
           }
 
           // Implement logic for token refresh, expiration handling, etc.
