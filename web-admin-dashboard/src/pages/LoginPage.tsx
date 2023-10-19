@@ -77,52 +77,50 @@ function LoginPage() {
   return (
     <React.Fragment>
       {/* redirect to dashboard if authenticated, need to figure a way to redirect if its a user */}
-      {isAuthenticated() ? (
-        <Navigate to="dashboard" />
-      ) : (
-        <div className="login-main">
-          <Card className="login-content">
-            <CardHeader className="header">
-              <div>PeerPrep</div>
-              <CardTitle className="text-3xl font-bold">
-                Welcome back!
-              </CardTitle>
-              <CardDescription className="text-base text-slate-500">
-                Enter your login details
-              </CardDescription>
-            </CardHeader>
+      {/* {isAuthenticated() ? (
+        <Navigate to="/dashboard" />
+      ) : ( */}
+      <div className="login-main">
+        <Card className="login-content">
+          <CardHeader className="header">
+            <div>PeerPrep</div>
+            <CardTitle className="text-3xl font-bold">Welcome back!</CardTitle>
+            <CardDescription className="text-base text-slate-500">
+              Enter your login details
+            </CardDescription>
+          </CardHeader>
 
-            <CardContent>
-              <form className="login-form" onSubmit={onSubmit}>
-                <CustomInput label="Email" setData={setEmail} data={email} />
-                <CustomPassword
-                  label="Password"
-                  setData={setPassword}
-                  data={password}
-                />
-                <div className="text-red-400">{error}</div>
-                <Button type="submit" className="login-button">
-                  Login
-                </Button>
-              </form>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  paddingTop: "20px",
-                }}
+          <CardContent>
+            <form className="login-form" onSubmit={onSubmit}>
+              <CustomInput label="Email" setData={setEmail} data={email} />
+              <CustomPassword
+                label="Password"
+                setData={setPassword}
+                data={password}
+              />
+              <div className="text-red-400">{error}</div>
+              <Button type="submit" className="login-button">
+                Login
+              </Button>
+            </form>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                paddingTop: "20px",
+              }}
+            >
+              <button
+                onClick={() => navigate("/signup")}
+                className="signup-button"
               >
-                <button
-                  onClick={() => navigate("/signup")}
-                  className="signup-button"
-                >
-                  Don't have an account? Click here to sign up!
-                </button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      )}
+                Don't have an account? Click here to sign up!
+              </button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+      {/* )} */}
     </React.Fragment>
   );
 }
