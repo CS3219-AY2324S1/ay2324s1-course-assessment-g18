@@ -41,7 +41,7 @@ function SessionPage() {
           <LanugageSelect setData={setLang} data={lang} />
         </div>
         <CodeEditor roomId="1" language={lang} />
-        <ChatBtn peer={peer} roomId={location.state.roomId}/>
+        <ChatBtn peer={peer} roomId={location.state.roomId} />
       </div>
     </div>
   );
