@@ -15,10 +15,10 @@ function App() {
   return (
     <AuthProvider>
       <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
         <Route element={<AdminProviderWrapper />}>
           <Route element={<Sidebar />}>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignUpPage />} />
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/users" element={<UserPage />} />
           </Route>
