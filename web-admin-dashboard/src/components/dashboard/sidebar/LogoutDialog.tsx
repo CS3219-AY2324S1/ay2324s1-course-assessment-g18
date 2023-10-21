@@ -20,37 +20,6 @@ function LogoutDialog({ setIsLogoutDialogOpen }: LogoutDialogProps) {
   const [openDialog, setOpenDialog] = useState(true);
   const { logout } = useContext(AuthContext);
 
-  // const navigate = useNavigate();
-
-  // const { toast } = useToast();
-
-  // const handleLogout = async (e: SyntheticEvent) => {
-  //   e.preventDefault();
-  //   console.log(localStorage.getItem("accessToken"));
-  //   console.log(localStorage.getItem("refreshToken"));
-  //   try {
-  //     const response = await api.get("/auth/logout", {
-  //       baseURL: import.meta.env.VITE_BASE_AUTH_URL,
-  //     });
-  //     if (response.status === 200) {
-  //       navigate("/login");
-  //       setOpenDialog(false); // Close the dialog after logout
-  //       toast({
-  //         title: "Success!",
-  //         description: "You have been logged out successfully.",
-  //       });
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     toast({
-  //       variant: "destructive",
-  //       title: "Logout failed",
-  //       description: "An error occurred during logout.",
-  //     });
-  //     setIsLogoutDialogOpen(false);
-  //   }
-  // };
-
   return (
     <AlertDialog open={openDialog} onOpenChange={setOpenDialog}>
       <AlertDialogTrigger asChild>
