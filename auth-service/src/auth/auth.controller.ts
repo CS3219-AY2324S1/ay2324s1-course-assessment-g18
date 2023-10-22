@@ -57,7 +57,7 @@ export class AuthController {
       @UseGuards(GoogleOauthGuard)
       async googleAuthRedirect(@Req() req: Request, @Res() res: Response) {
         const {user} = req;
-        const newUser: CreateUserDto = {"email": user['email'], "username": user["username"], "providerId": user['providerId'], "role": "user"}
+        const newUser: CreateUserDto = {"email": user['email'], "providerId": user['providerId']}
         res.send(newUser);
         return await this.authService.oauthLogin(newUser);
       }
