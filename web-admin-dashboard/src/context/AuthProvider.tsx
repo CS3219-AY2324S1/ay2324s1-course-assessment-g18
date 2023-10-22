@@ -46,6 +46,7 @@ const AuthProvider = ({ children }: Props) => {
   const isAuthenticated = () => {
     // similar to the previous function in App.tsx
     if (authState.loggedIn) {
+      console.log("User is logged in");
       return true;
     }
     return false;
@@ -61,11 +62,15 @@ const AuthProvider = ({ children }: Props) => {
       refreshToken: null
       });
       if (response.status === 200) {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
         navigate("/login");
+        console.log("User is logged out");
         setAuthState({
           userInfo: {},
           loggedIn: false,
         });
+        console.log(authState.loggedIn);
         toast({
           title: "Success!",
           description: "You have been logged out successfully.",
