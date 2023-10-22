@@ -45,25 +45,42 @@ function LoginPage() {
           const { accessToken, refreshToken } = authResponse.data;
           localStorage.setItem("accessToken", accessToken);
           localStorage.setItem("refreshToken", refreshToken);
-          const userResponse = await api.put(`http://localhost:4000/users/update/${email}`, {
-            refreshToken: refreshToken})
-          if (userResponse.status == 200) {
-            setAccessToken(accessToken);
-            setRefreshToken(refreshToken);
-            
-            const user = await new LiveUserRepository().getUser(email);
 
-            if (user) {
-              setAuthState({ userInfo: user, loggedIn: true });
-              localStorage.setItem("userInfo", JSON.stringify(user));
-              console.log(user);
-              if (user.role === UserRole.Admin) {
-                navigate("/dashboard");
-              } else {
-                navigate("/user-dashboard");
-              }
+          // Get user role from BE
+          const user = await new LiveUserRepository().getUser(email);
+          localStorage.setItem("userInfo", JSON.stringify(user));
+          const userInfo = JSON.parse(localStorage.getItem("userInfo")!);
+          const role = userInfo['role'];
+          console.log("Role: ", role);
+          
+          const roleTokens = await api.post("http://localhost:3000/auth/tokens", {
+            email,
+            role,
+          });
+
+            if (roleTokens.status === 201) {
+              const { accessToken, refreshToken } = roleTokens.data;
+              // Set tokens with role
+              localStorage.setItem("accessToken", accessToken);
+              localStorage.setItem("refreshToken", refreshToken);
+              const userResponse = await api.put(`http://localhost:4000/users/update/${email}`, {
+                refreshToken: refreshToken})
+              if (userResponse.status == 200) {
+                if (user) {
+                  setAuthState({ userInfo: user, loggedIn: true });
+                  console.log('User:', user);
+                  if (user.role === UserRole.Admin) {
+                    navigate("/dashboard");
+                  } else {
+                    navigate("/user-dashboard");
+                  }
+                } else {
+                  console.log("User is NULL");
+                }
+
+            }
           }
-          }
+          
 
         } else {
           setError("Login failed. Check your credentials.");

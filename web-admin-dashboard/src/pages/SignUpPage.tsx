@@ -20,7 +20,7 @@ function SignUpPage() {
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
-  const [userRole, setUserRole] = useState("user"); // Set default value to "user"
+  const [userRole, setUserRole] = useState("Admin"); 
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
