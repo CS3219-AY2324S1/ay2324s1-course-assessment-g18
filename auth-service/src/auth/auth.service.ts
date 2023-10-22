@@ -53,6 +53,9 @@ export class AuthService {
     async login(authDto: AuthDto) {
         const {email, password, role} = authDto;
         const currentUser = await this.authRepository.getCredentialsByEmail(email);
+        const allUsers = await this.authRepository.getAllCredentials();
+        console.log(allUsers);
+        console.log(currentUser);
         if (!currentUser || currentUser.password === null) {
             throw new UnauthorizedException("Invalid email or password");
         }
@@ -63,6 +66,7 @@ export class AuthService {
         // const user = this.client.send({cmd: 'getUser'}, {"email": email});
         // await user.subscribe();
         // const userData = await lastValueFrom(user);
+        console.log(role);
         const tokens = await this.getTokens(currentUser._id.toString(), currentUser.email, role);
         // const encryptedRefreshToken = await this.hashData(tokens.refreshToken);
         // this.updateRefreshToken(email, encryptedRefreshToken);
@@ -106,7 +110,7 @@ export class AuthService {
               },
               {
                 secret: 'secret',
-                expiresIn: '5s',
+                expiresIn: '5m',
               },
             ),
             this.jwtService.signAsync(

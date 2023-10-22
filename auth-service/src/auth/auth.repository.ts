@@ -28,6 +28,11 @@ export class AuthMongoRepository implements AuthRepository {
         return await this.authModel.create(authDto);
     }
 
+    async getAllCredentials() {
+        return await this.authModel.find().exec();
+    }
+
+
     async addCredentials(authDto: AuthDto) {
         return await this.authModel.create(authDto);
     }
