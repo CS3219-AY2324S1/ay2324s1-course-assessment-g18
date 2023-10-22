@@ -15,12 +15,12 @@ import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
 import { AuthContext, AuthProvider } from "@/context/AuthProvider";
 import LiveUserRepository from "@/userRepo/LiveUserRepository";
+import { UserRole } from "@/userRepo/user.model";
 
 function SignUpPage() {
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
-  const [userRole, setUserRole] = useState("Admin"); 
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
@@ -34,17 +34,20 @@ function SignUpPage() {
       return;
     } else {
       try {
-        const response = await axios.post(
+        const authResponse = await axios.post(
           "http://localhost:3000/auth/sign-up",
           {
-            username: userName,
             email: userEmail,
             password: userPassword,
-            role: userRole,
           }
         );
 
-        if (response.status === 201) {
+        if (authResponse.status === 201) {
+          const { accessToken, refreshToken } = authResponse.data;
+          localStorage.setItem("accessToken", accessToken);
+          localStorage.setItem("refreshToken", refreshToken);
+
+          const createUser = await new LiveUserRepository().addUser(userName, userEmail, refreshToken, UserRole.User);
           const user = await new LiveUserRepository().getUser(userEmail);
           if (user) {
             setAuthState({ userInfo: user, loggedIn: true });
