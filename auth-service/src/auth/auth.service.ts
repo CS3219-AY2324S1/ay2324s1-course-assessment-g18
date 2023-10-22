@@ -5,6 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom, lastValueFrom } from 'rxjs';
+import { UserRole } from './dto/user-role.enum';
 
 
 @Injectable()
@@ -27,7 +28,7 @@ export class AuthService {
                 password: encryptedPassword,
             }            
             const addedCredentials = await this.authRepository.addCredentials(newCredentials);
-            const tokens = await this.getTokens(addedCredentials._id.toString(), addedCredentials.email, undefined);
+            const tokens = await this.getTokens(addedCredentials._id.toString(), addedCredentials.email, UserRole.User);
             // const encryptedRefreshToken = await this.hashData(tokens.refreshToken);
             // newUser.refreshToken = encryptedRefreshToken;
             // console.log(newUser);
