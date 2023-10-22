@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Request, Response } from 'express';
-import { AuthDto, CreateUserDto, RefreshTokenDto } from './dto/auth.dto';
+import { AuthDto, CreateUserDto, RefreshTokenDto, TokenDto } from './dto/auth.dto';
 import { RefreshTokenGuard } from './guards/refreshToken.guard';
 import { AccessTokenGuard } from './guards/accessToken.guard';
 import { GoogleOauthGuard } from './guards/google-oauth.guard';
@@ -19,8 +19,14 @@ export class AuthController {
 
       @Post('login')
       async login(@Body() authDto: AuthDto) {
-        console.log("login");
         return this.authService.login(authDto);
+      }
+
+      @UseGuards(AccessTokenGuard)
+      @Post('tokens') 
+      async generateTokensWithRole(@Body() tokenDto: TokenDto) {
+        const {email, role} = tokenDto;
+        return this.authService.generateTokenWithRole(email, role);
       }
 
       @UseGuards(RefreshTokenGuard)

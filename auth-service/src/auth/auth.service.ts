@@ -51,11 +51,8 @@ export class AuthService {
     }
 
     async login(authDto: AuthDto) {
-        const {email, password, role} = authDto;
+        const {email, password } = authDto;
         const currentUser = await this.authRepository.getCredentialsByEmail(email);
-        const allUsers = await this.authRepository.getAllCredentials();
-        console.log(allUsers);
-        console.log(currentUser);
         if (!currentUser || currentUser.password === null) {
             throw new UnauthorizedException("Invalid email or password");
         }
@@ -66,10 +63,15 @@ export class AuthService {
         // const user = this.client.send({cmd: 'getUser'}, {"email": email});
         // await user.subscribe();
         // const userData = await lastValueFrom(user);
-        console.log(role);
-        const tokens = await this.getTokens(currentUser._id.toString(), currentUser.email, role);
+        const tokens = await this.getTokens(currentUser._id.toString(), currentUser.email);
         // const encryptedRefreshToken = await this.hashData(tokens.refreshToken);
         // this.updateRefreshToken(email, encryptedRefreshToken);
+        return tokens;
+    }
+
+    async generateTokenWithRole(email: String, role: String) {
+        const currentUser = await this.authRepository.getCredentialsByEmail(email);
+        const tokens = await this.getTokens(currentUser._id.toString(), currentUser.email, role);
         return tokens;
     }
 
@@ -96,11 +98,7 @@ export class AuthService {
         return tokens;
     }
 
-    async logout(email: string) {
-        // return await this.updateRefreshToken(email, null);
-    }
-
-    async getTokens(userId: string, email: string, role: string) {
+    async getTokens(userId: String, email: String, role?: String) {
         const [accessToken, refreshToken] = await Promise.all([
             this.jwtService.signAsync(
               {

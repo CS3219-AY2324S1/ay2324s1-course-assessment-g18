@@ -13,9 +13,18 @@ export class AuthDto {
     @IsString()
     providerId?: string;
 
+    // @IsString()
+    // role: string;
+}
+
+export class TokenDto {
+    @IsString()
+    email: string;
+
     @IsString()
     role: string;
 }
+
 
 export class CreateUserDto {
     @IsString()
