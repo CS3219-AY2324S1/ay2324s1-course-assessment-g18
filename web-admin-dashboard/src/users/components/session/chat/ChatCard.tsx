@@ -10,7 +10,7 @@ import { chatSocket } from "../../match/sockets";
 interface Props {
   setOpenChat: Dispatch<SetStateAction<boolean>>;
   peer: User;
-  roomId: string;
+  roomId: String;
   messagesReceived: Message[];
 }
 function ChatCard({ setOpenChat, peer, roomId, messagesReceived }: Props) {
