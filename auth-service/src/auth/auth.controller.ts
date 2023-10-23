@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Request, Response } from 'express';
-import { AuthDto, CreateUserDto, RefreshTokenDto } from './dto/auth.dto';
+import { AuthDto, CreateUserDto, RefreshTokenDto, TokenDto } from './dto/auth.dto';
 import { RefreshTokenGuard } from './guards/refreshToken.guard';
 import { AccessTokenGuard } from './guards/accessToken.guard';
 import { GoogleOauthGuard } from './guards/google-oauth.guard';
@@ -20,6 +20,13 @@ export class AuthController {
       @Post('login')
       async login(@Body() authDto: AuthDto) {
         return this.authService.login(authDto);
+      }
+
+      @UseGuards(AccessTokenGuard)
+      @Post('tokens') 
+      async generateTokensWithRole(@Body() tokenDto: TokenDto) {
+        const {email, role} = tokenDto;
+        return this.authService.generateTokenWithRole(email, role);
       }
 
       @UseGuards(RefreshTokenGuard)
@@ -50,7 +57,7 @@ export class AuthController {
       @UseGuards(GoogleOauthGuard)
       async googleAuthRedirect(@Req() req: Request, @Res() res: Response) {
         const {user} = req;
-        const newUser: CreateUserDto = {"email": user['email'], "username": user["username"], "providerId": user['providerId'], "role": "user"}
+        const newUser: CreateUserDto = {"email": user['email'], "providerId": user['providerId']}
         res.send(newUser);
         return await this.authService.oauthLogin(newUser);
       }
