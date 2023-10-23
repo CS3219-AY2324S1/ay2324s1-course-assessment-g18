@@ -9,7 +9,7 @@ import { chatSocket } from "../../match/sockets";
 
 interface Props {
   setOpenChat: Dispatch<SetStateAction<boolean>>;
-  peer: User;
+  peer: String;
   roomId: String;
   messagesReceived: Message[];
 }
