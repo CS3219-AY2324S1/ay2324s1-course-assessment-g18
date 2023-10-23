@@ -3,6 +3,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Checkbox } from '@/components/ui/checkbox';
 import { ArrowUpDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import HistoryDialog from './history-card/HistoryDialog';
 
 export const Columns: ColumnDef<History>[] = [
   {
@@ -34,9 +35,7 @@ export const Columns: ColumnDef<History>[] = [
   {
     accessorKey: 'questionTitle',
     header: 'Title',
-    cell: ({ row }) => (
-      <div className="citalize">{row.getValue('questionTitle')}</div>
-    ),
+    cell: ({ row }) => <HistoryDialog history={row.original} />,
   },
   {
     accessorKey: 'questionDifficulty',
