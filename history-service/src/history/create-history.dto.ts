@@ -1,5 +1,9 @@
-import { IsString, IsNotEmpty } from 'class-validator';
+import { IsString, IsNotEmpty, IsNumber } from 'class-validator';
 export class CreateHistoryDto {
+  @IsNumber()
+  @IsNotEmpty()
+  readonly historyId: number;
+
   @IsString()
   @IsNotEmpty()
   readonly userEmail: string;
