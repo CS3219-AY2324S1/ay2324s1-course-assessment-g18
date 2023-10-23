@@ -1,15 +1,17 @@
 export interface History {
   _id: string;
-  email: string;
+  userEmail: string;
+  questionId: string;
   questionTitle: string;
-  questionDifficulty: QuestionDifficulty;
   questionDescription: string;
+  questionDifficulty: QuestionDifficulty;
+  chatHistory: string;
+  codeExecuted: string;
   dateSubmitted: string;
-  submission: string;
 }
 
 export enum QuestionDifficulty {
-  Easy = "Easy",
-  Medium = "Medium",
-  Hard = "Hard",
+  Easy = 'Easy',
+  Medium = 'Medium',
+  Hard = 'Hard',
 }
