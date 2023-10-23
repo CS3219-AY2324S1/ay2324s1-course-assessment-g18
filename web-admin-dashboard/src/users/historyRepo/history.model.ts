@@ -1,5 +1,6 @@
 export interface History {
   _id: string;
+  historyId: number;
   userEmail: string;
   questionId: string;
   questionTitle: string;
