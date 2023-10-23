@@ -21,7 +21,7 @@ export class MatchGateway implements OnGatewayConnection, OnGatewayDisconnect {
     }
   
     @SubscribeMessage('match')
-    handleSelectDifficulty(client: Socket, payload: { difficulty: string, userId: string }) {
+    handleSelectDifficulty(client: Socket, payload: { difficulty: string, userId: String }) {
       const { difficulty, userId } = payload;
       const user = { client: client, difficulty, userId };
       this.matchService.enqueueUser(user);
