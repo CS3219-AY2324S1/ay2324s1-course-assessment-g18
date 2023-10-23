@@ -5,6 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom, lastValueFrom } from 'rxjs';
+import { UserRole } from './dto/user-role.enum';
 
 
 @Injectable()
@@ -22,17 +23,12 @@ export class AuthService {
         }
         const encryptedPassword = await this.hashData(createUserDto.password);
         try {
-            const newUser = {
-                ...createUserDto,
-            }
-            newUser.password = undefined;
             const newCredentials = {
                 email: createUserDto.email,
                 password: encryptedPassword,
-                role: createUserDto.role
             }            
             const addedCredentials = await this.authRepository.addCredentials(newCredentials);
-            const tokens = await this.getTokens(addedCredentials._id.toString(), addedCredentials.email, newUser.role);
+            const tokens = await this.getTokens(addedCredentials._id.toString(), addedCredentials.email, UserRole.User);
             // const encryptedRefreshToken = await this.hashData(tokens.refreshToken);
             // newUser.refreshToken = encryptedRefreshToken;
             // console.log(newUser);
@@ -51,7 +47,7 @@ export class AuthService {
     }
 
     async login(authDto: AuthDto) {
-        const {email, password, role} = authDto;
+        const {email, password } = authDto;
         const currentUser = await this.authRepository.getCredentialsByEmail(email);
         if (!currentUser || currentUser.password === null) {
             throw new UnauthorizedException("Invalid email or password");
@@ -63,9 +59,15 @@ export class AuthService {
         // const user = this.client.send({cmd: 'getUser'}, {"email": email});
         // await user.subscribe();
         // const userData = await lastValueFrom(user);
-        const tokens = await this.getTokens(currentUser._id.toString(), currentUser.email, role);
+        const tokens = await this.getTokens(currentUser._id.toString(), currentUser.email);
         // const encryptedRefreshToken = await this.hashData(tokens.refreshToken);
         // this.updateRefreshToken(email, encryptedRefreshToken);
+        return tokens;
+    }
+
+    async generateTokenWithRole(email: String, role: String) {
+        const currentUser = await this.authRepository.getCredentialsByEmail(email);
+        const tokens = await this.getTokens(currentUser._id.toString(), currentUser.email, role);
         return tokens;
     }
 
@@ -73,30 +75,26 @@ export class AuthService {
         const authDto = {
             ...createUserDto
         }
-        const newUser = {
-            ...createUserDto,
-        }
-        newUser.password = undefined;
-        authDto.refreshToken = undefined;
-        authDto.role = undefined;
-        authDto.username = undefined;
-        console.log(newUser);
+        // const newUser = {
+        //     ...createUserDto,
+        // }
+        // newUser.password = undefined;
+        // authDto.refreshToken = undefined;
+        // authDto.role = undefined;
+        // authDto.username = undefined;
+        // console.log(newUser);
         const currentUser = await this.authRepository.getCredentialsByEmailOrAdd(authDto);
         // const user = this.client.send({cmd: 'getOrAdd'}, newUser);
         // await user.subscribe();
         // const userData = await lastValueFrom(user);
         // console.log(userData);
-        const tokens = await this.getTokens(currentUser._id.toString(), currentUser.email, newUser.role);
+        const tokens = await this.getTokens(currentUser._id.toString(), currentUser.email, undefined);
         // const encryptedRefreshToken = await this.hashData(tokens.refreshToken);
         // this.updateRefreshToken(createUserDto.email, encryptedRefreshToken);
         return tokens;
     }
 
-    async logout(email: string) {
-        // return await this.updateRefreshToken(email, null);
-    }
-
-    async getTokens(userId: string, email: string, role: string) {
+    async getTokens(userId: String, email: String, role?: String) {
         const [accessToken, refreshToken] = await Promise.all([
             this.jwtService.signAsync(
               {

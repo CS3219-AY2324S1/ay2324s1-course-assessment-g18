@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { UpdateUserDto } from './update-user.dto';
 import { ConflictException } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 
 
 @Injectable()
@@ -46,6 +47,11 @@ export class UsersService {
   }
 
 
+  async hashData(data: string) : Promise<string> {
+    const salt = await bcrypt.genSalt();
+    return bcrypt.hashSync(data, salt);
+  }
+
   async getUsers(): Promise<User[]> {
     return await this.userRepository.find();
   }
@@ -71,7 +77,7 @@ export class UsersService {
     user.username = updateUserDto.username ?? user.username;
     user.email = updateUserDto.email ?? user.email;
     user.role = updateUserDto.role ?? user.role;
-    user.refreshToken = updateUserDto.refreshToken ?? user.refreshToken;
+    user.refreshToken = updateUserDto.refreshToken ? await this.hashData(updateUserDto.refreshToken) : user.refreshToken;
     return await this.userRepository.save(user);
   }
 

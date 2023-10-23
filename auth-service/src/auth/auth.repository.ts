@@ -15,7 +15,7 @@ export class AuthMongoRepository implements AuthRepository {
 
     constructor(@InjectModel(Auth.name) private authModel: Model<AuthDocument>){}
     
-    async getCredentialsByEmail(email: string) {
+    async getCredentialsByEmail(email: String) {
         return await this.authModel.findOne({email});
     }
 
@@ -27,6 +27,11 @@ export class AuthMongoRepository implements AuthRepository {
         }
         return await this.authModel.create(authDto);
     }
+
+    async getAllCredentials() {
+        return await this.authModel.find().exec();
+    }
+
 
     async addCredentials(authDto: AuthDto) {
         return await this.authModel.create(authDto);
