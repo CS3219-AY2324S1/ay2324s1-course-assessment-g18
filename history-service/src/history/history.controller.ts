@@ -25,14 +25,14 @@ export class HistoryController {
     return this.historyService.getHistory();
   }
 
-  @Get(':userId')
-  async getHistoryByUserId(@Param('userId') userId: string) {
-    return this.historyService.getHistoryByUserId(userId);
+  @Get(':userEmail')
+  async getHistoryByUserId(@Param('userEmail') userEmail: string) {
+    return this.historyService.getHistoryByUserEmail(userEmail);
   }
 
-  @Delete(':userId')
-  async deleteHistoryByUserId(@Param('userId') userId: string) {
-    return this.historyService.deleteHistoryByUserId(userId);
+  @Delete(':userEmail')
+  async deleteHistoryByUserId(@Param('userEmail') userEmail: string) {
+    return this.historyService.deleteHistoryByUserEmail(userEmail);
   }
 
   @Put(':historyId')

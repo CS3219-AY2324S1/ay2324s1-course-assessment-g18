@@ -22,16 +22,16 @@ export class HistoryService {
     return historyData;
   }
 
-  async getHistoryByUserId(userId: string): Promise<IHistory[]> {
-    const existingHistory = await this.historyModel.find({ userId });
+  async getHistoryByUserEmail(userEmail: string): Promise<IHistory[]> {
+    const existingHistory = await this.historyModel.find({ userEmail });
     if (!existingHistory || existingHistory.length === 0) {
       throw new NotFoundException('History data not found');
     }
     return existingHistory;
   }
 
-  async deleteHistoryByUserId(userId: string) {
-    const deletedHistory = await this.historyModel.deleteMany({ userId });
+  async deleteHistoryByUserEmail(userEmail: string) {
+    const deletedHistory = await this.historyModel.deleteMany({ userEmail });
     if (!deletedHistory) {
       throw new NotFoundException('History data not found');
     }

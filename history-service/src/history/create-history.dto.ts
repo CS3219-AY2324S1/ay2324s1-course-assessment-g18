@@ -2,7 +2,7 @@ import { IsString, IsNotEmpty } from 'class-validator';
 export class CreateHistoryDto {
   @IsString()
   @IsNotEmpty()
-  readonly userId: string;
+  readonly userEmail: string;
 
   @IsString()
   @IsNotEmpty()

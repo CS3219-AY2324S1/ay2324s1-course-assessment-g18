@@ -7,7 +7,7 @@ export class History {
   historyId: string;
 
   @Prop()
-  userId: string;
+  userEmail: string;
 
   @Prop()
   questionId: string;
