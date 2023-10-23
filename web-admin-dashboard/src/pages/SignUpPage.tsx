@@ -22,6 +22,8 @@ function SignUpPage() {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [error, setError] = useState("");
+  const [accessToken, setAccessToken] = useState(""); 
+  const [refreshToken, setRefreshToken] = useState(""); 
 
   const navigate = useNavigate();
   const { setAuthState } = useContext(AuthContext);
