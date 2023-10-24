@@ -1,12 +1,19 @@
 import { DialogTitle } from "@/components/ui/dialog";
 import { QuestionDifficulty } from "@/questionrepo/question.model";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import "./MatchDialog.css";
 import { Separator } from "@/components/ui/separator";
 import { useNavigate } from "react-router-dom";
 import DifficultyBtn from "../buttons/DifficultyBtn";
 import { chatSocket, matchingSocket } from "./sockets";
 import { useToast } from "@/components/ui/use-toast";
+import { AuthContext } from "@/context/AuthProvider";
 
 interface Props {
   difficulty: QuestionDifficulty;
@@ -20,6 +27,8 @@ function WaitingMatch({
   setOpenDialog,
   setRematch,
 }: Props) {
+  const { authState } = useContext(AuthContext);
+  const username = authState.userInfo.username;
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -54,6 +63,10 @@ function WaitingMatch({
         // If "matchSuccess" is not received within 30 seconds, trigger an error.
         console.error("Match did not succeed within 30 seconds.");
         setRematch(true);
+        matchingSocket.emit("matchCancel", {
+          difficulty: difficulty,
+          userId: username,
+        });
         // You can throw an error or handle it according to your needs.
       }
     }, 30000);
