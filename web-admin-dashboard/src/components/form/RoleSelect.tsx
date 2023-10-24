@@ -14,10 +14,10 @@ interface Props {
   label: string;
   labelStyling?: CSSProperties;
   setData: Dispatch<SetStateAction<string>>;
-  data: string;
+  role: string;
 }
 
-function RoleSelect({ label, labelStyling, setData, data }: Props) {
+function RoleSelect({ label, labelStyling, setData, role }: Props) {
   return (
     <div className="input-div">
       <Label
@@ -34,7 +34,7 @@ function RoleSelect({ label, labelStyling, setData, data }: Props) {
         }}
       >
         <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="User Role" />
+          <SelectValue placeholder={role} />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="User">User</SelectItem>

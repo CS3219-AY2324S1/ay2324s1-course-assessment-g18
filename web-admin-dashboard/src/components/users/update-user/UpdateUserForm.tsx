@@ -73,8 +73,7 @@ function UpdateUserForm({ user, setOpen, setIsChanged }: Props) {
           <CustomInput label="User email" setData={setEmail} data={email} />
         </div>
         <div className="flex items-end gap-[10px]">
-          {/* <CustomInput label="User role" setData={setRole} data={role} /> */}
-          <RoleSelect label="User role" setData={setRole} data={role} />
+          <RoleSelect label="User role" setData={setRole} role={role} />
         </div>
         <div className="flex items-end gap-[10px]">
           <Button type="submit">Update User</Button>

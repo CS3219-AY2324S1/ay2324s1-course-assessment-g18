@@ -6,15 +6,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { BiLogOut } from "react-icons/bi";
 import { FiSettings } from "react-icons/fi";
 import profileIcon from "../../../assets/profile-icon.jpeg";
 import LogoutDialog from "@/components/dashboard/sidebar/LogoutDialog";
+import { AuthContext } from "@/context/AuthProvider";
 
 function SettingsDropdown() {
   const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
 
+  const { authState } = useContext(AuthContext);
+  const user = authState.userInfo;
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -24,8 +27,8 @@ function SettingsDropdown() {
         <div className="user-details">
           <img src={profileIcon} className="profile-img" />
           <div className="">
-            <DropdownMenuLabel>Mary Tan</DropdownMenuLabel>
-            <DropdownMenuItem>mary@gmail.com</DropdownMenuItem>
+            <DropdownMenuLabel>{user.username}</DropdownMenuLabel>
+            <DropdownMenuItem>{user.email}</DropdownMenuItem>
           </div>
         </div>
         <DropdownMenuSeparator />

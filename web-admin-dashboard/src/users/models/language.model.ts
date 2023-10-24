@@ -3,6 +3,5 @@ export enum Language {
   JavaScript = "javascript",
   Java = "java",
   C = "c",
-  Cplusplus = "c++",
   Language = "Language",
 }

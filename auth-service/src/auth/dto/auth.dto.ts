@@ -12,11 +12,23 @@ export class AuthDto {
     @IsOptional()
     @IsString()
     providerId?: string;
+
+    // @IsString()
+    // role: string;
 }
 
-export class CreateUserDto {
+export class TokenDto {
     @IsString()
-    username: string;
+    email: string;
+
+    @IsString()
+    role: string;
+}
+
+
+export class CreateUserDto {
+    // @IsString()
+    // username: string;
 
     @IsString()
     email: string;
@@ -29,11 +41,15 @@ export class CreateUserDto {
     @IsString()
     providerId?: string;
 
-    @IsString()
-    role: string;
+    // @IsString()
+    // role: string;
 
-    @IsOptional()
-    @IsString()
-    refreshToken?: string;
+    // @IsOptional()
+    // @IsString()
+    // refreshToken?: string;
 }
 
+export class RefreshTokenDto {
+    @IsString()
+    refreshToken: string;
+}

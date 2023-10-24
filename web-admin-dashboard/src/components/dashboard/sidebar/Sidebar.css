@@ -32,6 +32,14 @@
 
 .active {
   background-color: #5562eb;
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.active:hover {
+  background-color: #6470ee;
 }
 .active .link {
   color: white;
@@ -59,4 +67,5 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  cursor: pointer;
 }

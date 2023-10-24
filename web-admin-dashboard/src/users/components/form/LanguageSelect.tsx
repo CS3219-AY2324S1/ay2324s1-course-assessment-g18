@@ -29,7 +29,6 @@ export default function LanugageSelect({ data, setData }: Props) {
           <SelectItem value={Language.Java}>Java</SelectItem>
           <SelectItem value={Language.JavaScript}>JavaScript</SelectItem>
           <SelectItem value={Language.C}>C</SelectItem>
-          <SelectItem value={Language.Cplusplus}>C++</SelectItem>
         </SelectContent>
       </Select>
     </div>

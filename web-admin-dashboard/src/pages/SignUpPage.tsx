@@ -8,20 +8,23 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useContext, useState } from "react";
 import "./SignUpPage.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
+import { AuthContext, AuthProvider } from "@/context/AuthProvider";
+import LiveUserRepository from "@/userRepo/LiveUserRepository";
+import { UserRole } from "@/userRepo/user.model";
 
 function SignUpPage() {
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
-  const [userRole, setUserRole] = useState("user"); // Set default value to "user"
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
+  const { setAuthState } = useContext(AuthContext);
 
   async function onSubmit(e: SyntheticEvent) {
     e.preventDefault();
@@ -31,14 +34,25 @@ function SignUpPage() {
       return;
     } else {
       try {
-        const response = await axios.post("http://localhost:3000/auth/sign-up", { 
-          username: userName,
-          email: userEmail,
-          password: userPassword,
-          role: userRole,
-        });
-  
-        if (response.status === 201) {
+        const authResponse = await axios.post(
+          "http://localhost:3000/auth/sign-up",
+          {
+            email: userEmail,
+            password: userPassword,
+          }
+        );
+
+        if (authResponse.status === 201) {
+          const { accessToken, refreshToken } = authResponse.data;
+          localStorage.setItem("accessToken", accessToken);
+          localStorage.setItem("refreshToken", refreshToken);
+
+          const createUser = await new LiveUserRepository().addUser(userName, userEmail, refreshToken, UserRole.User);
+          const user = await new LiveUserRepository().getUser(userEmail);
+          if (user) {
+            setAuthState({ userInfo: user, loggedIn: true });
+            localStorage.setItem("userInfo", JSON.stringify(user));
+          }
           // Redirect to login page upon succesful signup
           navigate("/login");
           return toast({
@@ -96,7 +110,9 @@ function SignUpPage() {
               data={userPassword}
             />
             <div className="text-red-400">{error}</div>
-            <Button type="submit" className="signup-button">Sign Up</Button>
+            <Button type="submit" className="signup-button">
+              Sign Up
+            </Button>
           </form>
           <div
             style={{
@@ -105,9 +121,7 @@ function SignUpPage() {
               paddingTop: "20px",
             }}
           >
-            <button 
-            onClick={() => navigate("/login")}
-            className="login-button">
+            <button onClick={() => navigate("/login")} className="login-button">
               Already have an account? Click here to login!
             </button>
           </div>
