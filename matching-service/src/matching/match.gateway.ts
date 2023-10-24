@@ -35,4 +35,11 @@ export class MatchGateway implements OnGatewayConnection, OnGatewayDisconnect {
       client.emit('matchCancelSuccess', { userId, difficulty });
     }
 
+    @SubscribeMessage('leaveSession')
+    handleSessionLeave(client: Socket, payload: {roomId: string}) {
+        const {roomId} = payload;
+        this.server.to(roomId).emit("partnerLeaveSession");
+        client.leave(roomId);
+    }
+
 }

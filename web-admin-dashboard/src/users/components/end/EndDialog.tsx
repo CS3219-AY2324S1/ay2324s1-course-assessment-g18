@@ -11,6 +11,7 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { chatSocket, matchingSocket } from "../match/sockets";
 
 function EndDialog() {
   const navigate = useNavigate();
@@ -18,8 +19,10 @@ function EndDialog() {
 
   const [openDialog, setOpenDialog] = useState(false);
   const handleEnd = () => {
-    // end session logic
     navigate("/user-dashboard");
+    matchingSocket.emit("leaveSession", {roomId: localStorage.getItem("roomId")});
+    chatSocket.emit("leaveSession", {roomId: localStorage.getItem("roomId")});
+    localStorage.removeItem("roomId");
     toast({
       title: "Session ended!",
       description:

@@ -19,11 +19,13 @@ export class MatchService {
 
   enqueueUser(user: User): void {
     const { difficulty, userId } = user;
-    // if (this.queues[difficulty].findIndex(user => user.userId === userId) === -1) {
+    if (this.queues[difficulty].findIndex(user => user.userId === userId) === -1) {
+        console.log("userEnqued");
         this.queues[difficulty].push(user);
         this.tryMatchUsers(difficulty);
-    // }
-    console.log(this.queues[difficulty]);
+    } else {
+        console.log('user already in queue');
+    }
   }
 
   dequeueUser(userId: string, difficulty: string): void {
@@ -59,6 +61,7 @@ export class MatchService {
 
   notifyMatch(matchedUserId: String, user: User, roomId: string): void {
     const socket: Socket =  user.client;
+    socket.join(roomId);
     socket.emit('matchSuccess', { matchedUserId, roomId });
   }
 }

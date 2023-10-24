@@ -15,11 +15,11 @@ export class ChatGateway {
     console.log(data);
     const {message, username, currentRoom} = data;
     const messageDto = {message: message, username: username};
-    console.log(currentRoom);
-    console.log(message);
-    const sockets = await this.server.in(currentRoom).fetchSockets()
-    const socketIds = sockets.map(socket => socket.id);
-    console.log(socketIds);
+    // console.log(currentRoom);
+    // console.log(message);
+    // const sockets = await this.server.in(currentRoom).fetchSockets()
+    // const socketIds = sockets.map(socket => socket.id);
+    // console.log(socketIds);
     this.server.to(currentRoom).emit('sendMessage', messageDto);
   }
 
@@ -29,6 +29,11 @@ export class ChatGateway {
     const {roomId, toLeaveRoom} = data;
     socket.leave(toLeaveRoom);
     socket.join(roomId);
-    
   }
+
+  @SubscribeMessage('leaveSession')
+    handleSessionLeave(client: Socket, payload: {roomId: string}) {
+        const {roomId} = payload;
+        client.leave(roomId);
+    }
 }

@@ -18,6 +18,7 @@ function WaitingMatch({ difficulty, setChosen, setOpenDialog }: Props) {
   matchingSocket.on("matchSuccess", (payload) => {
     const { matchedUserId, roomId } = payload;
     chatSocket.emit('joinRoom', {roomId, toLeaveRoom: ""});
+    localStorage.setItem('roomId', roomId);
     navigate("/session", {state: {roomId: roomId, matchedUser: matchedUserId}});
     setOpenDialog(false);
   });
