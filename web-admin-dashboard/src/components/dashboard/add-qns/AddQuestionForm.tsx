@@ -5,6 +5,7 @@ import {
   Dispatch,
   SetStateAction,
   useContext,
+  useEffect,
 } from "react";
 import CustomInput from "@/components/form/CustomInput";
 import { QuestionDifficulty } from "@/questionrepo/question.model";
@@ -13,6 +14,7 @@ import CustomTextArea from "@/components/form/CustomTextArea";
 import "./AddQuestionForm.css";
 import { useToast } from "@/components/ui/use-toast";
 import { QuestionRepoContext } from "@/context/QuestionRepoContext";
+import QnExampleInputs from "@/components/form/QnExampleInputs";
 
 interface Props {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -27,7 +29,11 @@ function AddQuestionForm({ setOpen, setIsChanged }: Props) {
   const [complexity, setComplexity] = useState<QuestionDifficulty>(
     QuestionDifficulty.Easy
   );
-  const [link, setLink] = useState<string>("");
+  const [example1, setExample1] = useState<[string, string]>(["", ""]);
+  const [example2, setExample2] = useState<[string, string]>(["", ""]);
+  const [example3, setExample3] = useState<[string, string]>(["", ""]);
+  const [constraints, setConstraints] = useState<string>("");
+  const [img, setImg] = useState<string>("");
 
   const onSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -41,16 +47,6 @@ function AddQuestionForm({ setOpen, setIsChanged }: Props) {
       });
     }
     try {
-      // const newQuestion: Question = {
-      //   _id: "",
-      //   questionTitle: title,
-      //   questionDescription: description,
-      //   questionDifficulty: complexity,
-      //   questionCategories: [],
-      //   questionId: 0, // just set a dummy value first will think of how to do this better later
-      // };
-
-      // const data = await LocalQuestionRepository.saveQuestion(newQuestion);
       await questionRepo.saveQuestion(title, description, [], complexity);
       setIsChanged(true);
       setOpen(false);
@@ -70,7 +66,7 @@ function AddQuestionForm({ setOpen, setIsChanged }: Props) {
 
   function invalidForm() {
     if (title.length === 0 || description.length === 0) {
-      return "All fields are required.";
+      return "Title and description fields are required.";
     }
   }
 
@@ -86,8 +82,30 @@ function AddQuestionForm({ setOpen, setIsChanged }: Props) {
           setData={setDescription}
           data={description}
         />
+        <div className="flex flex-col gap-[10px] mb-[15px]">
+          <QnExampleInputs
+            example={example1}
+            setExample={setExample1}
+            exampleNum={1}
+          />
+          <QnExampleInputs
+            example={example2}
+            setExample={setExample2}
+            exampleNum={2}
+          />
+          <QnExampleInputs
+            example={example3}
+            setExample={setExample3}
+            exampleNum={3}
+          />
+        </div>
+        <CustomTextArea
+          label="Constraints"
+          setData={setConstraints}
+          data={constraints}
+        />
+        <CustomInput label="Image link" data={img} setData={setImg} />
 
-        <CustomInput label="Link" setData={setLink} data={link} />
         <Button type="submit">Add Question</Button>
       </form>
     </div>
