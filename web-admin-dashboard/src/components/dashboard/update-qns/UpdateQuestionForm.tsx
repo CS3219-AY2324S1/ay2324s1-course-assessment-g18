@@ -13,6 +13,7 @@ import CustomTextArea from "@/components/form/CustomTextArea";
 import "./../add-qns/AddQuestionForm.css";
 import { useToast } from "@/components/ui/use-toast";
 import { QuestionRepoContext } from "@/context/QuestionRepoContext";
+import QnExampleInputs from "@/components/form/QnExampleInputs";
 
 interface Props {
   question: Question;
@@ -31,7 +32,12 @@ function UpdateQuestionForm({ question, setOpen, setIsChanged }: Props) {
   const [complexity, setComplexity] = useState<QuestionDifficulty>(
     question.questionDifficulty
   );
-  const [link, setLink] = useState<string>("");
+  // to link to question object itself
+  const [example1, setExample1] = useState<[string, string]>(["", ""]);
+  const [example2, setExample2] = useState<[string, string]>(["", ""]);
+  const [example3, setExample3] = useState<[string, string]>(["", ""]);
+  const [constraints, setConstraints] = useState<string>("");
+  const [img, setImg] = useState<string>("");
 
   const onSubmit = async (e: SyntheticEvent) => {
     setIsChanged(false);
@@ -111,8 +117,29 @@ function UpdateQuestionForm({ question, setOpen, setIsChanged }: Props) {
           setData={setDescription}
           data={description}
         />
-
-        <CustomInput label="Link" setData={setLink} data={link} />
+        <div className="flex flex-col gap-[10px] mb-[15px]">
+          <QnExampleInputs
+            example={example1}
+            setExample={setExample1}
+            exampleNum={1}
+          />
+          <QnExampleInputs
+            example={example2}
+            setExample={setExample2}
+            exampleNum={2}
+          />
+          <QnExampleInputs
+            example={example3}
+            setExample={setExample3}
+            exampleNum={3}
+          />
+        </div>
+        <CustomTextArea
+          label="Constraints"
+          setData={setConstraints}
+          data={constraints}
+        />
+        <CustomInput label="Image link" data={img} setData={setImg} />{" "}
         <Button type="submit">Update Question</Button>
       </form>
     </div>
