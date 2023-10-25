@@ -6,11 +6,13 @@ import { useState } from "react";
 import QuestionExamples from "./QuestionExamples";
 import QuestionConstraints from "./QuestionConstraints";
 
+
 interface Props {
   question: Question;
 }
 function QuestionDialog({ question }: Props) {
   const [open, setOpen] = useState(false);
+
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
