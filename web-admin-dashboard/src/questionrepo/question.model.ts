@@ -5,6 +5,9 @@ export interface Question {
   questionCategories: string[];
   questionDifficulty: QuestionDifficulty;
   questionDescription: string;
+  questionExamples: string[][];
+  questionConstraints: string;
+  questionImages: string;
 }
 
 export enum QuestionDifficulty {

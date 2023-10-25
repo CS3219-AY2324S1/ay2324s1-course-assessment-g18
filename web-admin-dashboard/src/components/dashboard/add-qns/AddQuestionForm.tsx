@@ -47,7 +47,7 @@ function AddQuestionForm({ setOpen, setIsChanged }: Props) {
       });
     }
     try {
-      await questionRepo.saveQuestion(title, description, [], complexity);
+      await questionRepo.saveQuestion(title, description, [], complexity, [example1, example2, example3], constraints, img);
       setIsChanged(true);
       setOpen(false);
       return toast({
