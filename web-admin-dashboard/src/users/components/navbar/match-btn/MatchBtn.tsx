@@ -1,5 +1,5 @@
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useEffect } from "react";
 import MatchDialog from "../../match/MatchDialog";
 
 interface Props {
@@ -7,6 +7,11 @@ interface Props {
   setOpenDialog: Dispatch<SetStateAction<boolean>>;
 }
 function MatchBtn({ openDialog, setOpenDialog }: Props) {
+    // useEffect(() => {
+    //     if (openDialog) {
+    //         matchingso
+    //     }
+    // })
   return (
     <Dialog open={openDialog} onOpenChange={setOpenDialog}>
       <DialogTrigger>
