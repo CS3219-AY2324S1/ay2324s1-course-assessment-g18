@@ -16,9 +16,10 @@ interface Props {
 function WaitingMatch({ difficulty, setChosen, setOpenDialog }: Props) {
   const navigate = useNavigate();
   matchingSocket.on("matchSuccess", (payload) => {
-    const { roomId } = payload;
+    const { matchedUserId, roomId } = payload;
     chatSocket.emit('joinRoom', {roomId, toLeaveRoom: ""});
-    navigate("/session", {state: {roomId: roomId}});
+    localStorage.setItem('roomId', roomId);
+    navigate("/session", {state: {roomId: roomId, matchedUser: matchedUserId}});
     setOpenDialog(false);
   });
 //   useEffect(() => {

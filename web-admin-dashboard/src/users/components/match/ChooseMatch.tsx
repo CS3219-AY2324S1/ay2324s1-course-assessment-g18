@@ -3,8 +3,9 @@ import { Button } from "@/components/ui/button";
 import { DialogTitle } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { QuestionDifficulty } from "@/questionrepo/question.model";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { matchingSocket } from "./sockets";
+import { AuthContext } from "@/context/AuthProvider";
 
 interface Props {
   difficulty: QuestionDifficulty;
@@ -12,11 +13,12 @@ interface Props {
   setChosen: Dispatch<SetStateAction<boolean>>;
 }
 function ChooseMatch({ difficulty, setDifficulty, setChosen }: Props) {
-
+    const { authState } = useContext(AuthContext);
+    const user = authState.userInfo;
   const [error, setError] = useState<string>("");
   const handleSubmit = () => {
     // matching logic here
-    matchingSocket.emit("match", {difficulty: difficulty, userId: "username"});
+    matchingSocket.emit("match", {difficulty: difficulty, userId: user.username});
     setChosen(true);
   };
   return (
