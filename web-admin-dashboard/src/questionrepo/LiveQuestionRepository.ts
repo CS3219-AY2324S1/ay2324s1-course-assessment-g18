@@ -43,6 +43,9 @@ class LiveQuestionRepository {
     questionDescription: string,
     questionCategories: string[],
     questionDifficulty: string,
+    questionExamples: string[][],
+    questionConstraints: string,
+    questionImages: string,
     id: string
   ): Promise<Question> {
     const res = await api.put(
@@ -52,6 +55,9 @@ class LiveQuestionRepository {
         questionDescription,
         questionCategories,
         questionDifficulty,
+        questionExamples,
+        questionConstraints,
+        questionImages,
       },
       this.config
     );
@@ -73,7 +79,10 @@ class LiveQuestionRepository {
     questionTitle: string,
     questionDescription: string,
     questionCategories: string[],
-    questionDifficulty: string
+    questionDifficulty: string,
+    questionExamples: string[][],
+    questionConstraints: string,
+    questionImages: string
   ): Promise<Question> {
     const res = await api.post(
       "/questions",
@@ -82,6 +91,9 @@ class LiveQuestionRepository {
         questionDescription,
         questionCategories,
         questionDifficulty,
+        questionExamples,
+        questionConstraints,
+        questionImages,
       },
       this.config
     );

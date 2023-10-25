@@ -35,6 +35,10 @@ export class QuestionMongoRepository implements QuestionRepository {
         return await this.questionModel.findByIdAndUpdate(questionId, questionDto);
     }
 
+    async getMaximumId() {
+        return await this.questionModel.find().sort({questionId: -1}).limit(1);
+    }
+
     async getQuestionByTitle(questionTitle: string) {
         return await this.questionModel.findOne({questionTitle});
     }
