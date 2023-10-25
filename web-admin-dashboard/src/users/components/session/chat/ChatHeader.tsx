@@ -1,4 +1,3 @@
-import { User } from "@/userRepo/user.model";
 import React, { Dispatch, SetStateAction } from "react";
 import { IoIosClose } from "react-icons/io";
 

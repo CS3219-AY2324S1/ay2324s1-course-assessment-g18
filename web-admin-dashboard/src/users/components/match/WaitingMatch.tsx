@@ -46,9 +46,11 @@ function WaitingMatch({
     let matchSuccessReceived = false;
 
     const matchSuccessHandler = (payload: any) => {
-      const { roomId } = payload;
+      const { matchedUserId, roomId } = payload;
       chatSocket.emit("joinRoom", { roomId, toLeaveRoom: "" });
-      navigate("/session", { state: { roomId: roomId } });
+      navigate("/session", {
+        state: { roomId: roomId, matchedUser: matchedUserId },
+      });
 
       setOpenDialog(false);
       matchSuccessReceived = true;
