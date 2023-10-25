@@ -23,6 +23,11 @@ export class QuestionService {
                 'Question with the given title already exists', HttpStatus.BAD_REQUEST
             )
         }
+
+        const MaxId = await this.questionRepository.getMaximumId();
+
+        questionDto.questionId = String(Number(MaxId[0].questionId) + 1);
+
         return await this.questionRepository.addQuestion(questionDto);
     }
 

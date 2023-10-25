@@ -21,10 +21,16 @@ export class Question {
     questionDifficulty: string;
 
     @Prop()
-    questionLink: string;
+    questionDescription: string;
 
     @Prop()
-    questionDescription: string;
+    questionExamples: Array<Array<String>>;
+
+    @Prop()
+    questionConstraints: String;
+
+    @Prop()
+    questionImages: String;
 }
 
 export const QuestionSchema = SchemaFactory.createForClass(Question);
