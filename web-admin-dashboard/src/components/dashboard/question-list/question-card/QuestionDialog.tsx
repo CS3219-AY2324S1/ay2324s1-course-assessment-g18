@@ -3,32 +3,45 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Question, QuestionDifficulty } from "@/questionrepo/question.model";
 import { DialogDescription } from "@radix-ui/react-dialog";
 import { useState } from "react";
+import QuestionExamples from "./QuestionExamples";
 
 interface Props {
   question: Question;
 }
 function QuestionDialog({ question }: Props) {
   const [open, setOpen] = useState(false);
+  const questionExamples = [
+    ["n = 1, k = 1", "n = 1, k = 1"],
+    ["input", "output"],
+    ["input", "output"],
+  ];
+  const questionConstraints = "Hi this is a constraint";
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <div className="cursor-pointer">{question.questionTitle}</div>
       </DialogTrigger>
-      <CustomDialog
-        dialogTitle={`${question.questionId + 1}. ${question.questionTitle}`}
-      >
-        <div
-          className={` h-full w-20 rounded-md p-1 text-center ${
-            question.questionDifficulty == QuestionDifficulty.Easy
-              ? "bg-green-200 text-green-600"
-              : question.questionDifficulty == QuestionDifficulty.Medium
-              ? "bg-yellow-100 text-yellow-600"
-              : "bg-red-200 text-red-600"
-          }`}
-        >
-          {question.questionDifficulty}
+      <CustomDialog dialogTitle={question.questionTitle}>
+        <div className="h-[450px] overflow-y-auto flex flex-col gap-[20px] p-[20px]">
+          <div
+            className={`w-20 rounded-md p-1 text-center ${
+              question.questionDifficulty == QuestionDifficulty.Easy
+                ? "bg-green-200 text-green-600"
+                : question.questionDifficulty == QuestionDifficulty.Medium
+                ? "bg-yellow-100 text-yellow-600"
+                : "bg-red-200 text-red-600"
+            }`}
+          >
+            {question.questionDifficulty}
+          </div>
+          <div>{question.questionDescription}</div>
+          <QuestionExamples examples={questionExamples} />
+          <div>
+            <div className="font-bold">Constraints:</div>
+            <div>{questionConstraints}</div>
+          </div>
         </div>
-        <DialogDescription>{question.questionDescription}</DialogDescription>
       </CustomDialog>
     </Dialog>
   );
