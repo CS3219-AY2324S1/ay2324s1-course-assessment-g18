@@ -10,7 +10,7 @@ import { User } from "@/userRepo/user.model";
 import { Message } from "@/users/models/message.model";
 import { chatSocket } from "../../match/sockets";
 interface Props {
-  peer: User;
+  peer: String;
   roomId: String;
 }
 function ChatBtn({ peer, roomId }: Props) {

@@ -5,7 +5,7 @@ import { chatSocket } from "@/users/components/match/sockets";
 import { AuthContext } from "@/context/AuthProvider";
 
 interface Props {
-  roomId: string;
+  roomId: String;
 }
 
 function TextInput({ roomId }: Props) {

@@ -6,7 +6,7 @@ import { Socket } from 'socket.io';
 interface User {
   client: Socket;
   difficulty: string;
-  userId: string;
+  userId: String;
 }
 
 @Injectable()
@@ -18,9 +18,14 @@ export class MatchService {
   };
 
   enqueueUser(user: User): void {
-    const { difficulty } = user;
-    this.queues[difficulty].push(user);
-    this.tryMatchUsers(difficulty);
+    const { difficulty, userId } = user;
+    if (this.queues[difficulty].findIndex(user => user.userId === userId) === -1) {
+        console.log("userEnqued");
+        this.queues[difficulty].push(user);
+        this.tryMatchUsers(difficulty);
+    } else {
+        console.log('user already in queue');
+    }
   }
 
   dequeueUser(userId: string, difficulty: string): void {
@@ -34,6 +39,7 @@ export class MatchService {
 
   tryMatchUsers(difficulty: string): void {
     const queue = this.queues[difficulty];
+    console.log(queue);
     if (queue.length >= 2) {
       const matchedUsers = queue.splice(0, 2); // Extract the first two users from the queue
       const roomId = this.notifyMatchedUsers(matchedUsers);
@@ -53,8 +59,9 @@ export class MatchService {
     return roomId;
   }
 
-  notifyMatch(matchedUserId: string, user: User, roomId: string): void {
+  notifyMatch(matchedUserId: String, user: User, roomId: string): void {
     const socket: Socket =  user.client;
+    socket.join(roomId);
     socket.emit('matchSuccess', { matchedUserId, roomId });
   }
 }
