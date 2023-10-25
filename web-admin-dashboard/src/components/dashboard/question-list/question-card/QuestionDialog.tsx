@@ -4,18 +4,15 @@ import { Question, QuestionDifficulty } from "@/questionrepo/question.model";
 import { DialogDescription } from "@radix-ui/react-dialog";
 import { useState } from "react";
 import QuestionExamples from "./QuestionExamples";
+import QuestionConstraints from "./QuestionConstraints";
+
 
 interface Props {
   question: Question;
 }
 function QuestionDialog({ question }: Props) {
   const [open, setOpen] = useState(false);
-  const questionExamples = [
-    ["n = 1, k = 1", "n = 1, k = 1"],
-    ["input", "output"],
-    ["input", "output"],
-  ];
-  const questionConstraints = "Hi this is a constraint";
+
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -36,10 +33,9 @@ function QuestionDialog({ question }: Props) {
             {question.questionDifficulty}
           </div>
           <div>{question.questionDescription}</div>
-          <QuestionExamples examples={questionExamples} />
+          <QuestionExamples examples={question.questionExamples} />
           <div>
-            <div className="font-bold">Constraints:</div>
-            <div>{questionConstraints}</div>
+            <QuestionConstraints constraints= {question.questionConstraints} />
           </div>
         </div>
       </CustomDialog>

@@ -82,6 +82,9 @@ function UpdateQuestionForm({ question, setOpen, setIsChanged }: Props) {
         description,
         [],
         complexity,
+        [example1, example2, example3],
+        constraints,
+        img,
         question._id
       );
       setIsChanged(true);

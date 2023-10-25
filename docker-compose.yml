@@ -16,6 +16,14 @@ services:
       - 3000:3000
     networks:
       - mynetwork
+      
+  matching: 
+    container_name: matching
+    image: "rgonslayer/peerprep-matching:1.0"
+    ports:
+      - 6001:6001
+    networks:
+    - mynetwork
 
   question:
     container_name: question
