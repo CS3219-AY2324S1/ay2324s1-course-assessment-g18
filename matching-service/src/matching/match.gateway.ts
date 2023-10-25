@@ -21,7 +21,7 @@ export class MatchGateway implements OnGatewayConnection, OnGatewayDisconnect {
     }
   
     @SubscribeMessage('match')
-    handleSelectDifficulty(client: Socket, payload: { difficulty: string, userId: string }) {
+    handleSelectDifficulty(client: Socket, payload: { difficulty: string, userId: String }) {
       const { difficulty, userId } = payload;
       const user = { client: client, difficulty, userId };
       this.matchService.enqueueUser(user);
@@ -33,6 +33,13 @@ export class MatchGateway implements OnGatewayConnection, OnGatewayDisconnect {
       const { difficulty, userId } = payload;
       this.matchService.dequeueUser(userId, difficulty);
       client.emit('matchCancelSuccess', { userId, difficulty });
+    }
+
+    @SubscribeMessage('leaveSession')
+    handleSessionLeave(client: Socket, payload: {roomId: string}) {
+        const {roomId} = payload;
+        this.server.to(roomId).emit("partnerLeaveSession");
+        client.leave(roomId);
     }
 
 }

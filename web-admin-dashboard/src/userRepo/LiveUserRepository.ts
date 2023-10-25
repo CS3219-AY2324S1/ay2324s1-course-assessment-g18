@@ -74,6 +74,7 @@ class LiveUserRepository {
   async addUser(
     username: string,
     email: string,
+    refreshToken: string,
     role: UserRole
   ): Promise<User> {
     const res = await api.post(
@@ -81,6 +82,7 @@ class LiveUserRepository {
       {
         username,
         email,
+        refreshToken,
         role,
       },
       this.config
