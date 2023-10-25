@@ -8,9 +8,11 @@ import ChatBtn from "../components/session/chat/ChatBtn";
 import { User, UserRole } from "@/userRepo/user.model";
 import { useLocation } from "react-router-dom";
 import { chatSocket, matchingSocket } from "../components/match/sockets";
+import PeerLeftDialog from "../components/session/dialog/PeerLeftDialog";
 
 function SessionPage() {
   const [lang, setLang] = useState<Language>(Language.JavaScript);
+  const [peerLeft, setPeerLeft] = useState(false);
   const location = useLocation();
   const tempQn = {
     questionId: 1,
@@ -24,10 +26,10 @@ function SessionPage() {
 
   matchingSocket.on("partnerLeaveSession", (payload) => {
     console.log("partner left the session");
-
+    setPeerLeft(true);
     //logic to show the dialog that partner left the session. Navigate to user-dashboard in 5 sec or smth.
-  })
-  const peer: String = location.state.matchedUser;
+  });
+  const peer: string = location.state.matchedUser;
   return (
     <div className="w-full h-full flex flex-row p-5">
       {/* left side */}
@@ -42,6 +44,7 @@ function SessionPage() {
         <CodeEditor roomId="1" language={lang} />
         <ChatBtn peer={peer} roomId={location.state.roomId} />
       </div>
+      {peerLeft && <PeerLeftDialog peer={peer} />}
     </div>
   );
 }
