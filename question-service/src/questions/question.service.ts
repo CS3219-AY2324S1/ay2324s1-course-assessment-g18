@@ -26,7 +26,11 @@ export class QuestionService {
 
         const MaxId = await this.questionRepository.getMaximumId();
 
-        questionDto.questionId = String(Number(MaxId[0].questionId) + 1);
+        if (MaxId.length == 0) {
+            questionDto.questionId = "1";
+        } else {
+            questionDto.questionId = String(Number(MaxId[0].questionId) + 1);
+        }
 
         return await this.questionRepository.addQuestion(questionDto);
     }
