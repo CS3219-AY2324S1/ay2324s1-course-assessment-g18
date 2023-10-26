@@ -1,10 +1,9 @@
-import { User } from "@/userRepo/user.model";
 import React, { Dispatch, SetStateAction } from "react";
 import { IoIosClose } from "react-icons/io";
 
 interface Props {
   setOpenChat: Dispatch<SetStateAction<boolean>>;
-  peer: String;
+  peer: string;
 }
 function ChatHeader({ setOpenChat, peer }: Props) {
   return (
