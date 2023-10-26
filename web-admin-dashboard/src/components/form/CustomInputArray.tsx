@@ -1,16 +1,16 @@
 import { CSSProperties, Dispatch, SetStateAction } from "react";
 import "./Input.css";
+import { Input } from "@/components/ui/input";
 import { Label } from "../ui/label";
-import { Textarea } from "@/components/ui/textarea";
 
 interface Props {
   label: string;
   labelStyling?: CSSProperties;
   inputStyling?: CSSProperties;
-  setData: Dispatch<SetStateAction<string>>;
-  data: string;
+  setData: Dispatch<SetStateAction<string[]>>;
+  data: string[];
 }
-function CustomTextArea({
+function CustomInput({
   label,
   labelStyling,
   inputStyling,
@@ -19,11 +19,15 @@ function CustomTextArea({
 }: Props) {
   return (
     <div className="input-div">
-      <Label className="input-label" style={{ ...labelStyling }}>
+      <Label
+        className="input-label"
+        style={{ ...labelStyling }}
+        htmlFor="string"
+      >
         {label}
       </Label>
-      <Textarea
-        style={{ minHeight: "80px", whiteSpace: "pre-line" }}
+      <Input
+        style={{ ...inputStyling }}
         onChange={(e) => setData(e.target.value)}
         value={data}
       />
@@ -31,4 +35,4 @@ function CustomTextArea({
   );
 }
 
-export default CustomTextArea;
+export default CustomInput;
