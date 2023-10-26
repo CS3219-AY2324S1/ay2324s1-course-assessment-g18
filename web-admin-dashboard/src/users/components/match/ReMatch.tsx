@@ -15,8 +15,9 @@ function ReMatch({ setRematch, setChosen, setOpenDialog }: Props) {
     setChosen(false);
   };
   const handleClose = () => {
-    handleRematch();
     setOpenDialog(false);
+    handleRematch();
+    
     // setRematch(false);
     // setChosen(false);
   };
