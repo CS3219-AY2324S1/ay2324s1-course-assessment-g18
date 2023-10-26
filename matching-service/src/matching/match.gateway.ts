@@ -31,6 +31,7 @@ export class MatchGateway implements OnGatewayConnection, OnGatewayDisconnect {
     @SubscribeMessage('matchCancel')
     handleMatchCancel(client: Socket, payload: { difficulty: string, userId: string }) {
       const { difficulty, userId } = payload;
+      console.log("matchCancel called");
       this.matchService.dequeueUser(userId, difficulty);
       client.emit('matchCancelSuccess', { userId, difficulty });
     }
