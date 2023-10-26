@@ -38,6 +38,13 @@ export const Columns: ColumnDef<Question>[] = [
     cell: ({ row }) => <QuestionDialog question={row.original} />,
   },
   {
+    accessorKey: "questionCategories",
+    header: "Category",
+    cell: ({ row }) => (
+      <div className="citalize">{row.getValue("questionCategories")}</div>
+    ),
+  },
+  {
     accessorKey: "questionDifficulty",
     header: ({ column }) => {
       return (
