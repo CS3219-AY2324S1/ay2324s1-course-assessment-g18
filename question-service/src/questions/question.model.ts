@@ -2,8 +2,7 @@ import {IsString, IsArray, isBase32} from 'class-validator'
 
 
 export class QuestionDto {
-    @IsString()
-    _id: string;
+    id: string;
 
     @IsString()
     questionId: string;
