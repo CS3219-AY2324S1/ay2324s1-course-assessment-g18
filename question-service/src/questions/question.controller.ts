@@ -23,6 +23,11 @@ export class QuestionController {
         return await this.questionService.getQuestionById(questionId);
     }
 
+    @Get('/random/:questionDifficulty')
+    async getRandomQuestionWithDifficulty(@Param('questionDifficulty') questionDifficulty: String) {
+        return await this.questionService.getRandomQuestionWithDifficulty(questionDifficulty);
+    }
+
     @UseGuards(RolesGuard)
     @Roles([UserRole.Admin])
     @Post()
@@ -43,4 +48,5 @@ export class QuestionController {
     async editQuestion(@Param("questionId") questionId: string, @Body() questionDto: QuestionDto) {
         return await this.questionService.editQuestion(questionId, questionDto);
     }
+
 }

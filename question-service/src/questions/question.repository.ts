@@ -25,9 +25,15 @@ export class QuestionMongoRepository implements QuestionRepository {
     async getQuestionById(questionId: string) {
         return await this.questionModel.findById(questionId);
     }
+
+    async getRandomQuestionWithDifficulty(query: any) {
+        return await this.questionModel.aggregate([query]);
+    }
+
     async addQuestion(questionDto: QuestionDto) {
         return this.questionModel.create(questionDto);
     }
+
     async deleteQuestion(questionId: string) {
         return await this.questionModel.findByIdAndDelete(questionId);
     }

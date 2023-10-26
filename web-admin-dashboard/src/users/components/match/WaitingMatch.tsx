@@ -68,13 +68,15 @@ function WaitingMatch({
         // If "matchSuccess" is not received within 30 seconds, trigger an error.
         console.error("Match did not succeed within 30 seconds.");
         setRematch(true);
+        setChosen(false);
         matchingSocket.emit("matchCancel", {
           difficulty: difficulty,
           userId: username,
         });
+        
         // You can throw an error or handle it according to your needs.
       }
-    }, 30000);
+    }, 1000);
 
     // To cancel the timeout if "matchSuccess" is received before it expires
     matchingSocket.on("matchSuccess", () => {

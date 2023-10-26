@@ -7,6 +7,7 @@ import WaitingMatch from "./WaitingMatch";
 import ReMatch from "./ReMatch";
 interface Props {
   setOpenDialog: Dispatch<SetStateAction<boolean>>;
+
   openDialog: boolean;
 }
 function MatchDialog({ setOpenDialog, openDialog }: Props) {
