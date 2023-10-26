@@ -73,10 +73,10 @@ function WaitingMatch({
           difficulty: difficulty,
           userId: username,
         });
-        
+
         // You can throw an error or handle it according to your needs.
       }
-    }, 1000);
+    }, 30000);
 
     // To cancel the timeout if "matchSuccess" is received before it expires
     matchingSocket.on("matchSuccess", () => {
