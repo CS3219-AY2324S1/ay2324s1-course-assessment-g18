@@ -71,7 +71,7 @@ export default function QuestionList({ data, setIsChanged }: Props) {
       columnVisibility,
       rowSelection,
     },
-    initialState: { pagination: { pageSize: 6 } },
+    initialState: { pagination: { pageSize: 5 } },
   });
 
   return (

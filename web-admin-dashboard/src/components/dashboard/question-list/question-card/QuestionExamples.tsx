@@ -7,7 +7,7 @@ function QuestionExamples({ examples }: Props) {
   return (
     <div className="flex gap-[10px] flex-col">
       {examples.map((example, i) => (
-        <div>
+        <div key={i}>
           <div className="font-bold">Example {i + 1}</div>
           <div className="flex flex-col">
             <div>

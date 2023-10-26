@@ -26,21 +26,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import ActionsDropdown from "./actions-dropdown/ActionsDropdown";
 
-// const users: User[] = [
-//   {
-//     uId: 1,
-//     username: "admin",
-//     userEmail: "admin@test.com",
-//     userRole: UserRole.Admin,
-//   },
-//   {
-//     uId: 2,
-//     username: "user1",
-//     userEmail: "user1@test.com",
-//     userRole: UserRole.User,
-//   },
-// ];
-
 interface Props {
   data: User[];
   setIsChanged: Dispatch<SetStateAction<boolean>>;
@@ -84,6 +69,7 @@ function UserList({ data, setIsChanged }: Props) {
       columnVisibility,
       rowSelection,
     },
+    initialState: { pagination: { pageSize: 8 } },
   });
 
   return (
@@ -91,7 +77,7 @@ function UserList({ data, setIsChanged }: Props) {
       <div className="userlist-content">
         <div className="flex items-center py-4">
           <div className="w-3/5 flex gap-2 items-center">
-            <div className="text-xl font-bold pl-5">All Users</div>
+            <div className="text-xl font-bold pl-5">All Registered Users</div>
           </div>
           <Input
             className="w-2/5"

@@ -6,7 +6,6 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/components/ui/use-toast";
 import React, { useState } from "react";
@@ -20,8 +19,10 @@ function EndDialog() {
   const [openDialog, setOpenDialog] = useState(false);
   const handleEnd = () => {
     navigate("/user-dashboard");
-    matchingSocket.emit("leaveSession", {roomId: localStorage.getItem("roomId")});
-    chatSocket.emit("leaveSession", {roomId: localStorage.getItem("roomId")});
+    matchingSocket.emit("leaveSession", {
+      roomId: localStorage.getItem("roomId"),
+    });
+    chatSocket.emit("leaveSession", { roomId: localStorage.getItem("roomId") });
     localStorage.removeItem("roomId");
     toast({
       title: "Session ended!",
