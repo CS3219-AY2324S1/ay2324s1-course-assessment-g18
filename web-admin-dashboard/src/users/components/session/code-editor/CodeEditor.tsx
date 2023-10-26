@@ -35,7 +35,6 @@ export default function CodeEditor({ roomId, language }: Props) {
         language={language}
         value={state.codeTextStore[roomId]}
         onChange={(value) => (state.codeTextStore[roomId] = value)}
-        theme="vs-dark"
         onMount={handleEditorDidMount}
         className="editor"
       />
