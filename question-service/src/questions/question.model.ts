@@ -16,8 +16,14 @@ export class QuestionDto {
     @IsString()
     questionDifficulty: string;
 
+    @IsArray()
+    questionExamples: Array<Array<String>>;
+
     @IsString()
-    questionLink: string;
+    questionConstraints: String;
+
+    @IsString()
+    questionImages: String;
 
     @IsString()
     questionDescription: string; 

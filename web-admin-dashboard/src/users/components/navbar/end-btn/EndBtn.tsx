@@ -10,7 +10,7 @@ function EndBtn({ openDialog, setOpenDialog }: Props) {
   return (
     <AlertDialog open={openDialog} onOpenChange={setOpenDialog}>
       <AlertDialogTrigger>
-        <div className="end-btn">End</div>
+        <div className="end-btn hover:bg-primary/90">End</div>
       </AlertDialogTrigger>
       <EndDialog />
     </AlertDialog>

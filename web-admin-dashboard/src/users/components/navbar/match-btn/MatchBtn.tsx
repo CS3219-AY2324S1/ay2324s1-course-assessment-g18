@@ -12,7 +12,7 @@ function MatchBtn({ openDialog, setOpenDialog }: Props) {
       <DialogTrigger>
         <div className="match-btn">Match</div>
       </DialogTrigger>
-      <MatchDialog setOpenDialog={setOpenDialog} />
+      <MatchDialog setOpenDialog={setOpenDialog} openDialog={openDialog} />
     </Dialog>
   );
 }

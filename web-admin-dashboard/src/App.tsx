@@ -9,6 +9,8 @@ import Navbar from "./users/components/navbar/Navbar";
 import SessionPage from "./users/pages/SessionPage";
 import UserDashboardPage from "./users/pages/UserDashboardPage";
 import { AuthContext, AuthProvider } from "./context/AuthProvider";
+import Sidebar from "./components/dashboard/sidebar/Sidebar";
+import AdminProviderWrapper from "./components/admin-provider-wrapper/AdminProviderWrapper";
 
 function App() {
   return (
@@ -30,8 +32,12 @@ function Content() {
           <Route path="/" element={<Navigate to="/dashboard" />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/users" element={<UserPage />} />
+          <Route element={<AdminProviderWrapper />}>
+            <Route element={<Sidebar />}>
+              <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/users" element={<UserPage />} />
+            </Route>
+          </Route>
         </Routes>
       );
     } else {
@@ -44,7 +50,7 @@ function Content() {
           <Route element={<Navbar />}>
             <Route path="/user-dashboard" element={<UserDashboardPage />} />
             <Route path="/session" element={<SessionPage />} />
-         </Route>
+          </Route>
         </Routes>
       );
     }
@@ -61,5 +67,3 @@ function Content() {
 }
 
 export default App;
-
-
