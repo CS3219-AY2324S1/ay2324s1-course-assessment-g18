@@ -1,23 +1,24 @@
 import { Question } from "@/questionrepo/question.model";
-import axios from "axios";
+import api from '@/utils/api';
 
 class LiveQuestionRepository {
   config;
 
   constructor() {
     this.config = {
-      baseURL: import.meta.env.VITE_BASE_LOCALHOST_URL,
+      baseURL: import.meta.env.VITE_BASE_QUESTION_URL,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        // Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     };
   }
 
   async getQuestions(): Promise<Question[]> {
     try {
-      const res = await axios.get("/questions", this.config);
+      // const res = await axios.get("/questions", this.config);
+      const res = await api.get("/questions", this.config);
       const data: Question[] = res.data;
       return data;
     } catch (error) {
@@ -28,7 +29,7 @@ class LiveQuestionRepository {
 
   async getQuestion(id: string): Promise<Question | null> {
     try {
-      const res = await axios.get(`questions/${id}`, this.config);
+      const res = await api.get(`questions/${id}`, this.config);
       const data: Question = res.data;
       return data;
     } catch (error) {
@@ -42,15 +43,21 @@ class LiveQuestionRepository {
     questionDescription: string,
     questionCategories: string[],
     questionDifficulty: string,
+    questionExamples: string[][],
+    questionConstraints: string,
+    questionImages: string,
     id: string
   ): Promise<Question> {
-    const res = await axios.put(
+    const res = await api.put(
       `questions/${id}`,
       {
         questionTitle,
         questionDescription,
         questionCategories,
         questionDifficulty,
+        questionExamples,
+        questionConstraints,
+        questionImages,
       },
       this.config
     );
@@ -60,7 +67,7 @@ class LiveQuestionRepository {
 
   async deleteQuestion(id: string) {
     try {
-      await axios.delete(`questions/${id}`, this.config);
+      await api.delete(`questions/${id}`, this.config);
       return true;
     } catch (error) {
       console.error(error);
@@ -72,15 +79,21 @@ class LiveQuestionRepository {
     questionTitle: string,
     questionDescription: string,
     questionCategories: string[],
-    questionDifficulty: string
+    questionDifficulty: string,
+    questionExamples: string[][],
+    questionConstraints: string,
+    questionImages: string
   ): Promise<Question> {
-    const res = await axios.post(
+    const res = await api.post(
       "/questions",
       {
         questionTitle,
         questionDescription,
         questionCategories,
         questionDifficulty,
+        questionExamples,
+        questionConstraints,
+        questionImages,
       },
       this.config
     );

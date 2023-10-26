@@ -1,5 +1,6 @@
 // user.entity.ts
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { UserRole } from './user-role.enum';
 
 @Entity()
 export class User {
@@ -13,9 +14,11 @@ export class User {
   email: string;
 
   @Column()
-  refreshToken: string;
-
-  @Column()
   role: string;
 
+  @Column({
+    type: String,
+    nullable: true,
+  })
+  refreshToken: string | null = null;
 }

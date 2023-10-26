@@ -1,8 +1,18 @@
 // users.controller.ts
-import { Controller, Get, Post, Param, Body, Delete, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Param,
+  Body,
+  Delete,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './user.entity';
-import { MessagePattern } from '@nestjs/microservices';
+import { UpdateUserDto } from './update-user.dto';
+import { AccessTokenGuard } from './guards/accessToken.guard';
 
 @Controller('users')
 export class UsersController {
@@ -13,30 +23,36 @@ export class UsersController {
     return this.usersService.getUser(email);
   }
 
+  @UseGuards(AccessTokenGuard)
   @Get()
   findAll(): Promise<User[]> {
     return this.usersService.getUsers();
   }
 
-  @MessagePattern({cmd: 'create'})
+  @UseGuards(AccessTokenGuard)
   @Post("/create")
-  async create(@Body() user: User): Promise<User> {
+  async create(@Body() user: User): Promise<User | null> {
     console.log("create called");
     return this.usersService.create(user);
   }
 
+  @UseGuards(AccessTokenGuard)
   @Delete('/:email')
   async deleteUser(@Param('email') email: string) {
-      await this.usersService.deleteUser(email);
+    await this.usersService.deleteUser(email);
   }
 
-  @Put('/update/:email')
-  async updateUser(@Param('email') email:string, @Body() user: User) {
-    await this.usersService.updateUser(email, user);
+  @UseGuards(AccessTokenGuard)
+  @Put("/update/:email")
+  async updateUser(
+    @Param('email') email: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
+    return await this.usersService.updateUser(email, updateUserDto);
   }
 
-  @MessagePattern({cmd: 'refresh'})
-  async refresh(email: string, refreshToken: string) {
-    return await this.usersService.updateRefreshToken(email, refreshToken);
+  @Post("/getOrAdd")
+  async getOrAddUser(@Body() user: User) {
+    return await this.usersService.getOrAddUser(user);
   }
 }

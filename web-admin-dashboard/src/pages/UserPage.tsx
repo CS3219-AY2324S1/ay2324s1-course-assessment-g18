@@ -1,29 +1,28 @@
 import "./UserPage.css";
-import Sidebar from "@/components/dashboard/sidebar/Sidebar";
-import UserList from "@/components/users/UserList";
-import { useState } from "react";
+import UserList from "@/components/users/user-list/UserList";
+import { User } from "@/userRepo/user.model";
+import { useContext, useState } from "react";
+import { useEffect } from "react";
+import { UserRepoContext } from "@/context/UserRepoContext";
 
-interface Props {
-  handleClickDashboard: (event: React.MouseEvent) => void;
-  handleClickUser: (event: React.MouseEvent) => void;
-}
+function UserPage() {
+  const [data, setData] = useState<User[]>([]);
+  const [isChanged, setIsChanged] = useState<boolean>(false);
+  const { userRepo } = useContext(UserRepoContext);
 
-function UserPage({ handleClickDashboard, handleClickUser }: Props) {
-  const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
+  useEffect(() => {
+    async function getDataBackend() {
+      const res: User[] = await userRepo.getUsers();
+      console.log(res);
+      setData(res);
+    }
 
-  const openSidebar = () => {
-    setOpenSidebarToggle(!openSidebarToggle);
-  };
+    getDataBackend();
+  }, [isChanged, userRepo]);
 
   return (
     <div className="user-main">
-      <Sidebar
-        openSidebarToggle={openSidebarToggle}
-        openSidebar={openSidebar}
-        handleClickDashboard={handleClickDashboard}
-        handleClickUser={handleClickUser}
-      />
-      <UserList />
+      <UserList data={data} setIsChanged={setIsChanged} />
     </div>
   );
 }

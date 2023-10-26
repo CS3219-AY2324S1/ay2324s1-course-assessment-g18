@@ -1,0 +1,46 @@
+version: '3'
+services:
+  rabbitmq:
+    container_name: rabbitmq
+    image: "rabbitmq:3.12-management"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - mynetwork
+
+  auth:
+    container_name: auth
+    image: "rgonslayer/peerprep-auth:1.0"
+    ports:
+      - 3000:3000
+    networks:
+      - mynetwork
+      
+  matching: 
+    container_name: matching
+    image: "rgonslayer/peerprep-matching:1.0"
+    ports:
+      - 6001:6001
+    networks:
+    - mynetwork
+
+  question:
+    container_name: question
+    image: "rgonslayer/peerprep-question:1.0"
+    ports:
+      - 4001:4001
+    networks:
+      - mynetwork
+
+  user:
+    container_name: user
+    image: "rgonslayer/peerprep-user:1.1"
+    ports:
+      - 4000:4000
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
