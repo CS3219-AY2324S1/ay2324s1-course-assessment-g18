@@ -1,4 +1,4 @@
-import { CSSProperties, Dispatch, SetStateAction } from "react";
+import React, { CSSProperties, Dispatch, SetStateAction } from "react";
 import "./Input.css";
 import { Input } from "@/components/ui/input";
 import { Label } from "../ui/label";
@@ -7,16 +7,26 @@ interface Props {
   label: string;
   labelStyling?: CSSProperties;
   inputStyling?: CSSProperties;
-  setData: Dispatch<SetStateAction<string[]>>;
-  data: string[];
+  setData: Dispatch<SetStateAction<string[]>>; 
+  data: string[]; 
+  delimiter: string; // Add a delimiter prop
 }
-function CustomInput({
+
+function CustomInputArray({
   label,
   labelStyling,
   inputStyling,
   setData,
   data,
+  delimiter = "," 
 }: Props) {
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Split the input value into an array using the delimiter
+    const newValue = e.target.value.split(delimiter);
+    setData(newValue);
+  };
+
   return (
     <div className="input-div">
       <Label
@@ -28,11 +38,11 @@ function CustomInput({
       </Label>
       <Input
         style={{ ...inputStyling }}
-        onChange={(e) => setData(e.target.value)}
-        value={data}
+        onChange={handleInputChange}
+        value={data.join(delimiter)}
       />
     </div>
   );
 }
 
-export default CustomInput;
+export default CustomInputArray;
