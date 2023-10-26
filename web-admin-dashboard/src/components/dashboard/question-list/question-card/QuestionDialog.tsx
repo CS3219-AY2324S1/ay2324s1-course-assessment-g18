@@ -6,13 +6,11 @@ import { useState } from "react";
 import QuestionExamples from "./QuestionExamples";
 import QuestionConstraints from "./QuestionConstraints";
 
-
 interface Props {
   question: Question;
 }
 function QuestionDialog({ question }: Props) {
   const [open, setOpen] = useState(false);
-
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -32,10 +30,12 @@ function QuestionDialog({ question }: Props) {
           >
             {question.questionDifficulty}
           </div>
-          <div>{question.questionDescription}</div>
+          <div className="whitespace-pre-line">
+            {question.questionDescription}
+          </div>
           <QuestionExamples examples={question.questionExamples} />
           <div>
-            <QuestionConstraints constraints= {question.questionConstraints} />
+            <QuestionConstraints constraints={question.questionConstraints} />
           </div>
         </div>
       </CustomDialog>
