@@ -33,10 +33,18 @@ function UpdateQuestionForm({ question, setOpen, setIsChanged }: Props) {
     question.questionDifficulty
   );
   // to link to question object itself
-  const [example1, setExample1] = useState<[string, string]>(["", ""]);
-  const [example2, setExample2] = useState<[string, string]>(["", ""]);
-  const [example3, setExample3] = useState<[string, string]>(["", ""]);
-  const [constraints, setConstraints] = useState<string>("");
+  const [example1, setExample1] = useState<string[]>(
+    question.questionExamples[0]
+  );
+  const [example2, setExample2] = useState<string[]>(
+    question.questionExamples[1]
+  );
+  const [example3, setExample3] = useState<string[]>(
+    question.questionExamples[2]
+  );
+  const [constraints, setConstraints] = useState<string>(
+    question.questionConstraints
+  );
   const [img, setImg] = useState<string>("");
 
   const onSubmit = async (e: SyntheticEvent) => {
