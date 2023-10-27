@@ -5,6 +5,7 @@ import { AccessTokenGuard } from "./guards/accessToken.guard";
 import { RolesGuard } from "./guards/roles.guard";
 import { Roles } from "./decorator/roles.decorator";
 import { UserRole } from "./user-role.enum";
+import { MessagePattern, Payload } from "@nestjs/microservices";
 
 @Controller('questions')
 @UseGuards(AccessTokenGuard)
@@ -23,9 +24,11 @@ export class QuestionController {
         return await this.questionService.getQuestionById(questionId);
     }
 
+    @MessagePattern({cmd: 'random'})
     @Get('/random/:questionDifficulty')
-    async getRandomQuestionWithDifficulty(@Param('questionDifficulty') questionDifficulty: String) {
-        return await this.questionService.getRandomQuestionWithDifficulty(questionDifficulty);
+    async getRandomQuestionWithDifficulty(@Param('questionDifficulty') questionDifficulty: String, @Payload() data) {
+        const difficulty = data.difficulty;
+        return await this.questionService.getRandomQuestionWithDifficulty(difficulty);
     }
 
     @UseGuards(RolesGuard)
