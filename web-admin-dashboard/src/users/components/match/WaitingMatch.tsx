@@ -14,6 +14,7 @@ import DifficultyBtn from "../buttons/DifficultyBtn";
 import { chatSocket, matchingSocket } from "./sockets";
 import { useToast } from "@/components/ui/use-toast";
 import { AuthContext } from "@/context/AuthProvider";
+import api from "@/utils/api";
 
 interface Props {
   difficulty: QuestionDifficulty;
@@ -34,8 +35,6 @@ function WaitingMatch({
 
   matchingSocket.on("matchSuccess", (payload) => {
     const { matchedUserId, roomId } = payload;
-    chatSocket.emit("joinRoom", { roomId, toLeaveRoom: "" });
-    localStorage.setItem("roomId", roomId);
     navigate("/session", {
       state: { roomId: roomId, matchedUser: matchedUserId },
     });
@@ -44,13 +43,17 @@ function WaitingMatch({
 
   useEffect(() => {
     let matchSuccessReceived = false;
-
+    
     const matchSuccessHandler = (payload: any) => {
       const { matchedUserId, roomId } = payload;
       chatSocket.emit("joinRoom", { roomId, toLeaveRoom: "" });
-      navigate("/session", {
-        state: { roomId: roomId, matchedUser: matchedUserId, difficulty: difficulty },
-      });
+      api.get(`http://127.0.0.1:4001/questions/random/${difficulty}`).then((res) => {
+        const question = res.data[0]['questionDifficulty'][0];
+        navigate("/session", {
+            state: { roomId: roomId, matchedUser: matchedUserId, difficulty: difficulty, question: question},
+          });
+    }).catch((err) => console.log(err));
+      
 
       setOpenDialog(false);
       matchSuccessReceived = true;
