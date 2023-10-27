@@ -49,7 +49,7 @@ function WaitingMatch({
       const { matchedUserId, roomId } = payload;
       chatSocket.emit("joinRoom", { roomId, toLeaveRoom: "" });
       navigate("/session", {
-        state: { roomId: roomId, matchedUser: matchedUserId },
+        state: { roomId: roomId, matchedUser: matchedUserId, difficulty: difficulty },
       });
 
       setOpenDialog(false);
