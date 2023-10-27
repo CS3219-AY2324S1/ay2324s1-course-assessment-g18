@@ -1,17 +1,42 @@
-## Immediate Steps After Merge
+## Welcome to G18's PeerPrep
 
-1. `git pull` on `master`
+<p align="center">
+  <img src="https://github.com/CS3219-AY2324S1/ay2324s1-course-assessment-g18/assets/85295389/db8c3ec4-7833-4522-86b7-9fbd744ad993" alt="logo">
+</p>
 
-2. Delete all `node_modules` folders
+Meet Peer Prep, the ultimate hub for collaborative learning and problem-solving! Peer Prep stands as a dynamic web application that empowers users to effortlessly connect with fellow learners at the same proficiency level. Together, you'll delve into thoughtfully curated questions and amplify your problem-solving prowess. Our platform boasts innovative features that facilitate smooth collaboration with peers, enabling real-time discussions via our integrated chat feature. Additionally, you can visualize your code using our built-in code pad. We've streamlined the process of finding the perfect study partner, ensuring you team up with individuals who share your passion for problem-solving and maintain a similar proficiency level. With Peer Prep's interactive platform, effective and enjoyable learning is guaranteed. Embark on this exhilarating journey to enhance your skills, any time, from anywhere, right here on Peer Prep!
 
-3. Run `npm install` on all project folders again
+## Features
+1. Collaborate real time with other users on a live-code editor with syntax-highlighting.
 
-4. On any outdated branch before this PR, checkout to said branch and run `git merge master` to receive latest updates, and additionally resolve merge conflicts if any
+2. Match with other users based on question difficulty and your proficiency level.
+
+3. Chat with other users.
+
+4. Authentication with email and password, Google OAuth.
+
+5. See list of questions that you have attempted/submitted.
+
+6. Customise personal profile (IP).
+
+## Tech Stack
+Frontend: React, TypeScript, React Router, Axios, TailwindCss
+
+Server: Node, Express, Nest
+
+Databases: MongoDB, PostgreSQL
+
+Cloud: Google Cloud Platform
+
+Message Broker: RabbitMQ
+
+CI/CD Tools: Github Actions
+
+## Steps
+1. TBD
+
 
 ## Important Notes
 
-1. Probably would cause conflicts with any commit from this point forward, please merge ASAP
+1. Make sure your terminal active directory is pointing to the project folder e.g. `/ay2324s1-course-assessment-g18/web-admin-dashboard` before running any `npm` commands
 
-2. Make sure your terminal active directory is pointing to the project folder e.g. `/ay2324s1-course-assessment-g18/web-admin-dashboard` before running any `npm` commands
-
-3. You may open the `vscode.code-workspace` file in VSCode, this will force you to select which project folder you want to open your terminal in (in case you forget to set active directory in Step 2), but remember to add new paths into this file for any new project in the future!
