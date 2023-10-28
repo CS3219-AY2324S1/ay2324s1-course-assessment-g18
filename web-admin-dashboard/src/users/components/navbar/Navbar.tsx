@@ -14,11 +14,19 @@ import { AuthContext } from "@/context/AuthProvider";
 
 function Navbar() {
   const location = useLocation();
+  const pathname = location.pathname;
 
   const [openDialog, setOpenDialog] = useState(false);
   const { authState } = useContext(AuthContext);
   const user = authState.userInfo;
 
+  if (
+    pathname === "/rematch" ||
+    pathname === "/choose-match" ||
+    pathname === "/waiting-match"
+  ) {
+    return <Outlet />;
+  }
   return (
     <div className="w-screen h-screen flex flex-col">
       <NavigationMenu className="h-13 w-full flex max-w-none justify-between align-center px-5 bg-white pt-[10px] pb-[10px] pl-[25px] pr-[25px]">
