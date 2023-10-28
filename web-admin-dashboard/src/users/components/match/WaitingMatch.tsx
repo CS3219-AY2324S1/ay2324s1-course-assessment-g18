@@ -48,8 +48,6 @@ function WaitingMatch() {
       navigate("/session", {
         state: { roomId: roomId, matchedUser: matchedUserId },
       });
-
-      // setOpenDialog(false);
       matchSuccessReceived = true;
       toast({
         title: "Match found!",
@@ -84,7 +82,7 @@ function WaitingMatch() {
     <div className="flex w-screen h-screen items-center justify-center">
       <Card className="w-[500px] flex flex-col justify-center p-5">
         <CardTitle className="flex gap-[5px] mt-[10px] mb-[10px]">
-          Finding your Match in <Countdown />
+          Finding your Match in <Countdown time={30} />
         </CardTitle>
         <CardDescription>
           PeerPrep is working to find your match within the next 30 seconds.
