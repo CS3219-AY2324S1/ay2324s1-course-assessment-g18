@@ -20,6 +20,10 @@
 }
 
 .match-btn {
+  cursor: pointer !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: white;
   width: 100px;
   padding: 5px;
