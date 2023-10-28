@@ -15,6 +15,7 @@ import "./AddQuestionForm.css";
 import { useToast } from "@/components/ui/use-toast";
 import { QuestionRepoContext } from "@/context/QuestionRepoContext";
 import QnExampleInputs from "@/components/form/QnExampleInputs";
+import CustomInputArray from "@/components/form/CustomInputArray";
 
 interface Props {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -26,6 +27,7 @@ function AddQuestionForm({ setOpen, setIsChanged }: Props) {
   const { toast } = useToast();
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
+  const [categories, setCategories] = useState<string[]>([""]);
   const [complexity, setComplexity] = useState<QuestionDifficulty>(
     QuestionDifficulty.Easy
   );
@@ -47,7 +49,7 @@ function AddQuestionForm({ setOpen, setIsChanged }: Props) {
       });
     }
     try {
-      await questionRepo.saveQuestion(title, description, [], complexity, [example1, example2, example3], constraints, img);
+      await questionRepo.saveQuestion(title, description, categories, complexity, [example1, example2, example3], constraints, img);
       setIsChanged(true);
       setOpen(false);
       return toast({
@@ -77,6 +79,7 @@ function AddQuestionForm({ setOpen, setIsChanged }: Props) {
           <CustomInput label="Question Title" setData={setTitle} data={title} />
           <DifficultySelect setData={setComplexity} data={complexity} />
         </div>
+        <CustomInputArray label="Category" setData={setCategories} data={categories} delimiter="," />
         <CustomTextArea
           label="Description"
           setData={setDescription}
