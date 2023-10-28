@@ -14,6 +14,7 @@ import { matchingSocket } from "./sockets";
 import { AuthContext } from "@/context/AuthProvider";
 import { Card, CardTitle } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
+import { IoIosArrowBack } from "react-icons/io";
 
 function ChooseMatch() {
   const navigate = useNavigate();
@@ -22,7 +23,6 @@ function ChooseMatch() {
     QuestionDifficulty.Easy
   );
   const user = authState.userInfo;
-  const [error, setError] = useState<string>("");
   const handleSubmit = () => {
     // matching logic here
     matchingSocket.emit("match", {
@@ -34,7 +34,12 @@ function ChooseMatch() {
   return (
     <div className="flex w-screen h-screen items-center justify-center">
       <Card className="p-5 w-[500px]">
-        <CardTitle className="pb-3">Select your Preferences</CardTitle>
+        <CardTitle className="pb-3 flex gap-[5px]">
+          <button onClick={() => navigate("/user-dashboard")}>
+            <IoIosArrowBack />
+          </button>
+          Select your Preferences
+        </CardTitle>
         <div className="">
           PeerPrep will attempt to pair you with another user who shares the
           same preferences.

@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 
-function Countdown() {
+interface Props {
+  time: number;
+}
+function Countdown({ time }: Props) {
   const refInstance = useRef<number | null>(null);
   const [counter, setCountdown] = useState<string>("00:00:00");
 
@@ -25,7 +28,7 @@ function Countdown() {
   };
 
   const reset = (e: string) => {
-    setCountdown("30s");
+    setCountdown(time.toString() + "s");
     if (refInstance.current) clearInterval(refInstance.current);
     const id = setInterval(() => {
       initCounter(e);
@@ -35,7 +38,7 @@ function Countdown() {
 
   const voidTime = () => {
     const voidZone = new Date();
-    voidZone.setSeconds(voidZone.getSeconds() + 30);
+    voidZone.setSeconds(voidZone.getSeconds() + time);
     return voidZone.toISOString();
   };
 
