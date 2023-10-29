@@ -5,6 +5,7 @@ import {
   Dispatch,
   SetStateAction,
   useContext,
+  useEffect,
 } from "react";
 import CustomInput from "@/components/form/CustomInput";
 import { Question, QuestionDifficulty } from "@/questionrepo/question.model";
@@ -92,7 +93,7 @@ function UpdateQuestionForm({ question, setOpen, setIsChanged }: Props) {
       await questionRepo.updateQuestion(
         title,
         description,
-        categories,
+        categories.map((c) => c.trim()),
         complexity,
         [example1, example2, example3],
         constraints,
@@ -114,6 +115,7 @@ function UpdateQuestionForm({ question, setOpen, setIsChanged }: Props) {
       });
     }
   };
+
   function invalidForm() {
     if (title.length === 0 || description.length === 0) {
       return "All fields are required.";
@@ -127,7 +129,12 @@ function UpdateQuestionForm({ question, setOpen, setIsChanged }: Props) {
           <CustomInput label="Question Title" setData={setTitle} data={title} />
           <DifficultySelect setData={setComplexity} data={complexity} />
         </div>
-        <CustomInputArray label="Category" setData={setCategories} data={categories} delimiter="," />
+        <CustomInputArray
+          label="Category"
+          setData={setCategories}
+          data={categories}
+          delimiter=","
+        />
         <CustomTextArea
           label="Description"
           setData={setDescription}

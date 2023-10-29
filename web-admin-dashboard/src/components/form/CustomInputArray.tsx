@@ -7,8 +7,8 @@ interface Props {
   label: string;
   labelStyling?: CSSProperties;
   inputStyling?: CSSProperties;
-  setData: Dispatch<SetStateAction<string[]>>; 
-  data: string[]; 
+  setData: Dispatch<SetStateAction<string[]>>;
+  data: string[];
   delimiter: string; // Add a delimiter prop
 }
 
@@ -18,9 +18,8 @@ function CustomInputArray({
   inputStyling,
   setData,
   data,
-  delimiter = "," 
+  delimiter = ", ",
 }: Props) {
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // Split the input value into an array using the delimiter
     const newValue = e.target.value.split(delimiter);
