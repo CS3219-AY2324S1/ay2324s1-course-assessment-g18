@@ -18,7 +18,7 @@ function CustomInputArray({
   inputStyling,
   setData,
   data,
-  delimiter = ", ",
+  delimiter = ",",
 }: Props) {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // Split the input value into an array using the delimiter
