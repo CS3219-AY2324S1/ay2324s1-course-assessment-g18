@@ -1,6 +1,5 @@
 import { CSSProperties, Dispatch, SetStateAction } from "react";
 import "./Input.css";
-import { Input } from "@/components/ui/input";
 import { Label } from "../ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
