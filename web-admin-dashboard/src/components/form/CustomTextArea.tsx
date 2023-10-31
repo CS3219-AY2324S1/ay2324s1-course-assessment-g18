@@ -24,7 +24,7 @@ function CustomTextArea({
         {label}
       </Label>
       <Textarea
-        style={{ minHeight: "80px" }}
+        style={{ minHeight: "80px", whiteSpace: "pre-line" }}
         onChange={(e) => setData(e.target.value)}
         value={data}
       />

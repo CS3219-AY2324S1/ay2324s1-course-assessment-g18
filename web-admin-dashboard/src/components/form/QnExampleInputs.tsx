@@ -4,13 +4,13 @@ import { Label } from "../ui/label";
 import CustomExampleInput from "./CustomExampleInput";
 
 interface Props {
-  example: [string, string];
-  setExample: Dispatch<SetStateAction<[string, string]>>;
+  example: string[];
+  setExample: Dispatch<SetStateAction<string[]>>;
   exampleNum: number;
 }
 function QnExampleInputs({ example, setExample, exampleNum }: Props) {
-  const [input, setInput] = useState("");
-  const [output, setOutput] = useState("");
+  const [input, setInput] = useState(example[0]);
+  const [output, setOutput] = useState(example[1]);
 
   useEffect(() => {
     setExample([input, output]);
