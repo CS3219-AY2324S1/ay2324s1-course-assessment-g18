@@ -1,25 +1,32 @@
-import './UserDashboardPage.css';
-import UserDashboardStats from '@/users/components/user-dashboard/statistics/UserDashboardStats';
-import HistoryList from '@/users/components/user-dashboard/history-list/HistoryList';
-import { useEffect, useState } from 'react';
-import LiveHistoryRepository from '../historyRepo/LiveHistoryRepository';
-import { History } from '../historyRepo/history.model';
-import { HistoryRepoContext } from '@/context/HistoryRepoContext';
+import "./UserDashboardPage.css";
+import UserDashboardStats from "@/users/components/user-dashboard/statistics/UserDashboardStats";
+import HistoryList from "@/users/components/user-dashboard/history-list/HistoryList";
+import FallbackHistoryRepository from "@/users/userHistoryRepo/FallbackHistoryRepository";
+import { useContext, useEffect } from "react";
+import { matchingSocket } from "../components/match/sockets";
+import { AuthContext } from "@/context/AuthProvider";
 
 function UserDashboardPage() {
-  const [data, setData] = useState<History[]>([]);
-  const [historyRepo, setHistoryRepo] = useState<LiveHistoryRepository>(
-    new LiveHistoryRepository(),
-  );
-
+  const { authState } = useContext(AuthContext);
+  const user = authState.userInfo;
   useEffect(() => {
-    async function getDataBackend() {
-      const res: History[] = await historyRepo.getHistoryByEmail();
-      setData(res);
-    }
-
-    getDataBackend();
-  }, [historyRepo]);
+    const leaveRoom = () => {
+      if (localStorage.getItem("roomId")) {
+        matchingSocket.emit("leaveSession", {
+          roomId: localStorage.getItem("roomId"),
+        });
+        console.log("left session");
+      }
+    };
+    const leaveQueue = () => {
+      matchingSocket.emit("matchingCancel", {
+        userId: user.username,
+      });
+      console.log("matching cancelled");
+    };
+    leaveRoom();
+    leaveQueue();
+  }, []);
 
   return (
     <HistoryRepoContext.Provider value={{ historyRepo, setHistoryRepo }}>
