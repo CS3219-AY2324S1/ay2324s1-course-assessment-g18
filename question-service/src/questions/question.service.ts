@@ -23,7 +23,9 @@ export class QuestionService {
                 { $sample: { size: 1 }}
             ]
         }};
-        return await this.questionRepository.getRandomQuestionWithDifficulty(query);
+        const question = await this.questionRepository.getRandomQuestionWithDifficulty(query);
+        console.log(question);
+        return question;
     }
 
     async addQuestion(questionDto: QuestionDto) {

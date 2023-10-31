@@ -45,16 +45,19 @@ function WaitingMatch({
     let matchSuccessReceived = false;
     
     const matchSuccessHandler = (payload: any) => {
-      const { matchedUserId, roomId } = payload;
+      const { matchedUserId, roomId, question } = payload;
       chatSocket.emit("joinRoom", { roomId, toLeaveRoom: "" });
-      api.get(`http://127.0.0.1:4001/questions/random/${difficulty}`).then((res) => {
-        const question = res.data[0]['questionDifficulty'][0];
-        navigate("/session", {
-            state: { roomId: roomId, matchedUser: matchedUserId, difficulty: difficulty, question: question},
-          });
-    }).catch((err) => console.log(err));
+      localStorage.setItem("roomId", roomId);
+    //   api.get(`http://127.0.0.1:4001/questions/random/${difficulty}`).then((res) => {
+    //     const question = res.data[0]['questionDifficulty'][0];
+    //     navigate("/session", {
+    //         state: { roomId: roomId, matchedUser: matchedUserId, difficulty: difficulty, question: question},
+    //       });
+    // }).catch((err) => console.log(err));
       
-
+    navigate("/session", {
+                state: { roomId: roomId, matchedUser: matchedUserId, difficulty: difficulty, question: question},
+              });
       setOpenDialog(false);
       matchSuccessReceived = true;
       toast({
