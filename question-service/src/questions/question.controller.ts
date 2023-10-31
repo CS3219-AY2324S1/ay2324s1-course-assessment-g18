@@ -8,17 +8,18 @@ import { UserRole } from "./user-role.enum";
 import { MessagePattern, Payload } from "@nestjs/microservices";
 
 @Controller('questions')
-@UseGuards(AccessTokenGuard)
 export class QuestionController {
 
     constructor(private questionService:QuestionService){}
 
+    @UseGuards(AccessTokenGuard)
     @Get()
     async getAllQuestions(): Promise<QuestionDto[]>
     {
         return await this.questionService.getAllQuestions();
     }
 
+    @UseGuards(AccessTokenGuard)
     @Get('/:questionId')
     async getQuestionById(@Param('questionId') questionId: string) {
         return await this.questionService.getQuestionById(questionId);
@@ -27,10 +28,12 @@ export class QuestionController {
     @MessagePattern({cmd: 'random'})
     @Get('/random/:questionDifficulty')
     async getRandomQuestionWithDifficulty(@Param('questionDifficulty') questionDifficulty: String, @Payload() data) {
+        console.log("random called");
         const difficulty = data.difficulty;
         return await this.questionService.getRandomQuestionWithDifficulty(difficulty);
     }
 
+    @UseGuards(AccessTokenGuard)
     @UseGuards(RolesGuard)
     @Roles([UserRole.Admin])
     @Post()
@@ -38,6 +41,7 @@ export class QuestionController {
         return await this.questionService.addQuestion(questionDto);
     }
 
+    @UseGuards(AccessTokenGuard)
     @UseGuards(RolesGuard)
     @Roles([UserRole.Admin])
     @Delete('/:questionId')
@@ -45,6 +49,7 @@ export class QuestionController {
         await this.questionService.deleteQuestion(questionId);
     }
 
+    @UseGuards(AccessTokenGuard)
     @UseGuards(RolesGuard)
     @Roles([UserRole.Admin])
     @Put('/:questionId')
