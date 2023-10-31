@@ -38,6 +38,16 @@ export const Columns: ColumnDef<Question>[] = [
     cell: ({ row }) => <QuestionDialog question={row.original} />,
   },
   {
+    accessorKey: "questionCategories",
+    header: "Category",
+    cell: ({ row }) => {
+      console.log(row);
+      const values: string[] = row.getValue("questionCategories");
+      const combinedString = values.join(", ");
+      return <div>{combinedString}</div>;
+    },
+  },
+  {
     accessorKey: "questionDifficulty",
     header: ({ column }) => {
       return (
