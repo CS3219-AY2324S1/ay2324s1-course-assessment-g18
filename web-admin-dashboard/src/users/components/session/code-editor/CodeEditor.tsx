@@ -1,4 +1,3 @@
-import { CodeEditorProps } from "./interface";
 import Editor from "@monaco-editor/react";
 import { WebrtcProvider } from "y-webrtc";
 import * as Y from "yjs"
@@ -8,16 +7,10 @@ import { useSyncedStore } from "@syncedstore/react";
 import { useRef, useState } from "react";
 import { Language } from "@/users/models/language.model";
 import "./CodeEditor.css";
-import { listen } from 'vscode-ws-jsonrpc';
-import {
-  MonacoLanguageClient,
-  MonacoServices,
-  CloseAction,
-  ErrorAction,
-  createConnection
-} from 'monaco-languageclient';
+import { getYjsValue } from "@syncedstore/core";
 
 interface Props {
+  onChange: any;
   roomId: string;
   language: Language;
 }
@@ -26,7 +19,7 @@ export default function CodeEditor({ onChange, roomId, language }: Props) {
   const state = useSyncedStore(store);
   const editorRef = useRef(null);
 
-  const [value, setValue] = useState(state.codeTextStore[roomId] || "");
+  const [value, setValue] = useState(state.codeTextStore[roomId] || "// Your Code Here");
 
   const handleEditorChange = (value) => {
     setValue(value);
@@ -37,7 +30,7 @@ export default function CodeEditor({ onChange, roomId, language }: Props) {
   function handleEditorDidMount(editor, monaco) {
     editorRef.current = editor;
     // Initialize YJS
-    const doc = new Y.Doc(); // a collection of shared objects -> Text
+    const doc: any = getYjsValue(store);
     // Connect to peers (or start connection) with WebRTC
     const provider = new WebrtcProvider({roomId}, doc); // room1, room2
     const type = doc.getText("monaco"); // doc { "monaco": "what our IDE is showing" }

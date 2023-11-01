@@ -7,7 +7,6 @@ const OutputWindow = ({ outputDetails }) => {
       return (
         <pre className="px-2 py-1 font-normal text-xs text-red-500">
           {atob(outputDetails?.compile_output)}
-          {/* {Buffer.from(outputDetails?.compile_output, 'base64').toString('ascii')} */}
         </pre>
       );
     } else if (statusId === 3) {
@@ -27,7 +26,7 @@ const OutputWindow = ({ outputDetails }) => {
     } else {
       return (
         <pre className="px-2 py-1 font-normal text-xs text-red-500">
-          Error
+          {window.atob(outputDetails?.stderr)}
         </pre>
       );
     }
