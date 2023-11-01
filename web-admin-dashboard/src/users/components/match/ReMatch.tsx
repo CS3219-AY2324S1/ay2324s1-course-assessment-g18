@@ -7,9 +7,6 @@ import {
   CardFooter,
   CardTitle,
 } from "@/components/ui/card";
-import { DialogTitle } from "@/components/ui/dialog";
-import { DialogClose, DialogContent } from "@radix-ui/react-dialog";
-import React, { Dispatch, SetStateAction } from "react";
 import { useNavigate } from "react-router-dom";
 
 function ReMatch() {
@@ -24,7 +21,7 @@ function ReMatch() {
     // setChosen(false);
   };
   return (
-    <div className="flex w-screen h-screen items-center justify-center">
+    <div className="flex w-screen h-screen items-center justify-center bg-[#FAFBFF]">
       <Card className="h-[200px] w-[500px] flex flex-col justify-between p-5">
         <div className="mt-[10px] flex flex-col gap-[10px]">
           <CardTitle className="">No match found...</CardTitle>
@@ -38,7 +35,10 @@ function ReMatch() {
           >
             No
           </Button>
-          <Button onClick={handleRematch} className="w-[80px]">
+          <Button
+            onClick={handleRematch}
+            className="w-[80px] bg-[#5562eb] hover:bg-[#6470ee]"
+          >
             Yes
           </Button>
         </div>

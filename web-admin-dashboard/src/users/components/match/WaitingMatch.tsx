@@ -103,7 +103,7 @@ function WaitingMatch() {
   }, []);
 
   return (
-    <div className="flex w-screen h-screen items-center justify-center">
+    <div className="flex w-screen h-screen items-center justify-center bg-[#FAFBFF]">
       <Card className="w-[500px] flex flex-col justify-center p-5">
         <CardTitle className="flex gap-[5px] mt-[10px] mb-[10px]">
           <button onClick={handleBack}>

@@ -15,7 +15,6 @@ import { AuthContext } from "@/context/AuthProvider";
 import { Card, CardTitle } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
-
 function ChooseMatch() {
   const navigate = useNavigate();
   const { authState } = useContext(AuthContext);
@@ -33,7 +32,7 @@ function ChooseMatch() {
   };
 
   return (
-    <div className="flex w-screen h-screen items-center justify-center">
+    <div className="flex w-screen h-screen items-center justify-center bg-[#FAFBFF]">
       <Card className="p-5 w-[500px]">
         <CardTitle className="pb-3 flex gap-[5px]">
           <button onClick={() => navigate("/user-dashboard")}>
@@ -48,7 +47,9 @@ function ChooseMatch() {
         <form onSubmit={handleSubmit} className="pt-3 pb-3 mt-3">
           <Label>Question difficulty:</Label>
           <DifficultySelect data={difficulty} setData={setDifficulty} />
-          <Button type="submit">Confirm</Button>
+          <Button type="submit" className="bg-[#5562eb] hover:bg-[#6470ee]">
+            Confirm
+          </Button>
         </form>
       </Card>
     </div>
