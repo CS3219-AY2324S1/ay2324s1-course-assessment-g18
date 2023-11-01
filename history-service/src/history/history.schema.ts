@@ -21,7 +21,7 @@ export class History {
   questionDifficulty: string;
 
   @Prop()
-  chatHistory: string;
+  chatHistory: Array<string>;
 
   @Prop()
   codeExecuted: string;

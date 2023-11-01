@@ -25,7 +25,7 @@ export class CreateHistoryDto {
 
   @IsString()
   @IsNotEmpty()
-  readonly chatHistory: string;
+  readonly chatHistory: Array<string>;
 
   @IsString()
   @IsNotEmpty()
