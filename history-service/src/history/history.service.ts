@@ -12,7 +12,7 @@ export class HistoryService {
   async addHistory(createHistoryDto: CreateHistoryDto): Promise<IHistory> {
     const newHistory = await new this.historyModel(createHistoryDto);
 
-    const MaxId = await this.getMaximumId();
+    const MaxId = await this.getMaximumId(createHistoryDto.userEmail);
 
     if (MaxId.length == 0) {
       newHistory.historyId = 1;
@@ -62,7 +62,10 @@ export class HistoryService {
     return updatedHistory;
   }
 
-  async getMaximumId() {
-    return await this.historyModel.find().sort({ historyId: -1 }).limit(1);
+  async getMaximumId(userEmail: string) {
+    return await this.historyModel
+      .find({ userEmail })
+      .sort({ historyId: -1 })
+      .limit(1);
   }
 }
