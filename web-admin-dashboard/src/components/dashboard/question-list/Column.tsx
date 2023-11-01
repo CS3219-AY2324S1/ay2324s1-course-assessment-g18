@@ -27,9 +27,19 @@ export const Columns: ColumnDef<Question>[] = [
   },
   {
     accessorKey: "questionId",
-    header: "ID",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          ID
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     cell: ({ row }) => (
-      <div className="citalize">{row.getValue("questionId")}</div>
+      <div className="capitalize pl-7">{row.getValue("questionId")}</div>
     ),
   },
   {
