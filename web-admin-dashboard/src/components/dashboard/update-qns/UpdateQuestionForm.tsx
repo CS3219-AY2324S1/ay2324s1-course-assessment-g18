@@ -5,6 +5,7 @@ import {
   Dispatch,
   SetStateAction,
   useContext,
+  useEffect,
 } from "react";
 import CustomInput from "@/components/form/CustomInput";
 import { Question, QuestionDifficulty } from "@/questionrepo/question.model";
@@ -14,6 +15,7 @@ import "./../add-qns/AddQuestionForm.css";
 import { useToast } from "@/components/ui/use-toast";
 import { QuestionRepoContext } from "@/context/QuestionRepoContext";
 import QnExampleInputs from "@/components/form/QnExampleInputs";
+import CustomInputArray from "@/components/form/CustomInputArray";
 
 interface Props {
   question: Question;
@@ -29,14 +31,25 @@ function UpdateQuestionForm({ question, setOpen, setIsChanged }: Props) {
   const [description, setDescription] = useState<string>(
     question.questionDescription
   );
+  const [categories, setCategories] = useState<string[]>(
+    question.questionCategories
+  );
   const [complexity, setComplexity] = useState<QuestionDifficulty>(
     question.questionDifficulty
   );
   // to link to question object itself
-  const [example1, setExample1] = useState<[string, string]>(["", ""]);
-  const [example2, setExample2] = useState<[string, string]>(["", ""]);
-  const [example3, setExample3] = useState<[string, string]>(["", ""]);
-  const [constraints, setConstraints] = useState<string>("");
+  const [example1, setExample1] = useState<string[]>(
+    question.questionExamples[0]
+  );
+  const [example2, setExample2] = useState<string[]>(
+    question.questionExamples[1]
+  );
+  const [example3, setExample3] = useState<string[]>(
+    question.questionExamples[2]
+  );
+  const [constraints, setConstraints] = useState<string>(
+    question.questionConstraints
+  );
   const [img, setImg] = useState<string>("");
 
   const onSubmit = async (e: SyntheticEvent) => {
@@ -80,7 +93,7 @@ function UpdateQuestionForm({ question, setOpen, setIsChanged }: Props) {
       await questionRepo.updateQuestion(
         title,
         description,
-        [],
+        categories.map((c) => c.trim()),
         complexity,
         [example1, example2, example3],
         constraints,
@@ -102,6 +115,7 @@ function UpdateQuestionForm({ question, setOpen, setIsChanged }: Props) {
       });
     }
   };
+
   function invalidForm() {
     if (title.length === 0 || description.length === 0) {
       return "All fields are required.";
@@ -115,6 +129,12 @@ function UpdateQuestionForm({ question, setOpen, setIsChanged }: Props) {
           <CustomInput label="Question Title" setData={setTitle} data={title} />
           <DifficultySelect setData={setComplexity} data={complexity} />
         </div>
+        <CustomInputArray
+          label="Category"
+          setData={setCategories}
+          data={categories}
+          delimiter=","
+        />
         <CustomTextArea
           label="Description"
           setData={setDescription}

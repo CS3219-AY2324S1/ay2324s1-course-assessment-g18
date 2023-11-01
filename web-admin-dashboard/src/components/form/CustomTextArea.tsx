@@ -1,6 +1,5 @@
 import { CSSProperties, Dispatch, SetStateAction } from "react";
 import "./Input.css";
-import { Input } from "@/components/ui/input";
 import { Label } from "../ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -24,7 +23,7 @@ function CustomTextArea({
         {label}
       </Label>
       <Textarea
-        style={{ minHeight: "80px" }}
+        style={{ minHeight: "80px", whiteSpace: "pre-line" }}
         onChange={(e) => setData(e.target.value)}
         value={data}
       />
