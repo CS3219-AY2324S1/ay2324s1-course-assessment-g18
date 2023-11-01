@@ -16,6 +16,18 @@ export class QuestionService {
         return await this.questionRepository.getQuestionById(questionId);
     }
 
+    async getRandomQuestionWithDifficulty(difficulty: String) {
+        let query = {"$facet":{
+            "questionDifficulty": [
+                { $match: { questionDifficulty: difficulty }},
+                { $sample: { size: 1 }}
+            ]
+        }};
+        const question = await this.questionRepository.getRandomQuestionWithDifficulty(query);
+        console.log(question);
+        return question;
+    }
+
     async addQuestion(questionDto: QuestionDto) {
         const existingQuestion = await this.questionRepository.getQuestionByTitle(questionDto.questionTitle);
         if (existingQuestion) {

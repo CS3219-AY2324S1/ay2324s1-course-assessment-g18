@@ -12,20 +12,14 @@ import { DialogClose, DialogContent } from "@radix-ui/react-dialog";
 import React, { Dispatch, SetStateAction } from "react";
 import { useNavigate } from "react-router-dom";
 
-interface Props {
-  setRematch: Dispatch<SetStateAction<boolean>>;
-  setChosen: Dispatch<SetStateAction<boolean>>;
-  setOpenDialog: Dispatch<SetStateAction<boolean>>;
-}
 function ReMatch() {
   const navigate = useNavigate();
   const handleRematch = () => {
     navigate("/choose-match");
   };
   const handleClose = () => {
+    handleRematch();
     navigate("/user-dashboard");
-    // setRematch(false);
-    // setChosen(false);
   };
   return (
     <div className="flex w-screen h-screen items-center justify-center">

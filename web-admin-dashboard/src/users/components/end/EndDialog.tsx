@@ -19,6 +19,7 @@ function EndDialog() {
   const [openDialog, setOpenDialog] = useState(false);
   const handleEnd = () => {
     navigate("/user-dashboard");
+    console.log("leaving session");
     matchingSocket.emit("leaveSession", {
       roomId: localStorage.getItem("roomId"),
     });

@@ -33,8 +33,6 @@ function WaitingMatch() {
   const difficulty = state.difficulty;
   matchingSocket.on("matchSuccess", (payload) => {
     const { matchedUserId, roomId } = payload;
-    chatSocket.emit("joinRoom", { roomId, toLeaveRoom: "" });
-    localStorage.setItem("roomId", roomId);
     navigate("/session", {
       state: { roomId: roomId, matchedUser: matchedUserId },
     });
@@ -43,13 +41,14 @@ function WaitingMatch() {
 
   useEffect(() => {
     let matchSuccessReceived = false;
-
+    
     const matchSuccessHandler = (payload: any) => {
-      const { matchedUserId, roomId } = payload;
+      const { matchedUserId, roomId, question } = payload;
       chatSocket.emit("joinRoom", { roomId, toLeaveRoom: "" });
+        localStorage.setItem("roomId", roomId);
       navigate("/session", {
-        state: { roomId: roomId, matchedUser: matchedUserId },
-      });
+                state: { roomId: roomId, matchedUser: matchedUserId, difficulty: difficulty, question: question},
+              });
       matchSuccessReceived = true;
       toast({
         title: "Match found!",
@@ -64,7 +63,7 @@ function WaitingMatch() {
       if (!matchSuccessReceived) {
         // If "matchSuccess" is not received within 30 seconds, trigger an error.
         console.error("Match did not succeed within 30 seconds.");
-        // setRematch(true);
+
         matchingSocket.emit("matchCancel", {
           difficulty: difficulty,
           userId: username,

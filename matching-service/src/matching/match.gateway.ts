@@ -21,23 +21,28 @@ export class MatchGateway implements OnGatewayConnection, OnGatewayDisconnect {
     }
   
     @SubscribeMessage('match')
-    handleSelectDifficulty(client: Socket, payload: { difficulty: string, userId: String }) {
+    async handleSelectDifficulty(client: Socket, payload: { difficulty: string, userId: String }) {
       const { difficulty, userId } = payload;
       const user = { client: client, difficulty, userId };
-      this.matchService.enqueueUser(user);
+      await this.matchService.enqueueUser(user);
       client.emit('matching', { userId, difficulty });
     }
 
     @SubscribeMessage('matchCancel')
     handleMatchCancel(client: Socket, payload: { difficulty: string, userId: string }) {
-      const { difficulty, userId } = payload;
-      this.matchService.dequeueUser(userId, difficulty);
-      client.emit('matchCancelSuccess', { userId, difficulty });
+      const { userId } = payload;
+      console.log("matchCancel called");
+      this.matchService.dequeueUser(userId, "Easy");
+      this.matchService.dequeueUser(userId, "Medium");
+      this.matchService.dequeueUser(userId, "Hard");
+      client.emit('matchCancelSuccess', { userId });
     }
 
     @SubscribeMessage('leaveSession')
     handleSessionLeave(client: Socket, payload: {roomId: string}) {
         const {roomId} = payload;
+        console.log("client leaving session");
+        console.log(roomId);
         this.server.to(roomId).emit("partnerLeaveSession");
         client.leave(roomId);
     }
