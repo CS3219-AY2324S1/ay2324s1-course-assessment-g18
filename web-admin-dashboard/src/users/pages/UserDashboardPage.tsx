@@ -9,6 +9,11 @@ import { AuthContext } from "@/context/AuthProvider";
 function UserDashboardPage() {
   const { authState } = useContext(AuthContext);
   const user = authState.userInfo;
+  const [data, setData] = useState<History[]>([]);
+  const [historyRepo, setHistoryRepo] = useState<LiveHistoryRepository>(
+    new LiveHistoryRepository(),
+  );
+    
   useEffect(() => {
     const leaveRoom = () => {
       if (localStorage.getItem("roomId")) {
@@ -28,11 +33,22 @@ function UserDashboardPage() {
     leaveQueue();
   }, []);
 
+  useEffect(() => {
+    async function getDataBackend() {
+      const res: History[] = await historyRepo.getHistoryByEmail();
+      setData(res);
+    }
+
+    getDataBackend();
+  }, [historyRepo]);
+
   return (
-    <div className="user-dashboard-main">
-      <UserDashboardStats />
-      <HistoryList data={FallbackHistoryRepository.getHistory()} />
-    </div>
+    <HistoryRepoContext.Provider value={{ historyRepo, setHistoryRepo }}>
+      <div className="user-dashboard-main">
+        <UserDashboardStats />
+        <HistoryList data={data} />
+      </div>
+    </HistoryRepoContext.Provider>
   );
 }
 
