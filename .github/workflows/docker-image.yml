@@ -24,3 +24,33 @@ jobs:
           docker build . --file ./dockerfile --tag rgonslayer/peerprep-question:1.0
           docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
           docker push rgonslayer/peerprep-question:1.0
+
+      - name: Build MatchingService image
+        run: |
+          cd ./matching-service
+          docker build . --file ./dockerfile --tag rgonslayer/peerprep-matching:1.0
+          docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+          docker push rgonslayer/peerprep-matching:1.0
+          
+      - name: Build AuthService image
+        run: |
+          cd ./auth-service
+          docker build . --file ./dockerfile --tag rgonslayer/peerprep-auth:1.0
+          docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+          docker push rgonslayer/peerprep-auth:1.0
+          
+      - name: Build ChatService image
+        run: |
+          cd ./chat-service
+          docker build . --file ./dockerfile --tag adrielsoh/peerprep-chat:1.0
+          docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+          docker push adrielsoh/peerprep-chat:1.0
+      
+      - name: Build HistoryService image
+        run: |
+          cd ./history-service
+          docker build . --file ./dockerfile --tag adrielsoh/peerprep-history:1.0
+          docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+          docker push adrielsoh/peerprep-history:1.0
+
+
