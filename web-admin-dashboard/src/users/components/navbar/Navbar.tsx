@@ -34,9 +34,6 @@ function Navbar() {
         <NavigationMenuList className="w-full gap-5">
           <NavigationMenuItem className="flex gap-2 items-center">
             <img src={logo} className="logo" />
-            <Link to="/user-dashboard" className="">
-              PeerPrep
-            </Link>
           </NavigationMenuItem>
           <NavigationMenuItem className="font-bold flex gap-2 items-center justify-center">
             Hello, {user.username} <p className="text-xl">👋🏻</p>
