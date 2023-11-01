@@ -38,7 +38,11 @@ function HistoryDialog({ history }: Props) {
         </div>
         <div>
           <DialogTitle>Your submission</DialogTitle>
-          <DialogDescription>{history.codeExecuted}</DialogDescription>
+          <DialogDescription>
+            <pre>
+              <code>{history.codeExecuted}</code>
+            </pre>
+          </DialogDescription>
         </div>
         <div>
           <DialogTitle>Chat history with partner</DialogTitle>
