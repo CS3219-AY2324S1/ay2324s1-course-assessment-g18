@@ -48,7 +48,7 @@ function Countdown({ time }: Props) {
 
   return (
     <>
-      <h1 className="h1 alert alert-info text-center">{counter}</h1>
+      <div className="h1 alert alert-info text-center">{counter}</div>
       <div className="d-grid"></div>
     </>
   );
