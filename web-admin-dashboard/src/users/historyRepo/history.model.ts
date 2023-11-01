@@ -2,7 +2,7 @@ export interface History {
   _id: string;
   historyId: number;
   userEmail: string;
-  questionId: string;
+  questionId: number;
   questionTitle: string;
   questionDescription: string;
   questionDifficulty: QuestionDifficulty;

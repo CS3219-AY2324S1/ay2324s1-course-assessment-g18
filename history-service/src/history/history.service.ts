@@ -11,6 +11,15 @@ export class HistoryService {
 
   async addHistory(createHistoryDto: CreateHistoryDto): Promise<IHistory> {
     const newHistory = await new this.historyModel(createHistoryDto);
+
+    const MaxId = await this.getMaximumId();
+
+    if (MaxId.length == 0) {
+      newHistory.historyId = 1;
+    } else {
+      newHistory.historyId = MaxId[0].historyId + 1;
+    }
+
     return newHistory.save();
   }
 
@@ -51,5 +60,9 @@ export class HistoryService {
       throw new NotFoundException('History data not found');
     }
     return updatedHistory;
+  }
+
+  async getMaximumId() {
+    return await this.historyModel.find().sort({ historyId: -1 }).limit(1);
   }
 }

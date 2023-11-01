@@ -1,8 +1,8 @@
 import { Document } from 'mongoose';
 export interface IHistory extends Document {
-  readonly historyId: number;
+  historyId: number;
   readonly userEmail: string;
-  readonly questionId: string;
+  readonly questionId: number;
   readonly questionTitle: string;
   readonly questionDescription: string;
   readonly questionDifficulty: string;
