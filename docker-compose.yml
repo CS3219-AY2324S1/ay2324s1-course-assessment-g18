@@ -49,6 +49,15 @@ services:
     networks:
       - mynetwork
 
+  history:
+    container_name: history
+    image: 'adrielsoh/peerprep-history:1.0'
+    ports:
+      - 4002:4002
+    networks:
+      - mynetwork
+    
+
 networks:
   mynetwork:
     driver: bridge
