@@ -47,7 +47,7 @@ export default function CodeEditor({ onChange, roomId, language }: Props) {
   }
 
   return (
-    <div className="h-full">
+    <div className="h-full border-b-2 border-gray-200">
       <Editor
         language={language}
         value={value}

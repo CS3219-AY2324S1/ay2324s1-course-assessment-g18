@@ -174,7 +174,7 @@ function SessionPage() {
         </div>
         <CodeEditor roomId="1" language={lang} />
         <div className="w-full h-2/5 flex flex-row p-5">
-          <div className="h-full w-full flex flex-col mt-5 pr-5">
+          <div className="h-full w-full flex flex-col pr-5">
             <OutputWindow outputDetails={{outputDetails}} />
           </div>
           <div className="h-full w-60 flex flex-col mt-10">
