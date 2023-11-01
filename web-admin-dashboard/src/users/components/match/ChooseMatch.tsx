@@ -32,12 +32,6 @@ function ChooseMatch() {
     navigate("/waiting-match", { state: { difficulty: difficulty } });
   };
 
-  useEffect(() => {
-    matchingSocket.emit("matchCancel", {
-      userId: user.username,
-    });
-  }, []);
-
   return (
     <div className="flex w-screen h-screen items-center justify-center">
       <Card className="p-5 w-[500px]">

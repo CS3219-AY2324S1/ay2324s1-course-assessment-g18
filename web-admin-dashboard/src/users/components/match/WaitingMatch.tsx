@@ -88,13 +88,19 @@ function WaitingMatch() {
   }, []);
 
   const handleBack = () => {
-    clearTimeout(timeoutRef.current);
-    // dequeue user
-    matchingSocket.emit("matchCancel", {
-      userId: username,
-    });
     navigate("/choose-match");
   };
+
+  useEffect(() => {
+    // clear timeout when component unmounts
+    return () => {
+      clearTimeout(timeoutRef.current);
+      // dequeue user
+      matchingSocket.emit("matchCancel", {
+        userId: username,
+      });
+    };
+  }, []);
 
   return (
     <div className="flex w-screen h-screen items-center justify-center">

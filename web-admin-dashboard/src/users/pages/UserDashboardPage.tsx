@@ -26,13 +26,7 @@ function UserDashboardPage() {
         console.log("left session");
       }
     };
-    const leaveQueue = () => {
-      matchingSocket.emit("matchCancel", {
-        userId: user.username,
-      });
-    };
     leaveRoom();
-    leaveQueue();
   }, []);
 
   return (
