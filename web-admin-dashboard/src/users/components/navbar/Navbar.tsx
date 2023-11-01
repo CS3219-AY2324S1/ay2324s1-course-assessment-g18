@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./Navbar.css";
-import logo from "./../../../assets/dashboard/logo.svg";
+import logo from "../../../assets/logo.png";
 import {
   NavigationMenu,
   NavigationMenuItem,
