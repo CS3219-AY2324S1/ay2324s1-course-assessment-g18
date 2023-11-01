@@ -27,10 +27,9 @@ function UserDashboardPage() {
       }
     };
     const leaveQueue = () => {
-      matchingSocket.emit("matchingCancel", {
+      matchingSocket.emit("matchCancel", {
         userId: user.username,
       });
-      console.log("matching cancelled");
     };
     leaveRoom();
     leaveQueue();
