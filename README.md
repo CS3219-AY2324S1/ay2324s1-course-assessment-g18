@@ -5,7 +5,7 @@
 </p>
 
 <div>
-  ![CI/CD](https://github.com/CS3219-AY2324S1/ay2324s1-course-assessment-g18/workflows/Auth-Service-CI/badge.svg)
+  ![CI/CD](https://github.com/CS3219-AY2324S1/ay2324s1-course-assessment-g18/workflows/Auth%20Service%20CI/badge.svg)
 </div>
 
 
