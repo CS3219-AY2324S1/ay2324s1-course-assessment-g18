@@ -9,11 +9,13 @@ import React, {
 } from "react";
 import "./MatchDialog.css";
 import { Separator } from "@/components/ui/separator";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import DifficultyBtn from "../buttons/DifficultyBtn";
 import { chatSocket, matchingSocket } from "./sockets";
 import { useToast } from "@/components/ui/use-toast";
 import { AuthContext } from "@/context/AuthProvider";
+import { Card, CardDescription, CardTitle } from "@/components/ui/card";
+import Countdown from "./Countdown";
 
 interface Props {
   difficulty: QuestionDifficulty;
@@ -21,17 +23,14 @@ interface Props {
   setOpenDialog: Dispatch<SetStateAction<boolean>>;
   setRematch: Dispatch<SetStateAction<boolean>>;
 }
-function WaitingMatch({
-  difficulty,
-  setChosen,
-  setOpenDialog,
-  setRematch,
-}: Props) {
+function WaitingMatch() {
   const { authState } = useContext(AuthContext);
   const username = authState.userInfo.username;
   const { toast } = useToast();
   const navigate = useNavigate();
 
+  const { state } = useLocation();
+  const difficulty = state.difficulty;
   matchingSocket.on("matchSuccess", (payload) => {
     const { matchedUserId, roomId } = payload;
     chatSocket.emit("joinRoom", { roomId, toLeaveRoom: "" });
@@ -39,7 +38,7 @@ function WaitingMatch({
     navigate("/session", {
       state: { roomId: roomId, matchedUser: matchedUserId },
     });
-    setOpenDialog(false);
+    // setOpenDialog(false);
   });
 
   useEffect(() => {
@@ -51,8 +50,6 @@ function WaitingMatch({
       navigate("/session", {
         state: { roomId: roomId, matchedUser: matchedUserId },
       });
-
-      setOpenDialog(false);
       matchSuccessReceived = true;
       toast({
         title: "Match found!",
@@ -67,11 +64,12 @@ function WaitingMatch({
       if (!matchSuccessReceived) {
         // If "matchSuccess" is not received within 30 seconds, trigger an error.
         console.error("Match did not succeed within 30 seconds.");
-        setRematch(true);
+        // setRematch(true);
         matchingSocket.emit("matchCancel", {
           difficulty: difficulty,
           userId: username,
         });
+        navigate("/rematch");
         // You can throw an error or handle it according to your needs.
       }
     }, 30000);
@@ -83,16 +81,23 @@ function WaitingMatch({
   }, []);
 
   return (
-    <div>
-      <DialogTitle className="">New Session Started</DialogTitle>
-      <div className="ellipses">PeerPrep is matching you with a peer...</div>
-      <Separator className="w-3/4" />
-      <div className="flex flex-col gap-2 pt-3">
-        <div className="text-slate-500">You have selected:</div>
-        <div className="flex flex-row w-full items-center gap-3 text-slate-500">
-          Difficulty: <DifficultyBtn level={difficulty} />
+    <div className="flex w-screen h-screen items-center justify-center">
+      <Card className="w-[500px] flex flex-col justify-center p-5">
+        <CardTitle className="flex gap-[5px] mt-[10px] mb-[10px]">
+          Finding your Match in <Countdown time={30} />
+        </CardTitle>
+        <CardDescription>
+          PeerPrep is working to find your match within the next 30 seconds.
+          Note that navigating back will remove you from the waiting room.
+        </CardDescription>
+        <Separator className="w-3/4 mt-[20px]" />
+        <div className="flex flex-col gap-2 pt-3">
+          <div className="text-slate-500">You have selected:</div>
+          <div className="flex flex-row w-full items-center gap-3 text-slate-500">
+            Difficulty: <DifficultyBtn level={difficulty} />
+          </div>
         </div>
-      </div>
+      </Card>
     </div>
   );
 }
