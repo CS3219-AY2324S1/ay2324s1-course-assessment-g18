@@ -122,7 +122,9 @@ function AddQuestionForm({ setOpen, setIsChanged }: Props) {
         />
         <CustomInput label="Image link" data={img} setData={setImg} />
 
-        <Button type="submit">Add Question</Button>
+        <Button type="submit" className="bg-[#5562eb] hover:bg-[#6470ee]">
+          Add Question
+        </Button>
       </form>
     </div>
   );

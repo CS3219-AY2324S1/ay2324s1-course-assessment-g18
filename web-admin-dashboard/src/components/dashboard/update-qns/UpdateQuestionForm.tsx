@@ -163,7 +163,9 @@ function UpdateQuestionForm({ question, setOpen, setIsChanged }: Props) {
           data={constraints}
         />
         <CustomInput label="Image link" data={img} setData={setImg} />{" "}
-        <Button type="submit">Update Question</Button>
+        <Button type="submit" className="bg-[#5562eb] hover:bg-[#6470ee]">
+          Update Question
+        </Button>
       </form>
     </div>
   );
