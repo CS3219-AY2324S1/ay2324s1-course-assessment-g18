@@ -25,6 +25,9 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
+      - name: Run the tests and generate coverage report
+        run: npm test -- --coverage
+
       # Upload Coverage report
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
