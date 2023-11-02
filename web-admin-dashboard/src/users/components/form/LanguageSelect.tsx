@@ -5,31 +5,30 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Dispatch, SetStateAction } from "react";
 import "./Input.css";
+import { languageOptions } from "@/users/constants/languageOptions";
 import { Language } from "@/users/models/language.model";
 interface Props {
-  setData: Dispatch<SetStateAction<Language>>;
-  data: string;
+  onSelectChange: any;
 }
-export default function LanugageSelect({ data, setData }: Props) {
+export default function LanguageSelect({ onSelectChange } : Props ) {
   return (
     <div className="input-div">
       <Select
-        onValueChange={(value) => {
-          const val: Language = value as Language;
-          setData(val);
-        }}
+        onValueChange={(selectedOption) => onSelectChange(selectedOption)}
+        defaultValue={languageOptions[0].value}
       >
         <SelectTrigger className="flex">
-          <SelectValue placeholder={data} />
+          <SelectValue placeholder={'Filter By Category'} />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value={Language.Python}>Python</SelectItem>
-          <SelectItem value={Language.Java}>Java</SelectItem>
-          <SelectItem value={Language.JavaScript}>JavaScript</SelectItem>
-          <SelectItem value={Language.C}>C</SelectItem>
-          <SelectItem value={Language.HTML}>Html</SelectItem>
+          <SelectItem value={languageOptions[0].value}>JavaScript</SelectItem>
+          <SelectItem value={languageOptions[1].value}>C</SelectItem>
+          <SelectItem value={languageOptions[2].value}>Java</SelectItem>
+          <SelectItem value={languageOptions[3].value}>Python</SelectItem>
+          <SelectItem value={languageOptions[4].value}>C++</SelectItem>
+          <SelectItem value={languageOptions[5].value}>SQL</SelectItem>
+          <SelectItem value={Language.HTML}>HTML</SelectItem>
         </SelectContent>
       </Select>
     </div>

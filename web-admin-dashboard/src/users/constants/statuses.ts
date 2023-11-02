@@ -9,7 +9,7 @@ export const statuses = [
     },
     {
       id: 3,
-      description: "Accepted",
+      description: "Successful",
     },
     {
       id: 4,

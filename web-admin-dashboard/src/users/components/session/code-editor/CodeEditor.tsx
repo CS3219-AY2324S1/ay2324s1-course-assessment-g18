@@ -5,14 +5,13 @@ import { MonacoBinding } from "y-monaco"
 import { store } from "./store";
 import { useSyncedStore } from "@syncedstore/react";
 import { useRef, useState } from "react";
-import { Language } from "@/users/models/language.model";
 import "./CodeEditor.css";
 import { getYjsValue } from "@syncedstore/core";
 
 interface Props {
   onChange: any;
   roomId: string;
-  language: Language;
+  language: string;
 }
 
 export default function CodeEditor({ onChange, roomId, language }: Props) {

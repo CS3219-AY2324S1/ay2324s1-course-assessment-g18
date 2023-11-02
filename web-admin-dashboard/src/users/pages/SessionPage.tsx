@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import CodeEditor from "../components/session/code-editor/CodeEditor";
-import LanugageSelect from "../components/form/LanguageSelect";
-import { Language } from "../models/language.model";
 import QuestionView from "../components/session/question-view/QuestionView";
 import { QuestionDifficulty } from "@/questionrepo/question.model";
 import ChatBtn from "../components/session/chat/ChatBtn";
@@ -14,6 +12,7 @@ import OutputWindow from "../components/session/output/OutputWindox";
 import OutputDetails from "../components/session/output/OutputDetails";
 import { classnames } from "@/utils/general";
 import { languageOptions } from "../constants/languageOptions";
+import LanguageSelect from "../components/form/LanguageSelect";
 
 
 const javascriptDefault = `
@@ -21,7 +20,6 @@ console.log("hello");
 `;
 
 function SessionPage() {
-  const [lang, setLang] = useState<Language>(Language.JavaScript);
   const [outputDetails, setOutputDetails] = useState(null);
   const [processing, setProcessing] = useState<boolean | null>(null);
   const [peerLeft, setPeerLeft] = useState(false);
@@ -51,6 +49,17 @@ function SessionPage() {
     //logic to show the dialog that partner left the session. Navigate to user-dashboard in 5 sec or smth.
   });
 
+  function findLanguageByValue(value) {
+    const foundLanguage = languageOptions.find((language) => language.value === value);
+    return foundLanguage;
+  }
+
+  const onSelectChange = (sl) => {
+    sl = findLanguageByValue(sl);
+    console.log("selected Option...", sl);
+    setLanguage(sl);
+  };
+  
   const onChange = (action, data) => {
     switch (action) {
       case "code": {
@@ -67,7 +76,6 @@ function SessionPage() {
     const formData = {
       language_id: language.id,
       // encode source code in base64
-      // source_code: Buffer.from(code).toString('base64'),
       source_code: btoa(code),
 
     };
@@ -156,7 +164,7 @@ function SessionPage() {
       <div className="h-full w-3/5 flex flex-col">
         <div className="h-max w-full pt-5 pb-5 flex ml-5 justify-between p-5">
           <div className="w-1/5">
-            <LanugageSelect setData={setLang} data={lang} />
+            <LanguageSelect onSelectChange={onSelectChange} />
           </div>
           <div className="pr-10">
             <button
@@ -172,7 +180,7 @@ function SessionPage() {
           </div>
 
         </div>
-        <CodeEditor roomId="1" language={lang} onChange={onChange}/>
+        <CodeEditor roomId="1" language={language.value} onChange={onChange}/>
         <div className="w-full h-2/5 flex flex-row p-5">
           <div className="h-full w-full flex flex-col pr-5">
             <OutputWindow outputDetails={outputDetails} />
