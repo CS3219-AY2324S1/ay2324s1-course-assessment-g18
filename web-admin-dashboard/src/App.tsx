@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import DashboardPage from "./pages/DashboardPage";
@@ -11,6 +11,9 @@ import UserDashboardPage from "./users/pages/UserDashboardPage";
 import { AuthContext, AuthProvider } from "./context/AuthProvider";
 import Sidebar from "./components/dashboard/sidebar/Sidebar";
 import AdminProviderWrapper from "./components/admin-provider-wrapper/AdminProviderWrapper";
+import ChooseMatch from "./users/components/match/ChooseMatch";
+import WaitingMatch from "./users/components/match/WaitingMatch";
+import ReMatch from "./users/components/match/ReMatch";
 
 function App() {
   return (
@@ -50,6 +53,10 @@ function Content() {
           <Route element={<Navbar />}>
             <Route path="/user-dashboard" element={<UserDashboardPage />} />
             <Route path="/session" element={<SessionPage />} />
+
+            <Route path="/choose-match" element={<ChooseMatch />} />
+            <Route path="/waiting-match" element={<WaitingMatch />} />
+            <Route path="/rematch" element={<ReMatch />} />
           </Route>
         </Routes>
       );

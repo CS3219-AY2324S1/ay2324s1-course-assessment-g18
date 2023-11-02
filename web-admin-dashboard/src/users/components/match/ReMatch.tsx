@@ -1,30 +1,34 @@
 import { AlertDialogAction } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardTitle,
+} from "@/components/ui/card";
 import { DialogTitle } from "@/components/ui/dialog";
 import { DialogClose, DialogContent } from "@radix-ui/react-dialog";
 import React, { Dispatch, SetStateAction } from "react";
+import { useNavigate } from "react-router-dom";
 
-interface Props {
-  setRematch: Dispatch<SetStateAction<boolean>>;
-  setChosen: Dispatch<SetStateAction<boolean>>;
-  setOpenDialog: Dispatch<SetStateAction<boolean>>;
-}
-function ReMatch({ setRematch, setChosen, setOpenDialog }: Props) {
+function ReMatch() {
+  const navigate = useNavigate();
   const handleRematch = () => {
-    setRematch(false);
-    setChosen(false);
+    navigate("/choose-match");
   };
   const handleClose = () => {
     handleRematch();
-    setOpenDialog(false);
-    // setRematch(false);
-    // setChosen(false);
+    navigate("/user-dashboard");
   };
   return (
-    <div className="h-[150px] flex flex-col">
-      <DialogTitle className="">No match found...</DialogTitle>
-      <DialogContent className="h-full flex flex-col justify-center gap-10">
-        <div>Would you like to rematch?</div>
+    <div className="flex w-screen h-screen items-center justify-center">
+      <Card className="h-[200px] w-[500px] flex flex-col justify-between p-5">
+        <div className="mt-[10px] flex flex-col gap-[10px]">
+          <CardTitle className="">No match found...</CardTitle>
+          <CardDescription>Would you like to rematch?</CardDescription>
+        </div>
+
         <div className="flex gap-3 justify-end">
           <Button
             onClick={handleClose}
@@ -36,7 +40,7 @@ function ReMatch({ setRematch, setChosen, setOpenDialog }: Props) {
             Yes
           </Button>
         </div>
-      </DialogContent>
+      </Card>
     </div>
   );
 }

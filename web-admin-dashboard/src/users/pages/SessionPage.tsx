@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import CodeEditor from "../components/session/code-editor/CodeEditor";
 import QuestionView from "../components/session/question-view/QuestionView";
 import { QuestionDifficulty } from "@/questionrepo/question.model";
@@ -13,6 +13,7 @@ import OutputDetails from "../components/session/output/OutputDetails";
 import { classnames } from "@/utils/general";
 import { languageOptions } from "../constants/languageOptions";
 import LanguageSelect from "../components/form/LanguageSelect";
+import api from "@/utils/api";
 
 
 const javascriptDefault = `
@@ -23,10 +24,24 @@ function SessionPage() {
   const [outputDetails, setOutputDetails] = useState(null);
   const [processing, setProcessing] = useState<boolean | null>(null);
   const [peerLeft, setPeerLeft] = useState(false);
+  const [question, setQuestion] = useState({});
+  const [status, setStatus] = useState("success");
   const location = useLocation();
   const [code, setCode] = useState(javascriptDefault);
   const [language, setLanguage] = useState(languageOptions[0]);
 
+  useEffect(() => {
+    console.log(location.state.question);
+  })
+//   useEffect(() => {
+//     setStatus("loading");
+    // api.get(`http://127.0.0.1:4001/questions/random/${location.state.difficulty}`).then((res) => {
+    //     const question = res.data[0]['questionDifficulty'][0];
+    //     console.log(question);
+    //     setQuestion(question);
+    //     setStatus("success");
+    // }).catch((err) => console.log(err));
+//   }, [])
   const tempQn = {
     questionId: 1,
     _id: "e0bd7857-17b3-4811-9434-3f623efa78ae",
@@ -158,7 +173,8 @@ function SessionPage() {
     <div className="w-full h-full flex flex-row p-5">
       {/* left side */}
       <div className="h-full w-2/5 flex flex-col mt-5">
-        <QuestionView question={tempQn} />
+        {location.state.question === undefined ? (<h1>Loading</h1>) : 
+        (<QuestionView question={location.state.question} />)}
       </div>
       {/* right side */}
       <div className="h-full w-3/5 flex flex-col">
