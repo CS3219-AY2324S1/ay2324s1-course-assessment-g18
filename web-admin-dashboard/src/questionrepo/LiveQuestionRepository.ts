@@ -1,5 +1,6 @@
-import { Question } from "@/questionrepo/question.model";
+import { Question } from '@/questionrepo/question.model';
 import api from '@/utils/api';
+import FallbackQuestionRepository from './FallbackQuestionRepository';
 
 class LiveQuestionRepository {
   config;
@@ -8,8 +9,8 @@ class LiveQuestionRepository {
     this.config = {
       baseURL: import.meta.env.VITE_BASE_QUESTION_URL,
       headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     };
@@ -18,12 +19,12 @@ class LiveQuestionRepository {
   async getQuestions(): Promise<Question[]> {
     try {
       // const res = await axios.get("/questions", this.config);
-      const res = await api.get("/questions", this.config);
+      const res = await api.get('/questions', this.config);
       const data: Question[] = res.data;
       return data;
     } catch (error) {
       console.log(error);
-      return [] as Question[];
+      return FallbackQuestionRepository.getQuestions() as Question[];
     }
   }
 
@@ -46,7 +47,7 @@ class LiveQuestionRepository {
     questionExamples: string[][],
     questionConstraints: string,
     questionImages: string,
-    id: string
+    id: string,
   ): Promise<Question> {
     const res = await api.put(
       `questions/${id}`,
@@ -59,7 +60,7 @@ class LiveQuestionRepository {
         questionConstraints,
         questionImages,
       },
-      this.config
+      this.config,
     );
     const question = res.data as Question;
     return question;
@@ -82,10 +83,10 @@ class LiveQuestionRepository {
     questionDifficulty: string,
     questionExamples: string[][],
     questionConstraints: string,
-    questionImages: string
+    questionImages: string,
   ): Promise<Question> {
     const res = await api.post(
-      "/questions",
+      '/questions',
       {
         questionTitle,
         questionDescription,
@@ -95,7 +96,7 @@ class LiveQuestionRepository {
         questionConstraints,
         questionImages,
       },
-      this.config
+      this.config,
     );
     const parsed = res.data as Question;
     return parsed;
