@@ -58,12 +58,6 @@ function Content() {
             <Route path="/waiting-match" element={<WaitingMatch />} />
             <Route path="/rematch" element={<ReMatch />} />
           </Route>
-          <Route element={<AdminProviderWrapper />}>
-            <Route element={<Sidebar />}>
-              <Route path="/dashboard" element={<DashboardPage />} />
-              <Route path="/users" element={<UserPage />} />
-            </Route>
-          </Route>
         </Routes>
       );
     }
