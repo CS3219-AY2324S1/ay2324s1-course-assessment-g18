@@ -1,13 +1,15 @@
 import React from "react";
 
-import { motion } from "framer-motion";
+import { MotionStyle, motion } from "framer-motion";
 interface Props {
   children: React.ReactNode;
   delay: number;
+  style: MotionStyle;
 }
-function FloatingDiv({ children, delay }: Props) {
+function FloatingDiv({ children, delay, style }: Props) {
   return (
     <motion.div
+      style={style}
       animate={["initial"]}
       variants={{
         rotate: {
@@ -21,7 +23,7 @@ function FloatingDiv({ children, delay }: Props) {
           },
         },
         initial: {
-          y: [-10, 10],
+          y: [-6, 6],
           rotate: 0,
           transition: {
             delay,

@@ -1,24 +1,15 @@
 import React, { useRef, useState } from "react";
+import activeNow from "../../assets/dashboard/active-now.svg";
+import computer from "../../assets/dashboard/members.svg";
+import totalQns from "../../assets/dashboard/total-qns.svg";
 
 import { motion } from "framer-motion";
 import FloatingDiv from "./FloatingDiv";
-import useMouse from "@react-hook/mouse-position";
 
 function AuthRight() {
   return (
     <div className="flex w-full h-full">
-      <div className="flex w-full h-full">
-        <div className="flex w-full h-full" ref={ref}>
-          <motion.div
-            variants={variants}
-            className="circle"
-            animate={cursorVariant}
-            transition={spring}
-          >
-            <span className="cursorText">{cursorText}</span>
-          </motion.div>
-        </div>
-      </div>
+      <div className="relative"></div>
     </div>
   );
 }

@@ -5,6 +5,8 @@ import logo from "../assets/logo.png";
 import auth1 from "../assets/auth/authone.png";
 import AuthRight from "../components/auth/AuthRight";
 import useMouse from "@react-hook/mouse-position";
+import SlideOne from "@/components/slider/SlideOne";
+import Slider from "@/components/slider/Slider";
 
 function Auth() {
   const tabs = ["Login", "Register"];
@@ -38,7 +40,7 @@ function Auth() {
         width: 10,
         borderRadius: "50%",
         fontSize: "20px",
-        backgroundColor: "#13ACDE",
+        backgroundColor: "#5562eb",
         x: mouseXPosition,
         y: mouseYPosition,
         transition: {
@@ -47,11 +49,14 @@ function Auth() {
         },
       },
       disappear: {
+        backgroundColor: "#ffffff",
+        color: "#000",
         opacity: 0,
-        // display: "none",
+        x: mouseXPosition,
+        y: mouseYPosition,
         transition: {
-          // type: "spring",
-          // mass: 0.6,
+          type: "ease: [0.17, 0.67, 0.83, 0.67]",
+          mass: 0.6,
         },
       },
     };
@@ -62,12 +67,13 @@ function Auth() {
     stiffness: 500,
     damping: 28,
   };
-  function mouseEnter() {
+
+  function projectEnter(event) {
     setCursorText("");
     setCursorVariant("disappear");
   }
 
-  function mouseLeave() {
+  function projectLeave(event) {
     setCursorText("");
     setCursorVariant("default");
   }
@@ -79,22 +85,20 @@ function Auth() {
         <AnimatePresence mode="wait">
           <motion.div
             variants={variants}
-            className="circle"
+            className="fixed z-50 flex top-0 left-0 items-center justify-center h-[10px] w-[10px] rounded-[200px] bg-[#5562eb]"
             animate={cursorVariant}
             transition={spring}
-          >
-            <span className="cursorText">{cursorText}</span>
-          </motion.div>
+          />
         </AnimatePresence>
 
         {/* left side */}
         <div
-          className="flex w-6/12 h-full p-5 justify-center items-center"
-          onMouseEnter={mouseEnter}
-          onMouseLeave={mouseLeave}
+          className="flex w-6/12 h-full p-5 justify-center items-center  z-[1]"
+          onMouseEnter={projectEnter}
+          onMouseLeave={projectLeave}
         >
           {/* container for auth page */}
-          <div className="flex flex-col p-10 items-center justify-center w-4/6 ">
+          <div className="flex flex-col p-10 items-center justify-center w-4/6 z-[0]">
             <img src={logo} className="w-12 m-5" />
 
             <main className="flex w-full h-4/6">
@@ -120,6 +124,8 @@ function Auth() {
         {/* auth page -right */}
         <div className="flex w-6/12 h-full bg-gradient-to-b from-[#F1F5FD] from-70% to-[#F6F1F2]">
           {/* <AuthRight /> */}
+          {/* <SlideOne /> */}
+          <Slider />
         </div>
       </div>
     </div>
