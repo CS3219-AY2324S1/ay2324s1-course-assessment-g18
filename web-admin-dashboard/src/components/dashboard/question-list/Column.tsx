@@ -1,13 +1,13 @@
-import { Checkbox } from '@/components/ui/checkbox';
-import { Question, QuestionDifficulty } from '@/questionrepo/question.model';
-import { ColumnDef } from '@tanstack/react-table';
-import { ArrowUpDown } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import QuestionDialog from './question-card/QuestionDialog';
+import { Checkbox } from "@/components/ui/checkbox";
+import { Question, QuestionDifficulty } from "@/questionrepo/question.model";
+import { ColumnDef } from "@tanstack/react-table";
+import { ArrowUpDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import QuestionDialog from "./question-card/QuestionDialog";
 
 export const Columns: ColumnDef<Question>[] = [
   {
-    id: 'select',
+    id: "select",
     header: ({ table }) => (
       <Checkbox
         checked={table.getIsAllPageRowsSelected()}
@@ -26,12 +26,12 @@ export const Columns: ColumnDef<Question>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'questionId',
+    accessorKey: "questionId",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           ID
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -39,30 +39,30 @@ export const Columns: ColumnDef<Question>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className="capitalize pl-7">{row.getValue('questionId')}</div>
+      <div className="capitalize pl-7">{row.getValue("questionId")}</div>
     ),
   },
   {
-    accessorKey: 'questionTitle',
-    header: 'Title',
+    accessorKey: "questionTitle",
+    header: "Title",
     cell: ({ row }) => <QuestionDialog question={row.original} />,
   },
   {
-    accessorKey: 'questionCategories',
-    header: 'Category',
+    accessorKey: "questionCategories",
+    header: "Category",
     cell: ({ row }) => {
-      // console.log(row);
-      const values: string[] = row.getValue('questionCategories');
-      const combinedString = values.join(', ');
+      console.log(row);
+      const values: string[] = row.getValue("questionCategories");
+      const combinedString = values.join(", ");
       return <div>{combinedString}</div>;
     },
   },
   {
-    accessorKey: 'questionDifficulty',
+    accessorKey: "questionDifficulty",
     header: ({ column }) => (
       <Button
         variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
       >
         Difficulty
         <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -71,14 +71,14 @@ export const Columns: ColumnDef<Question>[] = [
     cell: ({ row }) => (
       <div
         className={`h-full w-20 rounded-md p-1 text-center ${
-          row.original['questionDifficulty'] === QuestionDifficulty.Easy
-            ? 'bg-green-200 text-green-600'
-            : row.original['questionDifficulty'] === QuestionDifficulty.Medium
-            ? 'bg-yellow-100 text-yellow-600'
-            : 'bg-red-200 text-red-600'
+          row.original["questionDifficulty"] === QuestionDifficulty.Easy
+            ? "bg-green-200 text-green-600"
+            : row.original["questionDifficulty"] === QuestionDifficulty.Medium
+            ? "bg-yellow-100 text-yellow-600"
+            : "bg-red-200 text-red-600"
         }`}
       >
-        {row.original['questionDifficulty']}
+        {row.original["questionDifficulty"]}
       </div>
     ),
     sortingFn: (rowA, rowB, columnId) => {
@@ -87,10 +87,10 @@ export const Columns: ColumnDef<Question>[] = [
         [QuestionDifficulty.Medium]: 1,
         [QuestionDifficulty.Hard]: 2,
       };
-
+  
       const difficultyA = rowA.original[columnId];
       const difficultyB = rowB.original[columnId];
-
+  
       return difficultyOrder[difficultyA] - difficultyOrder[difficultyB];
     },
   },
