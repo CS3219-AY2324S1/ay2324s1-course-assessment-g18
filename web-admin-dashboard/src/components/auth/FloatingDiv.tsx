@@ -4,7 +4,7 @@ import { MotionStyle, motion } from "framer-motion";
 interface Props {
   children: React.ReactNode;
   delay: number;
-  style: MotionStyle;
+  style?: MotionStyle;
 }
 function FloatingDiv({ children, delay, style }: Props) {
   return (
@@ -15,11 +15,10 @@ function FloatingDiv({ children, delay, style }: Props) {
         rotate: {
           rotate: [null, -5, 5, 0],
           transition: {
-            // delay,
-            duration: 10,
-            // repeat: Infinity,
-            // repeatDelay: 0.2,
-            // repeatType: "reverse"
+            duration: 8,
+            repeat: Infinity,
+            repeatDelay: 0.2,
+            repeatType: "reverse",
           },
         },
         initial: {

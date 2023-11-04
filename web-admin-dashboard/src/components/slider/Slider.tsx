@@ -1,14 +1,21 @@
 import { useState, useEffect } from "react";
-import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import "./Slider.css";
 import SlideOne from "./SlideOne";
 import SlideTwo from "./SlideTwo";
 import React from "react";
-import { AnimatePresence, color, easeInOut, motion } from "framer-motion";
+import {
+  AnimatePresence,
+  color,
+  easeIn,
+  easeInOut,
+  motion,
+} from "framer-motion";
+import SlideThree from "./SlideThree";
 
 const Slider = () => {
   const [slide, setSlide] = useState(0);
   const timeoutRef = React.useRef(null);
+  const items = [<SlideOne />, <SlideTwo />, <SlideThree />];
 
   function resetTimeout() {
     if (timeoutRef.current) {
@@ -19,7 +26,7 @@ const Slider = () => {
     resetTimeout();
     timeoutRef.current = setTimeout(
       () => setSlide((prevIndex) => (prevIndex === 3 - 1 ? 0 : prevIndex + 1)),
-      5000
+      7000
     );
 
     return () => {
@@ -36,10 +43,20 @@ const Slider = () => {
     <main className="flex items-center flex-col justify-center w-full h-full">
       <div className="flex items-center flex-col justify-center">
         <div className="relative w-[400px] h-[500px]">
-          {slide === 0 && <SlideOne />}
-          {slide === 1 && <SlideTwo />}
-          {slide === 2 && <SlideTwo />}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={slide}
+              initial={{ x: 50, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: -50, opacity: 0 }}
+              transition={{ duration: 0.6, ease: easeInOut }}
+              style={{ height: "100%", width: "100%", position: "relative" }}
+            >
+              {items[slide]}
+            </motion.div>
+          </AnimatePresence>
         </div>
+
         <div className="flex gap-[10px]">
           <AnimatePresence>
             {[1, 2, 3].map((_, index) => {
