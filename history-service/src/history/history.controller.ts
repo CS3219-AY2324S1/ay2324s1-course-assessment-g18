@@ -10,6 +10,7 @@ import {
 import { HistoryService } from './history.service';
 import { CreateHistoryDto } from './create-history.dto';
 import { UpdateHistoryDto } from './update-history.dto';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 
 @Controller('history')
 export class HistoryController {
@@ -18,6 +19,13 @@ export class HistoryController {
   @Post()
   async addHistory(@Body() createHistoryDto: CreateHistoryDto) {
     return this.historyService.addHistory(createHistoryDto);
+  }
+
+  @MessagePattern({cmd: 'chat'})
+  async addChatHistory(@Payload() data) {
+    const message = data.message;
+    const roomId = data.roomId;
+    return await this.historyService.addChatHistory(message, roomId);
   }
 
   @Get()

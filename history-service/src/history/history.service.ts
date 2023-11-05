@@ -23,6 +23,11 @@ export class HistoryService {
     return newHistory.save();
   }
 
+  async addChatHistory(message: any, roomId: string) {
+    const foundHistories = await this.historyModel.find({roomId});
+    
+  }
+
   async getHistory(): Promise<IHistory[]> {
     const historyData = await this.historyModel.find();
     if (!historyData || historyData.length === 0) {
