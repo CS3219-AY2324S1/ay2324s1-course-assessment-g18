@@ -33,24 +33,21 @@ export class QuestionController {
         return await this.questionService.getRandomQuestionWithDifficulty(difficulty);
     }
 
-    @UseGuards(AccessTokenGuard)
-    @UseGuards(RolesGuard)
+    @UseGuards(AccessTokenGuard, RolesGuard)
     @Roles([UserRole.Admin])
     @Post()
     async addQuestion(@Body() questionDto: QuestionDto) {
         return await this.questionService.addQuestion(questionDto);
     }
 
-    @UseGuards(AccessTokenGuard)
-    @UseGuards(RolesGuard)
+    @UseGuards(AccessTokenGuard, RolesGuard)
     @Roles([UserRole.Admin])
     @Delete('/:questionId')
     async deleteQuestion(@Param("questionId") questionId: string) {
         await this.questionService.deleteQuestion(questionId);
     }
 
-    @UseGuards(AccessTokenGuard)
-    @UseGuards(RolesGuard)
+    @UseGuards(AccessTokenGuard, RolesGuard)
     @Roles([UserRole.Admin])
     @Put('/:questionId')
     async editQuestion(@Param("questionId") questionId: string, @Body() questionDto: QuestionDto) {
