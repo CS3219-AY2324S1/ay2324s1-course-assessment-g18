@@ -19,6 +19,7 @@ import { AuthContext } from "@/context/AuthProvider";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import Countdown from "./Countdown";
 import { IoIosArrowBack } from "react-icons/io";
+import axios from "axios";
 
 interface Props {
   difficulty: QuestionDifficulty;
@@ -44,11 +45,24 @@ function WaitingMatch() {
 
   useEffect(() => {
     let matchSuccessReceived = false;
-
-    const matchSuccessHandler = (payload: any) => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo")!);
+    const email = userInfo['email'];
+    const matchSuccessHandler = async (payload: any) => {
       const { matchedUserId, roomId, question } = payload;
       chatSocket.emit("joinRoom", { roomId, toLeaveRoom: "" });
       localStorage.setItem("roomId", roomId);
+    //   const response = await axios.post("http://localhost:4002/history/", {
+    //     roomId: roomId,
+    //     userEmail: email,
+    //     questionId: question.questionId,
+    //     questionTitle: question.questionTitle,
+    //     questionDescription: question.questionDescription,
+    //     questionDifficulty: question.questionDifficulty,
+    //     chatHistory: [],
+    //     codeExecuted: "",
+    //     dateSubmitted: "now",
+    //   });
+    //   console.log(response);
       navigate("/session", {
         state: {
           roomId: roomId,

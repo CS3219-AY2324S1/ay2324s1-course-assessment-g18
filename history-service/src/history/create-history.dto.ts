@@ -1,11 +1,15 @@
 import { IsString, IsNotEmpty, IsNumber } from 'class-validator';
 export class CreateHistoryDto {
-  // @IsNumber()
-  // historyId: number;
+//   @IsNumber()
+//   historyId: number;
 
   @IsString()
   @IsNotEmpty()
   readonly userEmail: string;
+
+  @IsString()
+  @IsNotEmpty()
+  readonly roomId: string;
 
   @IsNumber()
   @IsNotEmpty()
@@ -23,11 +27,9 @@ export class CreateHistoryDto {
   @IsNotEmpty()
   readonly questionDifficulty: string;
 
-  @IsString()
   @IsNotEmpty()
   readonly chatHistory: Array<string>;
 
   @IsString()
-  @IsNotEmpty()
   readonly codeExecuted: string;
 }

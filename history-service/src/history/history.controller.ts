@@ -18,14 +18,41 @@ export class HistoryController {
 
   @Post()
   async addHistory(@Body() createHistoryDto: CreateHistoryDto) {
-    return this.historyService.addHistory(createHistoryDto);
+    console.log("add history called");
+    console.log(createHistoryDto);
+    return await this.historyService.addHistory(createHistoryDto);
   }
 
-  @MessagePattern({cmd: 'chat'})
+  @MessagePattern({cmd: 'addHistory'})
+  async addPayloadHistory(@Payload() data) {
+    console.log("add payload history called");
+    const history : CreateHistoryDto = {
+        userEmail: data.userEmail,
+        roomId: data.roomId,
+        questionId: data.questionId,
+        questionTitle: data.questionTitle,
+        questionDescription: data.questionDescription,
+        questionDifficulty: data.questionDifficulty,
+        chatHistory: [],
+        codeExecuted: ''
+    }
+    console.log(history);
+    return await this.historyService.addHistory(history);
+  }
+
+  @MessagePattern({cmd: 'chatting'})
   async addChatHistory(@Payload() data) {
+    console.log("chat called");
     const message = data.message;
     const roomId = data.roomId;
+    console.log(message);
+    console.log(roomId);
     return await this.historyService.addChatHistory(message, roomId);
+  }
+
+  @Post('/chat')
+  async chat(@Body() data) {
+    return await this.historyService.addChatHistory(data.message, data.roomId);
   }
 
   @Get()

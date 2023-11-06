@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ChatGateway } from './chat/chat.gateway';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ChatService } from './chat/chat.service';
 
 @Module({
   imports: [ClientsModule.register([{
@@ -17,6 +18,6 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     }
   }])],
   controllers: [AppController],
-  providers: [AppService, ChatGateway],
+  providers: [AppService, ChatGateway, ChatService],
 })
 export class AppModule {}

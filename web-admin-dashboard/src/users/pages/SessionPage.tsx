@@ -16,6 +16,7 @@ function SessionPage() {
   const [peerLeft, setPeerLeft] = useState(false);
   const [question, setQuestion] = useState({});
   const [status, setStatus] = useState("success");
+  const [code, handleCodeChange] = useState("");
   const location = useLocation();
   useEffect(() => {
     console.log(location.state.question);

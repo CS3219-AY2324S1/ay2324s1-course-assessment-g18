@@ -13,7 +13,8 @@ interface User {
 
 @Injectable()
 export class MatchService {
-    @Inject('QUESTION_SERVICE') private client: ClientProxy
+    @Inject('QUESTION_SERVICE') private questionClient: ClientProxy
+    @Inject('HISTORY_SERVICE') private historyClient: ClientProxy
   private queues: { [key: string]: User[] } = {
     Easy: [],
     Medium: [],
@@ -53,24 +54,63 @@ export class MatchService {
   async notifyMatchedUsers(users: User[]): Promise<string> {
     const [user1, user2] = users;
     // Generate roomId by concatenating the two user's socket IDs
-    const roomId = user1.client.id + user2.client.id;
+    
     // const user = this.client.send({cmd: 'getUser'}, {"email": email});
         // await user.subscribe();
         // const userData = await lastValueFrom(user);
-    const request = this.client.send({cmd: 'random'}, {"difficulty": user1.difficulty});
+    const request = this.questionClient.send({cmd: 'random'}, {"difficulty": user1.difficulty});
     await request.subscribe();
     const response = await lastValueFrom(request);
     const randomQuestion = response[0]['questionDifficulty'][0];
-    console.log(randomQuestion);
+    const roomId = user1.client.id + user2.client.id + randomQuestion.questionId;
+    // const historyReq = this.historyClient.send({cmd: 'addHistory'}, {
+    //     userEmail: user1.userId,
+    //     roomId: roomId,
+    //     questionId: randomQuestion.questionId,
+    //     questionTitle: randomQuestion.questionTitle,
+    //     questionDescription: randomQuestion.questionDescription,
+    //     questionDifficulty: randomQuestion.questionDifficulty,
+    //     chatHistory: [],
+    //     codeExecuted: ''
+    // });
+    // await historyReq.subscribe();
+    // const historyRes = await lastValueFrom(historyReq);
+    // console.log(historyRes);
+    // const secondHistoryReq = this.historyClient.send({cmd: 'addHistory'}, {
+    //     userEmail: user2.userId,
+    //     roomId: roomId,
+    //     questionId: randomQuestion.questionId,
+    //     questionTitle: randomQuestion.questionTitle,
+    //     questionDescription: randomQuestion.questionDescription,
+    //     questionDifficulty: randomQuestion.questionDifficulty,
+    //     chatHistory: [],
+    //     codeExecuted: ''
+    // });
+    // await secondHistoryReq.subscribe();
+    // const secondHistoryRes = await lastValueFrom(secondHistoryReq);
+    // console.log(secondHistoryRes);
     // Notify users about the match
-    this.notifyMatch(user1.userId, user2, roomId, randomQuestion);
+    await this.notifyMatch(user1.userId, user2, roomId, randomQuestion);
     this.notifyMatch(user2.userId, user1, roomId, randomQuestion);
   
     return roomId;
   }
 
-  notifyMatch(matchedUserId: String, user: User, roomId: string, question: any): void {
+  async notifyMatch(matchedUserId: String, user: User, roomId: string, question: any): Promise<void> {
     const socket: Socket =  user.client;
+    console.log("notify match called for " + user.userId);
+    const req = await this.historyClient.send({cmd: 'addHistory'}, {
+        userEmail: user.userId,
+        roomId: roomId,
+        questionId: question.questionId,
+        questionTitle: question.questionTitle,
+        questionDescription: question.questionDescription,
+        questionDifficulty: question.questionDifficulty,
+        chatHistory: [],
+        codeExecuted: ''
+    });
+    await req.subscribe();
+    // await lastValueFrom(req);
     console.log(question)
     socket.join(roomId);
     socket.emit('matchSuccess', { matchedUserId, roomId, question });

@@ -16,6 +16,17 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         durable: false
       }
     }
+  }]),
+  ClientsModule.register([{
+    name: 'HISTORY_SERVICE',
+    transport: Transport.RMQ,
+    options: {
+      urls: ['amqp://localhost:5672'],
+      queue: 'history_queue',
+      queueOptions: {
+        durable: false
+      }
+    }
   }])],
   controllers: [AppController],
   providers: [AppService, MatchGateway, MatchService],
