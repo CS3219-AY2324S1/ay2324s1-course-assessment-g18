@@ -1,22 +1,28 @@
-import React, { useEffect, useRef, useState } from "react";
-import CodeEditor from "../components/session/code-editor/CodeEditor";
-import LanugageSelect from "../components/form/LanguageSelect";
-import { Language } from "../models/language.model";
-import QuestionView from "../components/session/question-view/QuestionView";
-import { QuestionDifficulty } from "@/questionrepo/question.model";
-import ChatBtn from "../components/session/chat/ChatBtn";
-import { User, UserRole } from "@/userRepo/user.model";
-import { useLocation } from "react-router-dom";
-import { chatSocket, matchingSocket } from "../components/match/sockets";
-import PeerLeftDialog from "../components/session/dialog/PeerLeftDialog";
-import api from "@/utils/api";
+import React, { useEffect, useRef, useState } from 'react';
+import CodeEditor from '../components/session/code-editor/CodeEditor';
+import LanugageSelect from '../components/form/LanguageSelect';
+import { Language } from '../models/language.model';
+import QuestionView from '../components/session/question-view/QuestionView';
+import { QuestionDifficulty } from '@/questionrepo/question.model';
+import ChatBtn from '../components/session/chat/ChatBtn';
+import { User, UserRole } from '@/userRepo/user.model';
+import { useLocation } from 'react-router-dom';
+import { chatSocket, matchingSocket } from '../components/match/sockets';
+import PeerLeftDialog from '../components/session/dialog/PeerLeftDialog';
+import api from '@/utils/api';
 
 function SessionPage() {
   const [lang, setLang] = useState<Language>(Language.JavaScript);
   const [peerLeft, setPeerLeft] = useState(false);
   const [question, setQuestion] = useState({});
-  const [status, setStatus] = useState("success");
-  const [code, handleCodeChange] = useState("");
+  const [status, setStatus] = useState('success');
+
+  const [code, setCode] = useState('');
+  const handleCodeChange = (newCode: string) => {
+    setCode(newCode);
+    console.log(newCode);
+  };
+
   const location = useLocation();
   useEffect(() => {
     console.log(location.state.question);
