@@ -46,7 +46,7 @@ function HistoryDialog({ history }: Props) {
         </div>
         <div>
           <DialogTitle>Chat history with partner</DialogTitle>
-          <DialogDescription>{history.chatHistory}</DialogDescription>
+          {/* <DialogDescription>{history.chatHistory}</DialogDescription> */}
         </div>
       </CustomDialog>
     </Dialog>
