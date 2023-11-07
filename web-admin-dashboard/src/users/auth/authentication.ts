@@ -6,7 +6,7 @@ const userRepo = new LiveUserRepository();
 
 export async function updateUsername(userOldEmail: string, username: string) {
   const res = await api.put(
-    `http://localhost:4000/users/update/${userOldEmail}`,
+    import.meta.env.VITE_BASE_USERHOST_URL + `/users/update/${userOldEmail}`,
     {
       username,
     }
@@ -17,7 +17,9 @@ export async function updateUsername(userOldEmail: string, username: string) {
 
 export async function getMyself(email: string) {
   try {
-    const res = await api.get(`http://localhost:4000/users/getUser/${email}`);
+    const res = await api.get(
+      import.meta.env.VITE_BASE_USERHOST_URL + `/users/getUser/${email}`
+    );
     const response = res.data as User;
     console.log(response);
     return response;
@@ -27,7 +29,9 @@ export async function getMyself(email: string) {
 }
 
 export async function deleteMyself(email: string) {
-  const res1 = await api.delete(`http://localhost:3000/auth/delete/${email}`);
+  const res1 = await api.delete(
+    import.meta.env.VITE_BASE_AUTH_URL + `/auth/delete/${email}`
+  );
   const res2 = await userRepo.deleteUser(email);
   return res1 && res2;
 }
@@ -37,10 +41,13 @@ export async function changePassword(
   newPassword: string,
   email: string
 ) {
-  const res = await api.put(`http://localhost:3000/auth/update`, {
-    email,
-    currentPassword,
-    newPassword,
-  });
+  const res = await api.put(
+    import.meta.env.VITE_BASE_AUTH_URL + `/auth/update`,
+    {
+      email,
+      currentPassword,
+      newPassword,
+    }
+  );
   return res;
 }
