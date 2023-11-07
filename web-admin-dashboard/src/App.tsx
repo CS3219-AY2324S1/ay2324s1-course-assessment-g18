@@ -34,8 +34,8 @@ function Content() {
       return (
         <Routes>
           <Route path="/" element={<Navigate to="/dashboard" />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
+          {/* <Route path="/login" element={<LoginPage />} /> */}
+          {/* <Route path="/signup" element={<SignUpPage />} /> */}
           <Route path="/auth" element={<Auth />} />
 
           <Route element={<AdminProviderWrapper />}>
@@ -51,8 +51,8 @@ function Content() {
       return (
         <Routes>
           <Route path="/" element={<Navigate to="/user-dashboard" />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
+          {/* <Route path="/login" element={<LoginPage />} /> */}
+          {/* <Route path="/signup" element={<SignUpPage />} /> */}
           <Route path="/auth" element={<Auth />} />
           <Route element={<Navbar />}>
             <Route path="/user-dashboard" element={<UserDashboardPage />} />
@@ -69,9 +69,9 @@ function Content() {
     // User is not authenticated, go to /login
     return (
       <Routes>
-        <Route path="/" element={<Navigate to="/login" />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/" element={<Navigate to="/auth" />} />
+        {/* <Route path="/login" element={<LoginPage />} /> */}
+        {/* <Route path="/signup" element={<SignUpPage />} /> */}
         <Route path="/auth" element={<Auth />} />
       </Routes>
     );
