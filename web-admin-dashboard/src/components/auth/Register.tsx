@@ -91,6 +91,52 @@ function Register({ setSelectedTab }: Props) {
     }
   }
 
+  const googleSignin = async () => {
+    const axiosInstance = axios.create();
+    axiosInstance.defaults.maxRedirects = 1; // Set to 0 to prevent automatic redirects
+    axiosInstance.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if (error.response && [301, 302].includes(error.response.status)) {
+          const redirectUrl = error.response.headers.location;
+          console.log(redirectUrl);
+          return axiosInstance.get(redirectUrl);
+        }
+        return Promise.reject(error);
+      }
+    );
+    axiosInstance
+      .get("http://localhost:3000/auth/to-google")
+      .then((response) => {
+        // Handle the response
+        console.log(response.headers.Location);
+      })
+      .catch((error) => {
+        // Handle errors
+      });
+    // try {
+    //   const response = await axios.get("http://localhost:3000/auth/to-google");
+    //   if (response.status === 302) {
+    //     // Extract the location header to get the redirect URL
+
+    //     const redirectUrl = response.headers.get("Location");
+    //     if (redirectUrl) {
+    //       // Use window.location to navigate to the redirect URL
+    //       window.location.href = redirectUrl;
+    //     } else {
+    //       // Handle the case where the Location header is missing
+    //       console.error("Redirect URL is missing.");
+    //     }
+    //   } else {
+    //     // Handle other response codes as needed
+    //     // For example, handle success or error responses
+    //     // ...
+    //   }
+    //   console.log(e);
+    // } catch (e) {
+    //   console.log(e);
+    // }
+  };
   return (
     <div className="flex flex-col">
       <motion.div
@@ -108,7 +154,10 @@ function Register({ setSelectedTab }: Props) {
         </div>
 
         <div className="w-full flex flex-col">
-          <Button className="mb-5 w-full flex gap-[10px] p-[10px] bg-white text-black border-[214.3 31.8% 91.4%] border-[1px] rounded-lg justify-center items-center hover:bg-black hover:text-white">
+          <Button
+            className="mb-5 w-full flex gap-[10px] p-[10px] bg-white text-black border-[214.3 31.8% 91.4%] border-[1px] rounded-lg justify-center items-center hover:bg-black hover:text-white"
+            onClick={googleSignin}
+          >
             <img src={googleLogo} className="w-5" />
             <div>Sign in with Google</div>
           </Button>
