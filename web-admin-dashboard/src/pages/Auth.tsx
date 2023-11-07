@@ -14,59 +14,60 @@ function Auth() {
   const [cursorText, setCursorText] = useState("");
   const [cursorVariant, setCursorVariant] = useState("default");
 
-  const ref = useRef(null);
+  // const ref = useRef(null);
 
-  const useVariants = (ref: React.MutableRefObject<null>) => {
-    const mouse = useMouse(ref, {
-      enterDelay: 100,
-      leaveDelay: 100,
-    });
+  // const useVariants = (ref: React.MutableRefObject<null>) => {
+  //   const mouse = useMouse(ref, {
+  //     enterDelay: 100,
+  //     leaveDelay: 100,
+  //   });
 
-    let mouseXPosition = 0;
-    let mouseYPosition = 0;
-    if (mouse.clientX !== null) {
-      mouseXPosition = mouse.clientX;
-      console.log(mouseXPosition);
-    }
+  //   let mouseXPosition = 0;
+  //   let mouseYPosition = 0;
+  //   if (mouse.clientX !== null) {
+  //     mouseXPosition = mouse.clientX;
+  //     console.log(mouseXPosition);
+  //   }
 
-    if (mouse.clientY !== null) {
-      mouseYPosition = mouse.clientY;
-    }
+  //   if (mouse.clientY !== null) {
+  //     mouseYPosition = mouse.clientY;
+  //   }
 
-    return {
-      default: {
-        opacity: 1,
-        height: 10,
-        width: 10,
-        borderRadius: "50%",
-        fontSize: "20px",
-        backgroundColor: "#5562eb",
-        x: mouseXPosition,
-        y: mouseYPosition,
-        transition: {
-          type: "spring",
-          mass: 0.6,
-        },
-      },
-      disappear: {
-        backgroundColor: "#ffffff",
-        color: "#000",
-        opacity: 0,
-        x: mouseXPosition,
-        y: mouseYPosition,
-        transition: {
-          type: "ease: [0.17, 0.67, 0.83, 0.67]",
-          mass: 0.6,
-        },
-      },
-    };
-  };
+  //   return {
+  //     default: {
+  //       height: 15,
+  //       width: 15,
+  //       opacity: 0.6,
+  //       backdropFilter: "blur(10px)",
+  //       borderRadius: "50%",
+  //       fontSize: "20px",
+  //       backgroundColor: "white",
+  //       x: mouseXPosition,
+  //       y: mouseYPosition,
+  //       transition: {
+  //         type: "spring",
+  //         mass: 0.6,
+  //       },
+  //     },
+  //     disappear: {
+  //       backgroundColor: "#ffffff",
+  //       color: "#000",
+  //       opacity: 0,
+  //       x: mouseXPosition,
+  //       y: mouseYPosition,
+  //       transition: {
+  //         type: "ease: [0.17, 0.67, 0.83, 0.67]",
+  //         mass: 0.6,
+  //       },
+  //     },
+  //   };
+  // };
 
-  const spring = {
-    type: "spring",
-    stiffness: 500,
-    damping: 28,
-  };
+  // const spring = {
+  //   type: "spring",
+  //   stiffness: 500,
+  //   damping: 28,
+  // };
 
   function projectEnter(event) {
     setCursorText("");
@@ -78,18 +79,20 @@ function Auth() {
     setCursorVariant("default");
   }
 
-  const variants = useVariants(ref);
+  // const variants = useVariants(ref);
   return (
     <div>
-      <div className="flex w-screen h-screen" ref={ref}>
-        <AnimatePresence mode="wait">
+      <div className="flex w-screen h-screen">
+        {/* <div className="flex w-screen h-screen" ref={ref}> */}
+
+        {/* <AnimatePresence mode="wait">
           <motion.div
             variants={variants}
             className="fixed z-50 flex top-0 left-0 items-center justify-center h-[10px] w-[10px] rounded-[200px] bg-[#5562eb]"
             animate={cursorVariant}
             transition={spring}
           />
-        </AnimatePresence>
+        </AnimatePresence> */}
 
         {/* left side */}
         <div

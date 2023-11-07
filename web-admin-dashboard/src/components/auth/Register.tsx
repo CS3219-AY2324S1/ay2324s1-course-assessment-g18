@@ -101,7 +101,7 @@ function Register({ setSelectedTab }: Props) {
         style={{ width: "100%" }}
       >
         <div className="flex flex-col w-full justify-center items-center gap-3">
-          <div className="text-3xl font-bold">Create your account</div>
+          <div className="text-3xl font-bold">Get Started with PeerPrep</div>
           <div className="text-base text-slate-500 mb-5">
             Enter your details to get started
           </div>
