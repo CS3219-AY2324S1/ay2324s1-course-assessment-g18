@@ -37,7 +37,7 @@ function HiddenPwInput({
           type={`${isHidden ? "password" : "text"}`}
         />
         <div
-          className="w-10 absolute bg-white right-2 cursor-pointer flex items-center justify-center h-max"
+          className="w-10 absolute  right-2 cursor-pointer flex items-center justify-center h-max"
           onClick={() => setIsHidden(!isHidden)}
         >
           {!isHidden ? (
