@@ -62,8 +62,9 @@ const Slider = () => {
             {[1, 2, 3].map((_, index) => {
               return (
                 <motion.div
+                  onClick={() => setSlide(index)}
                   key={index}
-                  className={`h-[10px] rounded-full`}
+                  className={`h-[10px] rounded-full cursor-pointer`}
                   animate={index === slide ? "active" : "inactive"}
                   transition={{ duration: 1, ease: easeInOut }}
                   variants={variants}
