@@ -1,5 +1,8 @@
+import LiveUserRepository from "@/userRepo/LiveUserRepository";
 import { User } from "@/userRepo/user.model";
 import api from "@/utils/api";
+
+const userRepo = new LiveUserRepository();
 
 export async function updateUsername(userOldEmail: string, username: string) {
   const res = await api.put(
@@ -21,4 +24,10 @@ export async function getMyself(email: string) {
   } catch (e) {
     console.log(e);
   }
+}
+
+export async function deleteMyself(email: string) {
+  const res1 = await api.delete(`http://localhost:3000/auth/delete/${email}`);
+  const res2 = await userRepo.deleteUser(email);
+  return res1 && res2;
 }
