@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - uses: google-github-actions/setup-gcloud@master
+    - uses: google-github-actions/setup-gcloud@v0
       with:
         service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
         project_id: ${{ env.PROJECT_ID }}
@@ -28,6 +28,48 @@ jobs:
         gcloud auth configure-docker
         docker tag rgonslayer/peerprep-user:1.1 gcr.io/${{ env.PROJECT_ID }}/peerprep-user:1.1
         docker push gcr.io/${{ env.PROJECT_ID }}/peerprep-user:1.1
+
+    - name: Build QuestionService image
+      run: |
+        cd ./question-service
+        docker build . --file ./dockerfile --tag rgonslayer/peerprep-question:1.0
+        gcloud auth configure-docker
+        docker tag rgonslayer/peerprep-question:1.0 gcr.io/${{ env.PROJECT_ID }}/peerprep-question:1.0
+        docker push gcr.io/${{ env.PROJECT_ID }}/peerprep-question:1.0
+
+    - name: Build MatchingService image
+      run: |
+        cd ./matching-service
+        docker build . --file ./dockerfile --tag rgonslayer/peerprep-matching:1.0
+        gcloud auth configure-docker
+        docker tag rgonslayer/peerprep-matching:1.0 gcr.io/${{ env.PROJECT_ID }}/peerprep-matching:1.0
+        docker push gcr.io/${{ env.PROJECT_ID }}/peerprep-matching:1.0
+
+    - name: Build AuthService image
+      run: |
+        cd ./auth-service
+        docker build . --file ./dockerfile --tag rgonslayer/peerprep-auth:1.0
+        gcloud auth configure-docker
+        docker tag rgonslayer/peerprep-auth:1.0 gcr.io/${{ env.PROJECT_ID }}/peerprep-auth:1.0
+        docker push gcr.io/${{ env.PROJECT_ID }}/peerprep-auth:1.0
+        
+    - name: Build ChatService image
+      run: |
+        cd ./chat-service
+        docker build . --file ./dockerfile --tag adrielsoh/peerprep-chat:1.0
+        gcloud auth configure-docker
+        docker tag rgonslayer/peerprep-chat:1.0 gcr.io/${{ env.PROJECT_ID }}/peerprep-chat:1.0
+        docker push gcr.io/${{ env.PROJECT_ID }}/peerprep-chat:1.0
+    
+    - name: Build HistoryService image
+      run: |
+        cd ./history-service
+        docker build . --file ./dockerfile --tag adrielsoh/peerprep-history:1.0
+        gcloud auth configure-docker
+        docker tag rgonslayer/peerprep-history:1.0 gcr.io/${{ env.PROJECT_ID }}/peerprep-history:1.0
+        docker push gcr.io/${{ env.PROJECT_ID }}/peerprep-history:1.0
+
+
 
   
   build-push-docker-images:
