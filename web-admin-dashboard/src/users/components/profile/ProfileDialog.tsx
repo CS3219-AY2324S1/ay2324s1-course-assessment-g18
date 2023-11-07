@@ -13,7 +13,11 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import profileIcon from "../../assets/profile-icon.jpeg";
 import { toast } from "@/components/ui/use-toast";
-import { changePassword, updateUsername } from "@/users/auth/authentication";
+import {
+  changePassword,
+  getMyself,
+  updateUsername,
+} from "@/users/auth/authentication";
 import ConfirmDeleteDialog from "./ConfirmDeleteDialog";
 import { ChevronLeftIcon } from "lucide-react";
 import HiddenPwInput from "../form/HiddenPwInput";
@@ -22,7 +26,7 @@ interface Props {
   setIsSettingsOpen: Dispatch<SetStateAction<boolean>>;
 }
 function ProfileDialog({ isSettingsOpen, setIsSettingsOpen }: Props) {
-  const { authState } = useContext(AuthContext);
+  const { authState, setAuthState } = useContext(AuthContext);
   const user = authState.userInfo;
   const [username, setUsername] = useState(user.username);
   const [openDelete, setOpenDelete] = useState(false);
@@ -44,14 +48,18 @@ function ProfileDialog({ isSettingsOpen, setIsSettingsOpen }: Props) {
     e.preventDefault();
     // logic here
     const errors = isValid();
-
     if (!errors) {
       try {
         await updateUsername(user.email, username);
-        return toast({
-          title: "Success!",
-          description: "You have successfully changed your username",
-        });
+        const newInfo = await getMyself(user.email);
+        if (newInfo) {
+          setAuthState({ userInfo: newInfo, loggedIn: true });
+          localStorage.setItem("userInfo", JSON.stringify(newInfo));
+          return toast({
+            title: "Success!",
+            description: "You have successfully changed your username",
+          });
+        }
       } catch (e) {
         console.log(e);
         return toast({
@@ -85,6 +93,9 @@ function ProfileDialog({ isSettingsOpen, setIsSettingsOpen }: Props) {
     if (!errors) {
       try {
         await changePassword(currPw, pw, user.email);
+        setPw("");
+        setCurrPw("");
+        setRePw("");
         return toast({
           title: "Success!",
           description: "You have successfully changed your password.",
