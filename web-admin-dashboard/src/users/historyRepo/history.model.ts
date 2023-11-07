@@ -6,7 +6,7 @@ export interface History {
   questionTitle: string;
   questionDescription: string;
   questionDifficulty: QuestionDifficulty;
-  chatHistory: Array<string>;
+  chatHistory: Array<any>;
   codeExecuted: string;
   dateSubmitted: string;
 }
