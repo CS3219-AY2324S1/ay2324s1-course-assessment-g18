@@ -3,7 +3,6 @@ import "./Input.css";
 import { Input } from "@/components/ui/input";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
 interface Props {
   label: string;
   labelStyling?: CSSProperties;
