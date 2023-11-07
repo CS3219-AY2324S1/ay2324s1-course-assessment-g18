@@ -34,13 +34,13 @@ function HiddenPwInput({
           className="pr-10"
           onChange={(e) => setData(e.target.value)}
           value={data}
-          type={`${isHidden ? "text" : "password"}`}
+          type={`${isHidden ? "password" : "text"}`}
         />
         <div
           className="w-10 absolute bg-white right-2 cursor-pointer flex items-center justify-center h-max"
           onClick={() => setIsHidden(!isHidden)}
         >
-          {isHidden ? (
+          {!isHidden ? (
             <AiFillEye size={20} />
           ) : (
             <AiFillEyeInvisible size={20} />
