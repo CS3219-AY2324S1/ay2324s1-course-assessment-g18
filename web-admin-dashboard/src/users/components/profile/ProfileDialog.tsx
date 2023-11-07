@@ -1,5 +1,5 @@
 import CustomDialog from "@/components/dialog/CustomDialog";
-import { Dialog } from "@/components/ui/dialog";
+import { Dialog, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import React, {
   Dispatch,
   SetStateAction,
@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import profileIcon from "../../assets/profile-icon.jpeg";
 import { toast } from "@/components/ui/use-toast";
-import { updateUsername } from "@/users/auth/authentication";
+import { changePassword, updateUsername } from "@/users/auth/authentication";
 import ConfirmDeleteDialog from "./ConfirmDeleteDialog";
 import { ChevronLeftIcon } from "lucide-react";
 interface Props {
@@ -29,6 +29,7 @@ function ProfileDialog({ isSettingsOpen, setIsSettingsOpen }: Props) {
   const [currPw, setCurrPw] = useState("");
   const [rePw, setRePw] = useState("");
   const [pw, setPw] = useState("");
+  const [err, setErr] = useState("");
   const isValid = () => {
     if (username === user.username) {
       return "Your new username must be different from your current.";
@@ -67,12 +68,45 @@ function ProfileDialog({ isSettingsOpen, setIsSettingsOpen }: Props) {
     }
   };
 
+  const checkPasswords = () => {
+    if (currPw === pw) {
+      return "New password cannot be the same as current password.";
+    }
+    if (pw !== rePw) {
+      return "New password and re-entered password do not match.";
+    }
+    return null;
+  };
+
+  const changePw = async (e: SyntheticEvent) => {
+    e.preventDefault();
+    const errors = checkPasswords();
+    if (!errors) {
+      try {
+        await changePassword(currPw, pw, user.email);
+        return toast({
+          title: "Success!",
+          description: "You have successfully changed your password.",
+        });
+      } catch (e) {
+        console.log(e);
+        return toast({
+          variant: "destructive",
+          title: "Oops!",
+          description: e.response.data.message,
+        });
+      }
+    } else {
+      setErr(errors);
+    }
+  };
+
   return (
     <Dialog open={isSettingsOpen} onOpenChange={setIsSettingsOpen}>
-      <CustomDialog dialogTitle="Settings">
-        <div>
-          {!openPwChange ? (
-            <form onSubmit={handleSubmit} className="mt-[10px] gap-[20px] flex">
+      <div>
+        {!openPwChange ? (
+          <CustomDialog dialogTitle="Your Profile">
+            <form onSubmit={handleSubmit} className="pt-[10px] gap-[20px] flex">
               <div className="flex flex-row gap-[30px] items-center">
                 <img
                   src={profileIcon}
@@ -116,20 +150,21 @@ function ProfileDialog({ isSettingsOpen, setIsSettingsOpen }: Props) {
                 Delete account
               </Button>
             </form>
-          ) : (
-            // change password
-            <form>
-              <div className="flex items-center gap-[10px]">
-                <Button
-                  variant="ghost"
-                  onClick={() => setPwChange(false)}
-                  className="w-[50px]"
-                >
-                  <ChevronLeftIcon />
-                </Button>
-                <div className="font-semibold">Change Password</div>
-              </div>
+          </CustomDialog>
+        ) : (
+          <CustomDialog dialogTitle="">
+            <div className="flex items-center gap-[10px]">
+              <Button
+                variant="ghost"
+                onClick={() => setPwChange(false)}
+                className="w-[50px]"
+              >
+                <ChevronLeftIcon />
+              </Button>
+              <DialogTitle>Change Password</DialogTitle>
+            </div>
 
+            <div className="flex flex-col gap-[15px] pt-2">
               <CustomInput
                 setData={setCurrPw}
                 data={currPw}
@@ -141,13 +176,18 @@ function ProfileDialog({ isSettingsOpen, setIsSettingsOpen }: Props) {
                 data={rePw}
                 label="Re-enter Password"
               />
-              <Button className="bg-[#5562eb] hover:bg-[#6470ee]">
+              <div className="text-red-500 mt-2 mb-2">{err}</div>
+              <Button
+                className="bg-[#5562eb] hover:bg-[#6470ee]"
+                onClick={changePw}
+              >
                 Change Password
               </Button>
-            </form>
-          )}
-        </div>
-      </CustomDialog>
+            </div>
+          </CustomDialog>
+        )}
+      </div>
+      {/* </CustomDialog> */}
       {openDelete && <ConfirmDeleteDialog setIsOpen={setOpenDelete} />}
     </Dialog>
   );

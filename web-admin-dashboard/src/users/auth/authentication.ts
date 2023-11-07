@@ -31,3 +31,16 @@ export async function deleteMyself(email: string) {
   const res2 = await userRepo.deleteUser(email);
   return res1 && res2;
 }
+
+export async function changePassword(
+  currentPassword: string,
+  newPassword: string,
+  email: string
+) {
+  const res = await api.put(`http://localhost:3000/auth/update`, {
+    email,
+    currentPassword,
+    newPassword,
+  });
+  return res;
+}
