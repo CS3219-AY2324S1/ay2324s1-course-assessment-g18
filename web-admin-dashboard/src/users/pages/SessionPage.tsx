@@ -10,6 +10,8 @@ import { useLocation } from 'react-router-dom';
 import { chatSocket, matchingSocket } from '../components/match/sockets';
 import PeerLeftDialog from '../components/session/dialog/PeerLeftDialog';
 import api from '@/utils/api';
+import LiveHistoryRepository from '../historyRepo/LiveHistoryRepository';
+import axios from 'axios';
 
 function SessionPage() {
   const [lang, setLang] = useState<Language>(Language.JavaScript);
@@ -22,6 +24,17 @@ function SessionPage() {
     setCode(newCode);
     console.log(newCode);
   };
+  useEffect(() => {
+    async function updateCode() {
+      const roomId = localStorage.getItem('roomId');
+      const res = await axios.put(
+        `http://localhost:4002/history/updateCodeExecutedByRoomId/${roomId}`,
+        { codeExecuted: code },
+      );
+      console.log(res);
+    }
+    updateCode();
+  }, [code]);
 
   const location = useLocation();
   useEffect(() => {
