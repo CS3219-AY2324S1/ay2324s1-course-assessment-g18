@@ -34,10 +34,14 @@ function ChooseMatch() {
   return (
     <div className="flex w-screen h-screen items-center justify-center bg-[#FAFBFF]">
       <Card className="p-5 w-[500px]">
-        <CardTitle className="pb-3 flex gap-[5px]">
-          <button onClick={() => navigate("/user-dashboard")}>
-            <IoIosArrowBack />
-          </button>
+        <CardTitle className="pb-3 flex gap-[10px] items-center">
+          <Button
+            onClick={() => navigate("/user-dashboard")}
+            variant="ghost"
+            className="w-[50px]"
+          >
+            <IoIosArrowBack size="30px" />
+          </Button>
           Select your Preferences
         </CardTitle>
         <div className="">

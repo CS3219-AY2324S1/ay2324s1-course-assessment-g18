@@ -19,6 +19,7 @@ import { AuthContext } from "@/context/AuthProvider";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import Countdown from "./Countdown";
 import { IoIosArrowBack } from "react-icons/io";
+import { Button } from "@/components/ui/button";
 
 interface Props {
   difficulty: QuestionDifficulty;
@@ -105,10 +106,10 @@ function WaitingMatch() {
   return (
     <div className="flex w-screen h-screen items-center justify-center bg-[#FAFBFF]">
       <Card className="w-[500px] flex flex-col justify-center p-5">
-        <CardTitle className="flex gap-[5px] mt-[10px] mb-[10px]">
-          <button onClick={handleBack}>
-            <IoIosArrowBack />
-          </button>
+        <CardTitle className="flex gap-[10px] mt-[10px] mb-[10px] items-center">
+          <Button onClick={handleBack} variant="ghost" className="w-[50px]">
+            <IoIosArrowBack size="30px" />
+          </Button>
           Finding your Match in <Countdown time={30} />
         </CardTitle>
         <CardDescription>
