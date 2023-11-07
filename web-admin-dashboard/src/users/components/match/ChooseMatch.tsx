@@ -27,6 +27,7 @@ function ChooseMatch() {
     matchingSocket.emit("match", {
       difficulty: difficulty,
       userId: user.username,
+      userEmail: user.email
     });
     navigate("/waiting-match", { state: { difficulty: difficulty } });
   };

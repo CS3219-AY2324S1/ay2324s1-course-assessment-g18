@@ -9,6 +9,7 @@ interface User {
   client: Socket;
   difficulty: string;
   userId: String;
+  userEmail: string;
 }
 
 @Injectable()
@@ -63,32 +64,6 @@ export class MatchService {
     const response = await lastValueFrom(request);
     const randomQuestion = response[0]['questionDifficulty'][0];
     const roomId = user1.client.id + user2.client.id + randomQuestion.questionId;
-    // const historyReq = this.historyClient.send({cmd: 'addHistory'}, {
-    //     userEmail: user1.userId,
-    //     roomId: roomId,
-    //     questionId: randomQuestion.questionId,
-    //     questionTitle: randomQuestion.questionTitle,
-    //     questionDescription: randomQuestion.questionDescription,
-    //     questionDifficulty: randomQuestion.questionDifficulty,
-    //     chatHistory: [],
-    //     codeExecuted: ''
-    // });
-    // await historyReq.subscribe();
-    // const historyRes = await lastValueFrom(historyReq);
-    // console.log(historyRes);
-    // const secondHistoryReq = this.historyClient.send({cmd: 'addHistory'}, {
-    //     userEmail: user2.userId,
-    //     roomId: roomId,
-    //     questionId: randomQuestion.questionId,
-    //     questionTitle: randomQuestion.questionTitle,
-    //     questionDescription: randomQuestion.questionDescription,
-    //     questionDifficulty: randomQuestion.questionDifficulty,
-    //     chatHistory: [],
-    //     codeExecuted: ''
-    // });
-    // await secondHistoryReq.subscribe();
-    // const secondHistoryRes = await lastValueFrom(secondHistoryReq);
-    // console.log(secondHistoryRes);
     // Notify users about the match
     await this.notifyMatch(user1.userId, user2, roomId, randomQuestion);
     this.notifyMatch(user2.userId, user1, roomId, randomQuestion);
@@ -100,7 +75,7 @@ export class MatchService {
     const socket: Socket =  user.client;
     console.log("notify match called for " + user.userId);
     const req = await this.historyClient.send({cmd: 'addHistory'}, {
-        userEmail: user.userId,
+        userEmail: user.userEmail,
         roomId: roomId,
         questionId: question.questionId,
         questionTitle: question.questionTitle,
