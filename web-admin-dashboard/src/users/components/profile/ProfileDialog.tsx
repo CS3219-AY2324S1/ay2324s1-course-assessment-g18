@@ -74,7 +74,7 @@ function ProfileDialog({ isSettingsOpen, setIsSettingsOpen }: Props) {
       return "New password cannot be the same as current password.";
     }
     if (pw !== rePw) {
-      return "New password and re-entered password do not match.";
+      return "New and re-entered passwords do not match.";
     }
     return null;
   };
