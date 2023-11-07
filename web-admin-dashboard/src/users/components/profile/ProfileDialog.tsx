@@ -16,6 +16,7 @@ import { toast } from "@/components/ui/use-toast";
 import { changePassword, updateUsername } from "@/users/auth/authentication";
 import ConfirmDeleteDialog from "./ConfirmDeleteDialog";
 import { ChevronLeftIcon } from "lucide-react";
+import HiddenPwInput from "../form/HiddenPwInput";
 interface Props {
   isSettingsOpen: boolean;
   setIsSettingsOpen: Dispatch<SetStateAction<boolean>>;
@@ -170,8 +171,8 @@ function ProfileDialog({ isSettingsOpen, setIsSettingsOpen }: Props) {
                 data={currPw}
                 label="Current Password"
               />
-              <CustomInput setData={setPw} data={pw} label="New Password" />
-              <CustomInput
+              <HiddenPwInput setData={setPw} data={pw} label="New Password" />
+              <HiddenPwInput
                 setData={setRePw}
                 data={rePw}
                 label="Re-enter Password"
