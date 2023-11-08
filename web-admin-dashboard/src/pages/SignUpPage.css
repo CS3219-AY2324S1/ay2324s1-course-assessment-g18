@@ -19,7 +19,8 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
 .login-button {
