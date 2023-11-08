@@ -2,9 +2,11 @@ import { DialogTitle } from "@/components/ui/dialog";
 import { QuestionDifficulty } from "@/questionrepo/question.model";
 import React, {
   Dispatch,
+  MutableRefObject,
   SetStateAction,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from "react";
 import "./MatchDialog.css";
@@ -16,6 +18,8 @@ import { useToast } from "@/components/ui/use-toast";
 import { AuthContext } from "@/context/AuthProvider";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import Countdown from "./Countdown";
+import { IoIosArrowBack } from "react-icons/io";
+import { Button } from "@/components/ui/button";
 
 interface Props {
   difficulty: QuestionDifficulty;
@@ -28,9 +32,9 @@ function WaitingMatch() {
   const username = authState.userInfo.username;
   const { toast } = useToast();
   const navigate = useNavigate();
-
   const { state } = useLocation();
   const difficulty = state.difficulty;
+  const timeoutRef = useRef(null);
   matchingSocket.on("matchSuccess", (payload) => {
     const { matchedUserId, roomId } = payload;
     navigate("/session", {
@@ -41,14 +45,19 @@ function WaitingMatch() {
 
   useEffect(() => {
     let matchSuccessReceived = false;
-    
+
     const matchSuccessHandler = (payload: any) => {
       const { matchedUserId, roomId, question } = payload;
       chatSocket.emit("joinRoom", { roomId, toLeaveRoom: "" });
-        localStorage.setItem("roomId", roomId);
+      localStorage.setItem("roomId", roomId);
       navigate("/session", {
-                state: { roomId: roomId, matchedUser: matchedUserId, difficulty: difficulty, question: question},
-              });
+        state: {
+          roomId: roomId,
+          matchedUser: matchedUserId,
+          difficulty: difficulty,
+          question: question,
+        },
+      });
       matchSuccessReceived = true;
       toast({
         title: "Match found!",
@@ -59,7 +68,7 @@ function WaitingMatch() {
     matchingSocket.on("matchSuccess", matchSuccessHandler);
 
     // Set a timeout to check if "matchSuccess" is not received within 30 seconds
-    const timeoutId = setTimeout(() => {
+    timeoutRef.current = setTimeout(() => {
       if (!matchSuccessReceived) {
         // If "matchSuccess" is not received within 30 seconds, trigger an error.
         console.error("Match did not succeed within 30 seconds.");
@@ -75,14 +84,32 @@ function WaitingMatch() {
 
     // To cancel the timeout if "matchSuccess" is received before it expires
     matchingSocket.on("matchSuccess", () => {
-      clearTimeout(timeoutId);
+      clearTimeout(timeoutRef.current);
     });
   }, []);
 
+  const handleBack = () => {
+    navigate("/choose-match");
+  };
+
+  useEffect(() => {
+    // clear timeout when component unmounts
+    return () => {
+      clearTimeout(timeoutRef.current);
+      // dequeue user
+      matchingSocket.emit("matchCancel", {
+        userId: username,
+      });
+    };
+  }, []);
+
   return (
-    <div className="flex w-screen h-screen items-center justify-center">
+    <div className="flex w-screen h-screen items-center justify-center bg-[#FAFBFF]">
       <Card className="w-[500px] flex flex-col justify-center p-5">
-        <CardTitle className="flex gap-[5px] mt-[10px] mb-[10px]">
+        <CardTitle className="flex gap-[10px] mt-[10px] mb-[10px] items-center">
+          <Button onClick={handleBack} variant="ghost" className="w-[50px]">
+            <IoIosArrowBack size="30px" />
+          </Button>
           Finding your Match in <Countdown time={30} />
         </CardTitle>
         <CardDescription>

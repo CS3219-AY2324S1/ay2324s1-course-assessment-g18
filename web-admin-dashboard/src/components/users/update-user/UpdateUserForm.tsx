@@ -76,7 +76,9 @@ function UpdateUserForm({ user, setOpen, setIsChanged }: Props) {
           <RoleSelect label="User role" setData={setRole} role={role} />
         </div>
         <div className="flex items-end gap-[10px]">
-          <Button type="submit">Update User</Button>
+          <Button type="submit" className="bg-[#5562eb] hover:bg-[#6470ee]">
+            Update User
+          </Button>
         </div>
       </form>
     </div>
