@@ -3,7 +3,7 @@ import { BsGrid1X2Fill, BsPeopleFill, BsFillGearFill } from "react-icons/bs";
 import { BiLogOut } from "react-icons/bi";
 import "../../../pages/DashboardPage.css";
 import "./Sidebar.css";
-import logo from "../../../assets/dashboard/logo.svg";
+import logo from "../../../assets/logo.png";
 import { Link, useResolvedPath, useMatch, Outlet } from "react-router-dom";
 import { ReactNode } from "react";
 import LogoutDialog from "./LogoutDialog"; // Import the LogoutDialog component
@@ -30,7 +30,7 @@ function Sidebar() {
       <aside className="flex-col h-13 w-[280px] flex align-center px-5 bg-white pt-[10px]">
         <div className="sidebar-title">
           <img src={logo} />
-          <span className="icon close_icon">X</span>
+          <div className="font-semibold">PeerPrep</div>
         </div>
 
         <ul className="sidebar-list">
