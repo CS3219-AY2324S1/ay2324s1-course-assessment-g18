@@ -1,6 +1,12 @@
 import CustomInput from "@/components/form/CustomInput";
-import React, { SyntheticEvent, useContext, useState } from "react";
-import "./LoginPage.css";
+import React, {
+  Dispatch,
+  SetStateAction,
+  SyntheticEvent,
+  useContext,
+  useState,
+} from "react";
+import "../../pages/LoginPage.css";
 import {
   Card,
   CardContent,
@@ -16,8 +22,13 @@ import LiveUserRepository from "@/userRepo/LiveUserRepository";
 import { AuthContext } from "@/context/AuthProvider";
 import { UserRole } from "@/userRepo/user.model";
 import api from "@/utils/api";
+import { DivideCircleIcon } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
-function LoginPage() {
+interface Props {
+  setSelectedTab: Dispatch<SetStateAction<string>>;
+}
+function Login({ setSelectedTab }: Props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -35,13 +46,6 @@ function LoginPage() {
       return;
     } else {
       try {
-<<<<<<< Updated upstream
-        const authResponse = await axios.post("http://localhost:3000/auth/login", {
-          email,
-          password,
-        });
-        
-=======
         const authResponse = await axios.post(
           import.meta.env.VITE_BASE_AUTH_URL + "/auth/login",
           {
@@ -49,7 +53,6 @@ function LoginPage() {
             password,
           }
         );
->>>>>>> Stashed changes
 
         if (authResponse.status === 201) {
           const { accessToken, refreshToken } = authResponse.data;
@@ -60,32 +63,9 @@ function LoginPage() {
           const user = await new LiveUserRepository().getUser(email);
           localStorage.setItem("userInfo", JSON.stringify(user));
           const userInfo = JSON.parse(localStorage.getItem("userInfo")!);
-          const role = userInfo['role'];
+          const role = userInfo["role"];
           console.log("Role: ", role);
-          
-          const roleTokens = await api.post("http://localhost:3000/auth/tokens", {
-            email,
-            role,
-          });
 
-<<<<<<< Updated upstream
-            if (roleTokens.status === 201) {
-              const { accessToken, refreshToken } = roleTokens.data;
-              // Set tokens with role
-              localStorage.setItem("accessToken", accessToken);
-              localStorage.setItem("refreshToken", refreshToken);
-              const userResponse = await api.put(`http://localhost:4000/users/update/${email}`, {
-                refreshToken: refreshToken})
-              if (userResponse.status == 200) {
-                if (user) {
-                  setAuthState({ userInfo: user, loggedIn: true });
-                  console.log('User:', user);
-                  if (user.role === UserRole.Admin) {
-                    navigate("/dashboard");
-                  } else {
-                    navigate("/user-dashboard");
-                  }
-=======
           const roleTokens = await api.post(
             import.meta.env.VITE_BASE_AUTH_URL + "/auth/tokens",
             {
@@ -100,7 +80,7 @@ function LoginPage() {
             localStorage.setItem("accessToken", accessToken);
             localStorage.setItem("refreshToken", refreshToken);
             const userResponse = await api.put(
-              import.meta.env.VITE_BASE_USERHOST_URL + `/users/update/${email}`,
+              import.meta.env.VITE_BASE_USERHOST_URL  + `/users/update/${email}`,
               {
                 refreshToken: refreshToken,
               }
@@ -111,15 +91,14 @@ function LoginPage() {
                 console.log("User:", user);
                 if (user.role === UserRole.Admin) {
                   navigate("/dashboard");
->>>>>>> Stashed changes
                 } else {
-                  console.log("User is NULL");
+                  navigate("/user-dashboard");
                 }
-
+              } else {
+                console.log("User is NULL");
+              }
             }
           }
-          
-
         } else {
           setError("Login failed. Check your credentials.");
         }
@@ -137,54 +116,50 @@ function LoginPage() {
   }
 
   return (
-    <React.Fragment>
-      {/* redirect to dashboard if authenticated, need to figure a way to redirect if its a user */}
-      {/* {isAuthenticated() ? (
-        <Navigate to="/dashboard" />
-      ) : ( */}
-      <div className="login-main">
-        <Card className="login-content">
-          <CardHeader className="header">
-            <div>PeerPrep</div>
-            <CardTitle className="text-3xl font-bold">Welcome back!</CardTitle>
-            <CardDescription className="text-base text-slate-500">
-              Enter your login details
-            </CardDescription>
-          </CardHeader>
+    <div className="flex flex-col">
+      <motion.div
+        initial={{ opacity: 0, x: 10 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: -10 }}
+        transition={{ duration: 0.2 }}
+        style={{ height: "100%", width: "100%" }}
+      >
+        <div className="flex items-center flex-col justify-center">
+          <div className="text-3xl font-bold">Welcome back!</div>
+          <div className="text-base text-slate-500">
+            Enter your login details
+          </div>
+        </div>
 
-          <CardContent>
-            <form className="login-form" onSubmit={onSubmit}>
-              <CustomInput label="Email" setData={setEmail} data={email} />
-              <CustomPassword
-                label="Password"
-                setData={setPassword}
-                data={password}
-              />
-              <div className="text-red-400">{error}</div>
-              <Button type="submit" className="login-button">
-                Login
-              </Button>
-            </form>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                paddingTop: "20px",
-              }}
+        <div>
+          <form
+            className="w-full h-full flex flex-1 flex-col gap-[10px] mb-[20px]"
+            onSubmit={onSubmit}
+          >
+            <CustomInput label="Email" setData={setEmail} data={email} />
+            <CustomPassword
+              label="Password"
+              setData={setPassword}
+              data={password}
+            />
+            <div className="text-red-400">{error}</div>
+            <Button type="submit" className="bg-[#5562eb] hover:bg-[#6470ee]">
+              Login
+            </Button>
+          </form>
+          <div className="flex gap-[10px] justify-center">
+            Don't have an account?
+            <button
+              onClick={() => setSelectedTab("Register")}
+              className="text-[#5562eb]"
             >
-              <button
-                onClick={() => navigate("/signup")}
-                className="signup-button"
-              >
-                Don't have an account? Click here to sign up!
-              </button>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-      {/* )} */}
-    </React.Fragment>
+              Sign up now
+            </button>
+          </div>
+        </div>
+      </motion.div>
+    </div>
   );
 }
 
-export default LoginPage;
+export default Login;
