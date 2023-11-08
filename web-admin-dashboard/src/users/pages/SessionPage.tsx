@@ -32,16 +32,16 @@ function SessionPage() {
 
   useEffect(() => {
     console.log(location.state.question);
-  })
-//   useEffect(() => {
-//     setStatus("loading");
-    // api.get(`http://127.0.0.1:4001/questions/random/${location.state.difficulty}`).then((res) => {
-    //     const question = res.data[0]['questionDifficulty'][0];
-    //     console.log(question);
-    //     setQuestion(question);
-    //     setStatus("success");
-    // }).catch((err) => console.log(err));
-//   }, [])
+  });
+  //   useEffect(() => {
+  //     setStatus("loading");
+  // api.get(`http://127.0.0.1:4001/questions/random/${location.state.difficulty}`).then((res) => {
+  //     const question = res.data[0]['questionDifficulty'][0];
+  //     console.log(question);
+  //     setQuestion(question);
+  //     setStatus("success");
+  // }).catch((err) => console.log(err));
+  //   }, [])
   const tempQn = {
     questionId: 1,
     _id: "e0bd7857-17b3-4811-9434-3f623efa78ae",
