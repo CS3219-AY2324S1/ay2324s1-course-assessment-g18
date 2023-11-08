@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./Navbar.css";
-import logo from "./../../../assets/dashboard/logo.svg";
+import logo from "../../../assets/logo.png";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -34,9 +34,6 @@ function Navbar() {
         <NavigationMenuList className="w-full gap-5">
           <NavigationMenuItem className="flex gap-2 items-center">
             <img src={logo} className="logo" />
-            <Link to="/user-dashboard" className="">
-              PeerPrep
-            </Link>
           </NavigationMenuItem>
           <NavigationMenuItem className="font-bold flex gap-2 items-center justify-center">
             Hello, {user.username} <p className="text-xl">👋🏻</p>

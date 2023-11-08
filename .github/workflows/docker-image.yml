@@ -58,7 +58,7 @@ jobs:
         cd ./chat-service
         docker build . --file ./dockerfile --tag adrielsoh/peerprep-chat:1.0
         gcloud auth configure-docker
-        docker tag rgonslayer/peerprep-chat:1.0 gcr.io/${{ env.PROJECT_ID }}/peerprep-chat:1.0
+        docker tag adrielsoh/peerprep-chat:1.0 gcr.io/${{ env.PROJECT_ID }}/peerprep-chat:1.0
         docker push gcr.io/${{ env.PROJECT_ID }}/peerprep-chat:1.0
     
     - name: Build HistoryService image
@@ -66,10 +66,15 @@ jobs:
         cd ./history-service
         docker build . --file ./dockerfile --tag adrielsoh/peerprep-history:1.0
         gcloud auth configure-docker
-        docker tag rgonslayer/peerprep-history:1.0 gcr.io/${{ env.PROJECT_ID }}/peerprep-history:1.0
+        docker tag adrielsoh/peerprep-history:1.0 gcr.io/${{ env.PROJECT_ID }}/peerprep-history:1.0
         docker push gcr.io/${{ env.PROJECT_ID }}/peerprep-history:1.0
 
-
+    - name: Push RabbitMQ image
+      run: |
+        docker pull rabbitmq:3.12-management
+        gcloud auth configure-docker
+        docker tag rabbitmq:3.12-management gcr.io/${{ env.PROJECT_ID }}/rabbitmq:3.12-management
+        docker push gcr.io/${{ env.PROJECT_ID }}/rabbitmq:3.12-management
 
   
   build-push-docker-images:

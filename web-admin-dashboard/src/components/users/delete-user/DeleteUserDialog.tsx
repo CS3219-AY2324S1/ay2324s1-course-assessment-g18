@@ -68,7 +68,12 @@ function DeleteUserDialog({ user, setOpen, setIsChanged }: Props) {
         <AlertDialogCancel onClick={() => setOpenDialog(false)}>
           Cancel
         </AlertDialogCancel>
-        <AlertDialogAction onClick={onDelete}>Continue</AlertDialogAction>
+        <AlertDialogAction
+          onClick={onDelete}
+          className="bg-[#5562eb] hover:bg-[#6470ee]"
+        >
+          Continue
+        </AlertDialogAction>
       </AlertDialogFooter>
       {err && <div className="text=red-800">{err}</div>}
     </>

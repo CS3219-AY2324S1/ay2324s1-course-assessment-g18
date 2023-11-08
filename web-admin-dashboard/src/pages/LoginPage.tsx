@@ -35,13 +35,6 @@ function LoginPage() {
       return;
     } else {
       try {
-<<<<<<< Updated upstream
-        const authResponse = await axios.post("http://localhost:3000/auth/login", {
-          email,
-          password,
-        });
-        
-=======
         const authResponse = await axios.post(
           import.meta.env.VITE_BASE_AUTH_URL + "/auth/login",
           {
@@ -49,7 +42,6 @@ function LoginPage() {
             password,
           }
         );
->>>>>>> Stashed changes
 
         if (authResponse.status === 201) {
           const { accessToken, refreshToken } = authResponse.data;
@@ -60,32 +52,9 @@ function LoginPage() {
           const user = await new LiveUserRepository().getUser(email);
           localStorage.setItem("userInfo", JSON.stringify(user));
           const userInfo = JSON.parse(localStorage.getItem("userInfo")!);
-          const role = userInfo['role'];
+          const role = userInfo["role"];
           console.log("Role: ", role);
-          
-          const roleTokens = await api.post("http://localhost:3000/auth/tokens", {
-            email,
-            role,
-          });
 
-<<<<<<< Updated upstream
-            if (roleTokens.status === 201) {
-              const { accessToken, refreshToken } = roleTokens.data;
-              // Set tokens with role
-              localStorage.setItem("accessToken", accessToken);
-              localStorage.setItem("refreshToken", refreshToken);
-              const userResponse = await api.put(`http://localhost:4000/users/update/${email}`, {
-                refreshToken: refreshToken})
-              if (userResponse.status == 200) {
-                if (user) {
-                  setAuthState({ userInfo: user, loggedIn: true });
-                  console.log('User:', user);
-                  if (user.role === UserRole.Admin) {
-                    navigate("/dashboard");
-                  } else {
-                    navigate("/user-dashboard");
-                  }
-=======
           const roleTokens = await api.post(
             import.meta.env.VITE_BASE_AUTH_URL + "/auth/tokens",
             {
@@ -111,15 +80,14 @@ function LoginPage() {
                 console.log("User:", user);
                 if (user.role === UserRole.Admin) {
                   navigate("/dashboard");
->>>>>>> Stashed changes
                 } else {
-                  console.log("User is NULL");
+                  navigate("/user-dashboard");
                 }
-
+              } else {
+                console.log("User is NULL");
+              }
             }
           }
-          
-
         } else {
           setError("Login failed. Check your credentials.");
         }
@@ -161,7 +129,7 @@ function LoginPage() {
                 data={password}
               />
               <div className="text-red-400">{error}</div>
-              <Button type="submit" className="login-button">
+              <Button type="submit" className="bg-[#5562eb] hover:bg-[#6470ee]">
                 Login
               </Button>
             </form>
