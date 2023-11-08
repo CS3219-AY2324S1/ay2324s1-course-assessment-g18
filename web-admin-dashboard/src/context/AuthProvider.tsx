@@ -55,16 +55,20 @@ const AuthProvider = ({ children }: Props) => {
   const logout = async () => {
     try {
       const userInfo = JSON.parse(localStorage.getItem("userInfo")!);
-      const email = userInfo['email'];
-      
-      const response = await api.put(`http://localhost:4000/users/update/${email}`, {
-      // baseURL: import.meta.env.VITE_BASE_USERHOST_URL,
-      refreshToken: null
-      });
+      const email = userInfo["email"];
+
+      const response = await api.put(
+        `http://localhost:4000/users/update/${email}`,
+        {
+          // baseURL: import.meta.env.VITE_BASE_USERHOST_URL,
+          refreshToken: null,
+        }
+      );
       if (response.status === 200) {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-        navigate("/login");
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        // navigate("/login");
+        navigate("/auth");
         console.log("User is logged out");
         setAuthState({
           userInfo: {},
