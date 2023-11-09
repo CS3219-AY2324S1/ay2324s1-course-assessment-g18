@@ -96,10 +96,10 @@ function Register({ setSelectedTab }: Props) {
     axiosInstance.defaults.maxRedirects = 1; // Set to 0 to prevent automatic redirects
     axiosInstance.interceptors.response.use(
       (response) => response,
-      (error) => {
+      async (error) => {
         if (error.response && [301, 302].includes(error.response.status)) {
           const redirectUrl = error.response.headers.location;
-          console.log(redirectUrl);
+          console.log("redirect", redirectUrl);
           return axiosInstance.get(redirectUrl);
         }
         return Promise.reject(error);
@@ -110,8 +110,18 @@ function Register({ setSelectedTab }: Props) {
       .then((response) => {
         // Handle the response
         console.log(response.headers.Location);
+
+        // Extract the location header to get the redirect URL
+
+        const redirectUrl = response.headers.get("Location");
+        if (redirectUrl) {
+          // Use window.location to navigate to the redirect URL
+          window.location.href = redirectUrl;
+        }
       })
       .catch((error) => {
+        console.log("caught");
+        console.log(error);
         // Handle errors
       });
     // try {
@@ -119,7 +129,7 @@ function Register({ setSelectedTab }: Props) {
     //   if (response.status === 302) {
     //     // Extract the location header to get the redirect URL
 
-    //     const redirectUrl = response.headers.get("Location");
+    //     const redirectUrl = response.headers.Location;
     //     if (redirectUrl) {
     //       // Use window.location to navigate to the redirect URL
     //       window.location.href = redirectUrl;
@@ -135,6 +145,14 @@ function Register({ setSelectedTab }: Props) {
     //   console.log(e);
     // } catch (e) {
     //   console.log(e);
+    //   if (e.status === 203) {
+    //     try {
+    //       const redirct = e.response.headers.Location;
+    //       window.location.href = redirct;
+    //     } catch (e) {
+    //       console.log(e);
+    //     }
+    //   }
     // }
   };
   return (
