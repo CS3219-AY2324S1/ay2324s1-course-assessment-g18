@@ -13,19 +13,21 @@ export class HistoryService {
   ) {}
 
   async addHistory(createHistoryDto: CreateHistoryDto): Promise<IHistory> {
-    // const newHistory = await new this.historyModel(createHistoryDto);
+    const newHistory = await new this.historyModel(createHistoryDto);
 
-    // const MaxId = await this.getMaximumId(createHistoryDto.userEmail);
+    const MaxId = await this.getMaximumId(createHistoryDto.userEmail);
 
-    // if (MaxId.length == 0) {
-    //   newHistory.historyId = 1;
-    // } else {
-    //   newHistory.historyId = MaxId[0].historyId + 1;
-    // }
-    const res = await new this.historyModel(createHistoryDto).save();
-    console.log(History.name);
-    console.log(res);
-    return res;
+    if (MaxId.length == 0) {
+      newHistory.historyId = 1;
+    } else {
+      newHistory.historyId = MaxId[0].historyId + 1;
+    }
+
+    return await new this.historyModel(newHistory).save();
+    // const res = await new this.historyModel(createHistoryDto).save();
+    // console.log(History.name);
+    // console.log(res);
+    // return res;
   }
 
   async updateCodeExecutedByRoomId(

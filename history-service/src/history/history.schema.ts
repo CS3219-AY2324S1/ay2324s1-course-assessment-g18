@@ -2,8 +2,8 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 @Schema()
 export class History {
-//   @Prop()
-//   historyId: number;
+  @Prop()
+  historyId: number;
 
   @Prop()
   userEmail: string;
