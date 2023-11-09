@@ -67,9 +67,11 @@ function Register({ setSelectedTab }: Props) {
           }
           // Redirect to login page upon succesful signup
           navigate("/auth");
+
           return toast({
             title: "Success!",
-            description: "You have succesfully signed up as a user",
+            description:
+              "You have succesfully signed up as a user. Login now to get started!",
           });
         } else {
           setError("Signup failed. Please try again.");
