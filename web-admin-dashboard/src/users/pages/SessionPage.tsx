@@ -28,7 +28,8 @@ function SessionPage() {
     async function updateCode() {
       const roomId = localStorage.getItem('roomId');
       const res = await axios.put(
-        `http://localhost:4002/history/updateCodeExecutedByRoomId/${roomId}`,
+        import.meta.env.VITE_BASE_HISTORY_URL +
+          `/history/updateCodeExecutedByRoomId/${roomId}`,
         { codeExecuted: code },
       );
       console.log(res);
