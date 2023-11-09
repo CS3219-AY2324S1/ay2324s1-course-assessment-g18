@@ -58,7 +58,7 @@ const AuthProvider = ({ children }: Props) => {
       const email = userInfo["email"];
 
       const response = await api.put(
-        `http://localhost:4000/users/update/${email}`,
+        import.meta.env.VITE_BASE_USERHOST_URL + `/users/update/${email}`,
         {
           // baseURL: import.meta.env.VITE_BASE_USERHOST_URL,
           refreshToken: null,

@@ -1,8 +1,8 @@
 // import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 
-export const matchingSocket = io("http://127.0.0.1:6001");
-export const chatSocket = io("http://127.0.0.1:5001");
+export const matchingSocket = io(import.meta.env.VITE_MATCHING_URL );
+export const chatSocket = io(import.meta.env.VITE_BASE_CHAT_URL );
 
 // chatSocket.on("sendMessage", () => {
 //   console.log("yay");

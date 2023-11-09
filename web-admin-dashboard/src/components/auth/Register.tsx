@@ -42,7 +42,7 @@ function Register({ setSelectedTab }: Props) {
     } else {
       try {
         const authResponse = await axios.post(
-          "http://localhost:3000/auth/sign-up",
+          import.meta.env.VITE_BASE_AUTH_URL + "/auth/sign-up",
           {
             email: userEmail,
             password: userPassword,

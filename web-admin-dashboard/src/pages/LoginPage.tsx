@@ -36,7 +36,7 @@ function LoginPage() {
     } else {
       try {
         const authResponse = await axios.post(
-          "http://localhost:3000/auth/login",
+          import.meta.env.VITE_BASE_AUTH_URL + "/auth/login",
           {
             email,
             password,
@@ -56,7 +56,7 @@ function LoginPage() {
           console.log("Role: ", role);
 
           const roleTokens = await api.post(
-            "http://localhost:3000/auth/tokens",
+            import.meta.env.VITE_BASE_AUTH_URL + "/auth/tokens",
             {
               email,
               role,
@@ -69,7 +69,7 @@ function LoginPage() {
             localStorage.setItem("accessToken", accessToken);
             localStorage.setItem("refreshToken", refreshToken);
             const userResponse = await api.put(
-              `http://localhost:4000/users/update/${email}`,
+              import.meta.env.VITE_BASE_USERHOST_URL + `/users/update/${email}`,
               {
                 refreshToken: refreshToken,
               }
