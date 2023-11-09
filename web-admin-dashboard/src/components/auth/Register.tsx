@@ -66,7 +66,7 @@ function Register({ setSelectedTab }: Props) {
             localStorage.setItem("userInfo", JSON.stringify(user));
           }
           // Redirect to login page upon succesful signup
-          navigate("/auth");
+          setSelectedTab("Login");
 
           return toast({
             title: "Success!",
