@@ -1,19 +1,20 @@
-import React, { useContext } from "react";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import LoginPage from "./pages/LoginPage";
-import SignUpPage from "./pages/SignUpPage";
-import DashboardPage from "./pages/DashboardPage";
-import UserPage from "./pages/UserPage";
-import { Toaster } from "./components/ui/toaster";
-import Navbar from "./users/components/navbar/Navbar";
-import SessionPage from "./users/pages/SessionPage";
-import UserDashboardPage from "./users/pages/UserDashboardPage";
-import { AuthContext, AuthProvider } from "./context/AuthProvider";
-import Sidebar from "./components/dashboard/sidebar/Sidebar";
-import AdminProviderWrapper from "./components/admin-provider-wrapper/AdminProviderWrapper";
-import ChooseMatch from "./users/components/match/ChooseMatch";
-import WaitingMatch from "./users/components/match/WaitingMatch";
-import ReMatch from "./users/components/match/ReMatch";
+import React, { useContext } from 'react';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import LoginPage from './pages/LoginPage';
+import SignUpPage from './pages/SignUpPage';
+import DashboardPage from './pages/DashboardPage';
+import UserPage from './pages/UserPage';
+import { Toaster } from './components/ui/toaster';
+import Navbar from './users/components/navbar/Navbar';
+import SessionPage from './users/pages/SessionPage';
+import UserDashboardPage from './users/pages/UserDashboardPage';
+import { AuthContext, AuthProvider } from './context/AuthProvider';
+import Sidebar from './components/dashboard/sidebar/Sidebar';
+import AdminProviderWrapper from './components/admin-provider-wrapper/AdminProviderWrapper';
+import ChooseMatch from './users/components/match/ChooseMatch';
+import WaitingMatch from './users/components/match/WaitingMatch';
+import ReMatch from './users/components/match/ReMatch';
+import HistorySessionPage from './users/pages/HistorySessionPage';
 
 function App() {
   return (
@@ -28,7 +29,7 @@ function Content() {
   const { authState, isAuthenticated } = useContext(AuthContext);
 
   if (isAuthenticated()) {
-    if (authState.userInfo.role === "Admin") {
+    if (authState.userInfo.role === 'Admin') {
       // Admin user, go to /dashboard
       return (
         <Routes>
@@ -53,6 +54,7 @@ function Content() {
           <Route element={<Navbar />}>
             <Route path="/user-dashboard" element={<UserDashboardPage />} />
             <Route path="/session" element={<SessionPage />} />
+            <Route path="/history-session" element={<HistorySessionPage />} />
 
             <Route path="/choose-match" element={<ChooseMatch />} />
             <Route path="/waiting-match" element={<WaitingMatch />} />
