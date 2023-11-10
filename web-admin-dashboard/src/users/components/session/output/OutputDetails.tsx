@@ -1,5 +1,4 @@
-
-const OutputDetails = ({ outputDetails }) => {
+const OutputDetails = ({ outputDetails }: any) => {
   return (
     <div className="metrics-container mt-4 flex flex-col space-y-3">
       <p className="text-sm">

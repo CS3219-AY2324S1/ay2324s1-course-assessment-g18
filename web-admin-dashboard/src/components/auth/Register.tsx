@@ -10,7 +10,7 @@ import {
 } from "react";
 import "../../pages/SignUpPage.css";
 import { useNavigate } from "react-router-dom";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
 import { AuthContext } from "@/context/AuthProvider";
 import LiveUserRepository from "@/userRepo/LiveUserRepository";

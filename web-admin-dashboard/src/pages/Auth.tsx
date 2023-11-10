@@ -7,8 +7,6 @@ import Slider from "@/components/slider/Slider";
 function Auth() {
   const tabs = ["Login", "Register"];
   const [selectedTab, setSelectedTab] = useState(tabs[0]);
-  const [cursorText, setCursorText] = useState("");
-  const [cursorVariant, setCursorVariant] = useState("default");
 
   // const ref = useRef(null);
 
@@ -65,16 +63,6 @@ function Auth() {
   //   damping: 28,
   // };
 
-  function projectEnter(event) {
-    setCursorText("");
-    setCursorVariant("disappear");
-  }
-
-  function projectLeave(event) {
-    setCursorText("");
-    setCursorVariant("default");
-  }
-
   // const variants = useVariants(ref);
   return (
     <div>
@@ -91,11 +79,7 @@ function Auth() {
         </AnimatePresence> */}
 
         {/* left side */}
-        <div
-          className="flex w-6/12 h-full p-5 justify-center items-center  z-[1]"
-          onMouseEnter={projectEnter}
-          onMouseLeave={projectLeave}
-        >
+        <div className="flex w-6/12 h-full p-5 justify-center items-center  z-[1]">
           {/* container for auth page */}
           <div className="flex flex-col p-10 items-center justify-center w-4/6 z-[0]">
             <img src={logo} className="w-12 m-5" />

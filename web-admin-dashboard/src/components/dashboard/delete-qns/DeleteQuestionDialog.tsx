@@ -43,7 +43,7 @@ function DeleteQuestionDialog({ question, setOpen, setIsChanged }: Props) {
           description: "A problem occurred while deleting the question.",
         });
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
       toast({
         variant: "destructive",

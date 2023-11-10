@@ -39,7 +39,7 @@ function UserList({ data, setIsChanged }: Props) {
     {
       id: "actions",
       enableHiding: false,
-      cell: ({ row }) => {
+      cell: ({ row }: any) => {
         const user = row.original;
 
         return <ActionsDropdown user={user} setIsChanged={setIsChanged} />;

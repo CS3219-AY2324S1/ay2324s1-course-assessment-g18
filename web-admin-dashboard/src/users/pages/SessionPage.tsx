@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import CodeEditor from "../components/session/code-editor/CodeEditor";
 import QuestionView from "../components/session/question-view/QuestionView";
-import { QuestionDifficulty } from "@/questionrepo/question.model";
 import ChatBtn from "../components/session/chat/ChatBtn";
 import { useLocation } from "react-router-dom";
 import { matchingSocket } from "../components/match/sockets";
