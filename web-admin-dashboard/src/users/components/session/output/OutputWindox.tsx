@@ -1,6 +1,6 @@
-const OutputWindow = ({ outputDetails }) => {
+const OutputWindow = ({ outputDetails }: any) => {
   const getOutput = () => {
-    let statusId = outputDetails?.status?.id;
+    const statusId = outputDetails?.status?.id;
 
     if (statusId === 6) {
       // compilation error

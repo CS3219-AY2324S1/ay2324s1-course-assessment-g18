@@ -45,20 +45,20 @@ function SessionPage() {
     //logic to show the dialog that partner left the session. Navigate to user-dashboard in 5 sec or smth.
   });
 
-  function findLanguageByValue(value) {
+  function findLanguageByValue(value: any) {
     const foundLanguage = languageOptions.find(
       (language) => language.value === value
     );
     return foundLanguage;
   }
 
-  const onSelectChange = (sl) => {
+  const onSelectChange = (sl: any) => {
     sl = findLanguageByValue(sl);
     console.log("selected Option...", sl);
     setLanguage(sl);
   };
 
-  const onChange = (action, data) => {
+  const onChange = (action: any, data: any) => {
     switch (action) {
       case "code": {
         setCode(data);
@@ -107,7 +107,7 @@ function SessionPage() {
       });
   };
 
-  const checkStatus = async (token) => {
+  const checkStatus = async (token: string) => {
     const options = {
       method: "GET",
       url: "https://judge0-ce.p.rapidapi.com/submissions" + "/" + token,
@@ -140,7 +140,7 @@ function SessionPage() {
           description: "Compiled Successfully",
         });
       }
-    } catch (err) {
+    } catch (err: any) {
       console.log("err", err);
       setProcessing(false);
       return toast({

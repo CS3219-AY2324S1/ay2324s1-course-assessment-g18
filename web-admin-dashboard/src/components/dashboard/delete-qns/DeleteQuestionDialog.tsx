@@ -19,7 +19,6 @@ interface Props {
 
 function DeleteQuestionDialog({ question, setOpen, setIsChanged }: Props) {
   const { questionRepo } = useContext(QuestionRepoContext);
-  const [ setOpenDialog] = useState(false);
   const [err] = useState("");
 
   const { toast } = useToast();
@@ -64,7 +63,7 @@ function DeleteQuestionDialog({ question, setOpen, setIsChanged }: Props) {
         </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter>
-        <AlertDialogCancel onClick={() => setOpenDialog(false)}>
+        <AlertDialogCancel onClick={() => setOpen(false)}>
           Cancel
         </AlertDialogCancel>
         <AlertDialogAction

@@ -1,9 +1,4 @@
-
-import {
-  useContext,
-  useEffect,
-  useRef
-} from "react";
+import { useContext, useEffect, useRef } from "react";
 import "./MatchDialog.css";
 import { Separator } from "@/components/ui/separator";
 import { useLocation, useNavigate } from "react-router-dom";

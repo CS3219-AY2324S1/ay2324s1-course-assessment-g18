@@ -45,7 +45,7 @@ function Navbar() {
             {location.pathname === "/session" ? (
               <EndBtn openDialog={openDialog} setOpenDialog={setOpenDialog} />
             ) : (
-              <MatchBtn openDialog={openDialog} setOpenDialog={setOpenDialog} />
+              <MatchBtn />
             )}
           </NavigationMenuItem>
           <NavigationMenuItem className="">

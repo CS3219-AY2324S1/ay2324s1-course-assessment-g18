@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { IoChatbubbleOutline } from "react-icons/io5";
 import "./ChatBtn.css";
@@ -6,7 +5,7 @@ import ChatCard from "./ChatCard";
 import { Message } from "@/users/models/message.model";
 import { chatSocket } from "../../match/sockets";
 interface Props {
-  peer: String;
+  peer: string;
   roomId: string;
 }
 function ChatBtn({ peer, roomId }: Props) {

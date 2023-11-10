@@ -1,3 +1,3 @@
-export const classnames = (...args) => {
-    return args.join(" ");
-  };
+export const classnames = (...args: any[]) => {
+  return args.join(" ");
+};

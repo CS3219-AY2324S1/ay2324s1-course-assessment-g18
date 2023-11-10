@@ -39,7 +39,7 @@ export default function QuestionList({ data, setIsChanged }: Props) {
     {
       id: "actions",
       enableHiding: false,
-      cell: ({ row }) => {
+      cell: ({ row }: any) => {
         const question = row.original;
 
         return (

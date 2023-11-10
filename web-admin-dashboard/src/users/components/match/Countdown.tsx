@@ -4,11 +4,11 @@ interface Props {
   time: number;
 }
 function Countdown({ time }: Props) {
-  const refInstance = useRef<number | null>(null);
+  const refInstance = useRef<NodeJS.Timeout | null>(null);
   const [counter, setCountdown] = useState<string>("00:00:00");
 
   const getCounter = (e: string) => {
-    const all = Date.parse(e) - Date.parse(new Date());
+    const all = Date.parse(e) - Date.parse(new Date().toString());
     const s = Math.floor((all / 1000) % 60);
     const m = Math.floor((all / 1000 / 60) % 60);
     const h = Math.floor((all / 1000 / 60 / 60) % 24);

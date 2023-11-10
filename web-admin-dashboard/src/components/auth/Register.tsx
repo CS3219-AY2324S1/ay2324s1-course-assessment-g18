@@ -10,7 +10,7 @@ import {
 } from "react";
 import "../../pages/SignUpPage.css";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { toast } from "@/components/ui/use-toast";
 import { AuthContext } from "@/context/AuthProvider";
 import LiveUserRepository from "@/userRepo/LiveUserRepository";
@@ -50,7 +50,6 @@ function Register({ setSelectedTab }: Props) {
           localStorage.setItem("accessToken", accessToken);
           localStorage.setItem("refreshToken", refreshToken);
 
-
           const user = await new LiveUserRepository().getUser(userEmail);
           if (user) {
             setAuthState({ userInfo: user, loggedIn: true });
@@ -65,7 +64,7 @@ function Register({ setSelectedTab }: Props) {
         } else {
           setError("Signup failed. Please try again.");
         }
-      } catch (err) {
+      } catch (err: any) {
         console.log(err);
         setError(err.response.data.message);
       }

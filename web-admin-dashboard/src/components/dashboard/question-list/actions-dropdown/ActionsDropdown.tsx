@@ -9,8 +9,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
 import UpdateDialog from "./UpdateDialog";
-import { Question } from "@/backend/dist/questions/question.schema";
 import DeleteDialog from "./DeleteDialog";
+import { Question } from "@/questionrepo/question.model";
 
 interface Props {
   question: Question;
