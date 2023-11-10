@@ -1,7 +1,17 @@
 // users.controller.ts
-import { Controller, Get, Post, Param, Body, Delete, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Param,
+  Body,
+  Delete,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './user.entity';
+import { UpdateUserDto } from './update-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -12,18 +22,31 @@ export class UsersController {
     return this.usersService.getUser(email);
   }
 
+  @Get()
+  findAll(): Promise<User[]> {
+    return this.usersService.getUsers();
+  }
+
   @Post("/create")
-  create(@Body() user: User): Promise<User> {
+  async create(@Body() user: User): Promise<User | null> {
+    console.log("create called");
     return this.usersService.create(user);
   }
-
-  @Delete('/:id')
-  async deleteUser(@Param('id') questionId: string) {
-      await this.usersService.deleteUser(questionId);
+  @Delete('/:email')
+  async deleteUser(@Param('email') email: string) {
+    await this.usersService.deleteUser(email);
   }
 
-  @Put('/update/:email')
-  async updateUser(@Param('email') email:string, @Body() user: User) {
-    await this.usersService.updateUser(email, user);
+  @Put("/update/:email")
+  async updateUser(
+    @Param('email') email: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
+    return await this.usersService.updateUser(email, updateUserDto);
+  }
+
+  @Post("/getOrAdd")
+  async getOrAddUser(@Body() user: User) {
+    return await this.usersService.getOrAddUser(user);
   }
 }

@@ -1,6 +1,6 @@
-import "../../pages/UserPage.css";
+import "../../../pages/UserPage.css";
 import "./UserList.css";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import {
   ColumnFiltersState,
   SortingState,
@@ -20,45 +20,40 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { User } from "./Column";
+import { User, UserRole } from "@/userRepo/user.model";
 import { Columns } from "./Column";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import ActionsDropdown from "./actions-dropdown/ActionsDropdown";
 
-const users: User[] = [
-  {
-    id: 1,
-    username: "admin",
-    password: "admin",
-    email: "admin@test.com",
-    role: "Admin",
-  },
-  {
-    id: 2,
-    username: "user1",
-    password: "user1",
-    email: "user1@test.com",
-    role: "User",
-  },
-  {
-    id: 3,
-    username: "user2",
-    password: "user2",
-    email: "user2@test.com",
-    role: "User",
-  },
-];
+interface Props {
+  data: User[];
+  setIsChanged: Dispatch<SetStateAction<boolean>>;
+}
 
-const columns = Columns;
+// const columns = Columns;
 
-function UserList() {
+function UserList({ data, setIsChanged }: Props) {
+  const columns = [
+    ...Columns,
+    {
+      id: "actions",
+      enableHiding: false,
+      cell: ({ row }) => {
+        const user = row.original;
+
+        return <ActionsDropdown user={user} setIsChanged={setIsChanged} />;
+      },
+    },
+  ];
+
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
 
   const table = useReactTable({
-    data: users,
+    data,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -74,6 +69,7 @@ function UserList() {
       columnVisibility,
       rowSelection,
     },
+    initialState: { pagination: { pageSize: 8 } },
   });
 
   return (
@@ -81,7 +77,7 @@ function UserList() {
       <div className="userlist-content">
         <div className="flex items-center py-4">
           <div className="w-3/5 flex gap-2 items-center">
-            <div className="text-xl font-bold pl-5">All Users</div>
+            <div className="text-xl font-bold pl-5">All Registered Users</div>
           </div>
           <Input
             className="w-2/5"
