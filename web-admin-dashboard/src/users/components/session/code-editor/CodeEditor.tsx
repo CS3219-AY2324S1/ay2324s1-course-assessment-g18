@@ -1,6 +1,7 @@
 import Editor from "@monaco-editor/react";
+// @ts-ignore
 import { WebrtcProvider } from "y-webrtc";
-import { MonacoBinding } from "y-monaco"
+import { MonacoBinding } from "y-monaco";
 import { store } from "./store";
 import { useSyncedStore } from "@syncedstore/react";
 import { useRef, useState } from "react";
@@ -14,27 +15,34 @@ interface Props {
 }
 
 export default function CodeEditor({ onChange, roomId, language }: Props) {
-  const state = useSyncedStore(store);
-  const editorRef = useRef(null);
+  const state: any = useSyncedStore(store);
+  const editorRef: any = useRef(null);
 
-  const [value, setValue] = useState(state.codeTextStore[roomId] || "// Your Code Here");
+  const [value, setValue] = useState<string>(
+    state.codeTextStore[roomId] || "// Your Code Here"
+  );
 
-  const handleEditorChange = (value) => {
+  const handleEditorChange = (value: any) => {
     setValue(value);
     state.codeTextStore[roomId] = value;
     onChange("code", value);
   };
 
-  function handleEditorDidMount(editor, monaco) {
+  function handleEditorDidMount(editor: any, monaco: any) {
     editorRef.current = editor;
     // Initialize YJS
     const doc: any = getYjsValue(store);
     // Connect to peers (or start connection) with WebRTC
-    const provider = new WebrtcProvider({roomId}, doc); // room1, room2
+    const provider = new WebrtcProvider({ roomId }, doc); // room1, room2
     const type = doc.getText("monaco"); // doc { "monaco": "what our IDE is showing" }
-    // Bind YJS to Monaco 
-    const binding = new MonacoBinding(type, editorRef.current.getModel(), new Set([editorRef.current]), provider.awareness);
-    console.log(provider.awareness);                
+    // Bind YJS to Monaco
+    const binding = new MonacoBinding(
+      type,
+      editorRef.current.getModel(),
+      new Set([editorRef.current]),
+      provider.awareness
+    );
+    console.log(provider.awareness);
   }
 
   return (
@@ -49,6 +57,3 @@ export default function CodeEditor({ onChange, roomId, language }: Props) {
     </div>
   );
 }
-
-
-

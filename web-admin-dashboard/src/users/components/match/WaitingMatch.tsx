@@ -18,7 +18,7 @@ function WaitingMatch() {
   const navigate = useNavigate();
   const { state } = useLocation();
   const difficulty = state.difficulty;
-  const timeoutRef = useRef(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   matchingSocket.on("matchSuccess", (payload) => {
     const { matchedUserId, roomId } = payload;
     navigate("/session", {
@@ -68,7 +68,9 @@ function WaitingMatch() {
 
     // To cancel the timeout if "matchSuccess" is received before it expires
     matchingSocket.on("matchSuccess", () => {
-      clearTimeout(timeoutRef.current);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
     });
   }, []);
 
@@ -79,11 +81,13 @@ function WaitingMatch() {
   useEffect(() => {
     // clear timeout when component unmounts
     return () => {
-      clearTimeout(timeoutRef.current);
-      // dequeue user
-      matchingSocket.emit("matchCancel", {
-        userId: username,
-      });
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        // dequeue user
+        matchingSocket.emit("matchCancel", {
+          userId: username,
+        });
+      }
     };
   }, []);
 
