@@ -1,0 +1,31 @@
+.board {
+    width: 100%;
+    height: 100%;
+    background-color: aqua;
+}
+
+.sketch {
+    width: 100%;
+    height: 100%;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+}
+
+.color-picker-container {
+    display: inline-block;
+    width: 30%;
+    text-align: center;
+    color: black;
+    padding: 10px; 
+}
+
+.brushsize-container {
+    display: inline-block;
+    width: 30%;
+    color: black;
+    padding: 10px; 
+}
+

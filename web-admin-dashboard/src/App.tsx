@@ -15,6 +15,7 @@ import ChooseMatch from "./users/components/match/ChooseMatch";
 import WaitingMatch from "./users/components/match/WaitingMatch";
 import ReMatch from "./users/components/match/ReMatch";
 import Auth from "./pages/Auth";
+import Board from "./users/components/session/board/Board";
 
 function App() {
   return (
@@ -26,8 +27,10 @@ function App() {
 }
 
 function Content() {
+  // return (
+  //   <Board />
+  // );
   const { authState, isAuthenticated } = useContext(AuthContext);
-
   if (isAuthenticated()) {
     if (authState.userInfo.role === "Admin") {
       // Admin user, go to /dashboard
@@ -57,6 +60,7 @@ function Content() {
           <Route element={<Navbar />}>
             <Route path="/user-dashboard" element={<UserDashboardPage />} />
             <Route path="/session" element={<SessionPage />} />
+            <Route path="/board" element={<Board initialColor="#000000" initialSize="3" />} />
 
             <Route path="/choose-match" element={<ChooseMatch />} />
             <Route path="/waiting-match" element={<WaitingMatch />} />
