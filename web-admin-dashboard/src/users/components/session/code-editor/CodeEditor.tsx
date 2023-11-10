@@ -1,6 +1,5 @@
 import Editor from "@monaco-editor/react";
 import { WebrtcProvider } from "y-webrtc";
-import * as Y from "yjs"
 import { MonacoBinding } from "y-monaco"
 import { store } from "./store";
 import { useSyncedStore } from "@syncedstore/react";
@@ -15,18 +14,18 @@ interface Props {
 }
 
 export default function CodeEditor({ onChange, roomId, language }: Props) {
-  const state = useSyncedStore(store);
-  const editorRef = useRef(null);
+  const state: any = useSyncedStore(store);
+  const editorRef: any = useRef(null);
 
-  const [value, setValue] = useState(state.codeTextStore[roomId] || "// Your Code Here");
+  const [value, setValue] = useState<string>(state.codeTextStore[roomId] || "// Your Code Here");
 
-  const handleEditorChange = (value) => {
+  const handleEditorChange = (value: any) => {
     setValue(value);
     state.codeTextStore[roomId] = value;
     onChange("code", value);
   };
 
-  function handleEditorDidMount(editor, monaco) {
+  function handleEditorDidMount(editor: any, monaco: any) {
     editorRef.current = editor;
     // Initialize YJS
     const doc: any = getYjsValue(store);
