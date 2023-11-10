@@ -5,8 +5,12 @@ export interface IHistory extends Document {
   readonly userEmail: string;
   readonly questionId: number;
   readonly questionTitle: string;
-  readonly questionDescription: string;
+  readonly questionCategories: string[];
   readonly questionDifficulty: string;
+  readonly questionDescription: string;
+  readonly questionExamples: string[][];
+  readonly questionConstraints: string;
+  readonly questionImages: string;
   readonly chatHistory: Array<any>;
   readonly codeExecuted: string;
   readonly dateSubmitted: string;

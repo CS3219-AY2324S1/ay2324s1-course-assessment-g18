@@ -4,8 +4,12 @@ export interface History {
   userEmail: string;
   questionId: number;
   questionTitle: string;
-  questionDescription: string;
+  questionCategories: string[];
   questionDifficulty: QuestionDifficulty;
+  questionDescription: string;
+  questionExamples: string[][];
+  questionConstraints: string;
+  questionImages: string;
   chatHistory: Array<any>;
   codeExecuted: string;
   dateSubmitted: string;

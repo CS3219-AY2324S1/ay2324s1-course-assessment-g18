@@ -32,8 +32,12 @@ export class HistoryController {
       roomId: data.roomId,
       questionId: data.questionId,
       questionTitle: data.questionTitle,
-      questionDescription: data.questionDescription,
+      questionCategories: data.questionCategories,
       questionDifficulty: data.questionDifficulty,
+      questionDescription: data.questionDescription,
+      questionExamples: data.questionExamples,
+      questionConstraints: data.questionConstraints,
+      questionImages: data.questionImages,
       chatHistory: [],
       codeExecuted: '',
     };

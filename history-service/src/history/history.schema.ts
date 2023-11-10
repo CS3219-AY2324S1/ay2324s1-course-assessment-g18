@@ -18,10 +18,22 @@ export class History {
   questionTitle: string;
 
   @Prop()
-  questionDescription: string;
+  questionCategories: Array<string>;
 
   @Prop()
   questionDifficulty: string;
+
+  @Prop()
+  questionDescription: string;
+
+  @Prop()
+  questionExamples: Array<Array<string>>;
+
+  @Prop()
+  questionConstraints: string;
+
+  @Prop()
+  questionImages: string;
 
   @Prop()
   chatHistory: Array<string>;
