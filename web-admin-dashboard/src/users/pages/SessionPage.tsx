@@ -73,6 +73,7 @@ function SessionPage() {
   });
 
   const peer: string = location.state.matchedUser;
+
   return (
     <div className="w-full h-full flex flex-row p-5">
       {/* left side */}
@@ -89,7 +90,7 @@ function SessionPage() {
           <LanugageSelect setData={setLang} data={lang} />
         </div>
         <CodeEditor
-          roomId="1"
+          roomId={location.state.roomId}
           language={lang}
           onCodeChange={handleCodeChange}
         />

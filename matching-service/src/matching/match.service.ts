@@ -4,6 +4,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
 import { Socket } from 'socket.io';
+import { uuid } from 'uuidv4';
 
 interface User {
   client: Socket;
@@ -70,8 +71,8 @@ export class MatchService {
     await request.subscribe();
     const response = await lastValueFrom(request);
     const randomQuestion = response[0]['questionDifficulty'][0];
-    const roomId =
-      user1.client.id + user2.client.id + randomQuestion.questionId;
+    // const roomId = user1.client.id + user2.client.id + randomQuestion.questionId;
+    const roomId = uuid();
     // Notify users about the match
     await this.notifyMatch(user1.userId, user2, roomId, randomQuestion);
     this.notifyMatch(user2.userId, user1, roomId, randomQuestion);
