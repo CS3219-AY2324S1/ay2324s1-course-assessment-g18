@@ -29,7 +29,6 @@ const fallbackHistory: History[] = [
   },
   {
     _id: "2",
-    email: "sw@.com",
     questionTitle: "3Sum",
     questionDifficulty: QuestionDifficulty.Medium,
     questionDescription:

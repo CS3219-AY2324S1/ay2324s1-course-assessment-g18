@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { BsGrid1X2Fill, BsPeopleFill, BsFillGearFill } from "react-icons/bs";
 import { BiLogOut } from "react-icons/bi";
 import "../../../pages/DashboardPage.css";
@@ -7,12 +7,6 @@ import logo from "../../../assets/logo.png";
 import { Link, useResolvedPath, useMatch, Outlet } from "react-router-dom";
 import { ReactNode } from "react";
 import LogoutDialog from "./LogoutDialog"; // Import the LogoutDialog component
-import { UserRepoContext } from "@/context/UserRepoContext";
-
-interface Props {
-  openSidebar: () => void;
-  openSidebarToggle: boolean;
-}
 
 function Sidebar() {
   const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);

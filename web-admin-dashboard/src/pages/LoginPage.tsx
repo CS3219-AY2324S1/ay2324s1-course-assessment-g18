@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import CustomPassword from "@/components/form/CustomPassword";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import LiveUserRepository from "@/userRepo/LiveUserRepository";
 import { AuthContext } from "@/context/AuthProvider";
@@ -21,8 +21,6 @@ function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [accessToken, setAccessToken] = useState("");
-  const [refreshToken, setRefreshToken] = useState("");
   const { setAuthState, isAuthenticated } = useContext(AuthContext);
 
   const navigate = useNavigate();

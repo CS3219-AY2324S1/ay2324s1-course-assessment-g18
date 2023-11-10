@@ -1,13 +1,8 @@
-import { DialogTitle } from "@/components/ui/dialog";
-import { QuestionDifficulty } from "@/questionrepo/question.model";
-import React, {
-  Dispatch,
-  MutableRefObject,
-  SetStateAction,
+
+import {
   useContext,
   useEffect,
-  useRef,
-  useState,
+  useRef
 } from "react";
 import "./MatchDialog.css";
 import { Separator } from "@/components/ui/separator";
@@ -21,12 +16,6 @@ import Countdown from "./Countdown";
 import { IoIosArrowBack } from "react-icons/io";
 import { Button } from "@/components/ui/button";
 
-interface Props {
-  difficulty: QuestionDifficulty;
-  setChosen: Dispatch<SetStateAction<boolean>>;
-  setOpenDialog: Dispatch<SetStateAction<boolean>>;
-  setRematch: Dispatch<SetStateAction<boolean>>;
-}
 function WaitingMatch() {
   const { authState } = useContext(AuthContext);
   const username = authState.userInfo.username;

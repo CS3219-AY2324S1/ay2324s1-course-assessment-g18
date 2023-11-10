@@ -1,4 +1,4 @@
-import { syncedStore, getYjsValue } from "@syncedstore/core";
+import { syncedStore } from "@syncedstore/core";
 
 
 // Create your SyncedStore store

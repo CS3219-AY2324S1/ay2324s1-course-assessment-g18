@@ -13,7 +13,7 @@ import "./SignUpPage.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
-import { AuthContext, AuthProvider } from "@/context/AuthProvider";
+import { AuthContext } from "@/context/AuthProvider";
 import LiveUserRepository from "@/userRepo/LiveUserRepository";
 import { UserRole } from "@/userRepo/user.model";
 

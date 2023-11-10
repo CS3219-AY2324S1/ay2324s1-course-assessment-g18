@@ -1,11 +1,7 @@
-import React, { useRef, useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import AuthForm from "@/components/auth/AuthForm";
 import logo from "../assets/logo.png";
-import auth1 from "../assets/auth/authone.png";
-import AuthRight from "../components/auth/AuthRight";
-import useMouse from "@react-hook/mouse-position";
-import SlideOne from "@/components/slider/SlideOne";
 import Slider from "@/components/slider/Slider";
 
 function Auth() {

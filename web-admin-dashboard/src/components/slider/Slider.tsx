@@ -5,8 +5,6 @@ import SlideTwo from "./SlideTwo";
 import React from "react";
 import {
   AnimatePresence,
-  color,
-  easeIn,
   easeInOut,
   motion,
 } from "framer-motion";

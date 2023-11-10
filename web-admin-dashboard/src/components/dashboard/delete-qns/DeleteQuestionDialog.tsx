@@ -19,8 +19,8 @@ interface Props {
 
 function DeleteQuestionDialog({ question, setOpen, setIsChanged }: Props) {
   const { questionRepo } = useContext(QuestionRepoContext);
-  const [openDialog, setOpenDialog] = useState(false);
-  const [err, setError] = useState("");
+  const [ setOpenDialog] = useState(false);
+  const [err] = useState("");
 
   const { toast } = useToast();
 

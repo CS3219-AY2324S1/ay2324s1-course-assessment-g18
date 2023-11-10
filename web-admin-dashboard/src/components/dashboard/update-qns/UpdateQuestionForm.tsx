@@ -5,7 +5,6 @@ import {
   Dispatch,
   SetStateAction,
   useContext,
-  useEffect,
 } from "react";
 import CustomInput from "@/components/form/CustomInput";
 import { Question, QuestionDifficulty } from "@/questionrepo/question.model";

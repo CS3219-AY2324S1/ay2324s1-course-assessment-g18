@@ -1,6 +1,5 @@
 import { CSSProperties, Dispatch, SetStateAction } from "react";
 import "./Input.css";
-import { Input } from "@/components/ui/input";
 import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
 
@@ -14,7 +13,6 @@ interface Props {
 function CustomExampleInput({
   label,
   labelStyling,
-  inputStyling,
   setData,
   data,
 }: Props) {

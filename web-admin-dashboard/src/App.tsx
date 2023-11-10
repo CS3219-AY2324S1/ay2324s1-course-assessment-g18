@@ -1,7 +1,5 @@
-import React, { useContext } from "react";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import LoginPage from "./pages/LoginPage";
-import SignUpPage from "./pages/SignUpPage";
+import { useContext } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import DashboardPage from "./pages/DashboardPage";
 import UserPage from "./pages/UserPage";
 import { Toaster } from "./components/ui/toaster";

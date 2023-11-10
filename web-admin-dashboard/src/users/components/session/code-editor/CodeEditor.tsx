@@ -1,6 +1,5 @@
 import Editor from "@monaco-editor/react";
 import { WebrtcProvider } from "y-webrtc";
-import * as Y from "yjs"
 import { MonacoBinding } from "y-monaco"
 import { store } from "./store";
 import { useSyncedStore } from "@syncedstore/react";
