@@ -91,69 +91,11 @@ function Register({ setSelectedTab }: Props) {
     }
   }
 
-  const googleSignin = async () => {
-    const axiosInstance = axios.create();
-    axiosInstance.defaults.maxRedirects = 1; // Set to 0 to prevent automatic redirects
-    axiosInstance.interceptors.response.use(
-      (response) => response,
-      async (error) => {
-        if (error.response && [301, 302].includes(error.response.status)) {
-          const redirectUrl = error.response.headers.location;
-          console.log("redirect", redirectUrl);
-          return axiosInstance.get(redirectUrl);
-        }
-        return Promise.reject(error);
-      }
+  const googleSignin = () => {
+    window.open(
+      `${import.meta.env.VITE_BASE_AUTH_URL}/auth/to-google`,
+      "_blank"
     );
-    axiosInstance
-      .get("http://localhost:3000/auth/to-google")
-      .then((response) => {
-        // Handle the response
-        console.log(response.headers.Location);
-
-        // Extract the location header to get the redirect URL
-
-        const redirectUrl = response.headers.get("Location");
-        if (redirectUrl) {
-          // Use window.location to navigate to the redirect URL
-          window.location.href = redirectUrl;
-        }
-      })
-      .catch((error) => {
-        console.log("caught");
-        console.log(error);
-        // Handle errors
-      });
-    // try {
-    //   const response = await axios.get("http://localhost:3000/auth/to-google");
-    //   if (response.status === 302) {
-    //     // Extract the location header to get the redirect URL
-
-    //     const redirectUrl = response.headers.Location;
-    //     if (redirectUrl) {
-    //       // Use window.location to navigate to the redirect URL
-    //       window.location.href = redirectUrl;
-    //     } else {
-    //       // Handle the case where the Location header is missing
-    //       console.error("Redirect URL is missing.");
-    //     }
-    //   } else {
-    //     // Handle other response codes as needed
-    //     // For example, handle success or error responses
-    //     // ...
-    //   }
-    //   console.log(e);
-    // } catch (e) {
-    //   console.log(e);
-    //   if (e.status === 203) {
-    //     try {
-    //       const redirct = e.response.headers.Location;
-    //       window.location.href = redirct;
-    //     } catch (e) {
-    //       console.log(e);
-    //     }
-    //   }
-    // }
   };
   return (
     <div className="flex flex-col">
