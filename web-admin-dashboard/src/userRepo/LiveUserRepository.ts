@@ -60,7 +60,7 @@ class LiveUserRepository {
     try {
       await api.delete(`/users/${userEmail}`, this.config);
       await api.delete(
-        `http://localhost:3000/auth/delete/${userEmail}`,
+        import.meta.env.VITE_BASE_AUTH_URL + `/auth/delete/${userEmail}`,
         this.config
       );
       return true;

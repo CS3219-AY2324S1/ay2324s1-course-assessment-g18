@@ -22,8 +22,8 @@ function SignUpPage() {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [error, setError] = useState("");
-  const [accessToken, setAccessToken] = useState(""); 
-  const [refreshToken, setRefreshToken] = useState(""); 
+  const [accessToken, setAccessToken] = useState("");
+  const [refreshToken, setRefreshToken] = useState("");
 
   const navigate = useNavigate();
   const { setAuthState } = useContext(AuthContext);
@@ -37,7 +37,7 @@ function SignUpPage() {
     } else {
       try {
         const authResponse = await axios.post(
-          "http://localhost:3000/auth/sign-up",
+          import.meta.env.VITE_BASE_AUTH_URL + "/auth/sign-up",
           {
             email: userEmail,
             password: userPassword,
@@ -49,7 +49,12 @@ function SignUpPage() {
           localStorage.setItem("accessToken", accessToken);
           localStorage.setItem("refreshToken", refreshToken);
 
-          const createUser = await new LiveUserRepository().addUser(userName, userEmail, refreshToken, UserRole.User);
+          const createUser = await new LiveUserRepository().addUser(
+            userName,
+            userEmail,
+            refreshToken,
+            UserRole.User
+          );
           const user = await new LiveUserRepository().getUser(userEmail);
           if (user) {
             setAuthState({ userInfo: user, loggedIn: true });
@@ -112,7 +117,7 @@ function SignUpPage() {
               data={userPassword}
             />
             <div className="text-red-400">{error}</div>
-            <Button type="submit" className="signup-button">
+            <Button type="submit" className="bg-[#5562eb] hover:bg-[#6470ee]">
               Sign Up
             </Button>
           </form>

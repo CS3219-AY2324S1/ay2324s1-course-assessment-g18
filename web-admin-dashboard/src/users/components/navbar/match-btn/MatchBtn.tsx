@@ -5,11 +5,6 @@ import { useNavigate } from "react-router-dom";
 import "../Navbar.css";
 import { Button } from "@/components/ui/button";
 
-interface Props {
-  openDialog: boolean;
-  setOpenDialog: Dispatch<SetStateAction<boolean>>;
-}
-
 function MatchBtn() {
   const navigate = useNavigate();
   return (

@@ -36,7 +36,12 @@ function LogoutDialog({ setIsLogoutDialogOpen }: LogoutDialogProps) {
           <AlertDialogCancel onClick={() => setIsLogoutDialogOpen(false)}>
             Cancel
           </AlertDialogCancel>
-          <AlertDialogAction onClick={logout}>Logout</AlertDialogAction>
+          <AlertDialogAction
+            onClick={logout}
+            className="bg-[#5562eb] hover:bg-[#6470ee]"
+          >
+            Logout
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
