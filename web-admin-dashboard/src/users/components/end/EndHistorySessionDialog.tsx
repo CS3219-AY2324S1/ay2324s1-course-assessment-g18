@@ -20,6 +20,7 @@ function EndHistorySessionDialog() {
   function handleEnd() {
     navigate('/user-dashboard');
     console.log('leaving history session');
+    localStorage.removeItem('roomId');
     toast({
       title: 'History session ended!',
       description:
