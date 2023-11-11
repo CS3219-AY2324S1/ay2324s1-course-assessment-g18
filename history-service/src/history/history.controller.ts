@@ -55,6 +55,19 @@ export class HistoryController {
     return await this.historyService.addChatHistory(message, roomId);
   }
 
+  @Put('/updateCodeByRoomIdAndUserEmail/:roomId/:userEmail')
+  async updateCodeByRoomIdAndUserEmail(
+    @Param('roomId') roomId: string,
+    @Param('userEmail') userEmail: string,
+    @Body() updateCodeExecutedDto: UpdateCodeExecutedDto,
+  ) {
+    return this.historyService.updateCodeByRoomIdAndUserEmail(
+      roomId,
+      userEmail,
+      updateCodeExecutedDto.codeExecuted,
+    );
+  }
+
   @Put('/updateCodeExecutedByRoomId/:roomId')
   async updateCodeExecutedByRoomId(
     @Param('roomId') roomId: string,

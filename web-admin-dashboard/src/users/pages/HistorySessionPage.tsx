@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Language } from '../models/language.model';
 import LanugageSelect from '../components/form/LanguageSelect';
 import QuestionView from '../components/session/question-view/QuestionView';
 import HistorySessionCodeEditor from '../components/session/code-editor/HistorySessionCodeEditor';
 import HistorySessionChatBtn from '../components/session/chat/HistorySessionChatBtn';
+import axios from 'axios';
 
 function HistorySessionPage() {
   const location = useLocation();
@@ -23,7 +24,7 @@ function HistorySessionPage() {
   };
   const [code, setCode] = useState(history.codeExecuted);
   const handleCodeChange = (newCode: string) => {
-    // setCode(newCode);
+    setCode(newCode);
     console.log(newCode);
   };
   const user = localStorage.getItem('userInfo');
@@ -33,6 +34,20 @@ function HistorySessionPage() {
     .filter((chat) => chat.username !== username)
     .map((chat) => chat.username)[0];
   // console.log(peer);
+  const roomId = history.roomId;
+  const userEmail = history.userEmail;
+
+  useEffect(() => {
+    async function updateCode() {
+      const res = await axios.put(
+        import.meta.env.VITE_BASE_HISTORY_URL +
+          `/history/updateCodeByRoomIdAndUserEmail/${roomId}/${userEmail}`,
+        { codeExecuted: code },
+      );
+      console.log(res);
+    }
+    updateCode();
+  }, [code, roomId, userEmail]);
 
   return (
     <div className="w-full h-full flex flex-row p-5">

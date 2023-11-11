@@ -30,6 +30,17 @@ export class HistoryService {
     // return res;
   }
 
+  async updateCodeByRoomIdAndUserEmail(
+    roomId: string,
+    userEmail: string,
+    newCode: string,
+  ): Promise<any> {
+    const filter = { roomId, userEmail };
+    const update = { codeExecuted: newCode };
+    const result = await this.historyModel.updateMany(filter, update);
+    return result;
+  }
+
   async updateCodeExecutedByRoomId(
     roomId: string,
     newCodeExecuted: string,
