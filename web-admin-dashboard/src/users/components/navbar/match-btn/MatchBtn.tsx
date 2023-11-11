@@ -2,7 +2,6 @@
 import { useNavigate } from "react-router-dom";
 import "../Navbar.css";
 
-
 function MatchBtn() {
   const navigate = useNavigate();
   return (

@@ -7,6 +7,7 @@ import logo from "../../../assets/logo.png";
 import { Link, useResolvedPath, useMatch, Outlet } from "react-router-dom";
 import { ReactNode } from "react";
 import LogoutDialog from "./LogoutDialog"; // Import the LogoutDialog component
+import ProfileDialog from "@/users/components/profile/ProfileDialog";
 
 function Sidebar() {
   const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
@@ -35,9 +36,9 @@ function Sidebar() {
           <CustomLink to="/users">
             <BsPeopleFill className="icon" /> Users
           </CustomLink>
-          <CustomLink to="/setting">
+          <CustomButton>
             <BsFillGearFill className="icon" /> Settings
-          </CustomLink>
+          </CustomButton>
 
           <li className="inactive" onClick={openLogoutDialog}>
             <span className="link">
@@ -72,5 +73,24 @@ function CustomLink({ to, children }: CustomLinkProps) {
     </li>
   );
 }
+interface CustomButtonProps {
+  children: ReactNode;
+}
+function CustomButton({ children }: CustomButtonProps) {
+  const [settingsOpen, setIsSettingsOpen] = useState(false);
 
+  return (
+    <li className={"inactive"}>
+      <div className={"link"} onClick={() => setIsSettingsOpen(true)}>
+        {children}
+      </div>
+      {settingsOpen && (
+        <ProfileDialog
+          isSettingsOpen={settingsOpen}
+          setIsSettingsOpen={setIsSettingsOpen}
+        />
+      )}
+    </li>
+  );
+}
 export default Sidebar;

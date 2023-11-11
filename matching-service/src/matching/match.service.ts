@@ -42,11 +42,12 @@ export class MatchService {
 
   async tryMatchUsers(difficulty: string): Promise<void> {
     const queue = this.queues[difficulty];
-    console.log(queue);
+    console.log(`Status of queue before match: ${queue}`);
     if (queue.length >= 2) {
       const matchedUsers = queue.splice(0, 2); // Extract the first two users from the queue
       const roomId = await this.notifyMatchedUsers(matchedUsers);
       console.log(`Room ID for the match: ${roomId}`);
+      console.log(`Status of queue after match: ${queue}`);
     }
   }
 
@@ -61,7 +62,7 @@ export class MatchService {
     await request.subscribe();
     const response = await lastValueFrom(request);
     const randomQuestion = response[0]['questionDifficulty'][0];
-    console.log(randomQuestion);
+    // console.log(randomQuestion);
     // Notify users about the match
     this.notifyMatch(user1.userId, user2, roomId, randomQuestion);
     this.notifyMatch(user2.userId, user1, roomId, randomQuestion);
@@ -71,8 +72,8 @@ export class MatchService {
 
   notifyMatch(matchedUserId: String, user: User, roomId: string, question: any): void {
     const socket: Socket =  user.client;
-    console.log(question)
-    socket.join(roomId);
+    // console.log(question)
+    // socket.join(roomId);
     socket.emit('matchSuccess', { matchedUserId, roomId, question });
   }
 }
