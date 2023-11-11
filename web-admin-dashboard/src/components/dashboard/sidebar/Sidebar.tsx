@@ -7,6 +7,7 @@ import logo from "../../../assets/logo.png";
 import { Link, useResolvedPath, useMatch, Outlet } from "react-router-dom";
 import { ReactNode } from "react";
 import LogoutDialog from "./LogoutDialog"; // Import the LogoutDialog component
+import { UserRepoContext } from "@/context/UserRepoContext";
 import ProfileDialog from "@/users/components/profile/ProfileDialog";
 
 function Sidebar() {
