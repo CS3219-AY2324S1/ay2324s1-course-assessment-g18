@@ -1,7 +1,7 @@
 // import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 
-export const matchingSocket = io(import.meta.env.VITE_MATCHING_URL );
+export const matchingSocket = io(import.meta.env.VITE_BASE_MATCHING_URL );
 export const chatSocket = io(import.meta.env.VITE_BASE_CHAT_URL );
 
 // chatSocket.on("sendMessage", () => {
