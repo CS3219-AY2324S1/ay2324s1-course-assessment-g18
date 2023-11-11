@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Auth, AuthDocument } from "./auth.schema";
-import { AuthDto, CreateUserDto } from "./dto/auth.dto";
+import { AuthDto, CreateUserDto, UpdatePasswordDto } from "./dto/auth.dto";
 
 export interface AuthRepository {
     getCredentialsByEmail(email:string);
@@ -43,5 +43,9 @@ export class AuthMongoRepository implements AuthRepository {
 
     async deleteUser(email: string) {
         await this.authModel.findOneAndDelete({email});
+    }
+
+    async updatePassword(userId: string, authDto: AuthDto) {
+        await this.authModel.findByIdAndUpdate(userId, authDto);
     }
 }
