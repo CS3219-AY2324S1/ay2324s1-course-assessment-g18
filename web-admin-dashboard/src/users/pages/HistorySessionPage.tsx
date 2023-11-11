@@ -4,6 +4,7 @@ import { Language } from '../models/language.model';
 import LanugageSelect from '../components/form/LanguageSelect';
 import QuestionView from '../components/session/question-view/QuestionView';
 import HistorySessionCodeEditor from '../components/session/code-editor/HistorySessionCodeEditor';
+import HistorySessionChatBtn from '../components/session/chat/HistorySessionChatBtn';
 
 function HistorySessionPage() {
   const location = useLocation();
@@ -25,6 +26,13 @@ function HistorySessionPage() {
     // setCode(newCode);
     console.log(newCode);
   };
+  const user = localStorage.getItem('userInfo');
+  const username = JSON.parse(user).username;
+  // console.log(username);
+  const peer = history.chatHistory
+    .filter((chat) => chat.username !== username)
+    .map((chat) => chat.username)[0];
+  // console.log(peer);
 
   return (
     <div className="w-full h-full flex flex-row p-5">
@@ -42,6 +50,11 @@ function HistorySessionPage() {
           language={lang}
           onCodeChange={handleCodeChange}
           codeHistory={code}
+        />
+        <HistorySessionChatBtn
+          peer={peer}
+          roomId={history.roomId}
+          messages={history.chatHistory}
         />
       </div>
     </div>
