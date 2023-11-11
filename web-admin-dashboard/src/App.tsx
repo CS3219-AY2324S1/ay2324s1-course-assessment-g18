@@ -29,8 +29,6 @@ function Content() {
   const { authState, isAuthenticated } = useContext(AuthContext);
 
   if (isAuthenticated()) {
-    if (authState.userInfo.role === "Admin") {
-      // Admin user, go to /dashboard
       return (
         <Routes>
           <Route path="/" element={<Navigate to="/dashboard" />} />
@@ -41,31 +39,12 @@ function Content() {
           <Route element={<AdminProviderWrapper />}>
             <Route element={<Sidebar />}>
               <Route path="/dashboard" element={<DashboardPage />} />
-              <Route path="/users" element={<UserPage />} />
             </Route>
           </Route>
         </Routes>
       );
-    } else {
-      // Regular user, go to /user-dashboard
-      return (
-        <Routes>
-          <Route path="/" element={<Navigate to="/user-dashboard" />} />
-          {/* <Route path="/login" element={<LoginPage />} /> */}
-          {/* <Route path="/signup" element={<SignUpPage />} /> */}
-          <Route path="/auth" element={<Auth />} />
-          <Route element={<Navbar />}>
-            <Route path="/user-dashboard" element={<UserDashboardPage />} />
-            <Route path="/session" element={<SessionPage />} />
-
-            <Route path="/choose-match" element={<ChooseMatch />} />
-            <Route path="/waiting-match" element={<WaitingMatch />} />
-            <Route path="/rematch" element={<ReMatch />} />
-          </Route>
-        </Routes>
-      );
-    }
-  } else {
+    } 
+   else {
     // User is not authenticated, go to /login
     return (
       <Routes>

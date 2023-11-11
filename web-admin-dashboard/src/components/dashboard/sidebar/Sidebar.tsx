@@ -34,9 +34,6 @@ function Sidebar() {
             <BsGrid1X2Fill className="icon" />
             Dashboard
           </CustomLink>
-          <CustomLink to="/users">
-            <BsPeopleFill className="icon" /> Users
-          </CustomLink>
           <CustomButton>
             <BsFillGearFill className="icon" /> Settings
           </CustomButton>
