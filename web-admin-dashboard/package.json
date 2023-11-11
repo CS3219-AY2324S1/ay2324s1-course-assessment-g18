@@ -1,18 +1,19 @@
 {
   "name": "peerprep",
   "private": true,
-  "homepage": "https://cs3219-ay2324s1.github.io/ay2324s1-course-assessment-g18/",
+  "homepage": "https://cs3219-ay2324s1.github.io/ay2324s1-course-assessment-g18",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build --emptyOutDir",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@esbuild/darwin-arm64": "^0.19.5",
     "@hookform/resolvers": "^3.3.1",
     "@monaco-editor/react": "^4.6.0",
     "@nestjs/common": "^10.2.5",
