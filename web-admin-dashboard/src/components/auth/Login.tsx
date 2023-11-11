@@ -89,11 +89,7 @@ function Login({ setSelectedTab }: Props) {
               if (user) {
                 setAuthState({ userInfo: user, loggedIn: true });
                 console.log("User:", user);
-                if (user.role === UserRole.Admin) {
                   navigate("/dashboard");
-                } else {
-                  navigate("/user-dashboard");
-                }
               } else {
                 console.log("User is NULL");
               }
