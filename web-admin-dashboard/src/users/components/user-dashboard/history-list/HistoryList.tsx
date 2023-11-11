@@ -59,7 +59,7 @@ export default function HistoryList({ data }: Props) {
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuItem
                 onClick={() => {
-                  navigate('/history-session');
+                  navigate('/history-session', { state: { history } });
                 }}
               >
                 View full history session
