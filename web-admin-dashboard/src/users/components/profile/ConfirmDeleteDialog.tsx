@@ -14,6 +14,7 @@ import { deleteMyself } from "@/users/auth/authentication";
 import { AuthContext } from "@/context/AuthProvider";
 import { toast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
+import { UserRole } from "@/userRepo/user.model";
 
 interface ConfirmDeleteDialog {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -31,7 +32,12 @@ function ConfirmDeleteDialog({ setIsOpen }: ConfirmDeleteDialog) {
       // TO CHANGE ONCE MY PR MERGE
       navigate("/login");
       setAuthState({
-        userInfo: {},
+        userInfo: {
+          uId: 0,
+          username: "",
+          email: "",
+          role: UserRole.Admin
+        },
         loggedIn: false,
       });
       toast({
@@ -43,7 +49,7 @@ function ConfirmDeleteDialog({ setIsOpen }: ConfirmDeleteDialog) {
       toast({
         title: "Oops",
         variant: "destructive",
-        description: "Something went wrong while deleting your accont.",
+        description: "Something went wrong while deleting your account.",
       });
     }
   };

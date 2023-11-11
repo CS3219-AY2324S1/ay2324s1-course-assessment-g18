@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import CodeEditor from "../components/session/code-editor/CodeEditor";
 import QuestionView from "../components/session/question-view/QuestionView";
-import { QuestionDifficulty } from "@/questionrepo/question.model";
 import ChatBtn from "../components/session/chat/ChatBtn";
 import { useLocation } from "react-router-dom";
 import { matchingSocket } from "../components/match/sockets";
@@ -13,7 +12,6 @@ import OutputDetails from "../components/session/output/OutputDetails";
 import { classnames } from "@/utils/general";
 import { languageOptions } from "../constants/languageOptions";
 import LanguageSelect from "../components/form/LanguageSelect";
-import api from "@/utils/api";
 
 const javascriptDefault = `
 console.log("hello");
@@ -23,8 +21,6 @@ function SessionPage() {
   const [outputDetails, setOutputDetails] = useState(null);
   const [processing, setProcessing] = useState<boolean | null>(null);
   const [peerLeft, setPeerLeft] = useState(false);
-  const [question, setQuestion] = useState({});
-  const [status, setStatus] = useState("success");
   const location = useLocation();
   const [code, setCode] = useState(javascriptDefault);
   const [language, setLanguage] = useState(languageOptions[0]);
@@ -41,42 +37,27 @@ function SessionPage() {
   //     setStatus("success");
   // }).catch((err) => console.log(err));
   //   }, [])
-  const tempQn = {
-    questionId: 1,
-    _id: "e0bd7857-17b3-4811-9434-3f623efa78ae",
-    questionTitle: "Two Sum",
-    questionCategories: ["array"],
-    questionDifficulty: QuestionDifficulty.Easy,
-    questionDescription:
-      "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target. You may assume that each input would have exactly one solution, and you may not use the same element twice. You can return the answer in any order.",
-    questionExamples: [
-      ["nums = [2,7,11,15], target = 9", "[0,1]"],
-      ["nums = [3,2,4], target = 6", "[1,2]"],
-      ["nums = [3,3], target = 6", "[0,1]"],
-    ],
-    questionConstraints: "Hi this is a constraint",
-  };
 
-  matchingSocket.on("partnerLeaveSession", (payload) => {
+  matchingSocket.on("partnerLeaveSession", () => {
     console.log("partner left the session");
     setPeerLeft(true);
     //logic to show the dialog that partner left the session. Navigate to user-dashboard in 5 sec or smth.
   });
 
-  function findLanguageByValue(value) {
+  function findLanguageByValue(value: any) {
     const foundLanguage = languageOptions.find(
       (language) => language.value === value
     );
     return foundLanguage;
   }
 
-  const onSelectChange = (sl) => {
+  const onSelectChange = (sl: any) => {
     sl = findLanguageByValue(sl);
     console.log("selected Option...", sl);
     setLanguage(sl);
   };
 
-  const onChange = (action, data) => {
+  const onChange = (action: any, data: any) => {
     switch (action) {
       case "code": {
         setCode(data);
@@ -125,7 +106,7 @@ function SessionPage() {
       });
   };
 
-  const checkStatus = async (token) => {
+  const checkStatus = async (token: string) => {
     const options = {
       method: "GET",
       url: "https://judge0-ce.p.rapidapi.com/submissions" + "/" + token,
@@ -158,7 +139,7 @@ function SessionPage() {
           description: "Compiled Successfully",
         });
       }
-    } catch (err) {
+    } catch (err: any) {
       console.log("err", err);
       setProcessing(false);
       return toast({

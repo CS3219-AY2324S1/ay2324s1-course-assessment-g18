@@ -20,7 +20,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { User, UserRole } from "@/userRepo/user.model";
+import { User } from "@/userRepo/user.model";
 import { Columns } from "./Column";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -39,7 +39,7 @@ function UserList({ data, setIsChanged }: Props) {
     {
       id: "actions",
       enableHiding: false,
-      cell: ({ row }) => {
+      cell: ({ row }: any) => {
         const user = row.original;
 
         return <ActionsDropdown user={user} setIsChanged={setIsChanged} />;

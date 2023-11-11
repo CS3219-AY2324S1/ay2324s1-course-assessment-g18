@@ -60,7 +60,7 @@ function ProfileDialog({ isSettingsOpen, setIsSettingsOpen }: Props) {
             description: "You have successfully changed your username",
           });
         }
-      } catch (e) {
+      } catch (e: any) {
         console.log(e);
         return toast({
           variant: "destructive",
@@ -100,7 +100,7 @@ function ProfileDialog({ isSettingsOpen, setIsSettingsOpen }: Props) {
           title: "Success!",
           description: "You have successfully changed your password.",
         });
-      } catch (e) {
+      } catch (e: any) {
         console.log(e);
         return toast({
           variant: "destructive",

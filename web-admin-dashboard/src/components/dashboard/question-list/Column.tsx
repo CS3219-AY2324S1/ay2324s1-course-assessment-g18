@@ -87,10 +87,10 @@ export const Columns: ColumnDef<Question>[] = [
         [QuestionDifficulty.Medium]: 1,
         [QuestionDifficulty.Hard]: 2,
       };
-  
-      const difficultyA = rowA.original[columnId];
-      const difficultyB = rowB.original[columnId];
-  
+
+      const difficultyA: QuestionDifficulty = (rowA.original as any)[columnId];
+      const difficultyB: QuestionDifficulty = (rowB.original as any)[columnId];
+
       return difficultyOrder[difficultyA] - difficultyOrder[difficultyB];
     },
   },

@@ -1,18 +1,12 @@
-import React, { useRef, useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import AuthForm from "@/components/auth/AuthForm";
 import logo from "../assets/logo.png";
-import auth1 from "../assets/auth/authone.png";
-import AuthRight from "../components/auth/AuthRight";
-import useMouse from "@react-hook/mouse-position";
-import SlideOne from "@/components/slider/SlideOne";
 import Slider from "@/components/slider/Slider";
 
 function Auth() {
   const tabs = ["Login", "Register"];
   const [selectedTab, setSelectedTab] = useState(tabs[0]);
-  const [cursorText, setCursorText] = useState("");
-  const [cursorVariant, setCursorVariant] = useState("default");
 
   // const ref = useRef(null);
 
@@ -69,16 +63,6 @@ function Auth() {
   //   damping: 28,
   // };
 
-  function projectEnter(event) {
-    setCursorText("");
-    setCursorVariant("disappear");
-  }
-
-  function projectLeave(event) {
-    setCursorText("");
-    setCursorVariant("default");
-  }
-
   // const variants = useVariants(ref);
   return (
     <div>
@@ -95,11 +79,7 @@ function Auth() {
         </AnimatePresence> */}
 
         {/* left side */}
-        <div
-          className="flex w-6/12 h-full p-5 justify-center items-center  z-[1]"
-          onMouseEnter={projectEnter}
-          onMouseLeave={projectLeave}
-        >
+        <div className="flex w-6/12 h-full p-5 justify-center items-center  z-[1]">
           {/* container for auth page */}
           <div className="flex flex-col p-10 items-center justify-center w-4/6 z-[0]">
             <img src={logo} className="w-12 m-5" />

@@ -76,7 +76,7 @@ function Register({ setSelectedTab }: Props) {
         } else {
           setError("Signup failed. Please try again.");
         }
-      } catch (err) {
+      } catch (err: any) {
         console.log(err);
         setError(err.response.data.message);
       }

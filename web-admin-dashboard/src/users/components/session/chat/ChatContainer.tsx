@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext } from "react";
 import "./ChatContainer.css";
 import ChatBubble from "./chat-bubble/ChatBubble";
 import { Message } from "@/users/models/message.model";

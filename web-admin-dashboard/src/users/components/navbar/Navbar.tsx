@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import "./Navbar.css";
 import logo from "../../../assets/logo.png";
 import {
@@ -6,7 +6,7 @@ import {
   NavigationMenuItem,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
-import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import SettingsDropdown from "./settings-dropdown/SettingsDropdown";
 import EndBtn from "./end-btn/EndBtn";
 import MatchBtn from "./match-btn/MatchBtn";

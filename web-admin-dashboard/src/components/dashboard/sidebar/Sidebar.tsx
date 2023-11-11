@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { BsGrid1X2Fill, BsPeopleFill, BsFillGearFill } from "react-icons/bs";
 import { BiLogOut } from "react-icons/bi";
 import "../../../pages/DashboardPage.css";

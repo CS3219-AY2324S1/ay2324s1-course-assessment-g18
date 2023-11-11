@@ -13,7 +13,7 @@ import "./SignUpPage.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
-import { AuthContext, AuthProvider } from "@/context/AuthProvider";
+import { AuthContext } from "@/context/AuthProvider";
 import LiveUserRepository from "@/userRepo/LiveUserRepository";
 import { UserRole } from "@/userRepo/user.model";
 
@@ -22,8 +22,6 @@ function SignUpPage() {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [error, setError] = useState("");
-  const [accessToken, setAccessToken] = useState("");
-  const [refreshToken, setRefreshToken] = useState("");
 
   const navigate = useNavigate();
   const { setAuthState } = useContext(AuthContext);
@@ -49,7 +47,7 @@ function SignUpPage() {
           localStorage.setItem("accessToken", accessToken);
           localStorage.setItem("refreshToken", refreshToken);
 
-          const createUser = await new LiveUserRepository().addUser(
+          await new LiveUserRepository().addUser(
             userName,
             userEmail,
             refreshToken,
@@ -69,7 +67,7 @@ function SignUpPage() {
         } else {
           setError("Signup failed. Please try again.");
         }
-      } catch (err) {
+      } catch (err: any) {
         console.log(err);
         setError(err.response.data.message);
       }
