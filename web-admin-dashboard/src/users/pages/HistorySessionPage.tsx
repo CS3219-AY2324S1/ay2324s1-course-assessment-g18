@@ -28,13 +28,7 @@ function HistorySessionPage() {
     setCode(newCode);
     console.log(newCode);
   };
-  const user = localStorage.getItem('userInfo');
-  const username = JSON.parse(user).username;
-  // console.log(username);
-  const peer = history.chatHistory
-    ?.filter((chat) => chat.username !== username)
-    ?.map((chat) => chat.username)[0];
-  // console.log(peer);
+  const peer = history.matchedPeer;
   const roomId = history.roomId;
   const userEmail = history.userEmail;
 
