@@ -14,6 +14,9 @@ function QuestionExamples({ examples }: Props) {
             <div>
               Output: <code className="text-slate-500">{example[1]}</code>
             </div>
+            <div>
+              Explanation: <code className="text-slate-500">{example[2]}</code>
+            </div>
           </div>
         </div>
       ))}

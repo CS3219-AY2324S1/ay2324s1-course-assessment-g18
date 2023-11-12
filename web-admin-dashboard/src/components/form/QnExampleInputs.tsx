@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Label } from "../ui/label";
 import CustomExampleInput from "./CustomExampleInput";
+import GoogleStorageFileUploader from "../dashboard/add-qns/GoogleStorageFileUploader";
 
 interface Props {
   example: string[];
@@ -10,10 +11,12 @@ interface Props {
 function QnExampleInputs({ example, setExample, exampleNum }: Props) {
   const [input, setInput] = useState(example[0]);
   const [output, setOutput] = useState(example[1]);
+  const [explanation, setExplanation] = useState(example[2]);
+  const [url, setUrl] = useState(example[3]);
 
   useEffect(() => {
-    setExample([input, output]);
-  }, [input, output]);
+    setExample([input, output, explanation, url]);
+  }, [input, output, explanation, url]);
   return (
     <div>
       <Label>Example {exampleNum}</Label>
@@ -30,6 +33,13 @@ function QnExampleInputs({ example, setExample, exampleNum }: Props) {
           setData={setOutput}
           labelStyling={{ color: "gray" }}
         />
+        <CustomExampleInput
+          label="Explanation"
+          data={explanation}
+          setData={setExplanation}
+          labelStyling={{ color: "gray" }}
+        />
+        <GoogleStorageFileUploader url = {url} setUrl={setUrl}/>
       </div>
     </div>
   );
