@@ -89,9 +89,9 @@ function ProfileDialog({ isSettingsOpen, setIsSettingsOpen }: Props) {
   .has().lowercase()                              // Must have lowercase letters
   .has().digits(1)                                // Must have at least 1 digits
   .has().not().spaces()                           // Should not have spaces
-  .is().not().oneOf(['Passw0rd', 'Password123']); // Blacklist these values
-  schema.validate('joke', { list: true })
-
+  .is().not().oneOf(['Passw0rd', 'Password123']) // Blacklist these values
+  .has().symbols(1);
+  
   const checkPasswords = () => {
     if (currPw === pw) {
       return "New password cannot be the same as current password.";
