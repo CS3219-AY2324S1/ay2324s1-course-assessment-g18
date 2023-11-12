@@ -20,7 +20,8 @@ function QnExampleInputs({ example, setExample, exampleNum }: Props) {
   return (
     <div>
       <Label>Example {exampleNum}</Label>
-      <div className="flex flex-col gap-[10px]">
+      <div className="flex flex-col gap-[15px]">
+        {url && <img src={url} />}
         <CustomExampleInput
           label="Input"
           data={input}
@@ -39,7 +40,7 @@ function QnExampleInputs({ example, setExample, exampleNum }: Props) {
           setData={setExplanation}
           labelStyling={{ color: "gray" }}
         />
-        <GoogleStorageFileUploader url = {url} setUrl={setUrl}/>
+        <GoogleStorageFileUploader url={url} setUrl={setUrl} />
       </div>
     </div>
   );
