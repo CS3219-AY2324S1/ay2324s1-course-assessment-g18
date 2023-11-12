@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react";
 import CodeEditor from "./code-editor/CodeEditor";
+import Board from "./board/Board";
 
 interface Props {
   mode: string;
@@ -21,8 +22,7 @@ function SessionForm({
         {mode === "Code" ? (
           <CodeEditor onChange={onChange} roomId={roomId} language={language} />
         ) : (
-          // white board
-          ""
+          <Board initialColor="#000000" initialSize="3" /> 
         )}
       </div>
     </React.Fragment>
