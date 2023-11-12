@@ -3,6 +3,7 @@ export interface IHistory extends Document {
   historyId: number;
   readonly roomId: string;
   readonly userEmail: string;
+  readonly matchedPeer: string;
   readonly questionId: number;
   readonly questionTitle: string;
   readonly questionCategories: string[];

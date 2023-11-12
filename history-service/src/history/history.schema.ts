@@ -9,6 +9,9 @@ export class History {
   userEmail: string;
 
   @Prop()
+  matchedPeer: string;
+
+  @Prop()
   questionId: number;
 
   @Prop()

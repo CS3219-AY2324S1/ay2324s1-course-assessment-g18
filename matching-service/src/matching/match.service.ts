@@ -47,7 +47,7 @@ export class MatchService {
 
   async tryMatchUsers(difficulty: string): Promise<void> {
     const queue = this.queues[difficulty];
-    
+
     console.log(`Status of queue before match: ${queue}`);
     if (queue.length >= 2) {
       const matchedUsers = queue.splice(0, 2); // Extract the first two users from the queue
@@ -93,6 +93,7 @@ export class MatchService {
       {
         userEmail: user.userEmail,
         roomId: roomId,
+        matchedPeer: matchedUserId,
         questionId: question.questionId,
         questionTitle: question.questionTitle,
         questionCategories: question.questionCategories,

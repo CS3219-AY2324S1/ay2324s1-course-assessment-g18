@@ -30,6 +30,7 @@ export class HistoryController {
     const history: CreateHistoryDto = {
       userEmail: data.userEmail,
       roomId: data.roomId,
+      matchedPeer: data.matchedPeer,
       questionId: data.questionId,
       questionTitle: data.questionTitle,
       questionCategories: data.questionCategories,

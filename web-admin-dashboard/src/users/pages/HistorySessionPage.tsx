@@ -11,6 +11,7 @@ function HistorySessionPage() {
   const location = useLocation();
   const [lang, setLang] = useState<Language>(Language.JavaScript);
   const history = location.state.history;
+  console.log(`history: ${history.userEmail}`);
   localStorage.setItem('roomId', history.roomId);
   const question = {
     questionId: history.questionId,
@@ -31,8 +32,8 @@ function HistorySessionPage() {
   const username = JSON.parse(user).username;
   // console.log(username);
   const peer = history.chatHistory
-    .filter((chat) => chat.username !== username)
-    .map((chat) => chat.username)[0];
+    ?.filter((chat) => chat.username !== username)
+    ?.map((chat) => chat.username)[0];
   // console.log(peer);
   const roomId = history.roomId;
   const userEmail = history.userEmail;

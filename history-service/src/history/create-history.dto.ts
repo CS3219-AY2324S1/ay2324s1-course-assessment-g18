@@ -11,6 +11,10 @@ export class CreateHistoryDto {
   @IsNotEmpty()
   readonly roomId: string;
 
+  @IsString()
+  @IsNotEmpty()
+  readonly matchedPeer: string;
+
   @IsNumber()
   @IsNotEmpty()
   readonly questionId: number;
