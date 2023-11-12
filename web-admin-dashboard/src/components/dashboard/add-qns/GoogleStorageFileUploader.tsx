@@ -9,19 +9,26 @@ function GoogleStorageFileUploader({ url, setUrl }: Props) {
   const [file, setFile] = useState<any | null>(null);
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("file", file.data);
-    const response = await fetch(
-      import.meta.env.VITE_BASE_UPLOAD_URL + "/upload/",
-      {
-        method: "POST",
-        body: formData,
+    try {
+      const formData = new FormData();
+      formData.append("file", file.data);
+
+      const response = await fetch(
+        import.meta.env.VITE_BASE_UPLOAD_URL + "/upload/",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      const responseWithBody = await response.json();
+      console.log(responseWithBody);
+      console.log(responseWithBody.url);
+      if (response) {
+        setUrl(responseWithBody.url);
       }
-    );
-    const responseWithBody = await response.json();
-    console.log(responseWithBody);
-    console.log(responseWithBody.url);
-    if (response) setUrl(responseWithBody.url);
+    } catch (e: any) {
+      console.log(e);
+    }
   };
   const handleFileChange = (e: any) => {
     const file = e.target.files[0];
