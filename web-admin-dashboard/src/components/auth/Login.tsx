@@ -1,5 +1,5 @@
 import CustomInput from "@/components/form/CustomInput";
-import React, {
+import {
   Dispatch,
   SetStateAction,
   SyntheticEvent,
@@ -7,23 +7,15 @@ import React, {
   useState,
 } from "react";
 import "../../pages/LoginPage.css";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import CustomPassword from "@/components/form/CustomPassword";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import LiveUserRepository from "@/userRepo/LiveUserRepository";
 import { AuthContext } from "@/context/AuthProvider";
 import { UserRole } from "@/userRepo/user.model";
 import api from "@/utils/api";
-import { DivideCircleIcon } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 interface Props {
   setSelectedTab: Dispatch<SetStateAction<string>>;
@@ -32,9 +24,7 @@ function Login({ setSelectedTab }: Props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [accessToken, setAccessToken] = useState("");
-  const [refreshToken, setRefreshToken] = useState("");
-  const { setAuthState, isAuthenticated } = useContext(AuthContext);
+  const { setAuthState } = useContext(AuthContext);
 
   const navigate = useNavigate();
 

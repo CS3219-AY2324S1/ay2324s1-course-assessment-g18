@@ -1,14 +1,4 @@
-import { DialogTitle } from "@/components/ui/dialog";
-import { QuestionDifficulty } from "@/questionrepo/question.model";
-import React, {
-  Dispatch,
-  MutableRefObject,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { useContext, useEffect, useRef } from "react";
 import "./MatchDialog.css";
 import { Separator } from "@/components/ui/separator";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -21,12 +11,6 @@ import Countdown from "./Countdown";
 import { IoIosArrowBack } from "react-icons/io";
 import { Button } from "@/components/ui/button";
 
-interface Props {
-  difficulty: QuestionDifficulty;
-  setChosen: Dispatch<SetStateAction<boolean>>;
-  setOpenDialog: Dispatch<SetStateAction<boolean>>;
-  setRematch: Dispatch<SetStateAction<boolean>>;
-}
 function WaitingMatch() {
   const { authState } = useContext(AuthContext);
   const username = authState.userInfo.username;
@@ -34,7 +18,7 @@ function WaitingMatch() {
   const navigate = useNavigate();
   const { state } = useLocation();
   const difficulty = state.difficulty;
-  const timeoutRef = useRef(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   matchingSocket.on("matchSuccess", (payload) => {
     const { matchedUserId, roomId } = payload;
     navigate("/session", {
@@ -84,7 +68,9 @@ function WaitingMatch() {
 
     // To cancel the timeout if "matchSuccess" is received before it expires
     matchingSocket.on("matchSuccess", () => {
-      clearTimeout(timeoutRef.current);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
     });
   }, []);
 
@@ -95,11 +81,13 @@ function WaitingMatch() {
   useEffect(() => {
     // clear timeout when component unmounts
     return () => {
-      clearTimeout(timeoutRef.current);
-      // dequeue user
-      matchingSocket.emit("matchCancel", {
-        userId: username,
-      });
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        // dequeue user
+        matchingSocket.emit("matchCancel", {
+          userId: username,
+        });
+      }
     };
   }, []);
 

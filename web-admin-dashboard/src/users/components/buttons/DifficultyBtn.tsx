@@ -1,5 +1,4 @@
 import { QuestionDifficulty } from "@/questionrepo/question.model";
-import React from "react";
 
 interface Props {
   level: string;

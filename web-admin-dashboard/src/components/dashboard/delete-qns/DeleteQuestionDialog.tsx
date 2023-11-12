@@ -19,8 +19,7 @@ interface Props {
 
 function DeleteQuestionDialog({ question, setOpen, setIsChanged }: Props) {
   const { questionRepo } = useContext(QuestionRepoContext);
-  const [openDialog, setOpenDialog] = useState(false);
-  const [err, setError] = useState("");
+  const [err] = useState("");
 
   const { toast } = useToast();
 
@@ -44,7 +43,7 @@ function DeleteQuestionDialog({ question, setOpen, setIsChanged }: Props) {
           description: "A problem occurred while deleting the question.",
         });
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
       toast({
         variant: "destructive",
@@ -64,7 +63,7 @@ function DeleteQuestionDialog({ question, setOpen, setIsChanged }: Props) {
         </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter>
-        <AlertDialogCancel onClick={() => setOpenDialog(false)}>
+        <AlertDialogCancel onClick={() => setOpen(false)}>
           Cancel
         </AlertDialogCancel>
         <AlertDialogAction

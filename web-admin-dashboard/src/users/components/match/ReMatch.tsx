@@ -1,10 +1,8 @@
-import { AlertDialogAction } from "@/components/ui/alert-dialog";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
-  CardContent,
   CardDescription,
-  CardFooter,
   CardTitle,
 } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";

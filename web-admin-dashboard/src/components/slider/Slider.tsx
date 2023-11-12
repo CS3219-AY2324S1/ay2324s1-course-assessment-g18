@@ -3,18 +3,12 @@ import "./Slider.css";
 import SlideOne from "./SlideOne";
 import SlideTwo from "./SlideTwo";
 import React from "react";
-import {
-  AnimatePresence,
-  color,
-  easeIn,
-  easeInOut,
-  motion,
-} from "framer-motion";
+import { AnimatePresence, easeInOut, motion } from "framer-motion";
 import SlideThree from "./SlideThree";
 
 const Slider = () => {
   const [slide, setSlide] = useState(0);
-  const timeoutRef = React.useRef(null);
+  const timeoutRef = React.useRef<NodeJS.Timeout | null>(null);
   const items = [<SlideOne />, <SlideTwo />, <SlideThree />];
 
   function resetTimeout() {

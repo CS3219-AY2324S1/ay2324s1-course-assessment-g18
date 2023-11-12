@@ -53,3 +53,14 @@ export class RefreshTokenDto {
     @IsString()
     refreshToken: string;
 }
+
+export class UpdatePasswordDto {
+    @IsString()
+    email: string;
+
+    @IsString()
+    currentPassword: string;
+
+    @IsString()
+    newPassword: string;
+}
