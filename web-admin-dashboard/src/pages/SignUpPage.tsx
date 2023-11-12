@@ -1,5 +1,5 @@
 import CustomInput from "@/components/form/CustomInput";
-import RegisterPassword from "@/components/form/RegisterPassword";
+import CustomPassword from "@/components/form/CustomPassword";
 import { Button } from "@/components/ui/button";
 import {
   Card,
