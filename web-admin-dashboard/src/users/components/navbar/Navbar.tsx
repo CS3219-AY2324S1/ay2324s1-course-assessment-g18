@@ -29,7 +29,7 @@ function Navbar() {
   }
   return (
     <div className="w-screen h-screen flex flex-col">
-      <NavigationMenu className="h-14 w-full flex max-w-none justify-between align-center px-5 bg-white pt-[10px] pb-[10px] pl-[25px] pr-[25px]">
+      <NavigationMenu className="flex-none h-14 w-full flex max-w-none justify-between align-center px-5 bg-white pt-[10px] pb-[10px] pl-[25px] pr-[25px]">
         {/* left side */}
         <NavigationMenuList className="w-full gap-2">
           <NavigationMenuItem className="flex gap-2 items-center">

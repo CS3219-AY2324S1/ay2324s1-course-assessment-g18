@@ -156,7 +156,7 @@ function SessionPage() {
   };
   const peer: string = location.state.matchedUser;
   return (
-    <div className="flex flex-1 w-full h-[calc(100%-56px)]">
+    <div className="flex flex-1 w-full h-[calc(100%-48px)]">
       <div className="w-full h-full flex flex-row p-5 gap-5">
         {/* left side */}
         <div className="h-full w-2/5 flex flex-col overflow-y-auto pr-5">
