@@ -29,7 +29,7 @@ function ConfirmDeleteDialog({ setIsOpen }: ConfirmDeleteDialog) {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
       // TO CHANGE ONCE MY PR MERGE
-      navigate("/login");
+      navigate("/auth");
       setAuthState({
         userInfo: {},
         loggedIn: false,

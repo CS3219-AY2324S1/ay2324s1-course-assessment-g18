@@ -17,7 +17,6 @@ export class UsersService {
 
   async create(user: User): Promise<User | null> {
     console.log(user);
-
     let existingUser = await this.userRepository.findOne({
       where: {
         email: user.email,
