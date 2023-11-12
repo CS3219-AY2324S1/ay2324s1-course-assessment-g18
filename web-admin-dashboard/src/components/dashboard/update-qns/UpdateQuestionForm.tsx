@@ -139,7 +139,7 @@ function UpdateQuestionForm({ question, setOpen, setIsChanged }: Props) {
           setData={setDescription}
           data={description}
         />
-        <div className="flex flex-col gap-[10px] mb-[15px]">
+        <div className="flex flex-col gap-[20px] mb-[15px]">
           <QnExampleInputs
             example={example1}
             setExample={setExample1}
