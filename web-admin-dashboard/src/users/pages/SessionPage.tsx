@@ -12,10 +12,14 @@ import OutputDetails from "../components/session/output/OutputDetails";
 import { classnames } from "@/utils/general";
 import { languageOptions } from "../constants/languageOptions";
 import LanguageSelect from "../components/form/LanguageSelect";
-
+import { AnimatePresence, motion } from "framer-motion";
+import SessionForm from "../components/session/SessionForm";
+import { BsPlay } from "react-icons/bs";
+import { Button } from "@/components/ui/button";
 const javascriptDefault = `
 console.log("hello");
 `;
+const tabs = ["Code", "Board"];
 
 function SessionPage() {
   const [outputDetails, setOutputDetails] = useState(null);
@@ -24,6 +28,7 @@ function SessionPage() {
   const location = useLocation();
   const [code, setCode] = useState(javascriptDefault);
   const [language, setLanguage] = useState(languageOptions[0]);
+  const [selectedTab, setSelectedTab] = useState(tabs[0]);
 
   useEffect(() => {
     console.log(location.state.question);
@@ -151,50 +156,102 @@ function SessionPage() {
   };
   const peer: string = location.state.matchedUser;
   return (
-    <div className="w-full h-full flex flex-row p-5">
-      {/* left side */}
-      <div className="h-full w-2/5 flex flex-col mt-5">
-        {location.state.question === undefined ? (
-          <h1>Loading</h1>
-        ) : (
-          <QuestionView question={location.state.question} />
-        )}
-      </div>
-      {/* right side */}
-      <div className="h-full w-3/5 flex flex-col">
-        <div className="h-max w-full pt-5 pb-5 flex ml-5 justify-between p-5">
-          <div className="w-1/5">
-            <LanguageSelect onSelectChange={onSelectChange} />
-          </div>
-          <div className="pr-10">
-            <button
-              onClick={handleCompile}
-              disabled={!code}
-              className={classnames(
-                " z-10  px-4 py-1 hover:shadow transition duration-200 bg-green-400 flex-shrink-0 rounded-lg",
-                !code ? "opacity-50" : ""
-              )}
-            >
-              {processing ? "Processing..." : "Run"}
-            </button>
-          </div>
+    <div className="flex flex-1 w-full h-[calc(100%-56px)]">
+      <div className="w-full h-full flex flex-row p-5 gap-5">
+        {/* left side */}
+        <div className="h-full w-2/5 flex flex-col overflow-y-auto pr-5">
+          {location.state.question === undefined ? (
+            <h1>Loading</h1>
+          ) : (
+            <QuestionView question={location.state.question} />
+          )}
         </div>
-        <CodeEditor
+        {/* right side */}
+        <div className="h-full w-3/5 flex flex-col gap-[15px]">
+          <div className="w-full flex h-[40px] border-b-[1px]">
+            <ul className="flex w-[200px] justify-evenly gap-[3px]">
+              {tabs.map((tab, index) => (
+                <li
+                  key={index}
+                  onClick={() => setSelectedTab(tab)}
+                  className={`${
+                    selectedTab === tab ? "bg-slate-200" : "white"
+                  } hover:bg-slate-200 cursor-pointer h-full flex w-full text-center items-center justify-center border-t-[1px] border-l-[1px] border-r-[1px] rounded-md rounded-b-none transition duration-200`}
+                >
+                  {tab}
+                </li>
+              ))}
+            </ul>
+          </div>
+          {selectedTab === tabs[0] && (
+            <div className="h-max w-full flex justify-between">
+              <div className="w-1/5">
+                <LanguageSelect onSelectChange={onSelectChange} />
+              </div>
+              <div className="">
+                <Button
+                  onClick={handleCompile}
+                  disabled={!code}
+                  className={`${
+                    processing
+                      ? "bg-slate-300 text-black hover:bg-slate-300"
+                      : "text-green bg-green-500 hover:bg-green-400"
+                  } ${!code ? "bg-slate-300 text-slate-500" : ""}
+                
+                flex justify-center items-center h-full w-max`}
+                >
+                  {processing ? (
+                    <div className="flex text-black">Processing...</div>
+                  ) : (
+                    <div className="flex gap-[10px]">
+                      {" "}
+                      Run
+                      <BsPlay size={20} />
+                    </div>
+                  )}
+                </Button>
+              </div>
+            </div>
+          )}
+          {/* <CodeEditor
           roomId={location.state.roomId}
           language={language.value}
           onChange={onChange}
-        />
-        <div className="w-full h-2/5 flex flex-row p-5">
-          <div className="h-full w-full flex flex-col pr-5">
-            <OutputWindow outputDetails={outputDetails} />
+        /> */}
+          <main className="flex w-full min-h-[350px] flex-1">
+            <AnimatePresence mode="wait">
+              <motion.div
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -10 }}
+                transition={{ duration: 0.3 }}
+                style={{ width: "100%", height: "100%" }}
+              >
+                {selectedTab && (
+                  <SessionForm
+                    roomId={location.state.roomId}
+                    mode={selectedTab}
+                    setSelectedTab={setSelectedTab}
+                    language={language.value}
+                    onChange={onChange}
+                  />
+                )}
+              </motion.div>
+            </AnimatePresence>
+          </main>
+
+          <div className="w-full flex flex-1 flex-row max-h-[210px] pt-2 border-t-[1px]">
+            <div className="h-full w-full flex flex-col pr-5">
+              <OutputWindow outputDetails={outputDetails} />
+            </div>
+            <div className="h-full w-60 flex flex-col mt-10">
+              {outputDetails && <OutputDetails outputDetails={outputDetails} />}
+            </div>
           </div>
-          <div className="h-full w-60 flex flex-col mt-10">
-            {outputDetails && <OutputDetails outputDetails={outputDetails} />}
-          </div>
+          <ChatBtn peer={peer} roomId={location.state.roomId} />
         </div>
-        <ChatBtn peer={peer} roomId={location.state.roomId} />
+        {peerLeft && <PeerLeftDialog peer={peer} />}
       </div>
-      {peerLeft && <PeerLeftDialog peer={peer} />}
     </div>
   );
 }
