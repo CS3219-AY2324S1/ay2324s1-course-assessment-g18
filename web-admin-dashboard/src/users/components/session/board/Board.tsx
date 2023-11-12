@@ -1,6 +1,6 @@
 import React, { Component, ChangeEvent } from 'react';
-
 import './Board.css';
+import { matchingSocket } from '../../match/sockets';
 
 interface BoardProps {
     initialColor: string;
@@ -17,8 +17,26 @@ class Board extends Component<BoardProps, BoardState> {
     ctx: CanvasRenderingContext2D | null = null;
     isDrawing = false;
 
+
     constructor(props: BoardProps) {
         super(props);
+
+        matchingSocket.on("canvas-data", (data: any) => { 
+            var root = this;
+            var interval = setInterval(() => { 
+                if (root.isDrawing) return;
+                root.isDrawing = true;
+                clearInterval(interval);
+                var image = new Image();
+                var canvas = document.querySelector('#board') as HTMLCanvasElement; 
+                var ctx = canvas.getContext('2d');
+                image.onload = function () {
+                    ctx.drawImage(image, 0, 0);
+                    root.isDrawing = false;
+                };
+                image.src = data;
+            }, 200)
+        })
 
         this.state = {
             color: props.initialColor,
@@ -64,17 +82,17 @@ class Board extends Component<BoardProps, BoardState> {
     }
 
     drawOnCanvas() {
-        const canvas = document.querySelector('#board') as HTMLCanvasElement;
+        var canvas = document.querySelector('#board') as HTMLCanvasElement;
         this.ctx = canvas.getContext('2d');
-        const ctx = this.ctx!;
+        var ctx = this.ctx!;
 
-        const sketch = document.querySelector('#sketch') as HTMLElement;
-        const sketch_style = getComputedStyle(sketch);
+        var sketch = document.querySelector('#sketch') as HTMLElement;
+        var sketch_style = getComputedStyle(sketch);
         canvas.width = parseInt(sketch_style.getPropertyValue('width'));
         canvas.height = parseInt(sketch_style.getPropertyValue('height'));
 
-        const mouse = { x: 0, y: 0 };
-        const last_mouse = { x: 0, y: 0 };
+        var mouse = { x: 0, y: 0 };
+        var last_mouse = { x: 0, y: 0 };
 
         /* Mouse Capturing Work */
         canvas.addEventListener('mousemove', (e) => {
@@ -99,8 +117,8 @@ class Board extends Component<BoardProps, BoardState> {
             canvas.removeEventListener('mousemove', onPaint, false);
         }, false);
 
-        const root = this;
-        const onPaint = () => {
+        var root = this;
+        var onPaint = () => {
             ctx.beginPath();
             ctx.moveTo(last_mouse.x, last_mouse.y);
             ctx.lineTo(mouse.x, mouse.y);
@@ -109,11 +127,8 @@ class Board extends Component<BoardProps, BoardState> {
 
             if (root.timeout !== undefined) clearTimeout(root.timeout);
             root.timeout = setTimeout(() => {
-                const base64ImageData = canvas.toDataURL('image/png');
-                // Assuming you have a 'socket' property passed as a prop
-                // if (root.props.socket) {
-                //     root.props.socket.emit('canvas-data', base64ImageData);
-                // }
+                var base64ImageData = canvas.toDataURL("image/png");
+                matchingSocket.emit("canvas-data", base64ImageData);
             }, 1000);
         };
     }
