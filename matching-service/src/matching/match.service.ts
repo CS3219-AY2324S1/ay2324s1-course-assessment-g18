@@ -109,7 +109,7 @@ export class MatchService {
     await req.subscribe();
     // await lastValueFrom(req);
     // console.log(question)
-    // socket.join(roomId);
+    socket.join(roomId);
     socket.emit('matchSuccess', { matchedUserId, roomId, question });
   }
 }
