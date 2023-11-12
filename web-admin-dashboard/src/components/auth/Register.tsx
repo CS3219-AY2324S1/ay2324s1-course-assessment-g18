@@ -60,7 +60,7 @@ function Register({ setSelectedTab }: Props) {
       return;
     } else if (Array.isArray(pwerror) && pwerror.length > 0) {
       console.log(pwerror);
-      setError("Password must be at least 8 characters long, have at least 1 uppercase letter, 1 lowercase letter, 1 digit and no spaces");
+      setError("Password must be at least 8 characters long, have at least 1 uppercase letter, 1 lowercase letter, 1 digit, 1 special character and no spaces");
       return;
     } else {
       try {

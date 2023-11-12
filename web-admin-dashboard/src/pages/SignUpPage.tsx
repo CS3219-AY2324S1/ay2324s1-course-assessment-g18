@@ -141,7 +141,7 @@ schema.validate('joke', { list: true })
               setData={setUserEmail}
               data={userEmail}
             />
-            <RegisterPassword
+            <CustomPassword
               label="Password"
               setData={setUserPassword}
               data={userPassword}

@@ -91,7 +91,7 @@ function ProfileDialog({ isSettingsOpen, setIsSettingsOpen }: Props) {
   .has().not().spaces()                           // Should not have spaces
   .is().not().oneOf(['Passw0rd', 'Password123']) // Blacklist these values
   .has().symbols(1);
-  
+
   const checkPasswords = () => {
     if (currPw === pw) {
       return "New password cannot be the same as current password.";
@@ -102,7 +102,7 @@ function ProfileDialog({ isSettingsOpen, setIsSettingsOpen }: Props) {
     const pwerror = schema.validate(pw, { list: true });
     if (Array.isArray(pwerror) && pwerror.length > 0) {
       console.log(pwerror);
-      return "Password must be at least 8 characters long, have at least 1 uppercase letter, 1 lowercase letter, 1 digit and no spaces";
+      return "Password must be at least 8 characters long, have at least 1 uppercase letter, 1 lowercase letter, 1 digit, 1 special character  and no spaces";
     }
     return null;
   };
