@@ -13,8 +13,8 @@
   justify-content: center;
   border-radius: 50%;
   position: absolute;
-  bottom: 20px;
-  right: 100px;
+  bottom: 30px;
+  right: 40px;
   cursor: pointer;
 }
 
@@ -25,5 +25,5 @@
   display: flex;
   position: absolute;
   bottom: 50px;
-  right: 100px;
+  right: 70px;
 }
