@@ -67,14 +67,14 @@ const AuthProvider = ({ children }: Props) => {
       if (response.status === 200) {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
-        // navigate("/login");
         navigate("/auth");
         console.log("User is logged out");
         setAuthState({
           userInfo: {},
           loggedIn: false,
         });
-        console.log(authState.loggedIn);
+
+        console.log(authState.userInfo);
         toast({
           title: "Success!",
           description: "You have been logged out successfully.",

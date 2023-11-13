@@ -1,11 +1,11 @@
-import React, { SyntheticEvent, useContext, useState } from "react";
+import { SyntheticEvent, useContext, useState } from "react";
 import { IoIosSend } from "react-icons/io";
 import "./TextInput.css";
 import { chatSocket } from "@/users/components/match/sockets";
 import { AuthContext } from "@/context/AuthProvider";
 
 interface Props {
-  roomId: String;
+  roomId: string;
 }
 
 function TextInput({ roomId }: Props) {

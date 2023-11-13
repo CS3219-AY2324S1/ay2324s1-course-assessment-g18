@@ -22,8 +22,8 @@ interface Props {
 
 function DeleteUserDialog({ user, setOpen, setIsChanged }: Props) {
   const { userRepo } = useContext(UserRepoContext);
-  const [openDialog, setOpenDialog] = useState(false);
-  const [err, setError] = useState("");
+  const [setOpenDialog] = useState(false);
+  const [err] = useState("");
 
   const { toast } = useToast();
 
@@ -65,7 +65,7 @@ function DeleteUserDialog({ user, setOpen, setIsChanged }: Props) {
         </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter>
-        <AlertDialogCancel onClick={() => setOpenDialog(false)}>
+        <AlertDialogCancel onClick={() => setOpen(false)}>
           Cancel
         </AlertDialogCancel>
         <AlertDialogAction

@@ -5,7 +5,6 @@ import {
   Dispatch,
   SetStateAction,
   useContext,
-  useEffect,
 } from "react";
 import CustomInput from "@/components/form/CustomInput";
 import { QuestionDifficulty } from "@/questionrepo/question.model";
@@ -16,6 +15,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { QuestionRepoContext } from "@/context/QuestionRepoContext";
 import QnExampleInputs from "@/components/form/QnExampleInputs";
 import CustomInputArray from "@/components/form/CustomInputArray";
+import GoogleStorageFileUploader from "./GoogleStorageFileUploader";
 
 interface Props {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -31,9 +31,9 @@ function AddQuestionForm({ setOpen, setIsChanged }: Props) {
   const [complexity, setComplexity] = useState<QuestionDifficulty>(
     QuestionDifficulty.Easy
   );
-  const [example1, setExample1] = useState<string[]>(["", ""]);
-  const [example2, setExample2] = useState<string[]>(["", ""]);
-  const [example3, setExample3] = useState<string[]>(["", ""]);
+  const [example1, setExample1] = useState<string[]>(["", "", "", ""]);
+  const [example2, setExample2] = useState<string[]>(["", "", "", ""]);
+  const [example3, setExample3] = useState<string[]>(["", "", "", ""]);
   const [constraints, setConstraints] = useState<string>("");
   const [img, setImg] = useState<string>("");
 
@@ -64,7 +64,7 @@ function AddQuestionForm({ setOpen, setIsChanged }: Props) {
         title: "Success!",
         description: "A question has successfully been added.",
       });
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
       return toast({
         variant: "destructive",
@@ -120,8 +120,8 @@ function AddQuestionForm({ setOpen, setIsChanged }: Props) {
           setData={setConstraints}
           data={constraints}
         />
-        <CustomInput label="Image link" data={img} setData={setImg} />
 
+        <GoogleStorageFileUploader url={img} setUrl={setImg}/>
         <Button type="submit" className="bg-[#5562eb] hover:bg-[#6470ee]">
           Add Question
         </Button>

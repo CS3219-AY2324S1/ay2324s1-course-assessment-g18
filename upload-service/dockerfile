@@ -1,0 +1,21 @@
+FROM node:18
+
+# Create app directory
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+ENV PORT=7001
+
+ENV GCP_PROJECT_ID=oceanic-will-398716
+ENV GCP_KEY_FILE=./keys.json
+ENV GCS_BUCKET_NAME=peerprep-questions
+
+
+EXPOSE 7001
+
+CMD [ "npm", "start" ]

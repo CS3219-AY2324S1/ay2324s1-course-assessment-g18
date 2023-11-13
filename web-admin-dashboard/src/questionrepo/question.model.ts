@@ -5,6 +5,7 @@ export interface Question {
   questionCategories: string[];
   questionDifficulty: QuestionDifficulty;
   questionDescription: string;
+  // 0: input, 1: output, 2: explanation, 3: img
   questionExamples: string[][];
   questionConstraints: string;
   questionImages: string;

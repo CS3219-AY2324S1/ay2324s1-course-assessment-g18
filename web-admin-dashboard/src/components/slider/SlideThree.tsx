@@ -1,4 +1,3 @@
-import React from "react";
 import code from "../../assets/auth/code.jpg";
 import FloatingDiv from "../auth/FloatingDiv";
 

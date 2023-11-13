@@ -1,10 +1,3 @@
-import React, { useRef, useState } from "react";
-import activeNow from "../../assets/dashboard/active-now.svg";
-import computer from "../../assets/dashboard/members.svg";
-import totalQns from "../../assets/dashboard/total-qns.svg";
-
-import { motion } from "framer-motion";
-import FloatingDiv from "./FloatingDiv";
 
 function AuthRight() {
   return (

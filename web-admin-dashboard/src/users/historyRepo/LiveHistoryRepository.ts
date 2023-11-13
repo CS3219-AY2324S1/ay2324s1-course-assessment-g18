@@ -47,6 +47,18 @@ class LiveHistoryRepository {
     }
   }
 
+  async updateCode(roomId: string, codeExecuted: string) {
+    const res = await api.put(
+      `/history/updateCodeExecutedByRoomId/${roomId}`,
+      {
+        codeExecuted,
+      },
+      this.config,
+    );
+    const history = res.data as History;
+    return history;
+  }
+
   async updateHistoryById(
     _id: string,
     historyId: number,

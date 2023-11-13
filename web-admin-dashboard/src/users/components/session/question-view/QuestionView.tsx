@@ -1,10 +1,9 @@
-import { Question, QuestionDifficulty } from "@/questionrepo/question.model";
-import React from "react";
+import { Question } from "@/questionrepo/question.model";
 import DifficultyBtn from "../../buttons/DifficultyBtn";
 import QuestionExamples from "@/components/dashboard/question-list/question-card/QuestionExamples";
 
 interface Props {
-  question: any;
+  question: Question;
   // Change to Question type when question model is updated
 }
 function QuestionView({ question }: Props) {
@@ -14,12 +13,15 @@ function QuestionView({ question }: Props) {
       <DifficultyBtn level={question.questionDifficulty} />
       <div className="whitespace-pre-line">{question.questionDescription}</div>
       <QuestionExamples examples={question.questionExamples} />
-      <div>
-        <div className="font-bold">Constraints:</div>
-        <div className="whitespace-pre-line">
-          {question.questionConstraints}
-        </div>
-      </div>
+      {question.questionConstraints &&
+        question.questionConstraints.length > 0 && (
+          <div>
+            <div className="font-bold">Constraints:</div>
+            <div className="whitespace-pre-line">
+              {question.questionConstraints}
+            </div>
+          </div>
+        )}
     </div>
   );
 }

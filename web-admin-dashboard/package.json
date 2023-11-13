@@ -1,13 +1,16 @@
 {
-  "name": "senwei-react-app",
+  "name": "peerprep",
   "private": true,
+  "homepage": "https://cs3219-ay2324s1.github.io/ay2324s1-course-assessment-g18",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build --emptyOutDir",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.1",
@@ -36,11 +39,14 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "dotenv": "^16.3.1",
+    "email-validator": "^2.0.4",
     "framer-motion": "^10.16.4",
     "lucide-react": "^0.276.0",
     "monaco-editor": "^0.44.0",
+    "password-validator": "^5.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-email-validator": "^1.0.2",
     "react-hook-form": "^7.46.1",
     "react-icons": "^4.11.0",
     "react-router-dom": "^6.16.0",
@@ -67,6 +73,7 @@
     "eslint": "^8.45.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
+    "gh-pages": "^6.0.0",
     "postcss": "^8.4.29",
     "prettier": "^3.0.3",
     "tailwindcss": "^3.3.3",

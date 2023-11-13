@@ -13,17 +13,22 @@
   justify-content: center;
   border-radius: 50%;
   position: absolute;
-  bottom: 20px;
-  right: 100px;
+  bottom: 30px;
+  right: 40px;
   cursor: pointer;
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .chat-btn:hover {
+  background-color: #6470ee;
 }
 
 .chat-card {
   display: flex;
   position: absolute;
   bottom: 50px;
-  right: 100px;
+  right: 70px;
 }

@@ -2,11 +2,17 @@ export interface History {
   _id: string;
   historyId: number;
   userEmail: string;
-  questionId: string;
+  roomId: string;
+  matchedPeer: string;
+  questionId: number;
   questionTitle: string;
-  questionDescription: string;
+  questionCategories: string[];
   questionDifficulty: QuestionDifficulty;
-  chatHistory: string;
+  questionDescription: string;
+  questionExamples: string[][];
+  questionConstraints: string;
+  questionImages: string;
+  chatHistory: Array<any>;
   codeExecuted: string;
   dateSubmitted: string;
 }

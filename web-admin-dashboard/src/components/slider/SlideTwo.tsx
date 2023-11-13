@@ -1,8 +1,7 @@
-import React from "react";
+
 import auth2 from "../../assets/auth/authtwo.png";
 import auth1 from "../../assets/auth/authone.png";
 
-import { AnimatePresence, motion } from "framer-motion";
 import FloatingDiv from "../auth/FloatingDiv";
 export default function SlideTwo() {
   return (

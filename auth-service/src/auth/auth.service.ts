@@ -1,6 +1,6 @@
 import { ForbiddenException, HttpException, HttpStatus, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { AuthMongoRepository } from './auth.repository';
-import { AuthDto, CreateUserDto } from './dto/auth.dto';
+import { AuthDto, CreateUserDto, UpdatePasswordDto } from './dto/auth.dto';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { ClientProxy } from '@nestjs/microservices';
@@ -164,6 +164,24 @@ export class AuthService {
         // const result = this.client.send({cmd: 'delete'}, {});
         // await result.subscribe();
         await this.authRepository.deleteUser(email);
+    }
+    
+    async updatePassword(updatePasswordDto: UpdatePasswordDto) {
+        const user = await this.authRepository.getCredentialsByEmail(updatePasswordDto.email);
+        if (user) {
+            const isPasswordMatch = await user.validatePassword(updatePasswordDto.currentPassword);
+            if (!isPasswordMatch) {
+                throw new UnauthorizedException("Current password doesn't match");
+            }   
+            const encryptedPassword = await this.hashData(updatePasswordDto.newPassword);
+            const authDto : AuthDto = {
+                email: updatePasswordDto.email,
+                password: encryptedPassword,
+            }
+            return await this.authRepository.updatePassword(user._id.toString(), authDto);
+        } else {
+            throw new HttpException('User with the email doesn\'t exist!', HttpStatus.BAD_REQUEST)
+        }
     }
 
 }
