@@ -31,7 +31,7 @@ class Board extends Component<BoardProps, BoardState> {
                 var canvas = document.querySelector('#board') as HTMLCanvasElement; 
                 var ctx = canvas.getContext('2d');
                 image.onload = function () {
-                    ctx.drawImage(image, 0, 0);
+                    ctx?.drawImage(image, 0, 0);
                     root.isDrawing = false;
                 };
                 image.src = data;
