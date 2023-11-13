@@ -21,6 +21,7 @@ import {
 import ConfirmDeleteDialog from "./ConfirmDeleteDialog";
 import { ChevronLeftIcon } from "lucide-react";
 import HiddenPwInput from "../form/HiddenPwInput";
+import passwordValidator from 'password-validator';
 interface Props {
   isSettingsOpen: boolean;
   setIsSettingsOpen: Dispatch<SetStateAction<boolean>>;
@@ -39,8 +40,8 @@ function ProfileDialog({ isSettingsOpen, setIsSettingsOpen }: Props) {
     if (username === user.username) {
       return "Your new username must be different from your current.";
     }
-    if (username.length === 0) {
-      return "Username cannot be empty.";
+    if (username.length < 5) {
+      return "Username must be at least 5 characters long.";
     }
     return null;
   };
@@ -77,12 +78,31 @@ function ProfileDialog({ isSettingsOpen, setIsSettingsOpen }: Props) {
     }
   };
 
+  // Create a schema
+  var schema = new passwordValidator();
+  
+  // Add properties to it
+  schema
+  .is().min(8)                                    // Minimum length 8
+  .is().max(100)                                  // Maximum length 100
+  .has().uppercase()                              // Must have uppercase letters
+  .has().lowercase()                              // Must have lowercase letters
+  .has().digits(1)                                // Must have at least 1 digits
+  .has().not().spaces()                           // Should not have spaces
+  .is().not().oneOf(['Passw0rd', 'Password123']) // Blacklist these values
+  .has().symbols(1);
+
   const checkPasswords = () => {
     if (currPw === pw) {
       return "New password cannot be the same as current password.";
     }
     if (pw !== rePw) {
       return "New and re-entered passwords do not match.";
+    }
+    const pwerror = schema.validate(pw, { list: true });
+    if (Array.isArray(pwerror) && pwerror.length > 0) {
+      console.log(pwerror);
+      return "Password must be at least 8 characters long, have at least 1 uppercase letter, 1 lowercase letter, 1 digit, 1 special character  and no spaces";
     }
     return null;
   };

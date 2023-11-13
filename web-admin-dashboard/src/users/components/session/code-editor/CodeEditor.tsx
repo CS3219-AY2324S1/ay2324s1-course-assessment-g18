@@ -7,6 +7,7 @@ import { useSyncedStore } from '@syncedstore/react';
 import { useRef, useState } from 'react';
 import './CodeEditor.css';
 import { getYjsValue } from '@syncedstore/core';
+import { motion } from 'framer-motion';
 
 interface Props {
   onChange: any;
@@ -53,14 +54,27 @@ export default function CodeEditor({
   }
 
   return (
-    <div className="h-full border-b-2 border-gray-200">
-      <Editor
-        language={language}
-        value={value}
-        onChange={handleEditorChange}
-        onMount={handleEditorDidMount}
-        className="editor"
-      />
+    <div className="h-full border-gray-200">
+      <motion.div
+        initial={{ opacity: 0, x: 10 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: -10 }}
+        transition={{ duration: 0.2 }}
+        style={{ height: '100%', width: '100%' }}
+      >
+        <Editor
+          language={language}
+          value={value}
+          onChange={handleEditorChange}
+          onMount={handleEditorDidMount}
+          className="editor"
+          options={{
+            minimap: {
+              enabled: false,
+            },
+          }}
+        />
+      </motion.div>
     </div>
   );
 }
