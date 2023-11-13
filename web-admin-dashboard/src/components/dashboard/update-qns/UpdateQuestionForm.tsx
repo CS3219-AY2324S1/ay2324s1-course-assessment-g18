@@ -89,6 +89,42 @@ function UpdateQuestionForm({ question, setOpen, setIsChanged }: Props) {
       //   newQuestion,
       //   question._id
       // );
+      const substring_to_remove =
+        "https://storage.googleapis.com/peerprep-questions/";
+
+      for (let i = 0; i < question.questionExamples.length; i++) {
+        if (i === 0 && example1[3] === question.questionExamples[i][3]) {
+          continue;
+        }
+        if (i === 1 && example2[3] === question.questionExamples[i][3]) {
+          continue;
+        }
+        if (i === 2 && example3[3] === question.questionExamples[i][3]) {
+          continue;
+        }
+        if (question.questionExamples[i][3]) {
+          const response = await fetch(
+            import.meta.env.VITE_BASE_UPLOAD_URL +
+              "/upload/" +
+              question.questionExamples[i][3].replace(substring_to_remove, ""),
+            {
+              method: "DELETE",
+            }
+          );
+        }
+      }
+
+      if (img != question.questionImages) {
+        const response = await fetch(
+          import.meta.env.VITE_BASE_UPLOAD_URL +
+            "/upload/" +
+            question.questionImages.replace(substring_to_remove, ""),
+          {
+            method: "DELETE",
+          }
+        );
+      }
+
       await questionRepo.updateQuestion(
         title,
         description,
@@ -139,7 +175,7 @@ function UpdateQuestionForm({ question, setOpen, setIsChanged }: Props) {
           setData={setDescription}
           data={description}
         />
-        <div className="flex flex-col gap-[10px] mb-[15px]">
+        <div className="flex flex-col gap-[20px] mb-[15px]">
           <QnExampleInputs
             example={example1}
             setExample={setExample1}

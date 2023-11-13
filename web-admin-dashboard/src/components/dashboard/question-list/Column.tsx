@@ -51,7 +51,6 @@ export const Columns: ColumnDef<Question>[] = [
     accessorKey: "questionCategories",
     header: "Category",
     cell: ({ row }) => {
-      console.log(row);
       const values: string[] = row.getValue("questionCategories");
       const combinedString = values.join(", ");
       return <div>{combinedString}</div>;

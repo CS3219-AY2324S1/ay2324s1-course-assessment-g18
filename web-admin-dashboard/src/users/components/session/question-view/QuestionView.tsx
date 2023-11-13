@@ -8,24 +8,20 @@ interface Props {
 }
 function QuestionView({ question }: Props) {
   return (
-    <div className="flex overflow-y-auto h-full p-2">
-      <div className="flex flex-col gap-[10px]">
-        <div className="flex gap-[15px] items-center">
-          <div className="font-bold text-lg">{question.questionTitle}</div>
-          <DifficultyBtn level={question.questionDifficulty} />
-        </div>
-        <div className="whitespace-pre-line">
-          {question.questionDescription}
-        </div>
-
-        <QuestionExamples examples={question.questionExamples} />
-        <div>
-          <div className="font-bold">Constraints:</div>
-          <div className="whitespace-pre-line">
-            {question.questionConstraints}
+    <div className="flex flex-col gap-[25px]">
+      <div className="font-bold text-lg">{question.questionTitle}</div>
+      <DifficultyBtn level={question.questionDifficulty} />
+      <div className="whitespace-pre-line">{question.questionDescription}</div>
+      <QuestionExamples examples={question.questionExamples} />
+      {question.questionConstraints &&
+        question.questionConstraints.length > 0 && (
+          <div>
+            <div className="font-bold">Constraints:</div>
+            <div className="whitespace-pre-line">
+              {question.questionConstraints}
+            </div>
           </div>
-        </div>
-      </div>
+        )}
     </div>
   );
 }
