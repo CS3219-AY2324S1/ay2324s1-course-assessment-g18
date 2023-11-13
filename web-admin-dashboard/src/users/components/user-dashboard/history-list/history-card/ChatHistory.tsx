@@ -1,7 +1,10 @@
-function ChatHistory({ history }) {
+interface Props {
+  history: any;
+}
+function ChatHistory({ history }: Props) {
   return (
     <div>
-      {history.chatHistory.map((chat, index) => (
+      {history.chatHistory.map((chat: any, index: any) => (
         <div key={index}>
           <strong>{chat.username}: </strong>
           {chat.message}
