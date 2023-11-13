@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useContext } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
@@ -15,6 +16,23 @@ import ChooseMatch from './users/components/match/ChooseMatch';
 import WaitingMatch from './users/components/match/WaitingMatch';
 import ReMatch from './users/components/match/ReMatch';
 import HistorySessionPage from './users/pages/HistorySessionPage';
+=======
+import { useContext } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import DashboardPage from "./pages/DashboardPage";
+import UserPage from "./pages/UserPage";
+import { Toaster } from "./components/ui/toaster";
+import Navbar from "./users/components/navbar/Navbar";
+import SessionPage from "./users/pages/SessionPage";
+import UserDashboardPage from "./users/pages/UserDashboardPage";
+import { AuthContext, AuthProvider } from "./context/AuthProvider";
+import Sidebar from "./components/dashboard/sidebar/Sidebar";
+import AdminProviderWrapper from "./components/admin-provider-wrapper/AdminProviderWrapper";
+import ChooseMatch from "./users/components/match/ChooseMatch";
+import WaitingMatch from "./users/components/match/WaitingMatch";
+import ReMatch from "./users/components/match/ReMatch";
+import Auth from "./pages/Auth";
+>>>>>>> 312a990be27b7cf13a296c08d3d90d4557776620
 
 function App() {
   return (
@@ -34,8 +52,10 @@ function Content() {
       return (
         <Routes>
           <Route path="/" element={<Navigate to="/dashboard" />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
+          {/* <Route path="/login" element={<LoginPage />} /> */}
+          {/* <Route path="/signup" element={<SignUpPage />} /> */}
+          <Route path="/auth" element={<Auth />} />
+
           <Route element={<AdminProviderWrapper />}>
             <Route element={<Sidebar />}>
               <Route path="/dashboard" element={<DashboardPage />} />
@@ -49,8 +69,9 @@ function Content() {
       return (
         <Routes>
           <Route path="/" element={<Navigate to="/user-dashboard" />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
+          {/* <Route path="/login" element={<LoginPage />} /> */}
+          {/* <Route path="/signup" element={<SignUpPage />} /> */}
+          <Route path="/auth" element={<Auth />} />
           <Route element={<Navbar />}>
             <Route path="/user-dashboard" element={<UserDashboardPage />} />
             <Route path="/session" element={<SessionPage />} />
@@ -67,9 +88,10 @@ function Content() {
     // User is not authenticated, go to /login
     return (
       <Routes>
-        <Route path="/" element={<Navigate to="/login" />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/" element={<Navigate to="/auth" />} />
+        {/* <Route path="/login" element={<LoginPage />} /> */}
+        {/* <Route path="/signup" element={<SignUpPage />} /> */}
+        <Route path="/auth" element={<Auth />} />
       </Routes>
     );
   }

@@ -5,7 +5,6 @@ import {
   Dispatch,
   SetStateAction,
   useContext,
-  useEffect,
 } from "react";
 import CustomInput from "@/components/form/CustomInput";
 import { Question, QuestionDifficulty } from "@/questionrepo/question.model";
@@ -106,7 +105,7 @@ function UpdateQuestionForm({ question, setOpen, setIsChanged }: Props) {
         title: "Success!",
         description: "A question has successfully been updated.",
       });
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
       return toast({
         variant: "destructive",

@@ -1,10 +1,7 @@
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import MatchDialog from "../../match/MatchDialog";
+import { useEffect, useState } from "react";
 import { IoChatbubbleOutline } from "react-icons/io5";
 import "./ChatBtn.css";
 import ChatCard from "./ChatCard";
-import { User } from "@/userRepo/user.model";
 import { Message } from "@/users/models/message.model";
 import { chatSocket } from "../../match/sockets";
 interface Props {

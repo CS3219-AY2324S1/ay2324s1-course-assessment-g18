@@ -6,15 +6,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { BiLogOut } from "react-icons/bi";
 import { FiSettings } from "react-icons/fi";
 import profileIcon from "../../../assets/profile-icon.jpeg";
 import LogoutDialog from "@/components/dashboard/sidebar/LogoutDialog";
 import { AuthContext } from "@/context/AuthProvider";
+import ProfileDialog from "../../profile/ProfileDialog";
 
 function SettingsDropdown() {
   const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   const { authState } = useContext(AuthContext);
   const user = authState.userInfo;
@@ -32,7 +34,10 @@ function SettingsDropdown() {
           </div>
         </div>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="flex gap-3 cursor-pointer">
+        <DropdownMenuItem
+          className="flex gap-3 cursor-pointer"
+          onClick={() => setIsSettingsOpen(true)}
+        >
           <FiSettings />
           Settings
         </DropdownMenuItem>
@@ -46,6 +51,12 @@ function SettingsDropdown() {
       </DropdownMenuContent>
       {isLogoutDialogOpen && (
         <LogoutDialog setIsLogoutDialogOpen={setIsLogoutDialogOpen} />
+      )}
+      {isSettingsOpen && (
+        <ProfileDialog
+          setIsSettingsOpen={setIsSettingsOpen}
+          isSettingsOpen={isSettingsOpen}
+        />
       )}
     </DropdownMenu>
   );

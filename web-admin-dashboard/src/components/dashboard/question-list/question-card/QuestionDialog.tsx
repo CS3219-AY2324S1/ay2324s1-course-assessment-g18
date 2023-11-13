@@ -1,7 +1,6 @@
 import CustomDialog from "@/components/dialog/CustomDialog";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Question, QuestionDifficulty } from "@/questionrepo/question.model";
-import { DialogDescription } from "@radix-ui/react-dialog";
 import { useState } from "react";
 import QuestionExamples from "./QuestionExamples";
 import QuestionConstraints from "./QuestionConstraints";

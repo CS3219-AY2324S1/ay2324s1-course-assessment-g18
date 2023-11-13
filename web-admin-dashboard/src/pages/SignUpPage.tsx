@@ -1,29 +1,27 @@
-import CustomInput from "@/components/form/CustomInput";
-import CustomPassword from "@/components/form/CustomPassword";
-import { Button } from "@/components/ui/button";
+import CustomInput from '@/components/form/CustomInput';
+import CustomPassword from '@/components/form/CustomPassword';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { SyntheticEvent, useContext, useState } from "react";
-import "./SignUpPage.css";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { toast } from "@/components/ui/use-toast";
-import { AuthContext, AuthProvider } from "@/context/AuthProvider";
-import LiveUserRepository from "@/userRepo/LiveUserRepository";
-import { UserRole } from "@/userRepo/user.model";
+} from '@/components/ui/card';
+import { SyntheticEvent, useContext, useState } from 'react';
+import './SignUpPage.css';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { toast } from '@/components/ui/use-toast';
+import { AuthContext } from '@/context/AuthProvider';
+import LiveUserRepository from '@/userRepo/LiveUserRepository';
+import { UserRole } from '@/userRepo/user.model';
 
 function SignUpPage() {
-  const [userName, setUserName] = useState("");
-  const [userEmail, setUserEmail] = useState("");
-  const [userPassword, setUserPassword] = useState("");
-  const [error, setError] = useState("");
-  const [accessToken, setAccessToken] = useState("");
-  const [refreshToken, setRefreshToken] = useState("");
+  const [userName, setUserName] = useState('');
+  const [userEmail, setUserEmail] = useState('');
+  const [userPassword, setUserPassword] = useState('');
+  const [error, setError] = useState('');
 
   const navigate = useNavigate();
   const { setAuthState } = useContext(AuthContext);
@@ -37,39 +35,39 @@ function SignUpPage() {
     } else {
       try {
         const authResponse = await axios.post(
-          "http://localhost:3000/auth/sign-up",
+          import.meta.env.VITE_BASE_AUTH_URL + '/auth/sign-up',
           {
             email: userEmail,
             password: userPassword,
-          }
+          },
         );
 
         if (authResponse.status === 201) {
           const { accessToken, refreshToken } = authResponse.data;
-          localStorage.setItem("accessToken", accessToken);
-          localStorage.setItem("refreshToken", refreshToken);
+          localStorage.setItem('accessToken', accessToken);
+          localStorage.setItem('refreshToken', refreshToken);
 
-          const createUser = await new LiveUserRepository().addUser(
+          await new LiveUserRepository().addUser(
             userName,
             userEmail,
             refreshToken,
-            UserRole.User
+            UserRole.User,
           );
           const user = await new LiveUserRepository().getUser(userEmail);
           if (user) {
             setAuthState({ userInfo: user, loggedIn: true });
-            localStorage.setItem("userInfo", JSON.stringify(user));
+            localStorage.setItem('userInfo', JSON.stringify(user));
           }
           // Redirect to login page upon succesful signup
-          navigate("/login");
+          navigate('/login');
           return toast({
-            title: "Success!",
-            description: "You have succesfully signed up as a user",
+            title: 'Success!',
+            description: 'You have succesfully signed up as a user',
           });
         } else {
-          setError("Signup failed. Please try again.");
+          setError('Signup failed. Please try again.');
         }
-      } catch (err) {
+      } catch (err: any) {
         console.log(err);
         setError(err.response.data.message);
       }
@@ -82,7 +80,7 @@ function SignUpPage() {
       userEmail.length === 0 ||
       userPassword.length === 0
     ) {
-      return "All fields are required";
+      return 'All fields are required';
     }
   }
 
@@ -123,12 +121,12 @@ function SignUpPage() {
           </form>
           <div
             style={{
-              display: "flex",
-              flexDirection: "column",
-              paddingTop: "20px",
+              display: 'flex',
+              flexDirection: 'column',
+              paddingTop: '20px',
             }}
           >
-            <button onClick={() => navigate("/login")} className="login-button">
+            <button onClick={() => navigate('/login')} className="login-button">
               Already have an account? Click here to login!
             </button>
           </div>

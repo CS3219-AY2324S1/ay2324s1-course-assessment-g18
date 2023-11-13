@@ -13,7 +13,6 @@ interface Props {
 function CustomTextArea({
   label,
   labelStyling,
-  inputStyling,
   setData,
   data,
 }: Props) {

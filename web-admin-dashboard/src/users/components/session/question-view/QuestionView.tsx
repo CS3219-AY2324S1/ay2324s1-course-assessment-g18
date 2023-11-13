@@ -1,5 +1,3 @@
-import { Question, QuestionDifficulty } from "@/questionrepo/question.model";
-import React from "react";
 import DifficultyBtn from "../../buttons/DifficultyBtn";
 import QuestionExamples from "@/components/dashboard/question-list/question-card/QuestionExamples";
 

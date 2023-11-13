@@ -1,18 +1,14 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { BsGrid1X2Fill, BsPeopleFill, BsFillGearFill } from "react-icons/bs";
 import { BiLogOut } from "react-icons/bi";
 import "../../../pages/DashboardPage.css";
 import "./Sidebar.css";
-import logo from "../../../assets/dashboard/logo.svg";
+import logo from "../../../assets/logo.png";
 import { Link, useResolvedPath, useMatch, Outlet } from "react-router-dom";
 import { ReactNode } from "react";
 import LogoutDialog from "./LogoutDialog"; // Import the LogoutDialog component
 import { UserRepoContext } from "@/context/UserRepoContext";
-
-interface Props {
-  openSidebar: () => void;
-  openSidebarToggle: boolean;
-}
+import ProfileDialog from "@/users/components/profile/ProfileDialog";
 
 function Sidebar() {
   const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
@@ -30,7 +26,7 @@ function Sidebar() {
       <aside className="flex-col h-13 w-[280px] flex align-center px-5 bg-white pt-[10px]">
         <div className="sidebar-title">
           <img src={logo} />
-          <span className="icon close_icon">X</span>
+          <div className="font-semibold">PeerPrep</div>
         </div>
 
         <ul className="sidebar-list">
@@ -41,9 +37,9 @@ function Sidebar() {
           <CustomLink to="/users">
             <BsPeopleFill className="icon" /> Users
           </CustomLink>
-          <CustomLink to="/setting">
+          <CustomButton>
             <BsFillGearFill className="icon" /> Settings
-          </CustomLink>
+          </CustomButton>
 
           <li className="inactive" onClick={openLogoutDialog}>
             <span className="link">
@@ -78,5 +74,24 @@ function CustomLink({ to, children }: CustomLinkProps) {
     </li>
   );
 }
+interface CustomButtonProps {
+  children: ReactNode;
+}
+function CustomButton({ children }: CustomButtonProps) {
+  const [settingsOpen, setIsSettingsOpen] = useState(false);
 
+  return (
+    <li className={"inactive"}>
+      <div className={"link"} onClick={() => setIsSettingsOpen(true)}>
+        {children}
+      </div>
+      {settingsOpen && (
+        <ProfileDialog
+          isSettingsOpen={settingsOpen}
+          setIsSettingsOpen={setIsSettingsOpen}
+        />
+      )}
+    </li>
+  );
+}
 export default Sidebar;

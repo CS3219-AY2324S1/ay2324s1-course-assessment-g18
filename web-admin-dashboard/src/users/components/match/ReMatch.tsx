@@ -1,24 +1,15 @@
-import { AlertDialogAction } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardTitle,
-} from "@/components/ui/card";
-import { useNavigate } from "react-router-dom";
+import { Button } from '@/components/ui/button';
+import { Card, CardDescription, CardTitle } from '@/components/ui/card';
+import { useNavigate } from 'react-router-dom';
 
 function ReMatch() {
   const navigate = useNavigate();
   const handleRematch = () => {
-    navigate("/choose-match");
+    navigate('/choose-match');
   };
   const handleClose = () => {
     handleRematch();
-    navigate("/user-dashboard");
-    // setRematch(false);
-    // setChosen(false);
+    navigate('/user-dashboard');
   };
   return (
     <div className="flex w-screen h-screen items-center justify-center bg-[#FAFBFF]">
