@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import "./MatchDialog.css";
-import CustomDialog from "@/components/dialog/CustomDialog";
-import ChooseMatch from "./ChooseMatch";
-import WaitingMatch from "./WaitingMatch";
-import ReMatch from "./ReMatch";
+import { useEffect, useState } from 'react';
+import './MatchDialog.css';
+import CustomDialog from '@/components/dialog/CustomDialog';
+import ChooseMatch from './ChooseMatch';
+import WaitingMatch from './WaitingMatch';
+import ReMatch from './ReMatch';
 interface Props {
   openDialog: boolean;
 }

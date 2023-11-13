@@ -7,6 +7,7 @@ import {
 } from '@/components/ui/dialog';
 import { History, QuestionDifficulty } from '@/users/historyRepo/history.model';
 import { useState } from 'react';
+import ChatHistory from './ChatHistory';
 
 interface Props {
   history: History;
@@ -38,11 +39,16 @@ function HistoryDialog({ history }: Props) {
         </div>
         <div>
           <DialogTitle>Your submission</DialogTitle>
-          <DialogDescription>{history.codeExecuted}</DialogDescription>
+          <DialogDescription>
+            <pre>
+              <code>{history.codeExecuted}</code>
+            </pre>
+          </DialogDescription>
         </div>
         <div>
           <DialogTitle>Chat history with partner</DialogTitle>
-          <DialogDescription>{history.chatHistory}</DialogDescription>
+          {/* <DialogDescription>{history.chatHistory}</DialogDescription> */}
+          {history.chatHistory && <ChatHistory history={history} />}
         </div>
       </CustomDialog>
     </Dialog>

@@ -1,8 +1,13 @@
+import { Inject } from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
 import { SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
+import { lastValueFrom } from 'rxjs';
 import { Socket, Server } from 'socket.io';
+import { ChatService } from './chat.service';
 
 @WebSocketGateway({cors: true})
 export class ChatGateway {
+    constructor(private readonly chatService: ChatService) {}
     @WebSocketServer() server: Server;
 
     handleConnection(client: Socket) {
@@ -15,11 +20,7 @@ export class ChatGateway {
     console.log(data);
     const {message, username, currentRoom} = data;
     const messageDto = {message: message, username: username};
-    // console.log(currentRoom);
-    // console.log(message);
-    // const sockets = await this.server.in(currentRoom).fetchSockets()
-    // const socketIds = sockets.map(socket => socket.id);
-    // console.log(socketIds);
+    await this.chatService.saveMessage(messageDto, currentRoom);
     this.server.to(currentRoom).emit('sendMessage', messageDto);
   }
 

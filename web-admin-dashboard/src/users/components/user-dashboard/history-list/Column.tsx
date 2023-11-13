@@ -4,6 +4,16 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { ArrowUpDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import HistoryDialog from './history-card/HistoryDialog';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { MoreHorizontal } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export const Columns: ColumnDef<History>[] = [
   {
@@ -39,31 +49,39 @@ export const Columns: ColumnDef<History>[] = [
   },
   {
     accessorKey: 'questionDifficulty',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Difficulty
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => {
-      return (
-        <div
-          className={` h-full w-20 rounded-md p-1 text-center ${
-            row.getValue('questionDifficulty') == QuestionDifficulty.Easy
-              ? 'bg-green-200 text-green-600'
-              : row.getValue('questionDifficulty') == QuestionDifficulty.Medium
-              ? 'bg-yellow-100 text-yellow-600'
-              : 'bg-red-200 text-red-600'
-          }`}
-        >
-          {row.getValue('questionDifficulty')}
-        </div>
-      );
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+      >
+        Difficulty
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }) => (
+      <div
+        className={`h-full w-20 rounded-md p-1 text-center ${
+          row.original['questionDifficulty'] === QuestionDifficulty.Easy
+            ? 'bg-green-200 text-green-600'
+            : row.original['questionDifficulty'] === QuestionDifficulty.Medium
+            ? 'bg-yellow-100 text-yellow-600'
+            : 'bg-red-200 text-red-600'
+        }`}
+      >
+        {row.original['questionDifficulty']}
+      </div>
+    ),
+    sortingFn: (rowA, rowB, columnId) => {
+      const difficultyOrder = {
+        [QuestionDifficulty.Easy]: 0,
+        [QuestionDifficulty.Medium]: 1,
+        [QuestionDifficulty.Hard]: 2,
+      };
+
+      const difficultyA = rowA.original[columnId];
+      const difficultyB = rowB.original[columnId];
+
+      return difficultyOrder[difficultyA] - difficultyOrder[difficultyB];
     },
   },
   {

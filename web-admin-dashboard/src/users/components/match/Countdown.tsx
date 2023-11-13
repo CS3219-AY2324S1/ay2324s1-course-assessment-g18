@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from 'react';
 
 interface Props {
   time: number;
 }
 function Countdown({ time }: Props) {
   const refInstance = useRef<NodeJS.Timeout | null>(null);
-  const [counter, setCountdown] = useState<string>("00:00:00");
+  const [counter, setCountdown] = useState<string>('00:00:00');
 
   const getCounter = (e: string) => {
     const all = Date.parse(e) - Date.parse(new Date().toString());
@@ -23,12 +23,12 @@ function Countdown({ time }: Props) {
   const initCounter = (e: string) => {
     const { all, s } = getCounter(e);
     if (all >= 0) {
-      setCountdown(s.toString() + "s");
+      setCountdown(s.toString() + 's');
     }
   };
 
   const reset = (e: string) => {
-    setCountdown(time.toString() + "s");
+    setCountdown(time.toString() + 's');
     if (refInstance.current) clearInterval(refInstance.current);
     const id = setInterval(() => {
       initCounter(e);
