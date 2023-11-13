@@ -16,6 +16,8 @@ import { toast } from "@/components/ui/use-toast";
 import { AuthContext } from "@/context/AuthProvider";
 import LiveUserRepository from "@/userRepo/LiveUserRepository";
 import { UserRole } from "@/userRepo/user.model";
+import passwordValidator from 'password-validator';
+import * as EmailValidator from 'email-validator';
 
 function SignUpPage() {
   const [userName, setUserName] = useState("");
@@ -26,11 +28,33 @@ function SignUpPage() {
   const navigate = useNavigate();
   const { setAuthState } = useContext(AuthContext);
 
+
+
+
+// Create a schema
+var schema = new passwordValidator();
+
+// Add properties to it
+schema
+.is().min(8)                                    // Minimum length 8
+.is().max(100)                                  // Maximum length 100
+.has().uppercase()                              // Must have uppercase letters
+.has().lowercase()                              // Must have lowercase letters
+.has().digits(1)                                // Must have at least 1 digits
+.has().not().spaces()                           // Should not have spaces
+.is().not().oneOf(['Passw0rd', 'Password123']); // Blacklist these values
+schema.validate('joke', { list: true })
+
   async function onSubmit(e: SyntheticEvent) {
     e.preventDefault();
     const error = invalidForm();
+    const pwerror = validatePassword();
     if (error) {
       setError(error);
+      return;
+    } else if (Array.isArray(pwerror) && pwerror.length > 0) {
+      console.log(pwerror);
+      setError("Password must be at least 8 characters long, have at least 1 uppercase letter, 1 lowercase letter, 1 digit and no spaces");
       return;
     } else {
       try {
@@ -75,13 +99,21 @@ function SignUpPage() {
   }
 
   function invalidForm() {
-    if (
-      userName.length === 0 ||
-      userEmail.length === 0 ||
-      userPassword.length === 0
-    ) {
+    if (userName.length === 0 || userEmail.length === 0 || userPassword.length === 0) {
       return "All fields are required";
+    } 
+    if (userName.length < 5) {
+      return "Username must be at least 5 characters long";
     }
+    if (EmailValidator.validate(userEmail) === false) {
+      return "Invalid email";
+    }
+    return; 
+  }
+
+  function validatePassword() {
+    const pwschema = schema.validate(userPassword, { list: true });
+    return pwschema;
   }
 
   return (
