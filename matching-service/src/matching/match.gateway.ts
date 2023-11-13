@@ -10,7 +10,10 @@ export class MatchGateway implements OnGatewayConnection, OnGatewayDisconnect {
     constructor(private readonly matchService: MatchService) {}
   
     handleConnection(client: Socket) {
-      console.log(`Client connected: ${client.id}`);
+        client.on('canvas-data', (data) => {
+            client.broadcast.emit('canvas-data', data);
+        });
+        console.log(`Client connected: ${client.id}`);
     }
   
     handleDisconnect(client: Socket) {
