@@ -26,7 +26,7 @@ export default function HistorySessionCodeEditor({
         value={codeHistory}
         onChange={(value) => {
           onCodeChange(value);
-          state.codeTextStore[roomId] = value;
+          state.codeTextStore[roomId]= value;
         }}
         className="editor"
       />

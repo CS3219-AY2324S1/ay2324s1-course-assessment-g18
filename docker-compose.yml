@@ -64,6 +64,15 @@ services:
       - 7001:7001
     networks:
       - mynetwork
+
+  frontend:
+    container_name: frontend
+    image: 'rgonslayer/peerprep:1.0'
+    ports:
+      - 5173:5173
+      - 4173:4173
+    networks:
+      - mynetwork
     
 
 networks:
