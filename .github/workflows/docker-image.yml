@@ -76,7 +76,16 @@ jobs:
         gcloud auth configure-docker
         docker tag rgonslayer/peerprep-upload:1.0 gcr.io/${{ env.PROJECT_ID }}/peerprep-upload:1.0
         docker push gcr.io/${{ env.PROJECT_ID }}/peerprep-upload:1.0
-        
+    
+    - name: Build PeerPrep FE image
+      run: |
+        cd ./web-admin-dashboard
+        docker build . --file ./dockerfile --tag rgonslayer/peerprep:1.0
+        gcloud auth configure-docker
+        docker tag rgonslayer/peerprep:1.0 gcr.io/${{ env.PROJECT_ID }}/peerprep:1.0
+        docker push gcr.io/${{ env.PROJECT_ID }}/peerprep:1.0
+
+  
     - name: Push RabbitMQ image
       run: |
         docker pull rabbitmq:3.12-management
@@ -139,4 +148,11 @@ jobs:
           docker build . --file ./dockerfile --tag rgonslayer/peerprep-upload:1.0
           docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
           docker push rgonslayer/peerprep-upload:1.0
+
+      - name: Build PeerPrep FE image
+        run: |
+          cd ./web-admin-dashboard
+          docker build . --file ./dockerfile --tag rgonslayer/peerprep:1.0
+          docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+          docker push rgonslayer/peerprep:1.0
 
