@@ -18,6 +18,7 @@ import { HistoryModule } from './history/history.module';
       },
     ]),
     HistoryModule,
+    
   ],
   controllers: [AppController],
   providers: [AppService, HistoryService],

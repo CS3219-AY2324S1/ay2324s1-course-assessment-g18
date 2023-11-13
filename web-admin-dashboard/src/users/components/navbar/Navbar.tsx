@@ -1,16 +1,17 @@
-import { useContext, useState } from "react";
-import "./Navbar.css";
-import logo from "../../../assets/logo.png";
+import { useContext, useState } from 'react';
+import './Navbar.css';
+import logo from '../../../assets/logo.png';
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuList,
-} from "@/components/ui/navigation-menu";
-import { Outlet, useLocation } from "react-router-dom";
-import SettingsDropdown from "./settings-dropdown/SettingsDropdown";
-import EndBtn from "./end-btn/EndBtn";
-import MatchBtn from "./match-btn/MatchBtn";
-import { AuthContext } from "@/context/AuthProvider";
+} from '@/components/ui/navigation-menu';
+import { Outlet, useLocation } from 'react-router-dom';
+import SettingsDropdown from './settings-dropdown/SettingsDropdown';
+import EndBtn from './end-btn/EndBtn';
+import MatchBtn from './match-btn/MatchBtn';
+import { AuthContext } from '@/context/AuthProvider';
+import EndHistorySessionBtn from './end-btn/EndHistorySessionBtn';
 
 function Navbar() {
   const location = useLocation();
@@ -21,9 +22,9 @@ function Navbar() {
   const user = authState.userInfo;
 
   if (
-    pathname === "/rematch" ||
-    pathname === "/choose-match" ||
-    pathname === "/waiting-match"
+    pathname === '/rematch' ||
+    pathname === '/choose-match' ||
+    pathname === '/waiting-match'
   ) {
     return <Outlet />;
   }
@@ -44,8 +45,13 @@ function Navbar() {
         {/* right side */}
         <NavigationMenuList className="gap-5">
           <NavigationMenuItem>
-            {location.pathname === "/session" ? (
+            {location.pathname === '/session' ? (
               <EndBtn openDialog={openDialog} setOpenDialog={setOpenDialog} />
+            ) : location.pathname === '/history-session' ? (
+              <EndHistorySessionBtn
+                openDialog={openDialog}
+                setOpenDialog={setOpenDialog}
+              />
             ) : (
               <MatchBtn />
             )}

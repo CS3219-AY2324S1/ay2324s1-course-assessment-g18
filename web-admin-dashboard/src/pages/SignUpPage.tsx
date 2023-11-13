@@ -1,49 +1,55 @@
-import CustomInput from "@/components/form/CustomInput";
-import CustomPassword from "@/components/form/CustomPassword";
-import { Button } from "@/components/ui/button";
+import CustomInput from '@/components/form/CustomInput';
+import CustomPassword from '@/components/form/CustomPassword';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { SyntheticEvent, useContext, useState } from "react";
-import "./SignUpPage.css";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { toast } from "@/components/ui/use-toast";
-import { AuthContext } from "@/context/AuthProvider";
-import LiveUserRepository from "@/userRepo/LiveUserRepository";
-import { UserRole } from "@/userRepo/user.model";
+} from '@/components/ui/card';
+import { SyntheticEvent, useContext, useState } from 'react';
+import './SignUpPage.css';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { toast } from '@/components/ui/use-toast';
+import { AuthContext } from '@/context/AuthProvider';
+import LiveUserRepository from '@/userRepo/LiveUserRepository';
+import { UserRole } from '@/userRepo/user.model';
 import passwordValidator from 'password-validator';
 import * as EmailValidator from 'email-validator';
 
 function SignUpPage() {
-  const [userName, setUserName] = useState("");
-  const [userEmail, setUserEmail] = useState("");
-  const [userPassword, setUserPassword] = useState("");
-  const [error, setError] = useState("");
+  const [userName, setUserName] = useState('');
+  const [userEmail, setUserEmail] = useState('');
+  const [userPassword, setUserPassword] = useState('');
+  const [error, setError] = useState('');
 
   const navigate = useNavigate();
   const { setAuthState } = useContext(AuthContext);
 
+  // Create a schema
+  var schema = new passwordValidator();
 
-
-
-// Create a schema
-var schema = new passwordValidator();
-
-// Add properties to it
-schema
-.is().min(8)                                    // Minimum length 8
-.is().max(100)                                  // Maximum length 100
-.has().uppercase()                              // Must have uppercase letters
-.has().lowercase()                              // Must have lowercase letters
-.has().digits(1)                                // Must have at least 1 digits
-.has().not().spaces()                           // Should not have spaces
-.is().not().oneOf(['Passw0rd', 'Password123']); // Blacklist these values
-schema.validate('joke', { list: true })
+  // Add properties to it
+  schema
+    .is()
+    .min(8) // Minimum length 8
+    .is()
+    .max(100) // Maximum length 100
+    .has()
+    .uppercase() // Must have uppercase letters
+    .has()
+    .lowercase() // Must have lowercase letters
+    .has()
+    .digits(1) // Must have at least 1 digits
+    .has()
+    .not()
+    .spaces() // Should not have spaces
+    .is()
+    .not()
+    .oneOf(['Passw0rd', 'Password123']); // Blacklist these values
+  schema.validate('joke', { list: true });
 
   async function onSubmit(e: SyntheticEvent) {
     e.preventDefault();
@@ -54,42 +60,44 @@ schema.validate('joke', { list: true })
       return;
     } else if (Array.isArray(pwerror) && pwerror.length > 0) {
       console.log(pwerror);
-      setError("Password must be at least 8 characters long, have at least 1 uppercase letter, 1 lowercase letter, 1 digit and no spaces");
+      setError(
+        'Password must be at least 8 characters long, have at least 1 uppercase letter, 1 lowercase letter, 1 digit and no spaces',
+      );
       return;
     } else {
       try {
         const authResponse = await axios.post(
-          import.meta.env.VITE_BASE_AUTH_URL + "/auth/sign-up",
+          import.meta.env.VITE_BASE_AUTH_URL + '/auth/sign-up',
           {
             email: userEmail,
             password: userPassword,
-          }
+          },
         );
 
         if (authResponse.status === 201) {
           const { accessToken, refreshToken } = authResponse.data;
-          localStorage.setItem("accessToken", accessToken);
-          localStorage.setItem("refreshToken", refreshToken);
+          localStorage.setItem('accessToken', accessToken);
+          localStorage.setItem('refreshToken', refreshToken);
 
           await new LiveUserRepository().addUser(
             userName,
             userEmail,
             refreshToken,
-            UserRole.User
+            UserRole.User,
           );
           const user = await new LiveUserRepository().getUser(userEmail);
           if (user) {
             setAuthState({ userInfo: user, loggedIn: true });
-            localStorage.setItem("userInfo", JSON.stringify(user));
+            localStorage.setItem('userInfo', JSON.stringify(user));
           }
           // Redirect to login page upon succesful signup
-          navigate("/login");
+          navigate('/login');
           return toast({
-            title: "Success!",
-            description: "You have succesfully signed up as a user",
+            title: 'Success!',
+            description: 'You have succesfully signed up as a user',
           });
         } else {
-          setError("Signup failed. Please try again.");
+          setError('Signup failed. Please try again.');
         }
       } catch (err: any) {
         console.log(err);
@@ -99,16 +107,20 @@ schema.validate('joke', { list: true })
   }
 
   function invalidForm() {
-    if (userName.length === 0 || userEmail.length === 0 || userPassword.length === 0) {
-      return "All fields are required";
-    } 
+    if (
+      userName.length === 0 ||
+      userEmail.length === 0 ||
+      userPassword.length === 0
+    ) {
+      return 'All fields are required';
+    }
     if (userName.length < 5) {
-      return "Username must be at least 5 characters long";
+      return 'Username must be at least 5 characters long';
     }
     if (EmailValidator.validate(userEmail) === false) {
-      return "Invalid email";
+      return 'Invalid email';
     }
-    return; 
+    return;
   }
 
   function validatePassword() {
@@ -153,12 +165,12 @@ schema.validate('joke', { list: true })
           </form>
           <div
             style={{
-              display: "flex",
-              flexDirection: "column",
-              paddingTop: "20px",
+              display: 'flex',
+              flexDirection: 'column',
+              paddingTop: '20px',
             }}
           >
-            <button onClick={() => navigate("/login")} className="login-button">
+            <button onClick={() => navigate('/login')} className="login-button">
               Already have an account? Click here to login!
             </button>
           </div>
