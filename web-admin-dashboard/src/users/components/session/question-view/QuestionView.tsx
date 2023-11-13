@@ -1,8 +1,9 @@
+import { Question } from "@/questionrepo/question.model";
 import DifficultyBtn from "../../buttons/DifficultyBtn";
 import QuestionExamples from "@/components/dashboard/question-list/question-card/QuestionExamples";
 
 interface Props {
-  question: any;
+  question: Question;
   // Change to Question type when question model is updated
 }
 function QuestionView({ question }: Props) {
