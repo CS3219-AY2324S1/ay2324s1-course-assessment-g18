@@ -28,7 +28,9 @@ function QuestionExamples({ examples }: Props) {
     <div className="flex gap-[10px] flex-col">
       {examples.map((example, i) => (
         <div key={i}>
-          <div className="font-bold">Example {i + 1}</div>
+          {example[0] && example[0].length > 0 && (
+            <div className="font-bold">Example {i + 1}</div>
+          )}
           <div className="flex flex-col gap-[15px]">
             {example[3] && (
               <img
@@ -43,15 +45,22 @@ function QuestionExamples({ examples }: Props) {
                 alt={`Example ${i + 1}`}
               />
             )}
-            <div>
-              Input: <code className="text-slate-500">{example[0]}</code>
-            </div>
-            <div>
-              Output: <code className="text-slate-500">{example[1]}</code>
-            </div>
-            <div>
-              Explanation: <code className="text-slate-500">{example[2]}</code>
-            </div>
+            {example[0] && example[0].length > 0 && (
+              <div>
+                Input: <code className="text-slate-500">{example[0]}</code>
+              </div>
+            )}
+            {example[1] && example[1].length > 0 && (
+              <div>
+                Output: <code className="text-slate-500">{example[1]}</code>
+              </div>
+            )}
+            {example[2] && example[2] && (
+              <div>
+                Explanation:{" "}
+                <code className="text-slate-500">{example[2]}</code>
+              </div>
+            )}
           </div>
         </div>
       ))}

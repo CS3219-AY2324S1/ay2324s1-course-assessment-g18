@@ -31,16 +31,24 @@ function QuestionDialog({ question }: Props) {
             >
               {question.questionDifficulty}
             </div>
-            <div className="flex items-center">
-              <span className="text-gray-500">Categories:</span>
-              <span className="ml-2">{question.questionCategories.join(", ")}</span>
-            </div>
+            {question.questionCategories[0].length > 0 && (
+              <div className="flex items-center">
+                <span className="text-gray-500">Categories:</span>
+                <span className="ml-2">
+                  {question.questionCategories.join(", ")}
+                </span>
+              </div>
+            )}
           </div>
-          <div className="whitespace-pre-line">{question.questionDescription}</div>
+          <div className="whitespace-pre-line">
+            {question.questionDescription}
+          </div>
           <QuestionExamples examples={question.questionExamples} />
-          <div>
-            <QuestionConstraints constraints={question.questionConstraints} />
-          </div>
+          {question.questionConstraints.length > 0 && (
+            <div>
+              <QuestionConstraints constraints={question.questionConstraints} />
+            </div>
+          )}
         </div>
       </CustomDialog>
     </Dialog>
