@@ -56,6 +56,14 @@ services:
       - 4002:4002
     networks:
       - mynetwork
+
+  upload:
+    container_name: upload
+    image: 'rgonslayer/peerprep-upload:1.0'
+    ports:
+      - 7001:7001
+    networks:
+      - mynetwork
     
 
 networks:
