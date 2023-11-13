@@ -89,7 +89,8 @@ function UpdateQuestionForm({ question, setOpen, setIsChanged }: Props) {
       //   newQuestion,
       //   question._id
       // );
-      const substring_to_remove = "https://storage.googleapis.com/peerprep-questions/"
+      const substring_to_remove =
+        "https://storage.googleapis.com/peerprep-questions/";
 
       for (let i = 0; i < question.questionExamples.length; i++) {
         if (i === 0 && example1[3] === question.questionExamples[i][3]) {
@@ -101,23 +102,27 @@ function UpdateQuestionForm({ question, setOpen, setIsChanged }: Props) {
         if (i === 2 && example3[3] === question.questionExamples[i][3]) {
           continue;
         }
-        const response = await fetch(
-          import.meta.env.VITE_BASE_UPLOAD_URL +"/upload/" + question.questionExamples[i][3].replace(substring_to_remove, ""),
-          {
-            method: "DELETE",
-          }
-        );
-        console.log(response)
+        if (question.questionExamples[i][3]) {
+          const response = await fetch(
+            import.meta.env.VITE_BASE_UPLOAD_URL +
+              "/upload/" +
+              question.questionExamples[i][3].replace(substring_to_remove, ""),
+            {
+              method: "DELETE",
+            }
+          );
+        }
       }
 
       if (img != question.questionImages) {
         const response = await fetch(
-          import.meta.env.VITE_BASE_UPLOAD_URL +"/upload/" + question.questionImages.replace(substring_to_remove, ""),
+          import.meta.env.VITE_BASE_UPLOAD_URL +
+            "/upload/" +
+            question.questionImages.replace(substring_to_remove, ""),
           {
             method: "DELETE",
           }
         );
-        console.log(response)
       }
 
       await questionRepo.updateQuestion(
