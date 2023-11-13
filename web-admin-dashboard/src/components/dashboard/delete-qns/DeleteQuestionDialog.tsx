@@ -27,6 +27,25 @@ function DeleteQuestionDialog({ question, setOpen, setIsChanged }: Props) {
     try {
       setIsChanged(false);
       const isDeleted = await questionRepo.deleteQuestion(question._id);
+      const substring_to_remove = "https://storage.googleapis.com/peerprep-questions/"
+
+      for (let i = 0; i < question.questionExamples.length; i++) {
+        const response = await fetch(
+          import.meta.env.VITE_BASE_UPLOAD_URL +"/upload/" + question.questionExamples[i][3].replace(substring_to_remove, ""),
+          {
+            method: "DELETE",
+          }
+        );
+        console.log(response)
+      }
+
+      const response = await fetch(
+        import.meta.env.VITE_BASE_UPLOAD_URL +"/upload/" + question.questionImages.replace(substring_to_remove, ""),
+        {
+          method: "DELETE",
+        }
+      );
+      console.log(response)
 
       if (isDeleted) {
         console.log("Successfully deleted");
