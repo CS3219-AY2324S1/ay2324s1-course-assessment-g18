@@ -58,7 +58,12 @@ function GoogleStorageFileUploader({ url, setUrl }: Props) {
 
   return (
     <div className="flex items-center gap-[10px]">
-      <input type="file" name="file" onChange={handleFileChange}></input>
+      <input
+        type="file"
+        name="file"
+        onChange={handleFileChange}
+        className="text-sm"
+      ></input>
       <Button
         onClick={handleSubmit}
         type="submit"
