@@ -17,13 +17,6 @@ services:
     networks:
       - mynetwork
 
-  matching:
-    container_name: matching
-    image: 'rgonslayer/peerprep-matching:1.0'
-    ports:
-      - 6001:6001
-    networks:
-      - mynetwork
 
   question:
     container_name: question
@@ -41,21 +34,7 @@ services:
     networks:
       - mynetwork
 
-  chat:
-    container_name: chat
-    image: 'adrielsoh/peerprep-chat:1.0'
-    ports:
-      - 5001:5001
-    networks:
-      - mynetwork
 
-  history:
-    container_name: history
-    image: 'adrielsoh/peerprep-history:1.0'
-    ports:
-      - 4002:4002
-    networks:
-      - mynetwork
     
 
 networks:
