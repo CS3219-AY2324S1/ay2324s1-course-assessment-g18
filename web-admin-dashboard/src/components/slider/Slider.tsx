@@ -36,7 +36,7 @@ const Slider = () => {
   return (
     <main className="flex items-center flex-col justify-center w-full h-full">
       <div className="flex items-center flex-col justify-center">
-        <div className="relative w-[400px] h-[500px]">
+        <div className="relative md:w-[400px] w-[250px] md:h-[500px] h-[450px]">
           <AnimatePresence mode="wait">
             <motion.div
               key={slide}

@@ -18,9 +18,8 @@ import { UserRole } from "@/userRepo/user.model";
 import { motion, AnimatePresence } from "framer-motion";
 import googleLogo from "../../assets/google.png";
 import { Separator } from "@/components/ui/separator";
-import passwordValidator from 'password-validator';
-import * as EmailValidator from 'email-validator';
-
+import passwordValidator from "password-validator";
+import * as EmailValidator from "email-validator";
 
 interface Props {
   setSelectedTab: Dispatch<SetStateAction<string>>;
@@ -37,19 +36,28 @@ function Register({ setSelectedTab }: Props) {
   const { setAuthState } = useContext(AuthContext);
 
   // Create a schema
-  var schema = new passwordValidator();
-  
+  const schema = new passwordValidator();
+
   // Add properties to it
   schema
-  .is().min(8)                                    // Minimum length 8
-  .is().max(100)                                  // Maximum length 100
-  .has().uppercase()                              // Must have uppercase letters
-  .has().lowercase()                              // Must have lowercase letters
-  .has().digits(1)                                // Must have at least 1 digits
-  .has().not().spaces()                           // Should not have spaces
-  .is().not().oneOf(['Passw0rd', 'Password123']) // Blacklist these values
-  .has().symbols(1);                               // Must have at least 1 symbol
-  
+    .is()
+    .min(8) // Minimum length 8
+    .is()
+    .max(100) // Maximum length 100
+    .has()
+    .uppercase() // Must have uppercase letters
+    .has()
+    .lowercase() // Must have lowercase letters
+    .has()
+    .digits(1) // Must have at least 1 digits
+    .has()
+    .not()
+    .spaces() // Should not have spaces
+    .is()
+    .not()
+    .oneOf(["Passw0rd", "Password123"]) // Blacklist these values
+    .has()
+    .symbols(1); // Must have at least 1 symbol
 
   async function onSubmit(e: SyntheticEvent) {
     e.preventDefault();
@@ -60,7 +68,9 @@ function Register({ setSelectedTab }: Props) {
       return;
     } else if (Array.isArray(pwerror) && pwerror.length > 0) {
       console.log(pwerror);
-      setError("Password must be at least 8 characters long, have at least 1 uppercase letter, 1 lowercase letter, 1 digit, 1 special character and no spaces");
+      setError(
+        "Password must be at least 8 characters long, have at least 1 uppercase letter, 1 lowercase letter, 1 digit, 1 special character and no spaces"
+      );
       return;
     } else {
       try {
@@ -107,16 +117,20 @@ function Register({ setSelectedTab }: Props) {
   }
 
   function invalidForm() {
-    if (userName.length === 0 || userEmail.length === 0 || userPassword.length === 0) {
+    if (
+      userName.length === 0 ||
+      userEmail.length === 0 ||
+      userPassword.length === 0
+    ) {
       return "All fields are required.";
-    } 
+    }
     if (userName.length < 5) {
       return "Username must be at least 5 characters long.";
     }
     if (EmailValidator.validate(userEmail) === false) {
       return "Invalid email.";
     }
-    return; 
+    return;
   }
 
   function validatePassword() {
@@ -134,8 +148,10 @@ function Register({ setSelectedTab }: Props) {
         style={{ width: "100%" }}
       >
         <div className="flex flex-col w-full justify-center items-center gap-3">
-          <div className="text-3xl font-bold">Get Started with PeerPrep</div>
-          <div className="text-base text-slate-500 mb-5">
+          <div className="md:text-3xl font-bold text-xl text-center">
+            Get Started with PeerPrep
+          </div>
+          <div className="md:text-base text-slate-500 mb-5 text-sm text-center">
             Enter your details to get started
           </div>
         </div>
@@ -143,10 +159,10 @@ function Register({ setSelectedTab }: Props) {
         <div className="w-full flex flex-col">
           <Button className="mb-5 w-full flex gap-[10px] p-[10px] bg-white text-black border-[214.3 31.8% 91.4%] border-[1px] rounded-lg justify-center items-center hover:bg-black hover:text-white">
             <img src={googleLogo} className="w-5" />
-            <div>Sign in with Google</div>
+            <div className="text-xs md:text-sm">Sign in with Google</div>
           </Button>
-          <div className="flex w-full items-center justify-center gap-[10px] text-slate-300">
-            <hr className="w-full border-t-slate-200 " />
+          <div className="flex w-full items-center justify-center gap-[10px] text-slate-300 md:text-base text-sm">
+            <hr className="w-full border-t-slate-200" />
             or <hr className="w-full border-t-slate-200 " />
           </div>
           <form className="signup-form" onSubmit={onSubmit}>
@@ -170,11 +186,11 @@ function Register({ setSelectedTab }: Props) {
               Sign Up
             </Button>
           </form>
-          <div className="flex gap-[10px] justify-center">
+          <div className="md:flex-row flex-col flex gap-[10px] justify-center md:text-base text-sm text-center">
             Already have an account?{" "}
             <button
               onClick={() => setSelectedTab("Login")}
-              className="text-[#5562eb]"
+              className="text-[#5562eb] text-center md:text-base text-sm"
             >
               Log in
             </button>

@@ -6,11 +6,11 @@ export default function SlideThree() {
     <div>
       <FloatingDiv
         delay={0}
-        style={{ position: "absolute", top: "40px", left: "0px" }}
+        style={{ position: "absolute", top: "20%", left: "0px" }}
       >
-        <img src={code} className="w-[1000px] mt-5" />
+        <img src={code} className="w-[1000px]" />
       </FloatingDiv>
-      <div className="absolute text-center font-semibold p-2 bottom-10">
+      <div className="absolute text-center font-semibold p-2 bottom-10 md:text-base text-sm">
         Code in real-time with your partner and practice solving problems
         together, just like in a real interview.
       </div>

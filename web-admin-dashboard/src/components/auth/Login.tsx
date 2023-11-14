@@ -70,7 +70,7 @@ function Login({ setSelectedTab }: Props) {
             localStorage.setItem("accessToken", accessToken);
             localStorage.setItem("refreshToken", refreshToken);
             const userResponse = await api.put(
-              import.meta.env.VITE_BASE_USERHOST_URL  + `/users/update/${email}`,
+              import.meta.env.VITE_BASE_USERHOST_URL + `/users/update/${email}`,
               {
                 refreshToken: refreshToken,
               }
@@ -115,8 +115,10 @@ function Login({ setSelectedTab }: Props) {
         style={{ height: "100%", width: "100%" }}
       >
         <div className="flex items-center flex-col justify-center">
-          <div className="text-3xl font-bold">Welcome back!</div>
-          <div className="text-base text-slate-500">
+          <div className="md:text-3xl font-bold text-center text-xl">
+            Welcome back!
+          </div>
+          <div className="md:text-base text-slate-500 text-center text-sm">
             Enter your login details
           </div>
         </div>
@@ -137,11 +139,11 @@ function Login({ setSelectedTab }: Props) {
               Login
             </Button>
           </form>
-          <div className="flex gap-[10px] justify-center">
+          <div className="flex gap-[10px] justify-center md:flex-row flex-col text-center md:text-base text-sm">
             Don't have an account?
             <button
               onClick={() => setSelectedTab("Register")}
-              className="text-[#5562eb]"
+              className="text-[#5562eb] text-center md:text-base text-sm"
             >
               Sign up now
             </button>
