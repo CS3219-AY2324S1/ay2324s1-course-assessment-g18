@@ -118,7 +118,7 @@ function Login({ setSelectedTab }: Props) {
           <div className="md:text-3xl font-bold text-center text-xl">
             Welcome back!
           </div>
-          <div className="md:text-base text-slate-500 text-center text-sm">
+          <div className="md:text-base text-slate-500 text-center text-sm mb-2">
             Enter your login details
           </div>
         </div>

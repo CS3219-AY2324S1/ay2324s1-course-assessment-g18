@@ -81,7 +81,7 @@ function Auth() {
         {/* left side */}
         <div className="flex w-6/12 h-full p-5 justify-center items-center  z-[1]">
           {/* container for auth page */}
-          <div className="flex flex-col p-10 items-center justify-center w-4/6 z-[0]">
+          <div className="flex flex-col md:p-10 p-5 items-center justify-center w-4/6 z-[0]">
             <img src={logo} className="w-12 m-5" />
 
             <main className="flex w-full h-4/6">

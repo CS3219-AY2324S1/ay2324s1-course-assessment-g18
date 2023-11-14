@@ -151,7 +151,7 @@ function Register({ setSelectedTab }: Props) {
           <div className="md:text-3xl font-bold text-xl text-center">
             Get Started with PeerPrep
           </div>
-          <div className="md:text-base text-slate-500 mb-5 text-sm text-center">
+          <div className="md:text-base text-slate-500 mb-2 text-sm text-center">
             Enter your details to get started
           </div>
         </div>
