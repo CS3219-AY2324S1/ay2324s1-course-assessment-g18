@@ -131,6 +131,7 @@ function Register({ setSelectedTab }: Props) {
     );
     if (oauth != null) {
         console.log(oauth);
+        navigate('/user-dashboard');
         // const { accessToken, refreshToken } = authResponse.data;
         //   localStorage.setItem("accessToken", accessToken);
         //   localStorage.setItem("refreshToken", refreshToken);
