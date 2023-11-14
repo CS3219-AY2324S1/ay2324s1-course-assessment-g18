@@ -10,7 +10,7 @@ import { ChatService } from './chat/chat.service';
     name: 'HISTORY_SERVICE',
     transport: Transport.RMQ,
     options: {
-      urls: ['amqp://localhost:5672'],
+      urls: ['amqp://34.142.210.160:5672'],
       queue: 'history_queue',
       queueOptions: {
         durable: false
