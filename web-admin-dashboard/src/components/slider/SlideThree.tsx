@@ -1,4 +1,4 @@
-import code from "../../assets/auth/code.jpg";
+import code from "../../assets/auth/code.png";
 import FloatingDiv from "../auth/FloatingDiv";
 
 export default function SlideThree() {

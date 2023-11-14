@@ -1,7 +1,7 @@
 ## Welcome to G18's PeerPrep
 
 <p align="center">
-  <img src="https://github.com/CS3219-AY2324S1/ay2324s1-course-assessment-g18/blob/312a990be27b7cf13a296c08d3d90d4557776620/web-admin-dashboard/src/assets/logo.png" alt="logo">
+  <img src="https://github.com/CS3219-AY2324S1/ay2324s1-course-assessment-g18/blob/312a990be27b7cf13a296c08d3d90d4557776620/web-admin-dashboard/src/assets/logo.png" alt="logo" width="300px">
 </p>
 
 Meet Peer Prep, the ultimate hub for collaborative learning and problem-solving! Peer Prep stands as a dynamic web application that empowers users to effortlessly connect with fellow learners at the same proficiency level. Together, you'll delve into thoughtfully curated questions and amplify your problem-solving prowess. Our platform boasts innovative features that facilitate smooth collaboration with peers, enabling real-time discussions via our integrated chat feature. Additionally, you can visualize your code using our built-in code pad. We've streamlined the process of finding the perfect study partner, ensuring you team up with individuals who share your passion for problem-solving and maintain a similar proficiency level. With Peer Prep's interactive platform, effective and enjoyable learning is guaranteed. Embark on this exhilarating journey to enhance your skills, any time, from anywhere, right here on Peer Prep!
