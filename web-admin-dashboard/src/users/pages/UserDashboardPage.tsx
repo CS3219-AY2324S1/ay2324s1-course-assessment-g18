@@ -15,6 +15,9 @@ function UserDashboardPage() {
   const [historyRepo, setHistoryRepo] = useState<LiveHistoryRepository>(
     new LiveHistoryRepository(),
   );
+  const [easy, setEasy] = useState<number>(0);
+  const [medium, setMedium] = useState<number>(0);
+  const [hard, setHard] = useState<number>(0);
 
   useEffect(() => {
     const leaveRoom = () => {
@@ -32,6 +35,25 @@ function UserDashboardPage() {
     async function getDataBackend() {
       const res: History[] = await historyRepo.getHistoryByEmail();
       setData(res);
+
+      let easyCount = 0;
+      let mediumCount = 0;
+      let hardCount = 0;
+
+      res.forEach((historyItem) => {
+        const difficulty = historyItem.questionDifficulty.toLowerCase();
+        if (difficulty === 'easy') {
+          easyCount++;
+        } else if (difficulty === 'medium') {
+          mediumCount++;
+        } else if (difficulty === 'hard') {
+          hardCount++;
+        }
+      });
+
+      setEasy(easyCount);
+      setMedium(mediumCount);
+      setHard(hardCount);
     }
 
     getDataBackend();
@@ -40,7 +62,7 @@ function UserDashboardPage() {
   return (
     <HistoryRepoContext.Provider value={{ historyRepo, setHistoryRepo }}>
       <div className="user-dashboard-main">
-        <UserDashboardStats />
+        <UserDashboardStats easy={easy} medium={medium} hard={hard} />
         <HistoryList data={data} />
       </div>
     </HistoryRepoContext.Provider>

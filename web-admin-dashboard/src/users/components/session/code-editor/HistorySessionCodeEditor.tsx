@@ -2,11 +2,7 @@ import './CodeEditor.css';
 import { useSyncedStore } from '@syncedstore/react';
 import { store } from './store';
 import { Editor } from '@monaco-editor/react';
-import { useRef, useState } from 'react';
-import { getYjsValue } from '@syncedstore/core';
-import { MonacoBinding } from 'y-monaco';
-// @ts-ignore
-import { WebrtcProvider } from 'y-webrtc';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 
 interface Props {
@@ -25,7 +21,6 @@ export default function HistorySessionCodeEditor({
   codeHistory,
 }: Props) {
   const state: any = useSyncedStore(store);
-  const editorRef: any = useRef(null);
 
   console.log(codeHistory);
 
@@ -35,25 +30,7 @@ export default function HistorySessionCodeEditor({
     onCodeChange(value);
     setValue(value);
     state.codeTextStore[roomId] = value;
-    onChange('code', value);
   };
-
-  function handleEditorDidMount(editor: any, monaco: any) {
-    editorRef.current = editor;
-    // Initialize YJS
-    const doc: any = getYjsValue(store);
-    // Connect to peers (or start connection) with WebRTC
-    const provider = new WebrtcProvider({ roomId }, doc); // room1, room2
-    const type = doc.getText('monaco'); // doc { "monaco": "what our IDE is showing" }
-    // Bind YJS to Monaco
-    const binding = new MonacoBinding(
-      type,
-      editorRef.current.getModel(),
-      new Set([editorRef.current]),
-      provider.awareness,
-    );
-    console.log(provider.awareness);
-  }
 
   return (
     <div className="h-full border-gray-200">
@@ -66,10 +43,8 @@ export default function HistorySessionCodeEditor({
       >
         <Editor
           language={language}
-          // value={codeHistory}
-          defaultValue="HELLO"
+          value={value}
           onChange={handleEditorChange}
-          onMount={handleEditorDidMount}
           className="editor"
           options={{
             minimap: {
