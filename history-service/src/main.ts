@@ -14,7 +14,7 @@ async function bootstrap() {
   const microservice = app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,
     options: {
-      urls: ['amqp://35.240.215.146:5672'],
+      urls: ['amqp://34.142.210.160:5672'],
       queue: 'history_queue',
       queueOptions: {
         durable: false,
