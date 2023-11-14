@@ -20,7 +20,9 @@ import googleLogo from "../../assets/google.png";
 import { Separator } from "@/components/ui/separator";
 import passwordValidator from 'password-validator';
 import * as EmailValidator from 'email-validator';
-
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from "jwt-decode";
+import api from "@/utils/api";
 
 interface Props {
   setSelectedTab: Dispatch<SetStateAction<string>>;
@@ -124,14 +126,119 @@ function Register({ setSelectedTab }: Props) {
     return pwschema;
   }
 
+  const handleGoogleLoginSuccess = async (response: any) => {
+    console.log(response);
+    console.log(jwtDecode(response.credential))
+    const res = jwtDecode(response.credential);
+    const { email, name } = res;
+    try {
+        const authResponse = await axios.post(
+          import.meta.env.VITE_BASE_AUTH_URL + "/auth/oauthLogin",
+          {
+            email: email,
+          }
+        );
+
+        if (authResponse.status === 201) {
+          const { accessToken, refreshToken } = authResponse.data;
+          localStorage.setItem("accessToken", accessToken);
+          localStorage.setItem("refreshToken", refreshToken);
+
+        //   const createUser = await new LiveUserRepository().addUser(
+        //     name,
+        //     email,
+        //     refreshToken,
+        //     UserRole.User
+        //   );
+          const user = await new LiveUserRepository().getUser(email);
+          if (!user) {
+            const createUser = await new LiveUserRepository().addUser(
+                name,
+                email,
+                refreshToken,
+                UserRole.User
+              );
+          }
+          if (user) {
+            setAuthState({ userInfo: user, loggedIn: true });
+            localStorage.setItem("userInfo", JSON.stringify(user));
+            const userInfo = JSON.parse(localStorage.getItem('userInfo')!);
+          const role = userInfo['role'];
+          console.log('Role: ', role);
+
+          const roleTokens = await api.post(
+            import.meta.env.VITE_BASE_AUTH_URL + '/auth/tokens',
+            {
+              email,
+              role,
+            },
+          );
+
+          if (roleTokens.status === 201) {
+            const { accessToken, refreshToken } = roleTokens.data;
+            // Set tokens with role
+            localStorage.setItem('accessToken', accessToken);
+            localStorage.setItem('refreshToken', refreshToken);
+            const userResponse = await api.put(
+              import.meta.env.VITE_BASE_USERHOST_URL + `/users/update/${email}`,
+              {
+                refreshToken: refreshToken,
+              },
+            );
+            if (userResponse.status == 200) {
+              if (user) {
+                setAuthState({ userInfo: user, loggedIn: true });
+                console.log('User:', user);
+                if (user.role === UserRole.Admin) {
+                    console.log("navigate to dashboard");
+                  navigate('/dashboard');
+                } else {
+                    console.log("navigate to user-dashboard");
+                  navigate('/user-dashboard');
+                }
+              } else {
+                console.log('User is NULL');
+              }
+            }
+          }
+        } else {
+          setError('Login failed. Check your credentials.');
+        }           
+        } else {
+          setError("Signup failed. Please try again.");
+        }
+      } catch (err: any) {
+        console.log(err);
+        // setError(err.response.data.message);
+      }
+    }
+  
+
+  const handleGoogleLoginFailure = () => {
+    console.error('Google login error');
+    // Gérer les erreurs de connexion ici
+  };
+
   const googleSignin = () => {
-    var oauth = window.open(
-      `${import.meta.env.VITE_BASE_AUTH_URL}/auth/to-google`,
-      "_blank"
-    );
-    if (oauth != null) {
-        console.log(oauth);
-        navigate('/user-dashboard');
+    
+    
+      return (
+        <div>
+          {/* Votre contenu de connexion */}
+          <GoogleLogin
+            onSuccess={handleGoogleLoginSuccess}
+            onError={handleGoogleLoginFailure}
+          />
+        </div>
+      );
+    // var oauth = window.open(
+    //   `${import.meta.env.VITE_BASE_AUTH_URL}/auth/to-google`,
+    //   "_blank"
+    // );
+    // axios.interceptors.response.use((response => { console.log("yayyyyy"); return response;}));
+    // if (oauth != null) {
+    //     console.log(oauth);
+        // navigate('/user-dashboard');
         // const { accessToken, refreshToken } = authResponse.data;
         //   localStorage.setItem("accessToken", accessToken);
         //   localStorage.setItem("refreshToken", refreshToken);
@@ -179,7 +286,7 @@ function Register({ setSelectedTab }: Props) {
         // } else {
         //   setError("Login failed. Check your credentials.");
         // }
-    }
+    // }
 
   };
   return (
@@ -199,13 +306,17 @@ function Register({ setSelectedTab }: Props) {
         </div>
 
         <div className="w-full flex flex-col">
-          <Button
+          {/* <Button
             className="mb-5 w-full flex gap-[10px] p-[10px] bg-white text-black border-[214.3 31.8% 91.4%] border-[1px] rounded-lg justify-center items-center hover:bg-black hover:text-white"
             onClick={googleSignin}
           >
             <img src={googleLogo} className="w-5" />
             <div>Sign in with Google</div>
-          </Button>
+          </Button> */}
+          <GoogleLogin
+            onSuccess={handleGoogleLoginSuccess}
+            onError={handleGoogleLoginFailure}
+          />
           <div className="flex w-full items-center justify-center gap-[10px] text-slate-300">
             <hr className="w-full border-t-slate-200 " />
             or <hr className="w-full border-t-slate-200 " />
