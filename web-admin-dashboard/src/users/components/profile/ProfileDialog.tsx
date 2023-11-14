@@ -79,7 +79,7 @@ function ProfileDialog({ isSettingsOpen, setIsSettingsOpen }: Props) {
   };
 
   // Create a schema
-  var schema = new passwordValidator();
+  const schema = new passwordValidator();
 
   // Add properties to it
   schema
