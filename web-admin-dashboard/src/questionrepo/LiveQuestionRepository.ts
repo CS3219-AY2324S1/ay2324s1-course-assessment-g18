@@ -6,7 +6,7 @@ class LiveQuestionRepository {
 
   constructor() {
     this.config = {
-      baseURL: import.meta.env.VITE_BASE_LOCALHOST_URL,
+      baseURL: import.meta.env.VITE_BASE_QUESTION_URL,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
