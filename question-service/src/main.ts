@@ -13,16 +13,15 @@ async function bootstrap() {
   const microservice = app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,
     options: {
-      urls:['amqp://rabbitmq:5672'],
+      urls: ['amqp://34.142.210.160:5672'],
       queue: 'questions_queue',
       queueOptions: {
-        durable: false
-      }
-    }
+        durable: false,
+      },
+    },
   });
   await app.startAllMicroservices();
   await app.listen(4001);
 }
-
 
 bootstrap();

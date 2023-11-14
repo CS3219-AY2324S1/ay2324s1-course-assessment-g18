@@ -4,14 +4,62 @@ import { Model } from 'mongoose';
 import { IHistory } from './history.interface';
 import { CreateHistoryDto } from './create-history.dto';
 import { UpdateHistoryDto } from './update-history.dto';
+import { History } from './history.schema';
 
 @Injectable()
 export class HistoryService {
-  constructor(@InjectModel('History') private historyModel: Model<IHistory>) {}
+  constructor(
+    @InjectModel(History.name) private historyModel: Model<IHistory>,
+  ) {}
 
   async addHistory(createHistoryDto: CreateHistoryDto): Promise<IHistory> {
     const newHistory = await new this.historyModel(createHistoryDto);
-    return newHistory.save();
+
+    const MaxId = await this.getMaximumId(createHistoryDto.userEmail);
+
+    if (MaxId.length == 0) {
+      newHistory.historyId = 1;
+    } else {
+      newHistory.historyId = MaxId[0].historyId + 1;
+    }
+
+    return await new this.historyModel(newHistory).save();
+    // const res = await new this.historyModel(createHistoryDto).save();
+    // console.log(History.name);
+    // console.log(res);
+    // return res;
+  }
+
+  async updateCodeByRoomIdAndUserEmail(
+    roomId: string,
+    userEmail: string,
+    newCode: string,
+  ): Promise<any> {
+    const filter = { roomId, userEmail };
+    const update = { codeExecuted: newCode };
+    const result = await this.historyModel.updateMany(filter, update);
+    return result;
+  }
+
+  async updateCodeExecutedByRoomId(
+    roomId: string,
+    newCodeExecuted: string,
+  ): Promise<any> {
+    const filter = { roomId };
+    const update = { codeExecuted: newCodeExecuted };
+    const result = await this.historyModel.updateMany(filter, update);
+    return result;
+  }
+
+  async addChatHistory(message: any, roomId: string) {
+    console.log(message);
+    console.log(roomId);
+    const foundHistories = await this.historyModel.find({ roomId });
+    console.log(foundHistories);
+    foundHistories.forEach((history) => {
+      history.chatHistory.push(message);
+      history.save();
+    });
   }
 
   async getHistory(): Promise<IHistory[]> {
@@ -51,5 +99,12 @@ export class HistoryService {
       throw new NotFoundException('History data not found');
     }
     return updatedHistory;
+  }
+
+  async getMaximumId(userEmail: string) {
+    return await this.historyModel
+      .find({ userEmail })
+      .sort({ historyId: -1 })
+      .limit(1);
   }
 }

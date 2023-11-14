@@ -2,9 +2,8 @@ import { QuestionRepoContext } from "@/context/QuestionRepoContext";
 import { UserRepoContext } from "@/context/UserRepoContext";
 import LiveQuestionRepository from "@/questionrepo/LiveQuestionRepository";
 import LiveUserRepository from "@/userRepo/LiveUserRepository";
-import { UserRole } from "@/userRepo/user.model";
-import React, { useContext, useEffect, useState } from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import { useState } from "react";
+import { Outlet } from "react-router-dom";
 
 // this wrapper instantiates the QuestionRepository and the LiveQuestionRepository
 

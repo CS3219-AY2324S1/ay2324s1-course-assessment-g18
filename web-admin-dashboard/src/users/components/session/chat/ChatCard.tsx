@@ -1,11 +1,9 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import  { Dispatch, SetStateAction} from "react";
 import { Card } from "@/components/ui/card";
 import TextInput from "./input/TextInput";
 import ChatContainer from "./ChatContainer";
 import ChatHeader from "./ChatHeader";
-import { User } from "@/userRepo/user.model";
 import { Message } from "@/users/models/message.model";
-import { chatSocket } from "../../match/sockets";
 
 interface Props {
   setOpenChat: Dispatch<SetStateAction<boolean>>;

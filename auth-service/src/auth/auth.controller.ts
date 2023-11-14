@@ -1,7 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Request, Response } from 'express';
-import { AuthDto, CreateUserDto, RefreshTokenDto, TokenDto } from './dto/auth.dto';
+import { AuthDto, CreateUserDto, RefreshTokenDto, TokenDto, UpdatePasswordDto } from './dto/auth.dto';
 import { RefreshTokenGuard } from './guards/refreshToken.guard';
 import { AccessTokenGuard } from './guards/accessToken.guard';
 import { GoogleOauthGuard } from './guards/google-oauth.guard';
@@ -51,6 +51,13 @@ export class AuthController {
       @UseGuards(GoogleOauthGuard)
       async googleAuth(@Req() req: Request) {
 
+      }
+
+      @UseGuards(AccessTokenGuard)
+      @Put('update')
+      async updatePassword(@Body() updatePasswordDto: UpdatePasswordDto) {
+        console.log(updatePasswordDto);
+        return await this.authService.updatePassword(updatePasswordDto);
       }
 
       @Get('google')

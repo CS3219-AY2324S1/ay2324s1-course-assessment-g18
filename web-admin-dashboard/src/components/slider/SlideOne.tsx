@@ -1,4 +1,3 @@
-import React from "react";
 import totalQns from "../../assets/dashboard/total-qns.svg";
 import computer from "../../assets/dashboard/active-now.svg";
 import members from "../../assets/dashboard/members.svg";

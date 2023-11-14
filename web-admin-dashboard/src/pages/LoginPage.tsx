@@ -1,28 +1,26 @@
-import CustomInput from "@/components/form/CustomInput";
-import React, { SyntheticEvent, useContext, useState } from "react";
-import "./LoginPage.css";
+import CustomInput from '@/components/form/CustomInput';
+import React, { SyntheticEvent, useContext, useState } from 'react';
+import './LoginPage.css';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import CustomPassword from "@/components/form/CustomPassword";
-import { Navigate, useNavigate } from "react-router-dom";
-import axios from "axios";
-import LiveUserRepository from "@/userRepo/LiveUserRepository";
-import { AuthContext } from "@/context/AuthProvider";
-import { UserRole } from "@/userRepo/user.model";
-import api from "@/utils/api";
+} from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import CustomPassword from '@/components/form/CustomPassword';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import LiveUserRepository from '@/userRepo/LiveUserRepository';
+import { AuthContext } from '@/context/AuthProvider';
+import { UserRole } from '@/userRepo/user.model';
+import api from '@/utils/api';
 
 function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [accessToken, setAccessToken] = useState("");
-  const [refreshToken, setRefreshToken] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const { setAuthState, isAuthenticated } = useContext(AuthContext);
 
   const navigate = useNavigate();
@@ -36,71 +34,71 @@ function LoginPage() {
     } else {
       try {
         const authResponse = await axios.post(
-          "http://localhost:3000/auth/login",
+          import.meta.env.VITE_BASE_AUTH_URL + '/auth/login',
           {
             email,
             password,
-          }
+          },
         );
 
         if (authResponse.status === 201) {
           const { accessToken, refreshToken } = authResponse.data;
-          localStorage.setItem("accessToken", accessToken);
-          localStorage.setItem("refreshToken", refreshToken);
+          localStorage.setItem('accessToken', accessToken);
+          localStorage.setItem('refreshToken', refreshToken);
 
           // Get user role from BE
           const user = await new LiveUserRepository().getUser(email);
-          localStorage.setItem("userInfo", JSON.stringify(user));
-          const userInfo = JSON.parse(localStorage.getItem("userInfo")!);
-          const role = userInfo["role"];
-          console.log("Role: ", role);
+          localStorage.setItem('userInfo', JSON.stringify(user));
+          const userInfo = JSON.parse(localStorage.getItem('userInfo')!);
+          const role = userInfo['role'];
+          console.log('Role: ', role);
 
           const roleTokens = await api.post(
-            "http://localhost:3000/auth/tokens",
+            import.meta.env.VITE_BASE_AUTH_URL + '/auth/tokens',
             {
               email,
               role,
-            }
+            },
           );
 
           if (roleTokens.status === 201) {
             const { accessToken, refreshToken } = roleTokens.data;
             // Set tokens with role
-            localStorage.setItem("accessToken", accessToken);
-            localStorage.setItem("refreshToken", refreshToken);
+            localStorage.setItem('accessToken', accessToken);
+            localStorage.setItem('refreshToken', refreshToken);
             const userResponse = await api.put(
-              `http://localhost:4000/users/update/${email}`,
+              import.meta.env.VITE_BASE_USERHOST_URL + `/users/update/${email}`,
               {
                 refreshToken: refreshToken,
-              }
+              },
             );
             if (userResponse.status == 200) {
               if (user) {
                 setAuthState({ userInfo: user, loggedIn: true });
-                console.log("User:", user);
+                console.log('User:', user);
                 if (user.role === UserRole.Admin) {
-                  navigate("/dashboard");
+                  navigate('/dashboard');
                 } else {
-                  navigate("/user-dashboard");
+                  navigate('/user-dashboard');
                 }
               } else {
-                console.log("User is NULL");
+                console.log('User is NULL');
               }
             }
           }
         } else {
-          setError("Login failed. Check your credentials.");
+          setError('Login failed. Check your credentials.');
         }
       } catch (err) {
         console.error(err);
-        setError("Login failed. Check your credentials.");
+        setError('Login failed. Check your credentials.');
       }
     }
   };
 
   function invalidForm() {
     if (email.length === 0 || password.length === 0) {
-      return "All fields are required.";
+      return 'All fields are required.';
     }
   }
 
@@ -135,13 +133,13 @@ function LoginPage() {
             </form>
             <div
               style={{
-                display: "flex",
-                flexDirection: "column",
-                paddingTop: "20px",
+                display: 'flex',
+                flexDirection: 'column',
+                paddingTop: '20px',
               }}
             >
               <button
-                onClick={() => navigate("/signup")}
+                onClick={() => navigate('/signup')}
                 className="signup-button"
               >
                 Don't have an account? Click here to sign up!

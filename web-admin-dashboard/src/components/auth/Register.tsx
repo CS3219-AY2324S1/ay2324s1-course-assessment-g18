@@ -18,6 +18,9 @@ import { UserRole } from "@/userRepo/user.model";
 import { motion, AnimatePresence } from "framer-motion";
 import googleLogo from "../../assets/google.png";
 import { Separator } from "@/components/ui/separator";
+import passwordValidator from 'password-validator';
+import * as EmailValidator from 'email-validator';
+
 
 interface Props {
   setSelectedTab: Dispatch<SetStateAction<string>>;
@@ -33,16 +36,36 @@ function Register({ setSelectedTab }: Props) {
   const navigate = useNavigate();
   const { setAuthState } = useContext(AuthContext);
 
+  // Create a schema
+  var schema = new passwordValidator();
+  
+  // Add properties to it
+  schema
+  .is().min(8)                                    // Minimum length 8
+  .is().max(100)                                  // Maximum length 100
+  .has().uppercase()                              // Must have uppercase letters
+  .has().lowercase()                              // Must have lowercase letters
+  .has().digits(1)                                // Must have at least 1 digits
+  .has().not().spaces()                           // Should not have spaces
+  .is().not().oneOf(['Passw0rd', 'Password123']) // Blacklist these values
+  .has().symbols(1);                               // Must have at least 1 symbol
+  
+
   async function onSubmit(e: SyntheticEvent) {
     e.preventDefault();
     const error = invalidForm();
+    const pwerror = validatePassword();
     if (error) {
       setError(error);
+      return;
+    } else if (Array.isArray(pwerror) && pwerror.length > 0) {
+      console.log(pwerror);
+      setError("Password must be at least 8 characters long, have at least 1 uppercase letter, 1 lowercase letter, 1 digit, 1 special character and no spaces");
       return;
     } else {
       try {
         const authResponse = await axios.post(
-          "http://localhost:3000/auth/sign-up",
+          import.meta.env.VITE_BASE_AUTH_URL + "/auth/sign-up",
           {
             email: userEmail,
             password: userPassword,
@@ -66,15 +89,17 @@ function Register({ setSelectedTab }: Props) {
             localStorage.setItem("userInfo", JSON.stringify(user));
           }
           // Redirect to login page upon succesful signup
-          navigate("/login");
+          setSelectedTab("Login");
+
           return toast({
             title: "Success!",
-            description: "You have succesfully signed up as a user",
+            description:
+              "You have succesfully signed up as a user. Login now to get started!",
           });
         } else {
           setError("Signup failed. Please try again.");
         }
-      } catch (err) {
+      } catch (err: any) {
         console.log(err);
         setError(err.response.data.message);
       }
@@ -82,13 +107,21 @@ function Register({ setSelectedTab }: Props) {
   }
 
   function invalidForm() {
-    if (
-      userName.length === 0 ||
-      userEmail.length === 0 ||
-      userPassword.length === 0
-    ) {
-      return "All fields are required";
+    if (userName.length === 0 || userEmail.length === 0 || userPassword.length === 0) {
+      return "All fields are required.";
+    } 
+    if (userName.length < 5) {
+      return "Username must be at least 5 characters long.";
     }
+    if (EmailValidator.validate(userEmail) === false) {
+      return "Invalid email.";
+    }
+    return; 
+  }
+
+  function validatePassword() {
+    const pwschema = schema.validate(userPassword, { list: true });
+    return pwschema;
   }
 
   const googleSignin = () => {

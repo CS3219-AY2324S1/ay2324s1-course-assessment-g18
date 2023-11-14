@@ -58,7 +58,7 @@ const AuthProvider = ({ children }: Props) => {
       const email = userInfo["email"];
 
       const response = await api.put(
-        `http://localhost:4000/users/update/${email}`,
+        import.meta.env.VITE_BASE_USERHOST_URL + `/users/update/${email}`,
         {
           // baseURL: import.meta.env.VITE_BASE_USERHOST_URL,
           refreshToken: null,
@@ -67,14 +67,14 @@ const AuthProvider = ({ children }: Props) => {
       if (response.status === 200) {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
-        // navigate("/login");
         navigate("/auth");
         console.log("User is logged out");
         setAuthState({
           userInfo: {},
           loggedIn: false,
         });
-        console.log(authState.loggedIn);
+
+        console.log(authState.userInfo);
         toast({
           title: "Success!",
           description: "You have been logged out successfully.",

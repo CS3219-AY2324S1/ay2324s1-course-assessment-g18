@@ -1,34 +1,28 @@
-import DifficultySelect from "@/components/form/DifficultySelect";
-import { Button } from "@/components/ui/button";
-import { DialogTitle } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { QuestionDifficulty } from "@/questionrepo/question.model";
-import React, {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-import { matchingSocket } from "./sockets";
-import { AuthContext } from "@/context/AuthProvider";
-import { Card, CardTitle } from "@/components/ui/card";
-import { useNavigate } from "react-router-dom";
-import { IoIosArrowBack } from "react-icons/io";
+import DifficultySelect from '@/components/form/DifficultySelect';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { QuestionDifficulty } from '@/questionrepo/question.model';
+import { useContext, useState } from 'react';
+import { matchingSocket } from './sockets';
+import { AuthContext } from '@/context/AuthProvider';
+import { Card, CardTitle } from '@/components/ui/card';
+import { useNavigate } from 'react-router-dom';
+import { IoIosArrowBack } from 'react-icons/io';
 function ChooseMatch() {
   const navigate = useNavigate();
   const { authState } = useContext(AuthContext);
   const [difficulty, setDifficulty] = useState<QuestionDifficulty>(
-    QuestionDifficulty.Easy
+    QuestionDifficulty.Easy,
   );
   const user = authState.userInfo;
   const handleSubmit = () => {
     // matching logic here
-    matchingSocket.emit("match", {
+    matchingSocket.emit('match', {
       difficulty: difficulty,
       userId: user.username,
+      userEmail: user.email,
     });
-    navigate("/waiting-match", { state: { difficulty: difficulty } });
+    navigate('/waiting-match', { state: { difficulty: difficulty } });
   };
 
   return (
@@ -36,7 +30,7 @@ function ChooseMatch() {
       <Card className="p-5 w-[500px]">
         <CardTitle className="pb-3 flex gap-[10px] items-center">
           <Button
-            onClick={() => navigate("/user-dashboard")}
+            onClick={() => navigate('/user-dashboard')}
             variant="ghost"
             className="w-[50px]"
           >

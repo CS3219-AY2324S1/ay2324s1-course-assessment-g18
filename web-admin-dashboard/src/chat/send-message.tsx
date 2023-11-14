@@ -1,8 +1,8 @@
 import styles from './styles.module.css';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { chatSocket } from '@/users/components/match/sockets';
 
-const SendMessage = ({ socket, username, room } : {socket: any, username: any, room: any}) => {
+const SendMessage = ({ username, room } : { username: any, room: any}) => {
   const [message, setMessage] = useState('');
 
   const sendMessage = () => {

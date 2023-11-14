@@ -17,6 +17,9 @@ class LocalQuestionRepository {
         questionTitle: question.questionTitle,
         questionDescription: question.questionDescription,
         questionDifficulty: QuestionDifficulty[question.questionDifficulty],
+        questionConstraints: question.questionConstraints,
+        questionExamples: question.questionExamples,
+        questionImages: question.questionImages,
         questionCategories: [],
       };
       // Find index of the question with questionId
@@ -61,6 +64,9 @@ class LocalQuestionRepository {
         questionDescription: question.questionDescription,
         questionDifficulty: QuestionDifficulty[question.questionDifficulty],
         questionCategories: [],
+        questionConstraints: question.questionConstraints,
+        questionExamples: question.questionExamples,
+        questionImages: question.questionImages,
       };
       const newArr = curr.concat(newQuestion);
       localStorage.setItem("questions", JSON.stringify(newArr));

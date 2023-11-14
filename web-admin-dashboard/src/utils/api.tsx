@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { Navigate, useNavigate } from "react-router-dom";
 
 
 const api = axios.create();
@@ -32,7 +31,7 @@ api.interceptors.response.use(
           const userRefreshToken = user['refreshToken'];
           console.log(refreshToken);
           console.log(userRefreshToken);
-          const response = await axios.post('http://localhost:3000/auth/refresh', 
+          const response = await axios.post( import.meta.env.VITE_BASE_AUTH_URL+ '/auth/refresh', 
           {refreshToken: userRefreshToken}
           ,{
               // baseURL: import.meta.env.VITE_BASE_AUTH_URL,

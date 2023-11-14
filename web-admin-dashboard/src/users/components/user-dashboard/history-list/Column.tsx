@@ -1,13 +1,23 @@
-import { History, QuestionDifficulty } from '@/users/historyRepo/history.model';
-import { ColumnDef } from '@tanstack/react-table';
-import { Checkbox } from '@/components/ui/checkbox';
-import { ArrowUpDown } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import HistoryDialog from './history-card/HistoryDialog';
+import { History, QuestionDifficulty } from "@/users/historyRepo/history.model";
+import { ColumnDef } from "@tanstack/react-table";
+import { Checkbox } from "@/components/ui/checkbox";
+import { ArrowUpDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import HistoryDialog from "./history-card/HistoryDialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { MoreHorizontal } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export const Columns: ColumnDef<History>[] = [
   {
-    id: 'select',
+    id: "select",
     header: ({ table }) => (
       <Checkbox
         checked={table.getIsAllPageRowsSelected()}
@@ -26,53 +36,61 @@ export const Columns: ColumnDef<History>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'historyId',
-    header: 'ID',
+    accessorKey: "historyId",
+    header: "ID",
     cell: ({ row }) => (
-      <div className="citalize">{row.getValue('historyId')}</div>
+      <div className="citalize">{row.getValue("historyId")}</div>
     ),
   },
   {
-    accessorKey: 'questionTitle',
-    header: 'Title',
+    accessorKey: "questionTitle",
+    header: "Title",
     cell: ({ row }) => <HistoryDialog history={row.original} />,
   },
   {
-    accessorKey: 'questionDifficulty',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Difficulty
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => {
-      return (
-        <div
-          className={` h-full w-20 rounded-md p-1 text-center ${
-            row.getValue('questionDifficulty') == QuestionDifficulty.Easy
-              ? 'bg-green-200 text-green-600'
-              : row.getValue('questionDifficulty') == QuestionDifficulty.Medium
-              ? 'bg-yellow-100 text-yellow-600'
-              : 'bg-red-200 text-red-600'
-          }`}
-        >
-          {row.getValue('questionDifficulty')}
-        </div>
-      );
+    accessorKey: "questionDifficulty",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Difficulty
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }) => (
+      <div
+        className={`h-full w-20 rounded-md p-1 text-center ${
+          row.original["questionDifficulty"] === QuestionDifficulty.Easy
+            ? "bg-green-200 text-green-600"
+            : row.original["questionDifficulty"] === QuestionDifficulty.Medium
+            ? "bg-yellow-100 text-yellow-600"
+            : "bg-red-200 text-red-600"
+        }`}
+      >
+        {row.original["questionDifficulty"]}
+      </div>
+    ),
+    sortingFn: (rowA, rowB, columnId) => {
+      const difficultyOrder = {
+        [QuestionDifficulty.Easy]: 0,
+        [QuestionDifficulty.Medium]: 1,
+        [QuestionDifficulty.Hard]: 2,
+      };
+
+      const difficultyA: QuestionDifficulty = (rowA.original as any)[columnId];
+      const difficultyB: QuestionDifficulty = (rowB.original as any)[columnId];
+
+      return difficultyOrder[difficultyA] - difficultyOrder[difficultyB];
     },
   },
   {
-    accessorKey: 'dateSubmitted',
+    accessorKey: "dateSubmitted",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Submitted On
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -80,7 +98,7 @@ export const Columns: ColumnDef<History>[] = [
       );
     },
     cell: ({ row }) => {
-      return <div className="citalize">{row.getValue('dateSubmitted')}</div>;
+      return <div className="citalize">{row.getValue("dateSubmitted")}</div>;
     },
   },
 ];
