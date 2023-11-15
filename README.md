@@ -36,7 +36,7 @@ CI/CD Tools: Github Actions
 
 ## Steps
 
-1. TBD
+1. To simulate 2 sessions, open the app through the following link: http://34.126.113.240:4173/#/ on 2 different incognito Chrome Tabs.
 
 ## Important Notes
 
