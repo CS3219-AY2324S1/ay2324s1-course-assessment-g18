@@ -48,7 +48,9 @@ NodeJS
 Docker
 
 Ensure that Docker is running on your machine.
+
 Ensure that you are not on NUS wifi.
+
 Ensure ports 4173, 3000, 4000, 4001, 4002, 5001, 6001, 7001, 15672 and 5672 are available on your machine.
 
 #### Installation
