@@ -14,13 +14,16 @@ import WaitingMatch from './users/components/match/WaitingMatch';
 import ReMatch from './users/components/match/ReMatch';
 import Auth from './pages/Auth';
 import HistorySessionPage from './users/pages/HistorySessionPage';
+import {GoogleOAuthProvider} from '@react-oauth/google'
 
 function App() {
   return (
+    <GoogleOAuthProvider clientId='931740617085-92ol6plh7gp8okdbofo6ubtusfgg8sca.apps.googleusercontent.com'>
     <AuthProvider>
       <Content />
       <Toaster />
     </AuthProvider>
+    </GoogleOAuthProvider>
   );
 }
 

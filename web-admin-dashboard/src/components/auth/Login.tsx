@@ -4,6 +4,8 @@ import {
   SetStateAction,
   SyntheticEvent,
   useContext,
+  useEffect,
+  useRef,
   useState,
 } from "react";
 import "../../pages/LoginPage.css";
@@ -16,11 +18,34 @@ import { AuthContext } from "@/context/AuthProvider";
 import { UserRole } from "@/userRepo/user.model";
 import api from "@/utils/api";
 import { motion } from "framer-motion";
+import { GoogleLogin } from "@react-oauth/google";
+import { JwtPayload } from "./Register";
+import { jwtDecode } from "jwt-decode";
 
 interface Props {
   setSelectedTab: Dispatch<SetStateAction<string>>;
 }
 function Login({ setSelectedTab }: Props) {
+  const parentContainerRef = useRef<HTMLDivElement>(null);
+  const [parentContainerWidth, setParentContainerWidth] = useState<number>(0);
+
+  useEffect(() => {
+    const updateParentContainerWidth = () => {
+      if (parentContainerRef.current) {
+        const width = parentContainerRef.current.clientWidth;
+        setParentContainerWidth(width);
+      }
+    };
+
+    window.addEventListener("resize", updateParentContainerWidth);
+
+    // Call the function once to set the initial width
+    updateParentContainerWidth();
+
+    return () => {
+      window.removeEventListener("resize", updateParentContainerWidth);
+    };
+  }, []);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -105,6 +130,98 @@ function Login({ setSelectedTab }: Props) {
     }
   }
 
+  const handleGoogleLoginSuccess = async (response: any) => {
+    console.log(response);
+    console.log(jwtDecode(response.credential));
+    const res = jwtDecode(response.credential);
+    const { email, name } = res as JwtPayload;
+    try {
+      const authResponse = await axios.post(
+        import.meta.env.VITE_BASE_AUTH_URL + "/auth/oauthLogin",
+        {
+          email: email,
+        }
+      );
+
+      if (authResponse.status === 201) {
+        const { accessToken, refreshToken } = authResponse.data;
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
+
+        //   const createUser = await new LiveUserRepository().addUser(
+        //     name,
+        //     email,
+        //     refreshToken,
+        //     UserRole.User
+        //   );
+        const user = await new LiveUserRepository().getUser(email);
+        if (!user) {
+          const createUser = await new LiveUserRepository().addUser(
+            name,
+            email,
+            refreshToken,
+            UserRole.User
+          );
+        }
+        if (user) {
+          setAuthState({ userInfo: user, loggedIn: true });
+          localStorage.setItem("userInfo", JSON.stringify(user));
+          const userInfo = JSON.parse(localStorage.getItem("userInfo")!);
+          const role = userInfo["role"];
+          console.log("Role: ", role);
+
+          const roleTokens = await api.post(
+            import.meta.env.VITE_BASE_AUTH_URL + "/auth/tokens",
+            {
+              email,
+              role,
+            }
+          );
+
+          if (roleTokens.status === 201) {
+            const { accessToken, refreshToken } = roleTokens.data;
+            // Set tokens with role
+            localStorage.setItem("accessToken", accessToken);
+            localStorage.setItem("refreshToken", refreshToken);
+            const userResponse = await api.put(
+              import.meta.env.VITE_BASE_USERHOST_URL + `/users/update/${email}`,
+              {
+                refreshToken: refreshToken,
+              }
+            );
+            if (userResponse.status == 200) {
+              if (user) {
+                setAuthState({ userInfo: user, loggedIn: true });
+                console.log("User:", user);
+                if (user.role === UserRole.Admin) {
+                  console.log("navigate to dashboard");
+                  navigate("/dashboard");
+                } else {
+                  console.log("navigate to user-dashboard");
+                  navigate("/user-dashboard");
+                }
+              } else {
+                console.log("User is NULL");
+              }
+            }
+          }
+        } else {
+          setError("Login failed. Check your credentials.");
+        }
+      } else {
+        setError("Signup failed. Please try again.");
+      }
+    } catch (err: any) {
+      console.log(err);
+      // setError(err.response.data.message);
+    }
+  };
+
+  const handleGoogleLoginFailure = () => {
+    console.error("Google login error");
+    // Gérer les erreurs de connexion ici
+  };
+
   return (
     <div className="flex flex-col">
       <motion.div
@@ -147,6 +264,21 @@ function Login({ setSelectedTab }: Props) {
             >
               Sign up now
             </button>
+          </div>
+          <div className="w-full flex items-center justify-center p-[10px] flex-col">
+            <hr className="w-full border-t-slate-200 mb-4" />
+
+            <div
+              className="flex w-full items-center justify-center"
+              ref={parentContainerRef}
+            >
+              <GoogleLogin
+                onSuccess={handleGoogleLoginSuccess}
+                onError={handleGoogleLoginFailure}
+                type="standard"
+                width={parentContainerWidth}
+              />
+            </div>
           </div>
         </div>
       </motion.div>

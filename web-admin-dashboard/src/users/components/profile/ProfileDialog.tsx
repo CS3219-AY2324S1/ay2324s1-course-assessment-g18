@@ -21,7 +21,7 @@ import {
 import ConfirmDeleteDialog from "./ConfirmDeleteDialog";
 import { ChevronLeftIcon } from "lucide-react";
 import HiddenPwInput from "../form/HiddenPwInput";
-import passwordValidator from 'password-validator';
+import passwordValidator from "password-validator";
 interface Props {
   isSettingsOpen: boolean;
   setIsSettingsOpen: Dispatch<SetStateAction<boolean>>;
@@ -79,18 +79,28 @@ function ProfileDialog({ isSettingsOpen, setIsSettingsOpen }: Props) {
   };
 
   // Create a schema
-  var schema = new passwordValidator();
-  
+  const schema = new passwordValidator();
+
   // Add properties to it
   schema
-  .is().min(8)                                    // Minimum length 8
-  .is().max(100)                                  // Maximum length 100
-  .has().uppercase()                              // Must have uppercase letters
-  .has().lowercase()                              // Must have lowercase letters
-  .has().digits(1)                                // Must have at least 1 digits
-  .has().not().spaces()                           // Should not have spaces
-  .is().not().oneOf(['Passw0rd', 'Password123']) // Blacklist these values
-  .has().symbols(1);
+    .is()
+    .min(8) // Minimum length 8
+    .is()
+    .max(100) // Maximum length 100
+    .has()
+    .uppercase() // Must have uppercase letters
+    .has()
+    .lowercase() // Must have lowercase letters
+    .has()
+    .digits(1) // Must have at least 1 digits
+    .has()
+    .not()
+    .spaces() // Should not have spaces
+    .is()
+    .not()
+    .oneOf(["Passw0rd", "Password123"]) // Blacklist these values
+    .has()
+    .symbols(1);
 
   const checkPasswords = () => {
     if (currPw === pw) {

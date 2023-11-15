@@ -65,7 +65,12 @@ export class AuthController {
       async googleAuthRedirect(@Req() req: Request, @Res() res: Response) {
         const {user} = req;
         const newUser: CreateUserDto = {"email": user['email'], "providerId": user['providerId']}
-        res.send(newUser);
+        // res.redirect("http://localhost:5173/login");
         return await this.authService.oauthLogin(newUser);
+      }
+
+      @Post('oauthLogin')
+      async oauthLogin(@Body() creatUserDto: CreateUserDto) {
+        return await this.authService.oauthLogin(creatUserDto);
       }
 }
