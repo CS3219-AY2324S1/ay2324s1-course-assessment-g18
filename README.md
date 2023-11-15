@@ -105,5 +105,5 @@ visit localhost:4173 on 2 different incognito Chrome Tabs to simulate two sessio
 2. Google Authentication only works when running locally as we need to purchase a domain name to enable functionality on the deployed version.
 
 ## Final Report
-[G18-Report]([URL](https://docs.google.com/document/d/1jQaBQejdzOHXN0YGrbYafIHkK3kcv_RwvhhPPIs9vbY/edit?usp=sharing)
+[G18-Report](https://docs.google.com/document/d/1jQaBQejdzOHXN0YGrbYafIHkK3kcv_RwvhhPPIs9vbY/edit?usp=sharing)
 
