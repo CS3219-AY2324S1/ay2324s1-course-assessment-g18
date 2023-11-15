@@ -42,25 +42,60 @@ Deployed version:
 To simulate 2 sessions, open the app through the following link: http://34.126.113.240:4173/#/ on 2 different incognito Chrome Tabs.
 
 Local Version:
-From the root directory, execute the following commands and rename dockerfile.txt to dockerfile after deleting the dockerfile in web-admin-dashboard 
+Software Required
+
+NodeJS
+Docker
+
+Ensure that Docker is running on your machine.
+Ensure ports 4173, 3000, 4000, 4001, 4002, 5001, 6001, 7001, 15672 and 5672 are available on your machine.
+
+#### Installation
+
+Navigate into the `ay2324s1-course-assessment-g18` directory from the downloaded
+release.
+
+```bash
+cd ay2324s1-course-assessment-g18
+```
+
+From the directory, execute the following commands and rename dockerfile.txt to dockerfile after deleting the dockerfile in web-admin-dashboard 
+```bash
 cd ./question-service
-docker build -t rgonslayer/peerprep-question:1.0 . 
+docker build -t rgonslayer/peerprep-question:1.0 .
+```
+```bash
 cd ../user-service
 docker build -t rgonslayer/peerprep-user:1.1 .
+```
+```bash
 cd ../auth-service
 docker build -t rgonslayer/peerprep-auth:1.0 .
+```
+```bash
 cd ../history-service
-docker build -t adrielsoh/peerprep-history:1.0 . 
+docker build -t adrielsoh/peerprep-history:1.0 .
+```
+```bash
 cd ../chat-service
 docker build -t adrielsoh/peerprep-chat:1.0 .
+```
+```bash
 cd ../upload-service
 docker build -t rgonslayer/peerprep-upload:1.0 .
+```
+```bash
 cd ../matching-service
 docker build -t rgonslayer/peerprep-matching:1.0 .
+```
+```bash
 cd ../web-admin-dashboard
 docker build -t rgonslayer/peerprep:1.0 .
+```
+```bash
 cd ..
 docker compose up
+```
 visit localhost:4173 on 2 different incognito Chrome Tabs to simulate two sessions
 
 
