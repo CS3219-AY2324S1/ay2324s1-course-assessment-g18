@@ -6,6 +6,8 @@ import {
   SetStateAction,
   SyntheticEvent,
   useContext,
+  useEffect,
+  useRef,
   useState,
 } from "react";
 import "../../pages/SignUpPage.css";
@@ -23,11 +25,12 @@ import * as EmailValidator from "email-validator";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import api from "@/utils/api";
+import { useWindowWidth } from "./windowWidth";
 
 interface Props {
   setSelectedTab: Dispatch<SetStateAction<string>>;
 }
-interface JwtPayload {
+export interface JwtPayload {
   email: string;
   name: string;
 }
@@ -41,6 +44,26 @@ function Register({ setSelectedTab }: Props) {
 
   const navigate = useNavigate();
   const { setAuthState } = useContext(AuthContext);
+  const parentContainerRef = useRef<HTMLDivElement>(null);
+  const [parentContainerWidth, setParentContainerWidth] = useState<number>(0);
+
+  useEffect(() => {
+    const updateParentContainerWidth = () => {
+      if (parentContainerRef.current) {
+        const width = parentContainerRef.current.clientWidth;
+        setParentContainerWidth(width);
+      }
+    };
+
+    window.addEventListener("resize", updateParentContainerWidth);
+
+    // Call the function once to set the initial width
+    updateParentContainerWidth();
+
+    return () => {
+      window.removeEventListener("resize", updateParentContainerWidth);
+    };
+  }, []);
 
   // Create a schema
   const schema = new passwordValidator();
@@ -330,11 +353,16 @@ function Register({ setSelectedTab }: Props) {
             <img src={googleLogo} className="w-5" />
             <div>Sign in with Google</div>
           </Button> */}
-          <div className="w-full flex items-center justify-center p-[10px]">
+          <div
+            className="w-full flex items-center justify-center p-[10px]"
+            ref={parentContainerRef}
+          >
             <GoogleLogin
               onSuccess={handleGoogleLoginSuccess}
               onError={handleGoogleLoginFailure}
               type="standard"
+              width={parentContainerWidth}
+              text="signin_with"
             />
           </div>
 
