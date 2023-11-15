@@ -155,15 +155,26 @@ function SessionPage() {
           checkStatus(token);
         }, 2000);
         return;
-      } else {
+      } 
+      else if (statusId === 3) {
         setProcessing(false);
+        response.data.status.description = "Successful";
         setOutputDetails(response.data);
-        console.log('response.data', response.data);
         return toast({
           title: 'Success!',
           description: 'Compiled Successfully',
         });
-      }
+    }
+    else {
+      setProcessing(false);
+      setOutputDetails(response.data);
+      console.log('response.data', response.data);
+      return toast({
+        variant: 'destructive',
+        title: 'Uh oh!',
+        description: response.data.status?.description,
+      });
+    }
     } catch (err: any) {
       console.log('err', err);
       setProcessing(false);

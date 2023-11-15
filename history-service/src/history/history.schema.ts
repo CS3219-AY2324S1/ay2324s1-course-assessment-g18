@@ -51,6 +51,7 @@ export class History {
 export const HistorySchema = SchemaFactory.createForClass(History);
 
 HistorySchema.pre('save', function (next) {
-  this.dateSubmitted = new Date().toLocaleString();
+  const options = { timeZone: 'Asia/Singapore' };
+  this.dateSubmitted = new Date().toLocaleString('en-US', options);
   next();
 });

@@ -314,8 +314,10 @@ function Register({ setSelectedTab }: Props) {
         style={{ width: "100%" }}
       >
         <div className="flex flex-col w-full justify-center items-center gap-3">
-          <div className="text-3xl font-bold">Get Started with PeerPrep</div>
-          <div className="text-base text-slate-500 mb-5">
+          <div className="md:text-3xl font-bold text-xl text-center">
+            Get Started with PeerPrep
+          </div>
+          <div className="md:text-base text-slate-500 mb-2 text-sm text-center">
             Enter your details to get started
           </div>
         </div>
@@ -361,11 +363,11 @@ function Register({ setSelectedTab }: Props) {
               Sign Up
             </Button>
           </form>
-          <div className="flex gap-[10px] justify-center">
+          <div className="md:flex-row flex-col flex gap-[10px] justify-center md:text-base text-sm text-center">
             Already have an account?{" "}
             <button
               onClick={() => setSelectedTab("Login")}
-              className="text-[#5562eb]"
+              className="text-[#5562eb] text-center md:text-base text-sm"
             >
               Log in
             </button>
