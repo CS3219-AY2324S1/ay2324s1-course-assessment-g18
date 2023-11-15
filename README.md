@@ -8,7 +8,7 @@ Meet Peer Prep, the ultimate hub for collaborative learning and problem-solving!
 
 ## Features
 
-1. Collaborate real time with other users on a live-code editor with syntax-highlighting, code validation error, and a real time collaboration whiteboard.
+1. Collaborate real time with other users on a live-code editor with syntax-highlighting, code error validation, code execution, and even a collaborative whiteboard to draw out your ideas.
 
 2. Match with other users based on question difficulty and your proficiency level.
 
