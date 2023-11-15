@@ -102,3 +102,4 @@ visit localhost:4173 on 2 different incognito Chrome Tabs to simulate two sessio
 ## Important Notes
 
 1. Make sure your terminal active directory is pointing to the project folder e.g. `/ay2324s1-course-assessment-g18/web-admin-dashboard` before running any `npm` commands
+2. Google Authentication only works when running locally as we need to purchase a domain name to enable functionality on the deployed version.
