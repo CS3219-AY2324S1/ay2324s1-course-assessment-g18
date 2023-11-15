@@ -38,10 +38,10 @@ CI/CD Tools: Github Actions
 
 ## Steps
 
-Deployed version:
+### Deployed version
 To simulate 2 sessions, open the app through the following link: http://34.87.154.192:4173/#/ on 2 different incognito Chrome Tabs.
 
-Local Version:
+### Local Version
 Software Required
 
 NodeJS
