@@ -8,7 +8,7 @@ Meet Peer Prep, the ultimate hub for collaborative learning and problem-solving!
 
 ## Features
 
-1. Collaborate real time with other users on a live-code editor with syntax-highlighting.
+1. Collaborate real time with other users on a live-code editor with syntax-highlighting, code validation error, and a real time collaboration whiteboard.
 
 2. Match with other users based on question difficulty and your proficiency level.
 
@@ -18,11 +18,13 @@ Meet Peer Prep, the ultimate hub for collaborative learning and problem-solving!
 
 5. See list of questions that you have attempted/submitted.
 
-6. Customise personal profile (IP).
+6. See the details of the questions that you have attempted so you can collate your learning points.
+
+7. Customise personal profile (IP).
 
 ## Tech Stack
 
-Frontend: React, TypeScript, React Router, Axios, TailwindCss
+Frontend: React, TypeScript, ShadCN, Axios, TailwindCss
 
 Server: Node, Express, Nest
 
