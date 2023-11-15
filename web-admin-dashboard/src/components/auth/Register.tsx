@@ -25,7 +25,6 @@ import * as EmailValidator from "email-validator";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import api from "@/utils/api";
-import { useWindowWidth } from "./windowWidth";
 
 interface Props {
   setSelectedTab: Dispatch<SetStateAction<string>>;
