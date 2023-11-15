@@ -38,7 +38,31 @@ CI/CD Tools: Github Actions
 
 ## Steps
 
-1. To simulate 2 sessions, open the app through the following link: http://34.126.113.240:4173/#/ on 2 different incognito Chrome Tabs.
+Deployed version:
+To simulate 2 sessions, open the app through the following link: http://34.126.113.240:4173/#/ on 2 different incognito Chrome Tabs.
+
+Local Version:
+From the root directory, execute the following commands and rename dockerfile.txt to dockerfile after deleting the dockerfile in web-admin-dashboard 
+cd ./question-service
+docker build -t rgonslayer/peerprep-question:1.0 . 
+cd ../user-service
+docker build -t rgonslayer/peerprep-user:1.1 .
+cd ../auth-service
+docker build -t rgonslayer/peerprep-auth:1.0 .
+cd ../history-service
+docker build -t adrielsoh/peerprep-history:1.0 . 
+cd ../chat-service
+docker build -t adrielsoh/peerprep-chat:1.0 .
+cd ../upload-service
+docker build -t rgonslayer/peerprep-upload:1.0 .
+cd ../matching-service
+docker build -t rgonslayer/peerprep-matching:1.0 .
+cd ../web-admin-dashboard
+docker build -t rgonslayer/peerprep:1.0 .
+cd ..
+docker compose up
+visit localhost:4173 on 2 different incognito Chrome Tabs to simulate two sessions
+
 
 ## Important Notes
 
