@@ -18,14 +18,18 @@ import { UserRole } from "@/userRepo/user.model";
 import { motion, AnimatePresence } from "framer-motion";
 import googleLogo from "../../assets/google.png";
 import { Separator } from "@/components/ui/separator";
-import passwordValidator from 'password-validator';
-import * as EmailValidator from 'email-validator';
-import { GoogleLogin } from '@react-oauth/google';
+import passwordValidator from "password-validator";
+import * as EmailValidator from "email-validator";
+import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import api from "@/utils/api";
 
 interface Props {
   setSelectedTab: Dispatch<SetStateAction<string>>;
+}
+interface JwtPayload {
+  email: string;
+  name: string;
 }
 function Register({ setSelectedTab }: Props) {
   const [userName, setUserName] = useState("");
@@ -39,19 +43,28 @@ function Register({ setSelectedTab }: Props) {
   const { setAuthState } = useContext(AuthContext);
 
   // Create a schema
-  var schema = new passwordValidator();
-  
+  const schema = new passwordValidator();
+
   // Add properties to it
   schema
-  .is().min(8)                                    // Minimum length 8
-  .is().max(100)                                  // Maximum length 100
-  .has().uppercase()                              // Must have uppercase letters
-  .has().lowercase()                              // Must have lowercase letters
-  .has().digits(1)                                // Must have at least 1 digits
-  .has().not().spaces()                           // Should not have spaces
-  .is().not().oneOf(['Passw0rd', 'Password123']) // Blacklist these values
-  .has().symbols(1);                               // Must have at least 1 symbol
-  
+    .is()
+    .min(8) // Minimum length 8
+    .is()
+    .max(100) // Maximum length 100
+    .has()
+    .uppercase() // Must have uppercase letters
+    .has()
+    .lowercase() // Must have lowercase letters
+    .has()
+    .digits(1) // Must have at least 1 digits
+    .has()
+    .not()
+    .spaces() // Should not have spaces
+    .is()
+    .not()
+    .oneOf(["Passw0rd", "Password123"]) // Blacklist these values
+    .has()
+    .symbols(1); // Must have at least 1 symbol
 
   async function onSubmit(e: SyntheticEvent) {
     e.preventDefault();
@@ -62,7 +75,9 @@ function Register({ setSelectedTab }: Props) {
       return;
     } else if (Array.isArray(pwerror) && pwerror.length > 0) {
       console.log(pwerror);
-      setError("Password must be at least 8 characters long, have at least 1 uppercase letter, 1 lowercase letter, 1 digit, 1 special character and no spaces");
+      setError(
+        "Password must be at least 8 characters long, have at least 1 uppercase letter, 1 lowercase letter, 1 digit, 1 special character and no spaces"
+      );
       return;
     } else {
       try {
@@ -109,16 +124,20 @@ function Register({ setSelectedTab }: Props) {
   }
 
   function invalidForm() {
-    if (userName.length === 0 || userEmail.length === 0 || userPassword.length === 0) {
+    if (
+      userName.length === 0 ||
+      userEmail.length === 0 ||
+      userPassword.length === 0
+    ) {
       return "All fields are required.";
-    } 
+    }
     if (userName.length < 5) {
       return "Username must be at least 5 characters long.";
     }
     if (EmailValidator.validate(userEmail) === false) {
       return "Invalid email.";
     }
-    return; 
+    return;
   }
 
   function validatePassword() {
@@ -128,21 +147,21 @@ function Register({ setSelectedTab }: Props) {
 
   const handleGoogleLoginSuccess = async (response: any) => {
     console.log(response);
-    console.log(jwtDecode(response.credential))
+    console.log(jwtDecode(response.credential));
     const res = jwtDecode(response.credential);
-    const { email, name } = res;
+    const { email, name } = res as JwtPayload;
     try {
-        const authResponse = await axios.post(
-          import.meta.env.VITE_BASE_AUTH_URL + "/auth/oauthLogin",
-          {
-            email: email,
-          }
-        );
+      const authResponse = await axios.post(
+        import.meta.env.VITE_BASE_AUTH_URL + "/auth/oauthLogin",
+        {
+          email: email,
+        }
+      );
 
-        if (authResponse.status === 201) {
-          const { accessToken, refreshToken } = authResponse.data;
-          localStorage.setItem("accessToken", accessToken);
-          localStorage.setItem("refreshToken", refreshToken);
+      if (authResponse.status === 201) {
+        const { accessToken, refreshToken } = authResponse.data;
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
 
         //   const createUser = await new LiveUserRepository().addUser(
         //     name,
@@ -150,87 +169,84 @@ function Register({ setSelectedTab }: Props) {
         //     refreshToken,
         //     UserRole.User
         //   );
-          const user = await new LiveUserRepository().getUser(email);
-          if (!user) {
-            const createUser = await new LiveUserRepository().addUser(
-                name,
-                email,
-                refreshToken,
-                UserRole.User
-              );
-          }
-          if (user) {
-            setAuthState({ userInfo: user, loggedIn: true });
-            localStorage.setItem("userInfo", JSON.stringify(user));
-            const userInfo = JSON.parse(localStorage.getItem('userInfo')!);
-          const role = userInfo['role'];
-          console.log('Role: ', role);
+        const user = await new LiveUserRepository().getUser(email);
+        if (!user) {
+          const createUser = await new LiveUserRepository().addUser(
+            name,
+            email,
+            refreshToken,
+            UserRole.User
+          );
+        }
+        if (user) {
+          setAuthState({ userInfo: user, loggedIn: true });
+          localStorage.setItem("userInfo", JSON.stringify(user));
+          const userInfo = JSON.parse(localStorage.getItem("userInfo")!);
+          const role = userInfo["role"];
+          console.log("Role: ", role);
 
           const roleTokens = await api.post(
-            import.meta.env.VITE_BASE_AUTH_URL + '/auth/tokens',
+            import.meta.env.VITE_BASE_AUTH_URL + "/auth/tokens",
             {
               email,
               role,
-            },
+            }
           );
 
           if (roleTokens.status === 201) {
             const { accessToken, refreshToken } = roleTokens.data;
             // Set tokens with role
-            localStorage.setItem('accessToken', accessToken);
-            localStorage.setItem('refreshToken', refreshToken);
+            localStorage.setItem("accessToken", accessToken);
+            localStorage.setItem("refreshToken", refreshToken);
             const userResponse = await api.put(
               import.meta.env.VITE_BASE_USERHOST_URL + `/users/update/${email}`,
               {
                 refreshToken: refreshToken,
-              },
+              }
             );
             if (userResponse.status == 200) {
               if (user) {
                 setAuthState({ userInfo: user, loggedIn: true });
-                console.log('User:', user);
+                console.log("User:", user);
                 if (user.role === UserRole.Admin) {
-                    console.log("navigate to dashboard");
-                  navigate('/dashboard');
+                  console.log("navigate to dashboard");
+                  navigate("/dashboard");
                 } else {
-                    console.log("navigate to user-dashboard");
-                  navigate('/user-dashboard');
+                  console.log("navigate to user-dashboard");
+                  navigate("/user-dashboard");
                 }
               } else {
-                console.log('User is NULL');
+                console.log("User is NULL");
               }
             }
           }
         } else {
-          setError('Login failed. Check your credentials.');
-        }           
-        } else {
-          setError("Signup failed. Please try again.");
+          setError("Login failed. Check your credentials.");
         }
-      } catch (err: any) {
-        console.log(err);
-        // setError(err.response.data.message);
+      } else {
+        setError("Signup failed. Please try again.");
       }
+    } catch (err: any) {
+      console.log(err);
+      // setError(err.response.data.message);
     }
-  
+  };
 
   const handleGoogleLoginFailure = () => {
-    console.error('Google login error');
+    console.error("Google login error");
     // Gérer les erreurs de connexion ici
   };
 
   const googleSignin = () => {
-    
-    
-      return (
-        <div>
-          {/* Votre contenu de connexion */}
-          <GoogleLogin
-            onSuccess={handleGoogleLoginSuccess}
-            onError={handleGoogleLoginFailure}
-          />
-        </div>
-      );
+    return (
+      <div>
+        {/* Votre contenu de connexion */}
+        <GoogleLogin
+          onSuccess={handleGoogleLoginSuccess}
+          onError={handleGoogleLoginFailure}
+        />
+      </div>
+    );
     // var oauth = window.open(
     //   `${import.meta.env.VITE_BASE_AUTH_URL}/auth/to-google`,
     //   "_blank"
@@ -238,56 +254,55 @@ function Register({ setSelectedTab }: Props) {
     // axios.interceptors.response.use((response => { console.log("yayyyyy"); return response;}));
     // if (oauth != null) {
     //     console.log(oauth);
-        // navigate('/user-dashboard');
-        // const { accessToken, refreshToken } = authResponse.data;
-        //   localStorage.setItem("accessToken", accessToken);
-        //   localStorage.setItem("refreshToken", refreshToken);
+    // navigate('/user-dashboard');
+    // const { accessToken, refreshToken } = authResponse.data;
+    //   localStorage.setItem("accessToken", accessToken);
+    //   localStorage.setItem("refreshToken", refreshToken);
 
-        //   // Get user role from BE
-        //   const user = await new LiveUserRepository().getUser(email);
-        //   localStorage.setItem("userInfo", JSON.stringify(user));
-        //   const userInfo = JSON.parse(localStorage.getItem("userInfo")!);
-        //   const role = userInfo["role"];
-        //   console.log("Role: ", role);
+    //   // Get user role from BE
+    //   const user = await new LiveUserRepository().getUser(email);
+    //   localStorage.setItem("userInfo", JSON.stringify(user));
+    //   const userInfo = JSON.parse(localStorage.getItem("userInfo")!);
+    //   const role = userInfo["role"];
+    //   console.log("Role: ", role);
 
-        //   const roleTokens = await api.post(
-        //     "http://localhost:3000/auth/tokens",
-        //     {
-        //       email,
-        //       role,
-        //     }
-        //   );
+    //   const roleTokens = await api.post(
+    //     "http://localhost:3000/auth/tokens",
+    //     {
+    //       email,
+    //       role,
+    //     }
+    //   );
 
-        //   if (roleTokens.status === 201) {
-        //     const { accessToken, refreshToken } = roleTokens.data;
-        //     // Set tokens with role
-        //     localStorage.setItem("accessToken", accessToken);
-        //     localStorage.setItem("refreshToken", refreshToken);
-        //     const userResponse = await api.put(
-        //       `http://localhost:4000/users/update/${email}`,
-        //       {
-        //         refreshToken: refreshToken,
-        //       }
-        //     );
-        //     if (userResponse.status == 200) {
-        //       if (user) {
-        //         setAuthState({ userInfo: user, loggedIn: true });
-        //         console.log("User:", user);
-        //         if (user.role === UserRole.Admin) {
-        //           navigate("/dashboard");
-        //         } else {
-        //           navigate("/user-dashboard");
-        //         }
-        //       } else {
-        //         console.log("User is NULL");
-        //       }
-        //     }
-        //   }
-        // } else {
-        //   setError("Login failed. Check your credentials.");
-        // }
+    //   if (roleTokens.status === 201) {
+    //     const { accessToken, refreshToken } = roleTokens.data;
+    //     // Set tokens with role
+    //     localStorage.setItem("accessToken", accessToken);
+    //     localStorage.setItem("refreshToken", refreshToken);
+    //     const userResponse = await api.put(
+    //       `http://localhost:4000/users/update/${email}`,
+    //       {
+    //         refreshToken: refreshToken,
+    //       }
+    //     );
+    //     if (userResponse.status == 200) {
+    //       if (user) {
+    //         setAuthState({ userInfo: user, loggedIn: true });
+    //         console.log("User:", user);
+    //         if (user.role === UserRole.Admin) {
+    //           navigate("/dashboard");
+    //         } else {
+    //           navigate("/user-dashboard");
+    //         }
+    //       } else {
+    //         console.log("User is NULL");
+    //       }
+    //     }
+    //   }
+    // } else {
+    //   setError("Login failed. Check your credentials.");
     // }
-
+    // }
   };
   return (
     <div className="flex flex-col">
@@ -313,10 +328,14 @@ function Register({ setSelectedTab }: Props) {
             <img src={googleLogo} className="w-5" />
             <div>Sign in with Google</div>
           </Button> */}
-          <GoogleLogin
-            onSuccess={handleGoogleLoginSuccess}
-            onError={handleGoogleLoginFailure}
-          />
+          <div className="w-full flex items-center justify-center p-[10px]">
+            <GoogleLogin
+              onSuccess={handleGoogleLoginSuccess}
+              onError={handleGoogleLoginFailure}
+              type="standard"
+            />
+          </div>
+
           <div className="flex w-full items-center justify-center gap-[10px] text-slate-300">
             <hr className="w-full border-t-slate-200 " />
             or <hr className="w-full border-t-slate-200 " />
