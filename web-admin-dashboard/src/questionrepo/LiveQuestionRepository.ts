@@ -71,6 +71,7 @@ class LiveQuestionRepository {
       return true;
     } catch (error) {
       console.error(error);
+      throw(error)
       return false;
     }
   }
