@@ -1,0 +1,25 @@
+FROM node:18-alpine AS development
+
+# Declaring env
+ENV NODE_ENV development
+
+WORKDIR /peerprep
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+ENV VITE_BASE_DEPLOYED_URL=https://oceanic-will-398716.et.r.appspot.com
+ENV VITE_BASE_AUTH_URL=http://35.240.215.146:3000
+ENV VITE_BASE_USERHOST_URL=http://35.240.215.146:4000
+ENV VITE_BASE_QUESTION_URL=http://35.240.215.146:4001
+ENV VITE_BASE_MATCHING_URL=http://34.142.210.160:6001
+ENV VITE_BASE_CHAT_URL=http://35.240.215.146:5001
+ENV VITE_BASE_HISTORY_URL=http://35.240.215.146:4002
+ENV VITE_BASE_UPLOAD_URL=http://34.87.90.22:7001
+
+RUN npm run build
+
+CMD [ "npm", "run", "preview" ]

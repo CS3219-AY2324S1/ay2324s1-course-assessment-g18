@@ -1,0 +1,39 @@
+.dashboard-main {
+  display: grid;
+  /* grid-template-columns: 230px 1fr; */
+  grid-template-rows: 50px 0.6fr 3fr;
+  grid-template-areas:
+    " greet"
+    " stats"
+    " question";
+  gap: 20px;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  /* padding: 30px; */
+}
+
+.greetings {
+  grid-area: greet;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  /* font-weight: bold; */
+  gap: 5px;
+  font-size: 1.2rem;
+  /* margin-top: 5px; */
+  /* margin-bottom: 5px; */
+  background-color: transparent;
+}
+.dashboard-content {
+  display: flex;
+  flex: 1;
+}
+
+.dashboard-stats {
+  grid-area: stats;
+}
+
+.dashboard-questions {
+  grid-area: question;
+}

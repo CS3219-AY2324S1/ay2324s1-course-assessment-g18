@@ -1,0 +1,29 @@
+.qns-main-content {
+  background-color: #fff;
+  filter: drop-shadow(0px 10px 60px rgba(226, 236, 249, 0.5));
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  padding: 30px;
+}
+.add-btn {
+  transform: rotate(0deg);
+  transition: transform 0.2s ease-in-out;
+}
+
+.open {
+  transition: transform 0.2s ease-in-out;
+  transform: rotate(-45deg);
+}
+
+.complexity {
+  width: 10%;
+}
+
+.title {
+  width: 60%;
+}
+
+.id {
+  width: 5%;
+}
